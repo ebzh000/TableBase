@@ -1,8 +1,8 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.Model.TableModel;
-import com.ez.tablebase.rest.Model.TableRequest;
-import com.ez.tablebase.rest.Model.TableResponse;
+import com.ez.tablebase.rest.model.TableModel;
+import com.ez.tablebase.rest.model.TableRequest;
+import com.ez.tablebase.rest.model.TableResponse;
 
 import java.util.List;
 

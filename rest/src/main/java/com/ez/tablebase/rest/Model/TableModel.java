@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.Model;
+package com.ez.tablebase.rest.model;
 /*
  * Copyright (C) 2017 Symbio Networks Pty Ltd. All Rights Reserved.
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.

@@ -1,11 +1,11 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.Model.TableModel;
-import com.ez.tablebase.rest.Model.TableModelBuilder;
+import com.ez.tablebase.rest.model.TableModel;
+import com.ez.tablebase.rest.model.TableModelBuilder;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.Model.TableRequest;
-import com.ez.tablebase.rest.Model.TableResponse;
+import com.ez.tablebase.rest.model.TableRequest;
+import com.ez.tablebase.rest.model.TableResponse;
 import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
