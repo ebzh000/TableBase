@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableBase.iml" filepath="$PROJECT_DIR$/.idea/modules/TableBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableBase_main.iml" filepath="$PROJECT_DIR$/.idea/modules/TableBase_main.iml" group="TableBase" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableBase_test.iml" filepath="$PROJECT_DIR$/.idea/modules/TableBase_test.iml" group="TableBase" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client/client.iml" group="client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest/rest.iml" filepath="$PROJECT_DIR$/.idea/modules/rest/rest.iml" group="rest" />
+    </modules>
+  </component>
+</project>

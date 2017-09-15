@@ -1,0 +1,3 @@
+rootProject.name = 'TableBase'
+include ':rest'
+include ':client'
