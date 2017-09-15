@@ -1,3 +1,4 @@
 rootProject.name = 'TableBase'
-include ':rest'
-include ':client'
+include 'rest'
+include 'client'
+

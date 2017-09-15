@@ -19,6 +19,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client_main" target="1.5" />
+      <module name="client_test" target="1.5" />
+      <module name="rest_main" target="1.8" />
+      <module name="rest_test" target="1.8" />
       <module name="TableBase_main" target="1.8" />
       <module name="TableBase_test" target="1.8" />
     </bytecodeTargetLevel>
