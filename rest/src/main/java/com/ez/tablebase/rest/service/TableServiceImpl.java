@@ -48,7 +48,7 @@ public class TableServiceImpl implements TableService
     private TableEntity validateTable(String tableId)
     {
         if (tableId == null)
-            throw new IllegalArgumentException("Country must be provided to get public holidays for");
+            throw new IllegalArgumentException("Table ID must be provided to get tables");
 
         TableEntity entity = tableRepository.findOne(tableId);
 
