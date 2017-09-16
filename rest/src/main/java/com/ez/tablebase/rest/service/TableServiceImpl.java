@@ -1,11 +1,9 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.model.TableModel;
-import com.ez.tablebase.rest.model.TableModelBuilder;
+import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.model.TableRequest;
-import com.ez.tablebase.rest.model.TableResponse;
 import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +26,20 @@ public class TableServiceImpl implements TableService
         this.tableRepository = tableRepository;
     }
 
-    public TableResponse createTable(TableRequest request)
+    @Override
+    public TableModel createTable(int userId)
+    {
+        return tableRepository.createTable(userId);
+    }
+
+    @Override
+    public TableModel getTable(int tableId)
+    {
+        return null;
+    }
+
+    @Override
+    public TableModel getUserTables(int userId)
     {
         return null;
     }
@@ -43,6 +54,28 @@ public class TableServiceImpl implements TableService
         entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId())));
 
         return models;
+    }
+
+    @Override
+    public void deleteTable(int id)
+    {
+    }
+
+    @Override
+    public CategoryEntity createCategory(int tableId, int categoryId, String attributeName, int parentId, DataType type)
+    {
+        return null;
+    }
+
+    @Override
+    public List<CategoryEntity> getTableCategories(int tableId)
+    {
+        return null;
+    }
+
+    @Override
+    public void deleteCategory(int tableId, int categoryId)
+    {
     }
 
     private TableEntity validateTable(String tableId)

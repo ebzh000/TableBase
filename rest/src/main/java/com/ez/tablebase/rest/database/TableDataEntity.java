@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tabledata")
 @IdClass(TableDataKey.class)
-public class TableData implements Serializable
+public class TableDataEntity implements Serializable
 {
     @Id
     @Column(name = "access_id")
@@ -70,7 +70,7 @@ public class TableData implements Serializable
     @Override
     public String toString()
     {
-        return "TableData{" +
+        return "TableDataEntity{" +
                 "accessId=" + accessId +
                 ", headerId=" + headerId +
                 ", tableId=" + tableId +

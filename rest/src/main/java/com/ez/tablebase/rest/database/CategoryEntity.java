@@ -1,5 +1,7 @@
 package com.ez.tablebase.rest.database;
 
+import com.ez.tablebase.rest.model.DataType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +12,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "categories")
 @IdClass(CategoryKey.class)
-public class Category implements Serializable
+public class CategoryEntity implements Serializable
 {
 
     @Id
@@ -83,7 +85,7 @@ public class Category implements Serializable
     @Override
     public String toString()
     {
-        return "Category{" +
+        return "CategoryEntity{" +
                 "categoryId=" + categoryId +
                 ", tableId=" + tableId +
                 ", attributeName='" + attributeName + '\'' +

@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.database;
+package com.ez.tablebase.rest.model;
 
 /**
  * Created by Erik Zhong on 9/11/2017.
@@ -6,5 +6,5 @@ package com.ez.tablebase.rest.database;
 
 public enum DataType
 {
-
+    NUMBER, TEXT, DATE
 }
