@@ -17,7 +17,7 @@ public interface TableService
     TableModel getTable(int tableId);
     TableModel getUserTables(int userId);
     List<TableModel> getTables();
-    void deleteTable(int id);
+    void deleteTable(int tableId);
 
     CategoryEntity createCategory(int tableId, int categoryId, String attributeName, int parentId, DataType type);
     List<CategoryEntity> getTableCategories(int tableId);

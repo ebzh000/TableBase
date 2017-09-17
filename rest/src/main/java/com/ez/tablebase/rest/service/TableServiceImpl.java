@@ -29,13 +29,18 @@ public class TableServiceImpl implements TableService
     @Override
     public TableModel createTable(int userId)
     {
-        return tableRepository.createTable(userId);
+        TableEntity newTable = new TableEntity();
+        newTable.setTableId((int) tableRepository.count() + 1);
+        newTable.setUserId(userId);
+        TableEntity entity = tableRepository.save(newTable);
+        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId());
     }
 
     @Override
     public TableModel getTable(int tableId)
     {
-        return null;
+        TableEntity entity = tableRepository.findTable(tableId);
+        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId());
     }
 
     @Override
@@ -57,8 +62,12 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
-    public void deleteTable(int id)
+    public void deleteTable(int tableId)
     {
+        TableEntity entity = new TableEntity();
+        entity.setUserId(1);
+        entity.setTableId(tableId);
+        tableRepository.delete(entity);
     }
 
     @Override

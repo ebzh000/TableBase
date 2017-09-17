@@ -16,6 +16,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface TableRepository extends PagingAndSortingRepository<TableEntity, String>
 {
-    @Query("INSERT INTO tablelist (table_id, user_id) VALUES (?, :userId)")
-    TableModel createTable(@Param("userid") int userId);
+
+    @Query(value = "SELECT * FROM tablelist WHERE table_id = :tableId", nativeQuery = true)
+    TableEntity findTable(@Param("tableId") int tableId);
 }
