@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 class TableDataKey implements Serializable
 {
-    Integer accessId;
-    Integer headerId;
-    Integer tableId;
+    int accessId;
+    int headerId;
+    int tableId;
 }

@@ -6,26 +6,48 @@ package com.ez.tablebase.rest.model;
 
 public class TableRequest
 {
-    private String tableId;
-    private String userId;
+    private int tableId;
+    private int userId;
+    private String tableName;
+    private String tags;
 
-    public String getTableId()
+    public int getTableId()
     {
         return tableId;
     }
 
-    public void setTableId(String tableId)
+    public void setTableId(int tableId)
     {
         this.tableId = tableId;
     }
 
-    public String getUserId()
+    public int getUserId()
     {
         return userId;
     }
 
-    public void setUserId(String userId)
+    public void setUserId(int userId)
     {
         this.userId = userId;
+    }
+
+    public String getTableName()
+    {
+        return tableName;
+    }
+
+    public void setTableName(String tableName)
+    {
+        this.tableName = tableName;
+    }
+
+    public String getTags()
+    {
+        return tags;
+    }
+
+    public void setTags(String tags)
+    {
+        this.tags = tags;
     }
 }

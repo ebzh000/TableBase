@@ -1,5 +1,7 @@
 package com.ez.tablebase.rest.controller;
 
+import com.ez.tablebase.rest.model.CategoryRequest;
+import com.ez.tablebase.rest.model.TableRequest;
 import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +26,9 @@ public class TableController
     }
 
     @PostMapping(value = "/create")
-    Object createTable()
+    Object createTable(@RequestBody TableRequest request)
     {
-        return tableService.createTable(1);
+        return tableService.createTable(request);
     }
 
     @GetMapping(value = "/tables")
@@ -48,9 +50,21 @@ public class TableController
     }
 
 
-    @PostMapping(value = "/table/{tableId}/category/create")
-    Object createCategory(@PathVariable int tableId)
+    @PostMapping(value = "/table/{tableId}/categories/create")
+    Object createCategories(@PathVariable int tableId, @RequestBody CategoryRequest request)
     {
         return null;
+    }
+
+    @PostMapping(value = "/table/{tableId}/category/create")
+    Object createCategory(@PathVariable int tableId, @RequestBody CategoryRequest request)
+    {
+        return null;
+    }
+
+    @GetMapping(value = "/table/{tableId}/categories")
+    Object getCategories(@PathVariable int tableId)
+    {
+        return tableService.getTableCategories(tableId);
     }
 }

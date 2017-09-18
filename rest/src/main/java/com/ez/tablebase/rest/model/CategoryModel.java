@@ -1,36 +1,14 @@
-package com.ez.tablebase.rest.database;
+package com.ez.tablebase.rest.model;
 
-import com.ez.tablebase.rest.model.DataType;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-/**
- * Created by Erik Zhong on 9/10/2017.
- */
-
-@Entity
-@Table(name = "categories")
-@IdClass(CategoryKey.class)
-public class CategoryEntity implements Serializable
+public class CategoryModel extends ResourceSupport
 {
-
-    @Id
-    @Column(name = "category_id")
     private int categoryId;
-
-    @Id
-    @Column(name = "table_id")
     private int tableId;
-
-    @Column(name = "attribute_name")
     private String attributeName;
-
-    @Column(name = "parent_id")
     private Integer parentId;
-
-    @Column(name = "type")
-    private byte type;
+    private DataType type;
 
     public int getCategoryId()
     {
@@ -72,12 +50,12 @@ public class CategoryEntity implements Serializable
         this.parentId = parentId;
     }
 
-    public byte getType()
+    public DataType getType()
     {
         return type;
     }
 
-    public void setType(byte type)
+    public void setType(DataType type)
     {
         this.type = type;
     }
@@ -85,7 +63,7 @@ public class CategoryEntity implements Serializable
     @Override
     public String toString()
     {
-        return "CategoryEntity{" +
+        return "CategoryModel{" +
                 "categoryId=" + categoryId +
                 ", tableId=" + tableId +
                 ", attributeName='" + attributeName + '\'' +

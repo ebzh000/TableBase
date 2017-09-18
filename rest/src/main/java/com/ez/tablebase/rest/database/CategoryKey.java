@@ -8,6 +8,6 @@ import java.io.Serializable;
 
 class CategoryKey implements Serializable
 {
-    Integer categoryId;
-    Integer tableId;
+    int categoryId;
+    int tableId;
 }

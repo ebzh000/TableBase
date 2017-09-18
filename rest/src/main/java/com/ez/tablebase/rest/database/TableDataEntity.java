@@ -14,15 +14,15 @@ public class TableDataEntity implements Serializable
 {
     @Id
     @Column(name = "access_id")
-    private Integer accessId;
+    private int accessId;
 
     @Id
     @Column(name = "header_id")
-    private Integer headerId;
+    private int headerId;
 
     @Id
     @Column(name = "table_id")
-    private Integer tableId;
+    private int tableId;
 
     @Column(name = "data")
     private String data;

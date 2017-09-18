@@ -4,6 +4,7 @@ import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,27 +21,30 @@ import java.util.List;
 public class TableServiceImpl implements TableService
 {
     private final TableRepository tableRepository;
+    private final CategoryRepository categoryRepository;
 
-    public TableServiceImpl(TableRepository tableRepository)
+    public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository)
     {
         this.tableRepository = tableRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
-    public TableModel createTable(int userId)
+    public TableModel createTable(TableRequest request)
     {
         TableEntity newTable = new TableEntity();
-        newTable.setTableId((int) tableRepository.count() + 1);
-        newTable.setUserId(userId);
+        newTable.setUserId(request.getUserId());
+        newTable.setTableName(request.getTableName());
+        newTable.setTags(request.getTags());
         TableEntity entity = tableRepository.save(newTable);
-        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId());
+        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags());
     }
 
     @Override
     public TableModel getTable(int tableId)
     {
         TableEntity entity = tableRepository.findTable(tableId);
-        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId());
+        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags());
     }
 
     @Override
@@ -53,10 +57,8 @@ public class TableServiceImpl implements TableService
     public List<TableModel> getTables() throws RuntimeException
     {
         Iterable<TableEntity> entities = tableRepository.findAll();
-
         List<TableModel> models = new ArrayList<>();
-
-        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId())));
+        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags())));
 
         return models;
     }
@@ -77,9 +79,12 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
-    public List<CategoryEntity> getTableCategories(int tableId)
+    public List<CategoryModel> getTableCategories(int tableId)
     {
-        return null;
+        List<CategoryEntity> entities = categoryRepository.findAllTableCategories(tableId);
+        List<CategoryModel> models = new ArrayList<>();
+        entities.forEach(entity -> models.add(CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()])));
+        return models;
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.ez.tablebase.rest.database;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -16,21 +13,30 @@ public class TableEntity implements Serializable
 {
     @Id
     @Column(name = "table_id")
-    private Integer tableId;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int tableId;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private int userId;
+
+    @Column(name = "table_name")
+    private String tableName;
+
+    @Column(name = "tags")
+    private String tags;
 
     public TableEntity()
     {
 
     }
 
-    public TableEntity(Integer tableId, Integer userId)
+    public TableEntity(Integer tableId, Integer userId, String tableName, String tags)
     {
         super();
         this.tableId = tableId;
         this.userId = userId;
+        this.tableName = tableName;
+        this.tags = tags;
     }
 
     public Integer getTableId()
@@ -53,12 +59,34 @@ public class TableEntity implements Serializable
         this.userId = userId;
     }
 
+    public String getTableName()
+    {
+        return tableName;
+    }
+
+    public void setTableName(String tableName)
+    {
+        this.tableName = tableName;
+    }
+
+    public String getTags()
+    {
+        return tags;
+    }
+
+    public void setTags(String tags)
+    {
+        this.tags = tags;
+    }
+
     @Override
     public String toString()
     {
         return "TableEntity{" +
                 "tableId=" + tableId +
                 ", userId=" + userId +
+                ", tableName='" + tableName + '\'' +
+                ", tags='" + tags + '\'' +
                 '}';
     }
 }

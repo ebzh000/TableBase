@@ -14,6 +14,8 @@ public class TableModel extends ResourceSupport
 {
     private int tableId;
     private int userId;
+    private String tableName;
+    private String tags;
 
     public int getTableId()
     {
@@ -35,12 +37,34 @@ public class TableModel extends ResourceSupport
         this.userId = userId;
     }
 
+    public String getTableName()
+    {
+        return tableName;
+    }
+
+    public void setTableName(String tableName)
+    {
+        this.tableName = tableName;
+    }
+
+    public String getTags()
+    {
+        return tags;
+    }
+
+    public void setTags(String tags)
+    {
+        this.tags = tags;
+    }
+
     @Override
     public String toString()
     {
         return "TableModel{" +
                 "tableId=" + tableId +
                 ", userId=" + userId +
+                ", tableName='" + tableName + '\'' +
+                ", tags='" + tags + '\'' +
                 '}';
     }
 }

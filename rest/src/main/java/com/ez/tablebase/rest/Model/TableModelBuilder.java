@@ -10,13 +10,14 @@ package com.ez.tablebase.rest.model;
 
 public class TableModelBuilder
 {
-    public static TableModel buildModel(int id, int user)
+    public static TableModel buildModel(int id, int user, String name, String tags)
     {
         TableModel model = new TableModel();
 
         model.setTableId(id);
         model.setUserId(user);
-
+        model.setTableName(name);
+        model.setTags(tags);
         return model;
     }
 }
