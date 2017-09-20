@@ -75,6 +75,7 @@ public class TableServiceImpl implements TableService
     @Override
     public CategoryEntity createCategory(int tableId, int categoryId, String attributeName, int parentId, DataType type)
     {
+
         return null;
     }
 
@@ -90,6 +91,10 @@ public class TableServiceImpl implements TableService
     @Override
     public void deleteCategory(int tableId, int categoryId)
     {
+        CategoryEntity entity = new CategoryEntity();
+        entity.setTableId(tableId);
+        entity.setCategoryId(categoryId);
+        categoryRepository.delete(entity);
     }
 
     private TableEntity validateTable(String tableId)

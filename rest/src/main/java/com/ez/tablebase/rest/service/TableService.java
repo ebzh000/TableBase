@@ -23,5 +23,6 @@ public interface TableService
 
     CategoryEntity createCategory(int tableId, int categoryId, String attributeName, int parentId, DataType type);
     List<CategoryModel> getTableCategories(int tableId);
+    CategoryModel getCategory(int tableId, int categoryId);
     void deleteCategory(int tableId, int categoryId);
 }

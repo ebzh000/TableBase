@@ -49,22 +49,4 @@ public class TableController
         tableService.deleteTable(tableId);
     }
 
-
-    @PostMapping(value = "/table/{tableId}/categories/create")
-    Object createCategories(@PathVariable int tableId, @RequestBody CategoryRequest request)
-    {
-        return null;
-    }
-
-    @PostMapping(value = "/table/{tableId}/category/create")
-    Object createCategory(@PathVariable int tableId, @RequestBody CategoryRequest request)
-    {
-        return null;
-    }
-
-    @GetMapping(value = "/table/{tableId}/categories")
-    Object getCategories(@PathVariable int tableId)
-    {
-        return tableService.getTableCategories(tableId);
-    }
 }

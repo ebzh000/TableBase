@@ -6,5 +6,5 @@ package com.ez.tablebase.rest.model;
 
 public enum DataType
 {
-    UNKNOWN, NUMBER, TEXT, DATE, PERCENTAGE
+    UNKNOWN, NUMERIC, TEXT, DATE, PERCENT, CURRENCY
 }
