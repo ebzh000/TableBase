@@ -34,7 +34,8 @@ public class CategoryController
     @PostMapping(value = "/category/create")
     Object createCategory(@PathVariable int tableId, @RequestBody CategoryRequest request)
     {
-        return null;
+        request.setTableId(tableId);
+        return tableService.createCategory(request);
     }
 
     @GetMapping(value = "/categories")
@@ -50,7 +51,8 @@ public class CategoryController
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
-    void deleteCategory(@PathVariable int categoryId)
+    void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId)
     {
+        tableService.deleteCategory(tableId, categoryId);
     }
 }

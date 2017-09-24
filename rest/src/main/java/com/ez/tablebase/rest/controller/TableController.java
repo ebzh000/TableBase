@@ -43,6 +43,12 @@ public class TableController
         return tableService.getTable(tableId);
     }
 
+    @GetMapping(value = "/search")
+    Object searchTable(@RequestParam("keyword") String keyword)
+    {
+        return tableService.searchTable(keyword);
+    }
+
     @DeleteMapping(value = "/table/{tableId}")
     void deleteTable(@PathVariable int tableId)
     {

@@ -1,10 +1,12 @@
 package com.ez.tablebase.rest.service;
 
 import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.TableDataEntity;
 import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.repository.CategoryRepository;
+import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +24,13 @@ public class TableServiceImpl implements TableService
 {
     private final TableRepository tableRepository;
     private final CategoryRepository categoryRepository;
+    private final TableEntryRepository tableEntryRepository;
 
-    public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository)
+    public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository)
     {
         this.tableRepository = tableRepository;
         this.categoryRepository = categoryRepository;
+        this.tableEntryRepository = tableEntryRepository;
     }
 
     @Override
@@ -53,13 +57,22 @@ public class TableServiceImpl implements TableService
         return null;
     }
 
+    @Override
+    @Transactional(readOnly=true)
+    public List<TableModel> searchTable(String keyword)
+    {
+        List<TableEntity> entities = tableRepository.searchTable(keyword);
+        List<TableModel> models = new ArrayList<>();
+        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags())));
+        return models;
+    }
+
     @Transactional(readOnly = true)
     public List<TableModel> getTables() throws RuntimeException
     {
         Iterable<TableEntity> entities = tableRepository.findAll();
         List<TableModel> models = new ArrayList<>();
         entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags())));
-
         return models;
     }
 
@@ -73,10 +86,16 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
-    public CategoryEntity createCategory(int tableId, int categoryId, String attributeName, int parentId, DataType type)
+    public CategoryModel createCategory(CategoryRequest request)
     {
-
-        return null;
+        CategoryEntity entity = new CategoryEntity();
+        entity.setTableId(request.getTableId());
+        entity.setCategoryId(request.getCategoryId());
+        entity.setAttributeName(request.getAttributeName());
+        entity.setParentId(request.getParentId());
+        entity.setType((byte) request.getType().ordinal());
+        categoryRepository.save(entity);
+        return CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()]);
     }
 
     @Override
@@ -89,12 +108,40 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
+    public CategoryModel getCategory(int tableId, int categoryId)
+    {
+        CategoryEntity entity = categoryRepository.findCategory(tableId, categoryId);
+        return CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()]);
+    }
+
+    @Override
     public void deleteCategory(int tableId, int categoryId)
     {
         CategoryEntity entity = new CategoryEntity();
         entity.setTableId(tableId);
         entity.setCategoryId(categoryId);
         categoryRepository.delete(entity);
+    }
+
+    @Override
+    public DataModel createTableEntry(DataRequest request)
+    {
+        TableDataEntity entity = new TableDataEntity();
+        entity.setTableId(request.getTableId());
+        entity.setAccessId(request.getAccessId());
+        entity.setHeaderId(request.getHeaderId());
+        entity.setData(request.getData());
+        tableEntryRepository.save(entity);
+        return DataModelBuilder.buildModel(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
+    }
+
+    @Override
+    public List<DataModel> getTableEntries(int tableId)
+    {
+        Iterable<TableDataEntity> entities = tableEntryRepository.findAll();
+        List<DataModel> models = new ArrayList<>();
+        entities.forEach(row -> models.add(DataModelBuilder.buildModel(row.getTableId(), row.getAccessId(), row.getHeaderId(), row.getData())));
+        return models;
     }
 
     private TableEntity validateTable(String tableId)

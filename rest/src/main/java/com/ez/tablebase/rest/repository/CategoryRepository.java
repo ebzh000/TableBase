@@ -11,4 +11,7 @@ public interface CategoryRepository extends PagingAndSortingRepository<CategoryE
 {
     @Query(value = "SELECT * FROM categories WHERE table_id = :tableId", nativeQuery = true)
     List<CategoryEntity> findAllTableCategories(@Param("tableId") int tableId);
+
+    @Query(value = "SELECT * FROM categories WHERE table_id = :tableId AND category_id = :categoryId", nativeQuery = true)
+    CategoryEntity findCategory(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 }
