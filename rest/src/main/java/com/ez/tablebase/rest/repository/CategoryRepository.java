@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CategoryRepository extends PagingAndSortingRepository<CategoryEntity, String>
 {
-    @Query(value = "SELECT * FROM categories WHERE table_id = :tableId", nativeQuery = true)
+    @Query(value = "SELECT * FROM categories WHERE table_id = :tableId ORDER BY table_id, category_id asc", nativeQuery = true)
     List<CategoryEntity> findAllTableCategories(@Param("tableId") int tableId);
 
     @Query(value = "SELECT * FROM categories WHERE table_id = :tableId AND category_id = :categoryId", nativeQuery = true)

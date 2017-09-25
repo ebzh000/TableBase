@@ -18,9 +18,8 @@ CREATE TABLE table_base.categories (
 	parent_id INT,
 	type INT NOT NULL,
 	PRIMARY KEY (category_id, table_id),
-	CONSTRAINT cat_table_fk FOREIGN KEY (table_id)
-	REFERENCES table_base.tablelist(table_id)
-		ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT cat_table_fk FOREIGN KEY (table_id) REFERENCES table_base.tablelist(table_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT parent_id_fk FOREIGN KEY (parent_id) REFERENCES categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 CREATE TABLE table_base.tabledata (
@@ -29,15 +28,9 @@ CREATE TABLE table_base.tabledata (
 	header_id INT NOT NULL,
 	data VARCHAR(500) NOT NULL,
 	PRIMARY KEY (table_id, access_id, header_id),
-	CONSTRAINT data_table_fk FOREIGN KEY (table_id)
-	REFERENCES table_base.tablelist(table_id)
-		ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT access_fk FOREIGN KEY (access_id)
-	REFERENCES table_base.categories(category_id)
-		ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT header_fk FOREIGN KEY (header_id)
-	REFERENCES table_base.categories(category_id)
-		ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT data_table_fk FOREIGN KEY (table_id)	REFERENCES table_base.tablelist(table_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT access_fk FOREIGN KEY (access_id)  REFERENCES table_base.categories(category_id)	ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT header_fk FOREIGN KEY (header_id) REFERENCES table_base.categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 INSERT INTO table_base.tablelist (user_id, table_name, tags) VALUES (1, 'Quantifying Fuel-Saving Opportunities from Specific Driving', 'FuelSaving, Driving');
