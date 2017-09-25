@@ -2,6 +2,7 @@ package com.ez.tablebase.rest.service;
 
         import com.ez.tablebase.rest.database.CategoryEntity;
         import com.ez.tablebase.rest.model.*;
+        import com.ez.tablebase.rest.repository.CategoryRepository;
 
         import java.util.List;
 
@@ -22,8 +23,11 @@ public interface TableService
     CategoryModel createCategory(CategoryRequest request);
     List<CategoryModel> getTableCategories(int tableId);
     CategoryModel getCategory(int tableId, int categoryId);
+    CategoryModel updateCategory(CategoryRequest request);
     void deleteCategory(int tableId, int categoryId);
 
     DataModel createTableEntry(DataRequest request);
     List<DataModel> getTableEntries(int tableId);
+    DataModel getTableEntry(int tableId, int accessId, int headerId);
+    DataModel updateTableEntry(DataRequest request);
 }

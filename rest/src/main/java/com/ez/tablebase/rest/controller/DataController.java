@@ -43,4 +43,19 @@ public class DataController
     {
         return tableService.getTableEntries(tableId);
     }
+
+    @GetMapping(value = "/accessId/{accessId}/headerId/{headerId}")
+    public DataModel getTableEntry(@PathVariable int tableId, @PathVariable int accessId, @PathVariable int headerId)
+    {
+        return tableService.getTableEntry(tableId, accessId, headerId);
+    }
+
+    @PostMapping(value = "/accessId/{accessId}/headerId/{headerId}")
+    public DataModel updateTableEntry(@PathVariable int tableId, @PathVariable int accessId, @PathVariable int headerId, @RequestBody DataRequest request)
+    {
+        request.setTableId(tableId);
+        request.setAccessId(accessId);
+        request.setHeaderId(headerId);
+        return tableService.updateTableEntry(request);
+    }
 }

@@ -50,6 +50,14 @@ public class CategoryController
         return tableService.getCategory(tableId, categoryId);
     }
 
+    @PostMapping(value = "/category/{categoryId}")
+    Object updateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryRequest request)
+    {
+        request.setTableId(tableId);
+        request.setCategoryId(categoryId);
+        return tableService.updateCategory(request);
+    }
+
     @DeleteMapping(value = "/category/{categoryId}")
     void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId)
     {

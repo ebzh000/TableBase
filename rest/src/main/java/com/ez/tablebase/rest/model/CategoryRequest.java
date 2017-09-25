@@ -5,7 +5,7 @@ public class CategoryRequest
     private int categoryId;
     private int tableId;
     private String attributeName;
-    private int parentId;
+    private Integer parentId;
     private DataType type;
 
     public int getCategoryId()
@@ -38,12 +38,12 @@ public class CategoryRequest
         this.attributeName = attributeName;
     }
 
-    public int getParentId()
+    public Integer getParentId()
     {
         return parentId;
     }
 
-    public void setParentId(int parentId)
+    public void setParentId(Integer parentId)
     {
         this.parentId = parentId;
     }

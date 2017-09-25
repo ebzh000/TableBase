@@ -12,9 +12,9 @@ import org.springframework.hateoas.ResourceSupport;
 
 public class DataModel extends ResourceSupport
 {
+    private int tableId;
     private int accessId;
     private int headerId;
-    private int tableId;
     private String data;
 
     public int getAccessId()
@@ -61,9 +61,9 @@ public class DataModel extends ResourceSupport
     public String toString()
     {
         return "DataModel{" +
-                "accessId=" + accessId +
+                "tableId=" + tableId +
+                ", accessId=" + accessId +
                 ", headerId=" + headerId +
-                ", tableId=" + tableId +
                 ", data='" + data + '\'' +
                 '}';
     }

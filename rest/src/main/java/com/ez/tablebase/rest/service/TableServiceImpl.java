@@ -20,6 +20,7 @@ import java.util.List;
  */
 
 @Service
+@javax.transaction.Transactional
 public class TableServiceImpl implements TableService
 {
     private final TableRepository tableRepository;
@@ -45,13 +46,15 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TableModel getTable(int tableId)
     {
-        TableEntity entity = tableRepository.findTable(tableId);
+        TableEntity entity = validateTable(tableId);
         return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TableModel getUserTables(int userId)
     {
         return null;
@@ -99,6 +102,7 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CategoryModel> getTableCategories(int tableId)
     {
         List<CategoryEntity> entities = categoryRepository.findAllTableCategories(tableId);
@@ -108,9 +112,23 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CategoryModel getCategory(int tableId, int categoryId)
     {
         CategoryEntity entity = categoryRepository.findCategory(tableId, categoryId);
+        return CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()]);
+    }
+
+    @Override
+    public CategoryModel updateCategory(CategoryRequest request)
+    {
+        CategoryEntity entity = new CategoryEntity();
+        entity.setTableId(request.getTableId());
+        entity.setCategoryId(request.getCategoryId());
+        entity.setAttributeName(request.getAttributeName());
+        entity.setParentId(request.getParentId());
+        entity.setType((byte) request.getType().ordinal());
+        categoryRepository.updateTableCateogry(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
         return CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()]);
     }
 
@@ -136,20 +154,41 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DataModel> getTableEntries(int tableId)
     {
-        Iterable<TableDataEntity> entities = tableEntryRepository.findAll();
+        List<TableDataEntity> entities = tableEntryRepository.findAllTableEntries(tableId);
         List<DataModel> models = new ArrayList<>();
         entities.forEach(row -> models.add(DataModelBuilder.buildModel(row.getTableId(), row.getAccessId(), row.getHeaderId(), row.getData())));
         return models;
     }
 
-    private TableEntity validateTable(String tableId)
+    @Override
+    @Transactional(readOnly = true)
+    public DataModel getTableEntry(int tableId, int accessId, int headerId)
+    {
+        TableDataEntity entity = tableEntryRepository.findTableEntry(tableId, accessId, headerId);
+        return DataModelBuilder.buildModel(entity.getTableId(),entity.getAccessId(),entity.getHeaderId(),entity.getData());
+    }
+
+    @Override
+    public DataModel updateTableEntry(DataRequest request)
+    {
+        TableDataEntity entity = new TableDataEntity();
+        entity.setTableId(request.getTableId());
+        entity.setAccessId(request.getAccessId());
+        entity.setHeaderId(request.getHeaderId());
+        entity.setData(request.getData());
+        tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
+        return DataModelBuilder.buildModel(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
+    }
+
+    private TableEntity validateTable(Integer tableId)
     {
         if (tableId == null)
             throw new IllegalArgumentException("Table ID must be provided to get tables");
 
-        TableEntity entity = tableRepository.findOne(tableId);
+        TableEntity entity = tableRepository.findOne(tableId.toString());
 
         if (entity == null)
             throw new ObjectNotFoundException("No table found for the id: " + tableId);
