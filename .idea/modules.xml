@@ -3,23 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableBase.iml" filepath="$PROJECT_DIR$/.idea/modules/TableBase.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/TableBase.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/TableBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableBase_main.iml" filepath="$PROJECT_DIR$/.idea/modules/TableBase_main.iml" group="TableBase" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/TableBase_main.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/TableBase_main.iml" group="TableBase" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableBase_test.iml" filepath="$PROJECT_DIR$/.idea/modules/TableBase_test.iml" group="TableBase" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/TableBase_test.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/TableBase_test.iml" group="TableBase" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client/client.iml" group="client" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/client/client.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/client/client.iml" group="client" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/client/client_main.iml" group="client" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/client/client_main.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/client/client_main.iml" group="client" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/client/client_test.iml" group="client" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/client/client_test.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/client/client_test.iml" group="client" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest/rest.iml" filepath="$PROJECT_DIR$/.idea/modules/rest/rest.iml" group="rest" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/rest/rest.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/rest/rest.iml" group="rest" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest/rest_main.iml" filepath="$PROJECT_DIR$/.idea/modules/rest/rest_main.iml" group="rest" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/rest/rest_main.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/rest/rest_main.iml" group="rest" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rest/rest_test.iml" filepath="$PROJECT_DIR$/.idea/modules/rest/rest_test.iml" group="rest" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/rest/rest_test.iml" filepath="$PROJECT_DIR$/../../../../Erik-z3462813/Documents/GitHub/TableBase/.idea/modules/rest/rest_test.iml" group="rest" />
     </modules>
   </component>
 </project>

@@ -105,7 +105,8 @@ public class TableServiceImpl implements TableService
     @Transactional(readOnly = true)
     public List<CategoryModel> getTableCategories(int tableId)
     {
-        List<CategoryEntity> entities = categoryRepository.findAllTableCategories(tableId);
+        TableEntity tableEntity = validateTable(tableId);
+        List<CategoryEntity> entities = categoryRepository.findAllTableCategories(tableEntity.getTableId());
         List<CategoryModel> models = new ArrayList<>();
         entities.forEach(entity -> models.add(CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()])));
         return models;
@@ -115,16 +116,14 @@ public class TableServiceImpl implements TableService
     @Transactional(readOnly = true)
     public CategoryModel getCategory(int tableId, int categoryId)
     {
-        CategoryEntity entity = categoryRepository.findCategory(tableId, categoryId);
+        CategoryEntity entity = validateCategory(tableId, categoryId);
         return CategoryModelBuilder.buildModel(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), DataType.values()[entity.getType()]);
     }
 
     @Override
     public CategoryModel updateCategory(CategoryRequest request)
     {
-        CategoryEntity entity = new CategoryEntity();
-        entity.setTableId(request.getTableId());
-        entity.setCategoryId(request.getCategoryId());
+        CategoryEntity entity = validateCategory(request.getTableId(), request.getCategoryId());
         entity.setAttributeName(request.getAttributeName());
         entity.setParentId(request.getParentId());
         entity.setType((byte) request.getType().ordinal());
@@ -157,7 +156,8 @@ public class TableServiceImpl implements TableService
     @Transactional(readOnly = true)
     public List<DataModel> getTableEntries(int tableId)
     {
-        List<TableDataEntity> entities = tableEntryRepository.findAllTableEntries(tableId);
+        TableEntity tableEntity = validateTable(tableId);
+        List<TableDataEntity> entities = tableEntryRepository.findAllTableEntries(tableEntity.getTableId());
         List<DataModel> models = new ArrayList<>();
         entities.forEach(row -> models.add(DataModelBuilder.buildModel(row.getTableId(), row.getAccessId(), row.getHeaderId(), row.getData())));
         return models;
@@ -167,31 +167,50 @@ public class TableServiceImpl implements TableService
     @Transactional(readOnly = true)
     public DataModel getTableEntry(int tableId, int accessId, int headerId)
     {
-        TableDataEntity entity = tableEntryRepository.findTableEntry(tableId, accessId, headerId);
+        TableDataEntity entity = validateTableEntry(tableId, accessId, headerId);
         return DataModelBuilder.buildModel(entity.getTableId(),entity.getAccessId(),entity.getHeaderId(),entity.getData());
     }
 
     @Override
     public DataModel updateTableEntry(DataRequest request)
     {
-        TableDataEntity entity = new TableDataEntity();
-        entity.setTableId(request.getTableId());
-        entity.setAccessId(request.getAccessId());
-        entity.setHeaderId(request.getHeaderId());
+        TableDataEntity entity = validateTableEntry(request.getTableId(), request.getAccessId(), request.getHeaderId());
         entity.setData(request.getData());
         tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
         return DataModelBuilder.buildModel(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
     }
 
-    private TableEntity validateTable(Integer tableId)
+    private TableEntity validateTable(int tableId)
     {
-        if (tableId == null)
-            throw new IllegalArgumentException("Table ID must be provided to get tables");
-
-        TableEntity entity = tableRepository.findOne(tableId.toString());
+        TableEntity entity = tableRepository.findTable(tableId);
 
         if (entity == null)
             throw new ObjectNotFoundException("No table found for the id: " + tableId);
+
+        return entity;
+    }
+
+    private CategoryEntity validateCategory(int tableId, int categoryId)
+    {
+        TableEntity tableEntity = validateTable(tableId);
+        CategoryEntity entity = categoryRepository.findCategory(tableEntity.getTableId(), categoryId);
+
+        if(entity == null)
+            throw new ObjectNotFoundException("No Category found for category id: " + categoryId + ", in table id: " + tableId);
+
+        return entity;
+    }
+
+    private TableDataEntity validateTableEntry(int tableId, int accessId, int headerId)
+    {
+        TableEntity tableEntity = validateTable(tableId);
+        CategoryEntity accessEntity = validateCategory(tableEntity.getTableId(), accessId);
+        CategoryEntity headerEntity = validateCategory(tableEntity.getTableId(), headerId);
+
+        TableDataEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), accessEntity.getCategoryId(), headerEntity.getCategoryId());
+
+        if(entity == null)
+            throw new ObjectNotFoundException("No Entry found for the combination; access id: " + accessId + ", header id: " + headerId + " in table id: " + tableId);
 
         return entity;
     }

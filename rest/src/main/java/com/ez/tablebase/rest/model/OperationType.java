@@ -10,4 +10,5 @@ package com.ez.tablebase.rest.model;
 
 public enum OperationType
 {
+    AVERAGE, ADDITION
 }
