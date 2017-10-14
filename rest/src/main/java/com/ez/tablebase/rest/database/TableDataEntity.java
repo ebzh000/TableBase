@@ -8,44 +8,21 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "tabledata")
+@Table(name = "table_data")
 @IdClass(TableDataKey.class)
 public class TableDataEntity implements Serializable
 {
     @Id
-    @Column(name = "access_id")
-    private int accessId;
-
-    @Id
-    @Column(name = "header_id")
-    private int headerId;
-
-    @Id
     @Column(name = "table_id")
     private int tableId;
 
+    @Id
+    @Column(name = "entry_id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int entryId;
+
     @Column(name = "data")
     private String data;
-
-    public Integer getAccessId()
-    {
-        return accessId;
-    }
-
-    public void setAccessId(Integer accessId)
-    {
-        this.accessId = accessId;
-    }
-
-    public Integer getHeaderId()
-    {
-        return headerId;
-    }
-
-    public void setHeaderId(Integer headerId)
-    {
-        this.headerId = headerId;
-    }
 
     public Integer getTableId()
     {
@@ -55,6 +32,16 @@ public class TableDataEntity implements Serializable
     public void setTableId(Integer tableId)
     {
         this.tableId = tableId;
+    }
+
+    public Integer getEntryId()
+    {
+        return entryId;
+    }
+
+    public void setEntryId(Integer entryId)
+    {
+        this.entryId = entryId;
     }
 
     public String getData()
@@ -71,9 +58,8 @@ public class TableDataEntity implements Serializable
     public String toString()
     {
         return "TableDataEntity{" +
-                "accessId=" + accessId +
-                ", headerId=" + headerId +
-                ", tableId=" + tableId +
+                "tableId=" + tableId +
+                ", entryId=" + entryId +
                 ", data='" + data + '\'' +
                 '}';
     }

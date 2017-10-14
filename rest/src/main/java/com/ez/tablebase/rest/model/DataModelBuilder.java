@@ -10,13 +10,12 @@ package com.ez.tablebase.rest.model;
 
 public class DataModelBuilder
 {
-    public static DataModel buildModel(int tableId, int accessId, int headerId, String data)
+    public static DataModel buildModel(int tableId, int entryId, String data)
     {
         DataModel model = new DataModel();
 
         model.setTableId(tableId);
-        model.setAccessId(accessId);
-        model.setHeaderId(headerId);
+        model.setEntryId(entryId);
         model.setData(data);
         return model;
     }

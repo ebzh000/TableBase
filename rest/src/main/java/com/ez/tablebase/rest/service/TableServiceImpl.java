@@ -1,11 +1,13 @@
 package com.ez.tablebase.rest.service;
 
 import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.TableDataEntity;
 import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.repository.CategoryRepository;
+import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
@@ -26,12 +28,14 @@ public class TableServiceImpl implements TableService
     private final TableRepository tableRepository;
     private final CategoryRepository categoryRepository;
     private final TableEntryRepository tableEntryRepository;
+    private final DataAccessPathRepository dataAccessPathRepository;
 
-    public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository)
+    public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository, DataAccessPathRepository dataAccessPathRepository)
     {
         this.tableRepository = tableRepository;
         this.categoryRepository = categoryRepository;
         this.tableEntryRepository = tableEntryRepository;
+        this.dataAccessPathRepository = dataAccessPathRepository;
     }
 
     @Override
@@ -145,11 +149,10 @@ public class TableServiceImpl implements TableService
     {
         TableDataEntity entity = new TableDataEntity();
         entity.setTableId(request.getTableId());
-        entity.setAccessId(request.getAccessId());
-        entity.setHeaderId(request.getHeaderId());
+        entity.setEntryId(request.getAccessId());
         entity.setData(request.getData());
         tableEntryRepository.save(entity);
-        return DataModelBuilder.buildModel(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
+        return DataModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
 
     @Override
@@ -159,16 +162,16 @@ public class TableServiceImpl implements TableService
         TableEntity tableEntity = validateTable(tableId);
         List<TableDataEntity> entities = tableEntryRepository.findAllTableEntries(tableEntity.getTableId());
         List<DataModel> models = new ArrayList<>();
-        entities.forEach(row -> models.add(DataModelBuilder.buildModel(row.getTableId(), row.getAccessId(), row.getHeaderId(), row.getData())));
+        entities.forEach(row -> models.add(DataModelBuilder.buildModel(row.getTableId(), row.getEntryId(), row.getData())));
         return models;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public DataModel getTableEntry(int tableId, int accessId, int headerId)
+    public DataModel getTableEntry(int tableId, int entryId)
     {
-        TableDataEntity entity = validateTableEntry(tableId, accessId, headerId);
-        return DataModelBuilder.buildModel(entity.getTableId(),entity.getAccessId(),entity.getHeaderId(),entity.getData());
+        TableDataEntity entity = validateTableEntry(tableId, entryId);
+        return DataModelBuilder.buildModel(entity.getTableId(),entity.getEntryId(),entity.getData());
     }
 
     @Override
@@ -176,8 +179,8 @@ public class TableServiceImpl implements TableService
     {
         TableDataEntity entity = validateTableEntry(request.getTableId(), request.getAccessId(), request.getHeaderId());
         entity.setData(request.getData());
-        tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
-        return DataModelBuilder.buildModel(entity.getTableId(), entity.getAccessId(), entity.getHeaderId(), entity.getData());
+        tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getEntryId(), entity.getData());
+        return DataModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
 
     private TableEntity validateTable(int tableId)
@@ -201,17 +204,26 @@ public class TableServiceImpl implements TableService
         return entity;
     }
 
-    private TableDataEntity validateTableEntry(int tableId, int accessId, int headerId)
+    private TableDataEntity validateTableEntry(int tableId, int entryId)
     {
         TableEntity tableEntity = validateTable(tableId);
-        CategoryEntity accessEntity = validateCategory(tableEntity.getTableId(), accessId);
-        CategoryEntity headerEntity = validateCategory(tableEntity.getTableId(), headerId);
-
-        TableDataEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), accessEntity.getCategoryId(), headerEntity.getCategoryId());
+        List<DataAccessPathEntity> accessPathEntity = validateAccessPath(tableEntity.getTableId(), entryId);
+        TableDataEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), accessPathEntity.get(0).getEntryId());
 
         if(entity == null)
-            throw new ObjectNotFoundException("No Entry found for the combination; access id: " + accessId + ", header id: " + headerId + " in table id: " + tableId);
+            throw new ObjectNotFoundException("No Entry found for the combination; entry id: " + entryId + " in table id: " + tableId);
 
         return entity;
+    }
+
+    private List<DataAccessPathEntity> validateAccessPath(int tableId, int entryId)
+    {
+        TableEntity tableEntity = validateTable(tableId);
+        List<DataAccessPathEntity> entities = dataAccessPathRepository.getEntryAccessPath(tableEntity.getTableId(), entryId);
+
+        if(entities == null)
+            throw new ObjectNotFoundException("No data access path found for the entry id: " + entryId + " in table id: " + tableId);
+
+        return entities;
     }
 }

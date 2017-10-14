@@ -13,28 +13,17 @@ import org.springframework.hateoas.ResourceSupport;
 public class DataModel extends ResourceSupport
 {
     private int tableId;
-    private int accessId;
-    private int headerId;
+    private int entryId;
     private String data;
 
-    public int getAccessId()
+    public int getEntryId()
     {
-        return accessId;
+        return entryId;
     }
 
-    public void setAccessId(int accessId)
+    public void setEntryId(int entryId)
     {
-        this.accessId = accessId;
-    }
-
-    public int getHeaderId()
-    {
-        return headerId;
-    }
-
-    public void setHeaderId(int headerId)
-    {
-        this.headerId = headerId;
+        this.entryId = entryId;
     }
 
     public int getTableId()
@@ -62,8 +51,7 @@ public class DataModel extends ResourceSupport
     {
         return "DataModel{" +
                 "tableId=" + tableId +
-                ", accessId=" + accessId +
-                ", headerId=" + headerId +
+                ", entryId=" + entryId +
                 ", data='" + data + '\'' +
                 '}';
     }

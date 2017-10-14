@@ -18,13 +18,13 @@ import java.util.List;
 
 public interface TableEntryRepository extends PagingAndSortingRepository<TableDataEntity, String>
 {
-    @Query(value = "SELECT * FROM tabledata WHERE table_id = :tableId ORDER BY table_id, access_id, header_id ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM table_data WHERE table_id = :tableId ORDER BY table_id, entry_id ASC", nativeQuery = true)
     List<TableDataEntity> findAllTableEntries(@Param("tableId") int tableId);
 
-    @Query(value = "SELECT * FROM tabledata WHERE table_id = :tableId AND access_id = :accessId AND header_id = :headerId", nativeQuery = true)
-    TableDataEntity findTableEntry(@Param("tableId") int tableId, @Param("accessId")  int accessId, @Param("headerId") int headerId);
+    @Query(value = "SELECT * FROM table_data WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
+    TableDataEntity findTableEntry(@Param("tableId") int tableId, @Param("entryid")  int entryId);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE tabledata SET data = :entry WHERE table_id = :tableId AND access_id = :accessId AND header_id = :headerId", nativeQuery = true)
-    void updateTableEntry(@Param("tableId") int tableId, @Param("accessId") int accessId, @Param("headerId") int headerId, @Param("entry") String data);
+    @Query(value = "UPDATE table_data SET data = :entry WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
+    void updateTableEntry(@Param("tableId") int tableId, @Param("entryId") int entryId, @Param("entry") String data);
 }
