@@ -8,8 +8,10 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
+import com.ez.tablebase.rest.model.DataAccessPathModel;
 import com.ez.tablebase.rest.model.DataModel;
 import com.ez.tablebase.rest.model.DataRequest;
+import com.ez.tablebase.rest.service.DataService;
 import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,40 +24,45 @@ import java.util.List;
 @RequestMapping(value = "/tablebase/table/{tableId}")
 public class DataController
 {
-    private TableService tableService;
+    private DataService dataService;
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public DataController(TableService tableService)
+    public DataController(DataService dataService)
     {
-        this.tableService = tableService;
+        this.dataService = dataService;
     }
 
     @PostMapping(value = "/entry/create")
     public DataModel createTableEntry(@PathVariable int tableId, DataRequest request)
     {
         request.setTableId(tableId);
-        return tableService.createTableEntry(request);
+        return dataService.createTableEntry(request);
     }
 
     @GetMapping(value = "/entries")
     public List<DataModel> getTableEntries(@PathVariable int tableId)
     {
-        return tableService.getTableEntries(tableId);
+        return dataService.getTableEntries(tableId);
     }
 
-    @GetMapping(value = "/accessId/{accessId}/headerId/{headerId}")
-    public DataModel getTableEntry(@PathVariable int tableId, @PathVariable int accessId, @PathVariable int headerId)
+    @GetMapping(value = "/entry/{entryId}")
+    public DataModel getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
     {
-        return tableService.getTableEntry(tableId, accessId, headerId);
+        return dataService.getTableEntry(tableId, entryId);
     }
 
-    @PostMapping(value = "/accessId/{accessId}/headerId/{headerId}")
-    public DataModel updateTableEntry(@PathVariable int tableId, @PathVariable int accessId, @PathVariable int headerId, @RequestBody DataRequest request)
+    @PostMapping(value = "/entry/{entryId}")
+    public DataModel updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request)
     {
         request.setTableId(tableId);
-        request.setAccessId(accessId);
-        request.setHeaderId(headerId);
-        return tableService.updateTableEntry(request);
+        request.setEntryId(entryId);
+        return dataService.updateTableEntry(request);
+    }
+
+    @GetMapping(value = "/entry/{entryId}/getAccessPath")
+    public List<DataAccessPathModel> getDataAccessPath(@PathVariable int tableId, @PathVariable int entryId)
+    {
+        return dataService.getDataAccessPath(tableId, entryId);
     }
 }

@@ -19,15 +19,4 @@ public interface TableService
     List<TableModel> searchTable(String keyword);
     List<TableModel> getTables();
     void deleteTable(int tableId);
-
-    CategoryModel createCategory(CategoryRequest request);
-    List<CategoryModel> getTableCategories(int tableId);
-    CategoryModel getCategory(int tableId, int categoryId);
-    CategoryModel updateCategory(CategoryRequest request);
-    void deleteCategory(int tableId, int categoryId);
-
-    DataModel createTableEntry(DataRequest request);
-    List<DataModel> getTableEntries(int tableId);
-    DataModel getTableEntry(int tableId, int accessId, int headerId);
-    DataModel updateTableEntry(DataRequest request);
 }

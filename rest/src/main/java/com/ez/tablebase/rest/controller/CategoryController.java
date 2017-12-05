@@ -9,6 +9,7 @@ package com.ez.tablebase.rest.controller;
  */
 
 import com.ez.tablebase.rest.model.CategoryRequest;
+import com.ez.tablebase.rest.service.CategoryService;
 import com.ez.tablebase.rest.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/tablebase/table/{tableId}")
 public class CategoryController
 {
-    private TableService tableService;
+    private CategoryService categoryService;
 
     @Autowired
-    public CategoryController(TableService tableService)
+    public CategoryController(CategoryService categoryService)
     {
-        this.tableService = tableService;
+        this.categoryService = categoryService;
     }
 
     @PostMapping(value = "/categories/create")
@@ -35,19 +36,19 @@ public class CategoryController
     Object createCategory(@PathVariable int tableId, @RequestBody CategoryRequest request)
     {
         request.setTableId(tableId);
-        return tableService.createCategory(request);
+        return categoryService.createCategory(request);
     }
 
     @GetMapping(value = "/categories")
     Object getCategories(@PathVariable int tableId)
     {
-        return tableService.getTableCategories(tableId);
+        return categoryService.getTableCategories(tableId);
     }
 
     @GetMapping(value = "/category/{categoryId}")
     Object getCategory(@PathVariable int tableId, @PathVariable int categoryId)
     {
-        return tableService.getCategory(tableId, categoryId);
+        return categoryService.getCategory(tableId, categoryId);
     }
 
     @PostMapping(value = "/category/{categoryId}")
@@ -55,12 +56,12 @@ public class CategoryController
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
-        return tableService.updateCategory(request);
+        return categoryService.updateCategory(request);
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
     void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId)
     {
-        tableService.deleteCategory(tableId, categoryId);
+        categoryService.deleteCategory(tableId, categoryId);
     }
 }

@@ -8,31 +8,33 @@ package com.ez.tablebase.rest.model;
  * Created by ErikZ on 24/09/2017.
  */
 
+import java.util.List;
+
 public class DataRequest
 {
-    private int accessId;
-    private int headerId;
+    private int entryId;
+    private List<Integer> categories;
     private int tableId;
     private String data;
 
-    public int getAccessId()
+    public int getEntryId()
     {
-        return accessId;
+        return entryId;
     }
 
-    public void setAccessId(int accessId)
+    public void setEntryId(int entryId)
     {
-        this.accessId = accessId;
+        this.entryId = entryId;
     }
 
-    public int getHeaderId()
+    public List<Integer> getCategories()
     {
-        return headerId;
+        return categories;
     }
 
-    public void setHeaderId(int headerId)
+    public void setCategories(List<Integer> categories)
     {
-        this.headerId = headerId;
+        this.categories = categories;
     }
 
     public int getTableId()
@@ -59,8 +61,7 @@ public class DataRequest
     public String toString()
     {
         return "DataRequest{" +
-                "accessId=" + accessId +
-                ", headerId=" + headerId +
+                "entryId=" + entryId +
                 ", tableId=" + tableId +
                 ", data='" + data + '\'' +
                 '}';
