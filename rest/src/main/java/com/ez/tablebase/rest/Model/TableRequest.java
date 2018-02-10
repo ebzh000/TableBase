@@ -10,6 +10,7 @@ public class TableRequest
     private int userId;
     private String tableName;
     private String tags;
+    private boolean isPublic;
 
     public int getTableId()
     {
@@ -49,5 +50,15 @@ public class TableRequest
     public void setTags(String tags)
     {
         this.tags = tags;
+    }
+
+    public boolean getPublic()
+    {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic)
+    {
+        isPublic = aPublic;
     }
 }

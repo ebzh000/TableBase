@@ -8,6 +8,7 @@ CREATE TABLE table_base.table_list(
   user_id INT NOT NULL,
   table_name VARCHAR(500) NOT NULL,
   tags TEXT,
+  public BOOLEAN NOT NULL,
   PRIMARY KEY (table_id)
 ) ENGINE INNODB;
 

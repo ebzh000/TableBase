@@ -10,7 +10,7 @@ package com.ez.tablebase.rest.model;
 
 public class TableModelBuilder
 {
-    public static TableModel buildModel(int id, int user, String name, String tags)
+    public static TableModel buildModel(int id, int user, String name, String tags, boolean isPublic)
     {
         TableModel model = new TableModel();
 
@@ -18,6 +18,7 @@ public class TableModelBuilder
         model.setUserId(user);
         model.setTableName(name);
         model.setTags(tags);
+        model.setPublic(isPublic);
         return model;
     }
 }

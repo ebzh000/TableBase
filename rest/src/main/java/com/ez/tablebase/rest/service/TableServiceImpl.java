@@ -1,8 +1,5 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.database.CategoryEntity;
-import com.ez.tablebase.rest.database.DataAccessPathEntity;
-import com.ez.tablebase.rest.database.TableDataEntity;
 import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
@@ -39,8 +36,9 @@ public class TableServiceImpl implements TableService
         newTable.setUserId(request.getUserId());
         newTable.setTableName(request.getTableName());
         newTable.setTags(request.getTags());
+        newTable.setPublic(request.getPublic());
         TableEntity entity = tableRepository.save(newTable);
-        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags());
+        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic());
     }
 
     @Override
@@ -48,7 +46,7 @@ public class TableServiceImpl implements TableService
     public TableModel getTable(int tableId)
     {
         TableEntity entity = validateTable(tableId);
-        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags());
+        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic());
     }
 
     @Override
@@ -64,7 +62,7 @@ public class TableServiceImpl implements TableService
     {
         List<TableEntity> entities = tableRepository.searchTable(keyword);
         List<TableModel> models = new ArrayList<>();
-        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags())));
+        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic())));
         return models;
     }
 
@@ -73,7 +71,7 @@ public class TableServiceImpl implements TableService
     {
         Iterable<TableEntity> entities = tableRepository.findAll();
         List<TableModel> models = new ArrayList<>();
-        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags())));
+        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic())));
         return models;
     }
 

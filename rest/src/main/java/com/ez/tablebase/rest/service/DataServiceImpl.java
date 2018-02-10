@@ -43,14 +43,15 @@ public class DataServiceImpl implements DataService
     @Override
     public DataModel createTableEntry(DataRequest request)
     {
+        /*
+         * TODO : Need to figure out how to pass this endpoint a list of categories.
+         * This means how the GUI will grab all related categories and send them to the end point.
+         */
         TableDataEntity entity = new TableDataEntity();
         entity.setTableId(request.getTableId());
         entity.setData(request.getData());
         tableEntryRepository.save(entity);
 
-        /*
-         * TODO: Need to see if there will only ever be one access header
-         */
         saveDataAccessPath(request.getCategories(), entity);
 
         return DataModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());

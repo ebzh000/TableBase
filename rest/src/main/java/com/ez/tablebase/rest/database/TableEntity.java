@@ -25,18 +25,22 @@ public class TableEntity implements Serializable
     @Column(name = "tags")
     private String tags;
 
+    @Column(name = "public")
+    private boolean isPublic;
+
     public TableEntity()
     {
 
     }
 
-    public TableEntity(Integer tableId, Integer userId, String tableName, String tags)
+    public TableEntity(Integer tableId, Integer userId, String tableName, String tags, boolean isPublic)
     {
         super();
         this.tableId = tableId;
         this.userId = userId;
         this.tableName = tableName;
         this.tags = tags;
+        this.isPublic = isPublic;
     }
 
     public Integer getTableId()
@@ -79,6 +83,16 @@ public class TableEntity implements Serializable
         this.tags = tags;
     }
 
+    public boolean isPublic()
+    {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic)
+    {
+        isPublic = aPublic;
+    }
+
     @Override
     public String toString()
     {
@@ -87,6 +101,7 @@ public class TableEntity implements Serializable
                 ", userId=" + userId +
                 ", tableName='" + tableName + '\'' +
                 ", tags='" + tags + '\'' +
+                ", getPublic=" + isPublic +
                 '}';
     }
 }

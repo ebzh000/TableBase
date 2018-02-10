@@ -16,6 +16,7 @@ public class TableModel extends ResourceSupport
     private int userId;
     private String tableName;
     private String tags;
+    private boolean isPublic;
 
     public int getTableId()
     {
@@ -57,6 +58,16 @@ public class TableModel extends ResourceSupport
         this.tags = tags;
     }
 
+    public boolean isPublic()
+    {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic)
+    {
+        isPublic = aPublic;
+    }
+
     @Override
     public String toString()
     {
@@ -65,6 +76,7 @@ public class TableModel extends ResourceSupport
                 ", userId=" + userId +
                 ", tableName='" + tableName + '\'' +
                 ", tags='" + tags + '\'' +
+                ", getPublic=" + isPublic +
                 '}';
     }
 }
