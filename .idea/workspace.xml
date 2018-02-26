@@ -61,7 +61,18 @@
     <favorites_list name="TableBase" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -778,7 +789,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/Controller/TableController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/Service/TableService.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/Service/TableServiceImpl.java" />
@@ -829,6 +839,7 @@
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java" />
+        <option value="$PROJECT_DIR$/client/package.json" />
       </list>
     </option>
   </component>
@@ -892,6 +903,11 @@
             <path>
               <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
               <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="client" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1407,7 +1423,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93000000" />
+    <option name="totallyTimeSpent" value="93230000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="-14" width="3868" height="2120" extended-state="6" />
@@ -1536,7 +1552,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/npm-debug.log" />
     <entry file="file://$PROJECT_DIR$/client/main.js" />
-    <entry file="file://$PROJECT_DIR$/client/package.json" />
     <entry file="file://$PROJECT_DIR$/matrix_schema.sql" />
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/OperationType.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1792,6 +1807,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
