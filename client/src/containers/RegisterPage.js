@@ -6,33 +6,14 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import Toggle from 'material-ui/Toggle';
 import DatePicker from 'material-ui/DatePicker';
-import {grey400} from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import PageBase from '../components/PageBase';
+import styles from '../styles';
 
-const FormPage = () => {
-
-  const styles = {
-    toggleDiv: {
-      maxWidth: 300,
-      marginTop: 40,
-      marginBottom: 5
-    },
-    toggleLabel: {
-      color: grey400,
-      fontWeight: 100
-    },
-    buttons: {
-      marginTop: 30,
-      float: 'right'
-    },
-    saveButton: {
-      marginLeft: 5
-    }
-  };
+const RegisterPage = () => {
 
   return (
-    <PageBase title="Form Page"
+    <PageBase title="Register Page"
               navigation="Application / Form Page">
       <form>
 
@@ -80,4 +61,4 @@ const FormPage = () => {
   );
 };
 
-export default FormPage;
+export default RegisterPage;

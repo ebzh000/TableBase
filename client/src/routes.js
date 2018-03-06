@@ -1,10 +1,9 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
-import WelcomePage from './containers/WelcomePage.js';
 import NotFoundPage from './containers/NotFoundPage.js';
 import LoginPage from './containers/LoginPage';
-import FormPage from './containers/FormPage';
+import RegisterPage from './containers/RegisterPage';
 import TablePage from './containers/TablePage';
 import Dashboard from './containers/DashboardPage';
 
@@ -12,9 +11,9 @@ export default (
   <Route>
     <Route path="login" component={LoginPage}/>
     <Route path="/" component={App}>
-      <IndexRoute component={WelcomePage}/>
+      <IndexRoute component={LoginPage}/>
       <Route path="dashboard" component={Dashboard}/>
-      <Route path="form" component={FormPage}/>
+      <Route path="register" component={RegisterPage}/>
       <Route path="table" component={TablePage}/>
       <Route path="*" component={NotFoundPage}/>
     </Route>
