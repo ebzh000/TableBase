@@ -1,17 +1,23 @@
-/* eslint-disable import/default */
-
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import ReduxPromise from 'redux-promise'
 import { Router, browserHistory } from 'react-router';
+import reducers from './reducers'
 import routes from './routes';
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
-require('./favicon.ico');
 import './styles.scss';
 import 'font-awesome/css/font-awesome.css';
 import 'flexboxgrid/css/flexboxgrid.css';
 
 injectTapEventPlugin();
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
-render(
-    <Router routes={routes} history={browserHistory} />, document.getElementById('app')
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <Router routes={routes} history={browserHistory} />
+  </Provider>,
+    document.getElementById('app')
 );

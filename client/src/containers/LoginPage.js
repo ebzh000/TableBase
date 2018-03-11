@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { PropTypes, Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { login } from '../actions/AuthActions'
+
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -9,49 +13,92 @@ import {Link} from 'react-router';
 import ThemeDefault from '../theme-default';
 import styles from '../styles';
 
-const LoginPage = () => {
-  return (
-    <MuiThemeProvider muiTheme={ThemeDefault}>
-      <div>
-        <div style={styles.loginContainer}>
+class LoginPage extends Component {
+  constructor (props) {
+    super(props);
 
-          <Paper style={styles.paper}>
+    this.state = { email: '', password: ''};
 
-            <form>
-              <TextField
-                hintText="Email"
-                floatingLabelText="Email"
-                fullWidth={true}
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+  }
+
+  onEmailChange (event) {
+    this.setState({ email: event.target.value })
+  }
+
+  onPasswordChange (event) {
+    this.setState({ password: event.target.value })
+  }
+
+  onFormSubmit (event) {
+    event.preventDefault();
+
+    // Login
+    this.props.login(this.state.email, this.state.password);
+    this.setState({ email: '', password: ''})
+  }
+
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={ThemeDefault}>
+        <div>
+          <div style={styles.loginContainer}>
+
+            <Paper style={styles.paper}>
+
+              <form onSubmit={this.onFormSubmit}>
+                <TextField
+                  hintText="Email"
+                  floatingLabelText="Email"
+                  fullWidth={true}
+                  value={this.state.email}
+                  onChange={this.onEmailChange}
+                />
+                <TextField
+                  hintText="Password"
+                  floatingLabelText="Password"
+                  fullWidth={true}
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.onPasswordChange}
+                />
+
+                <div>
+                  <Link to="/dashboard">
+                    <RaisedButton
+                      label="Login"
+                      primary={true}
+                      style={styles.loginBtn}
+                      type="submit"
+                    />
+                  </Link>
+                </div>
+              </form>
+            </Paper>
+
+            <div style={styles.buttonsDiv}>
+              <FlatButton
+                label="Register"
+                href="/register"
+                style={styles.flatButton}
+                icon={<PersonAdd/>}
               />
-              <TextField
-                hintText="Password"
-                floatingLabelText="Password"
-                fullWidth={true}
-                type="password"
-              />
-
-              <div>
-                <Link to="/dashboard">
-                  <RaisedButton label="Login"
-                                primary={true}
-                                style={styles.loginBtn}/>
-                </Link>
-              </div>
-            </form>
-          </Paper>
-
-          <div style={styles.buttonsDiv}>
-            <FlatButton
-              label="Register"
-              href="/register"
-              style={styles.flatButton}
-              icon={<PersonAdd />}
-            />
+            </div>
           </div>
         </div>
-      </div>
-    </MuiThemeProvider>
-  );
+      </MuiThemeProvider>
+    );
+  }
+}
+
+LoginPage.propTypes = {
+  login: PropTypes.func
 };
 
-export default LoginPage;
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({ login }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(LoginPage)
