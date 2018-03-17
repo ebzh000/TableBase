@@ -3,7 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from '../components/Header';
 import LeftDrawer from '../components/LeftDrawer';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
-import ThemeDefault from '../theme-default';
+import ThemeDefault from '../style/theme-default';
 import Data from '../data';
 
 class App extends Component {

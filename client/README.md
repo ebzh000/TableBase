@@ -1,26 +1,25 @@
-React Ui-Material Admin Template
-================================
+# ReduxSimpleStarter
 
-This is a simple responsive admin template using [React](https://facebook.github.io/react/) and [Material-UI](http://www.material-ui.com/) components.
+Interested in learning [Redux](https://www.udemy.com/react-redux/)?
 
-This is the very first version, feel free to use for any app. Contributions are always welcome!
+### Getting Started
 
-Demo
-----
+There are two methods for getting started with this repo.
 
-You can find a demo [here](http://rafaelhz.github.io/react-material-admin-template).
+#### Familiar with Git?
+Checkout this repo, install dependencies, then start the gulp process with the following:
 
+```
+> git clone https://github.com/StephenGrider/ReduxSimpleStarter.git
+> cd ReduxSimpleStarter
+> npm install
+> npm start
+```
 
-Installation / Running
-----------------------
+#### Not Familiar with Git?
+Click [here](https://github.com/StephenGrider/ReactStarter/releases) then download the .zip file.  Extract the contents of the zip file, then open your terminal, change to the project directory, and:
 
-1. `git clone <repository-url>` this repository
-2. change into the new directory
-3. `npm install`
-4. `npm start` will run the app
-5. Visit the app at [http://localhost:3000](http://localhost:3000)
-
-
-License
--------
-MIT
+```
+> npm install
+> npm start
+```

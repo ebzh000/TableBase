@@ -1,23 +1,34 @@
-import React from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import ReduxPromise from 'redux-promise'
-import { Router, browserHistory } from 'react-router';
 import reducers from './reducers'
-import routes from './routes';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import './styles.scss';
-import 'font-awesome/css/font-awesome.css';
-import 'flexboxgrid/css/flexboxgrid.css';
+import App from "./containers/App";
+import LoginPage from "./containers/LoginPage";
+import RegisterPage from "./containers/RegisterPage";
+import TablePage from "./containers/TablePage";
+import Dashboard from './containers/DashboardPage';
+import NotFoundPage from "./containers/NotFoundPage";
 
-injectTapEventPlugin();
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router routes={routes} history={browserHistory} />
+      <Router history={browserHistory}>
+          <Route>
+              <Route path="login" component={LoginPage}/>
+              <Route path="/" component={App}>
+                  <IndexRoute component={LoginPage}/>
+                  <Route path="dashboard" component={Dashboard}/>
+                  <Route path="register" component={RegisterPage}/>
+                  <Route path="table" component={TablePage}/>
+                  <Route path="*" component={NotFoundPage}/>
+              </Route>
+          </Route>
+      </Router>
   </Provider>,
-    document.getElementById('app')
-);
+  document.querySelector('.container')
+)

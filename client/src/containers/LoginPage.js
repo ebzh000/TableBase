@@ -10,34 +10,30 @@ import FlatButton from 'material-ui/FlatButton';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import TextField from 'material-ui/TextField';
 import {Link} from 'react-router';
-import ThemeDefault from '../theme-default';
-import styles from '../styles';
+import ThemeDefault from '../style/theme-default';
+import styles from '../style/styles';
 
 class LoginPage extends Component {
   constructor (props) {
     super(props);
-
-    this.state = { email: '', password: ''};
-
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
-  onEmailChange (event) {
-    this.setState({ email: event.target.value })
+  onEmailChange (text) {
+    this.props.emailChanged(text)
   }
 
-  onPasswordChange (event) {
-    this.setState({ password: event.target.value })
+  onPasswordChange (text) {
+    this.props.passwordChanged(text)
   }
 
-  onFormSubmit (event) {
-    event.preventDefault();
+  onFormSubmit () {
+    const { email, password } = this.props;
 
     // Login
-    this.props.login(this.state.email, this.state.password);
-    this.setState({ email: '', password: ''})
+    this.props.login({ email, password });
   }
 
   render() {
@@ -47,13 +43,15 @@ class LoginPage extends Component {
           <div style={styles.loginContainer}>
 
             <Paper style={styles.paper}>
-
+              <Label style={styles.errorTextStyle}>
+                {this.props.error}
+              </Label>
               <form onSubmit={this.onFormSubmit}>
                 <TextField
                   hintText="Email"
                   floatingLabelText="Email"
                   fullWidth={true}
-                  value={this.state.email}
+                  value={this.props.email}
                   onChange={this.onEmailChange}
                 />
                 <TextField
@@ -61,7 +59,7 @@ class LoginPage extends Component {
                   floatingLabelText="Password"
                   fullWidth={true}
                   type="password"
-                  value={this.state.password}
+                  value={this.props.password}
                   onChange={this.onPasswordChange}
                 />
 
@@ -94,11 +92,27 @@ class LoginPage extends Component {
 }
 
 LoginPage.propTypes = {
-  login: PropTypes.func
+  emailChanged: PropTypes.func,
+  passwordChanged: PropTypes.func,
+  login: PropTypes.func,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  error: PropTypes.string,
+  loading: PropTypes.bool
 };
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ login }, dispatch)
+const mapStateToProps = ({ auth }) => {
+  const { email, password, error, loading } = auth
+  return {
+    email,
+    password,
+    error,
+    loading
+  }
 }
 
-export default connect(null, mapDispatchToProps)(LoginPage)
+export default connect(mapStateToProps, {
+  emailChanged,
+  passwordChanged,
+  login
+})(LoginPage)

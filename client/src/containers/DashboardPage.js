@@ -9,7 +9,7 @@ import NewOrders from '../components/dashboard/NewOrders';
 import MonthlySales from '../components/dashboard/MonthlySales';
 import BrowserUsage from '../components/dashboard/BrowserUsage';
 import RecentlyProducts from '../components/dashboard/RecentlyProducts';
-import globalStyles from '../styles';
+import globalStyles from '../style/styles';
 import Data from '../data';
 
 const DashboardPage = () => {

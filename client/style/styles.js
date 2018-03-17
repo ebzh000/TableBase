@@ -88,6 +88,11 @@ const styles = {
   },
   saveButton: {
     marginLeft: 5
+  },
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
   }
 };
 

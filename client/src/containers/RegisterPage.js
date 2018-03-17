@@ -8,7 +8,7 @@ import Toggle from 'material-ui/Toggle';
 import DatePicker from 'material-ui/DatePicker';
 import Divider from 'material-ui/Divider';
 import PageBase from '../components/PageBase';
-import styles from '../styles';
+import styles from '../style/styles';
 
 const RegisterPage = () => {
 
