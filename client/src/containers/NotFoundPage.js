@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {Link} from 'react-router';
 
-const NotFoundPage = () => {
-  return (
-    <div>
-      <div>
-        404 Page Not Found
-      </div>
-    </div>
-  );
-};
+class NotFound extends Component {
+    render() {
+        return (
+            <article>
+                <h1>Page not found.</h1>
+                <Link to="/" className="btn">Home</Link>
+            </article>
+        );
+    }
+}
 
-export default NotFoundPage;
+export default NotFound;

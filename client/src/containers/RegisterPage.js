@@ -1,64 +1,39 @@
-import React from 'react';
-import {Link} from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
-import MenuItem from 'material-ui/MenuItem';
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import Toggle from 'material-ui/Toggle';
-import DatePicker from 'material-ui/DatePicker';
-import Divider from 'material-ui/Divider';
-import PageBase from '../components/PageBase';
-import styles from '../style/styles';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import Form from '../components/Form';
+import { register } from '../actions/AuthActions';
 
-const RegisterPage = () => {
+export default class RegisterPage extends Component {
+    render() {
+        const dispatch = this.props.dispatch;
+        const {formState, currentlySending} = this.props.data;
+        return (
+            <div className="form-page__wrapper">
+                <div className="form-page__form-wrapper">
+                    <div className="form-page__form-header">
+                        <h2 className="form-page__form-heading">Register</h2>
+                    </div>
+                    {/* While the form is sending, show the loading indicator,
+						otherwise show "Register" on the submit button */}
+                    <Form data={formState} dispatch={dispatch} location={location} history={this.props.history}
+                          onSubmit={::this._register} btnText={"Register"} currentlySending={currentlySending}/>
+                </div>
+            </div>
+        );
+    }
 
-  return (
-    <PageBase title="Register Page"
-              navigation="Application / Form Page">
-      <form>
+    // Register a user
+    _register(username, password) {
+        this.props.dispatch(register(username, password));
+    }
+}
 
-        <TextField
-          hintText="Name"
-          floatingLabelText="Name"
-          fullWidth={true}
-        />
+// Which props do we want to inject, given the global state?
+function select(state) {
+    return {
+        data: state
+    };
+}
 
-        <SelectField
-          floatingLabelText="City"
-          value=""
-          fullWidth={true}>
-          <MenuItem key={0} primaryText="London"/>
-          <MenuItem key={1} primaryText="Paris"/>
-          <MenuItem key={2} primaryText="Rome"/>
-        </SelectField>
-
-        <DatePicker
-          hintText="Expiration Date"
-          floatingLabelText="Expiration Date"
-          fullWidth={true}/>
-
-        <div style={styles.toggleDiv}>
-          <Toggle
-            label="Disabled"
-            labelStyle={styles.toggleLabel}
-          />
-        </div>
-
-        <Divider/>
-
-        <div style={styles.buttons}>
-          <Link to="/">
-            <RaisedButton label="Cancel"/>
-          </Link>
-
-          <RaisedButton label="Save"
-                        style={styles.saveButton}
-                        type="submit"
-                        primary={true}/>
-        </div>
-      </form>
-    </PageBase>
-  );
-};
-
-export default RegisterPage;
+// Wrap the component to inject dispatch and state into it
+export default connect(select)(RegisterPage);

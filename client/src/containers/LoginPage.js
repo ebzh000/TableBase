@@ -1,116 +1,38 @@
-import React, { PropTypes, Component } from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { login } from '../actions/AuthActions'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import Form from '../components/Form';
+import { login } from '../actions/AuthActions';
 
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
-import TextField from 'material-ui/TextField';
-import {Link} from 'react-router';
-import ThemeDefault from '../style/theme-default';
-import styles from '../style/styles';
-
-class LoginPage extends Component {
-  constructor (props) {
-    super(props);
-    this.onEmailChange = this.onEmailChange.bind(this);
-    this.onPasswordChange = this.onPasswordChange.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-  }
-
-  onEmailChange (text) {
-    this.props.emailChanged(text)
-  }
-
-  onPasswordChange (text) {
-    this.props.passwordChanged(text)
-  }
-
-  onFormSubmit () {
-    const { email, password } = this.props;
-
-    // Login
-    this.props.login({ email, password });
-  }
-
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={ThemeDefault}>
-        <div>
-          <div style={styles.loginContainer}>
-
-            <Paper style={styles.paper}>
-              <Label style={styles.errorTextStyle}>
-                {this.props.error}
-              </Label>
-              <form onSubmit={this.onFormSubmit}>
-                <TextField
-                  hintText="Email"
-                  floatingLabelText="Email"
-                  fullWidth={true}
-                  value={this.props.email}
-                  onChange={this.onEmailChange}
-                />
-                <TextField
-                  hintText="Password"
-                  floatingLabelText="Password"
-                  fullWidth={true}
-                  type="password"
-                  value={this.props.password}
-                  onChange={this.onPasswordChange}
-                />
-
-                <div>
-                  <Link to="/dashboard">
-                    <RaisedButton
-                      label="Login"
-                      primary={true}
-                      style={styles.loginBtn}
-                      type="submit"
-                    />
-                  </Link>
+export default class LoginPage extends Component {
+    render() {
+        const dispatch = this.props.dispatch;
+        const {formState, currentlySending} = this.props.data;
+        return (
+            <div className="form-page__wrapper">
+                <div className="form-page__form-wrapper">
+                    <div className="form-page__form-header">
+                        <h2 className="form-page__form-heading">Login</h2>
+                    </div>
+                    {/* While the form is sending, show the loading indicator,
+						otherwise show "Log in" on the submit button */}
+                    <Form data={formState} dispatch={dispatch} location={location} history={this.props.history}
+                          onSubmit={::this._login} btnText={"Login"} currentlySending={currentlySending}/>
                 </div>
-              </form>
-            </Paper>
-
-            <div style={styles.buttonsDiv}>
-              <FlatButton
-                label="Register"
-                href="/register"
-                style={styles.flatButton}
-                icon={<PersonAdd/>}
-              />
             </div>
-          </div>
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+        );
+    }
+
+    _login(username, password) {
+        this.props.dispatch(login(username, password));
+    }
 }
 
-LoginPage.propTypes = {
-  emailChanged: PropTypes.func,
-  passwordChanged: PropTypes.func,
-  login: PropTypes.func,
-  email: PropTypes.string,
-  password: PropTypes.string,
-  error: PropTypes.string,
-  loading: PropTypes.bool
-};
+// Which props do we want to inject, given the global state?
+function select(state) {
+    return {
+        data: state
+    };
+}
 
-const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
-  return {
-    email,
-    password,
-    error,
-    loading
-  }
-};
-
-export default connect(mapStateToProps, {
-  login
-})(LoginPage)
+// Wrap the component to inject dispatch and state into it
+export default connect(select)(LoginPage);
