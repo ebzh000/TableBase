@@ -1,7 +1,6 @@
 package com.ez.tablebase.rest.repository;
 
 import com.ez.tablebase.rest.database.CategoryEntity;
-import com.ez.tablebase.rest.model.DataType;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -20,4 +19,7 @@ public interface CategoryRepository extends PagingAndSortingRepository<CategoryE
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE categories SET attribute_name = :attributeName, parent_id = :parentId, type = :typeOrd WHERE table_id = :tableId AND category_id = :categoryId", nativeQuery = true)
     void updateTableCateogry(@Param("tableId") int tableId, @Param("categoryId") int categoryId, @Param("attributeName") String attributeName, @Param("parentId") Integer parentId, @Param("typeOrd") byte type);
+
+    @Query(value = "select * from (select * from categories where table_id = :tableId order by parent_id, category_id) categories_sorted, (select @pv \\:= :categoryId) initialisation where find_in_set(parent_id, @pv) and length(@pv \\:= concat(@pv, ',', category_id))", nativeQuery = true)
+    List<CategoryEntity> findAllChildren(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 }

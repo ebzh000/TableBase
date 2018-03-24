@@ -10,5 +10,5 @@ package com.ez.tablebase.rest.model;
 
 public enum OperationType
 {
-    AVERAGE, ADDITION
+    MAX, MIN, MEAN, MEDIAN, CONVERT_TO_STIRNG
 }

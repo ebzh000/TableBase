@@ -19,5 +19,6 @@ public interface CategoryService
     List<CategoryModel> getTableCategories(int tableId);
     CategoryModel getCategory(int tableId, int categoryId);
     CategoryModel updateCategory(CategoryRequest request);
+    void duplicateCategory (int tableId, int categoryId);
     void deleteCategory(int tableId, int categoryId);
 }

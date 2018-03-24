@@ -22,7 +22,7 @@ public interface TableEntryRepository extends PagingAndSortingRepository<TableDa
     List<TableDataEntity> findAllTableEntries(@Param("tableId") int tableId);
 
     @Query(value = "SELECT * FROM table_data WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
-    TableDataEntity findTableEntry(@Param("tableId") int tableId, @Param("entryid")  int entryId);
+    TableDataEntity findTableEntry(@Param("tableId") int tableId, @Param("entryId")  int entryId);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE table_data SET data = :entry WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)

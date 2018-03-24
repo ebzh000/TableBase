@@ -59,6 +59,12 @@ public class CategoryController
         return categoryService.updateCategory(request);
     }
 
+    @PostMapping(value = "/category/duplicate/{categoryId}")
+    void duplicateCategory(@PathVariable int tableId, @PathVariable int categoryId)
+    {
+        categoryService.duplicateCategory(tableId, categoryId);
+    }
+
     @DeleteMapping(value = "/category/{categoryId}")
     void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId)
     {

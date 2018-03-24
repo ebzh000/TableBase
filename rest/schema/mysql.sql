@@ -41,7 +41,7 @@ CREATE TABLE table_base.data_access_path (
   CONSTRAINT category_id_fk FOREIGN KEY (category_id) REFERENCES table_base.categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
-INSERT INTO table_base.table_list (user_id, table_name, tags) VALUES (1, 'Quantifying Fuel-Saving Opportunities from Specific Driving', 'FuelSaving, Driving');
+INSERT INTO table_base.table_list (user_id, table_name, tags, public) VALUES (1, 'Quantifying Fuel-Saving Opportunities from Specific Driving', 'FuelSaving, Driving', true);
 
 INSERT INTO table_base.categories (table_id, category_id, attribute_name, parent_id, type) VALUES (1, 1, 'VH', null, 0);
 INSERT INTO table_base.categories (table_id, category_id, attribute_name, parent_id, type) VALUES (1, 2, 'Cycle Name', null, 0);

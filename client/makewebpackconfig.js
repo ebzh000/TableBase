@@ -41,7 +41,7 @@ module.exports = function(options) {
     devtool = 'cheap-eval-source-map';
     // Entry
     entry = [
-      "webpack-dev-server/client?http://localhost:8080", // Needed for hot reloading
+      "webpack-dev-server/client?http://localhost:3000", // Needed for hot reloading
       "webpack/hot/only-dev-server", // See above
       path.resolve(__dirname, 'src/index.js')
     ];

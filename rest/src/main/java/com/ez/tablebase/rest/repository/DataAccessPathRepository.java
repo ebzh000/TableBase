@@ -18,5 +18,5 @@ import java.util.List;
 public interface DataAccessPathRepository extends PagingAndSortingRepository<DataAccessPathEntity, String>
 {
     @Query(value = "SELECT * FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
-    List<DataAccessPathEntity> getEntryAccessPath(@Param("tableId") int tableId, @Param("entry_id") int entry_id);
+    List<DataAccessPathEntity> getEntryAccessPath(@Param("tableId") int tableId, @Param("entryId") int entryId);
 }
