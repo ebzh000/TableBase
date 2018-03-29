@@ -1,7 +1,5 @@
 package com.ez.tablebase.rest.database;
 
-import com.ez.tablebase.rest.model.DataType;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -11,17 +9,15 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "categories")
-@IdClass(CategoryKey.class)
 public class CategoryEntity implements Serializable
 {
-
     @Id
-    @Column(name = "category_id")
-    private int categoryId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id", insertable = false, updatable = false)
+    private Integer categoryId;
 
-    @Id
-    @Column(name = "table_id")
-    private int tableId;
+    @Column(name = "table_id", nullable = false)
+    private Integer tableId;
 
     @Column(name = "attribute_name")
     private String attributeName;
@@ -32,22 +28,22 @@ public class CategoryEntity implements Serializable
     @Column(name = "type")
     private byte type;
 
-    public int getCategoryId()
-    {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId)
-    {
-        this.categoryId = categoryId;
-    }
-
-    public int getTableId()
+    public Integer getTableId()
     {
         return tableId;
     }
 
-    public void setTableId(int tableId)
+    public Integer getCategoryId()
+    {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId)
+    {
+        this.categoryId = categoryId;
+    }
+
+    public void setTableId(Integer tableId)
     {
         this.tableId = tableId;
     }
@@ -86,8 +82,8 @@ public class CategoryEntity implements Serializable
     public String toString()
     {
         return "CategoryEntity{" +
-                "categoryId=" + categoryId +
-                ", tableId=" + tableId +
+                "categoryId=" + getCategoryId() +
+                ", tableId=" + getTableId() +
                 ", attributeName='" + attributeName + '\'' +
                 ", parentId=" + parentId +
                 ", type=" + type +

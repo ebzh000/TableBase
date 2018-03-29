@@ -14,18 +14,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "data_access_path")
-@IdClass(DataAccessPathKey.class)
 public class DataAccessPathEntity implements Serializable
 {
     @Id
-    @Column(name = "table_id")
-    private int tableId;
-
-    @Id
-    @Column(name = "entry_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "entry_id", insertable = false, updatable = false)
     private int entryId;
 
-    @Id
+    @Column(name = "table_id", nullable = false)
+    private int tableId;
+
     @Column(name = "category_id")
     private int categoryId;
 

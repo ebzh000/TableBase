@@ -41,7 +41,6 @@ public class CategoryServiceImpl implements CategoryService
     {
         CategoryEntity entity = new CategoryEntity();
         entity.setTableId(request.getTableId());
-        entity.setCategoryId(request.getCategoryId());
         entity.setAttributeName(request.getAttributeName());
         entity.setParentId(request.getParentId());
         entity.setType((byte) request.getType().ordinal());

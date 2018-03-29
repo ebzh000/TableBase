@@ -1,14 +1,16 @@
 package com.ez.tablebase.rest.repository;
 
 import com.ez.tablebase.rest.database.CategoryEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface CategoryRepository extends PagingAndSortingRepository<CategoryEntity, String>
+@Repository
+public interface CategoryRepository extends JpaRepository<CategoryEntity, Integer>
 {
     @Query(value = "SELECT * FROM categories WHERE table_id = :tableId ORDER BY table_id, category_id ASC", nativeQuery = true)
     List<CategoryEntity> findAllTableCategories(@Param("tableId") int tableId);

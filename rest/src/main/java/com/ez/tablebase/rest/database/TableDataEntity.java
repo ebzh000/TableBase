@@ -9,17 +9,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "table_data")
-@IdClass(TableDataKey.class)
 public class TableDataEntity implements Serializable
 {
     @Id
-    @Column(name = "table_id")
-    private int tableId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "entry_id", insertable = false, updatable = false)
+    private int entryId;
 
     @Id
-    @Column(name = "entry_id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private int entryId;
+    @Column(name = "table_id", nullable = false)
+    private int tableId;
 
     @Column(name = "data")
     private String data;
