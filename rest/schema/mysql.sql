@@ -14,7 +14,7 @@ CREATE TABLE table_base.table_list(
 
 CREATE TABLE table_base.categories (
   table_id INT NOT NULL,
-  category_id INT NOT NULL,
+  category_id INT NOT NULL AUTO_INCREMENT,
   attribute_name VARCHAR(400) NOT NULL,
   parent_id INT,
   type INT NOT NULL,
