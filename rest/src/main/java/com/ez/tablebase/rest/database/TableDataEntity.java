@@ -16,7 +16,6 @@ public class TableDataEntity implements Serializable
     @Column(name = "entry_id", insertable = false, updatable = false)
     private int entryId;
 
-    @Id
     @Column(name = "table_id", nullable = false)
     private int tableId;
 
