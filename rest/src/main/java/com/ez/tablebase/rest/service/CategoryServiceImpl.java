@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -81,16 +80,12 @@ public class CategoryServiceImpl implements CategoryService
     @Override
     public void duplicateCategory(int tableId, int categoryId)
     {
-        CategoryEntity newCategory = new CategoryEntity();
         CategoryEntity category = validateCategory(tableId, categoryId);
-        newCategory.setTableId(tableId);
-        newCategory.setAttributeName(category.getAttributeName().concat("(1)"));
-        newCategory.setParentId(category.getParentId());
-        newCategory.setType(category.getType());
-        categoryRepository.save(newCategory);
 
-        List<CategoryEntity> children = categoryRepository.findAllChildren(tableId, categoryId);
-        System.out.println(Arrays.toString(children.toArray()));
+        // Need to prompt user with a confirmation if the selected category is the root node of the whole tree (categories are in a tree structure)
+        duplicateCategories(category, category.getParentId());
+
+        //TODO: Duplicate entries: 1. Get all Data Access Paths that include the root's category_id 2. Get all entries from the list of dataAccessPaths and then duplicate all entries (seems like recusion is not needed here)
     }
 
     @Override
@@ -100,6 +95,28 @@ public class CategoryServiceImpl implements CategoryService
         entity.setTableId(tableId);
         entity.setCategoryId(categoryId);
         categoryRepository.delete(entity);
+    }
+
+    private void duplicateCategories(CategoryEntity entity, Integer newParentId)
+    {
+        CategoryEntity newEntity = new CategoryEntity();
+        newEntity.setTableId(entity.getTableId());
+        newEntity.setAttributeName(entity.getAttributeName());
+        newEntity.setParentId(newParentId);
+        newEntity.setType(entity.getType());
+        categoryRepository.save(newEntity);
+        System.out.println("Duplicated Category: " + entity.getCategoryId() + " with parent: " + entity.getParentId() + "; New Category: " + newEntity.getCategoryId() + " with parent: " + newEntity.getParentId());
+
+        List<CategoryEntity> children = categoryRepository.findChildren(entity.getTableId(), entity.getCategoryId());
+        if(!children.isEmpty() && children.get(0) != null)
+        {
+            System.out.println("Children found: " + children.size());
+            for(CategoryEntity child : children)
+            {
+                System.out.println("Duplicating Child: " + child.getCategoryId() + " , parent: " + (child.getParentId() == null ? "null" : child.getParentId()));
+                duplicateCategories(child, newEntity.getCategoryId());
+            }
+        }
     }
 
     private TableEntity validateTable(int tableId)
