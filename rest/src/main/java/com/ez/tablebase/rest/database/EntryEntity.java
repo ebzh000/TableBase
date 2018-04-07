@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "table_data")
-public class TableDataEntity implements Serializable
+public class EntryEntity implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +55,7 @@ public class TableDataEntity implements Serializable
     @Override
     public String toString()
     {
-        return "TableDataEntity{" +
+        return "EntryEntity{" +
                 "tableId=" + tableId +
                 ", entryId=" + entryId +
                 ", data='" + data + '\'' +

@@ -8,11 +8,11 @@ package com.ez.tablebase.rest.model;
  * Created by ErikZ on 19/09/2017.
  */
 
-public class DataModelBuilder
+public class EntryModelBuilder
 {
-    public static DataModel buildModel(int tableId, int entryId, String data)
+    public static EntryModel buildModel(int tableId, int entryId, String data)
     {
-        DataModel model = new DataModel();
+        EntryModel model = new EntryModel();
 
         model.setTableId(tableId);
         model.setEntryId(entryId);

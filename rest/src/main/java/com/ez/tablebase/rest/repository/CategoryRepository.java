@@ -25,6 +25,6 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
     @Query(value = "SELECT c.table_id, c.category_id, c.attribute_name, c.parent_id, c.type FROM categories p LEFT JOIN categories c ON c.parent_id = p.category_id WHERE p.table_id = :tableId AND p.category_id = :categoryId", nativeQuery = true)
     List<CategoryEntity> findChildren(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 
-    @Query(value = "select COUNT(*) from (select * from categories where table_id = :tableId order by parent_id, category_id) categories_sorted, (select @pv \\:= :categoryId) initialisation where find_in_set(parent_id, @pv) and length(@pv \\:= concat(@pv, ',', category_id))", nativeQuery = true)
-    List<CategoryEntity> countAllChildren(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
+    @Query(value = "select category_id from (select * from categories where table_id = :tableId order by parent_id, category_id) categories_sorted, (select @pv \\:= :categoryId) initialisation where find_in_set(parent_id, @pv) and length(@pv \\:= concat(@pv, ',', category_id))", nativeQuery = true)
+    List<Integer> getAllChildren(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 }
