@@ -4,18 +4,18 @@ package com.ez.tablebase.rest.service;
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
  * The copyright notice above does not evidence any actual or intended
  * publication of such source code.
- * 
+ *
  * Created by ErikZ on 27/11/2017.
  */
 
+import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
+import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.model.CategoryModel;
-import com.ez.tablebase.rest.model.CategoryModelBuilder;
-import com.ez.tablebase.rest.model.CategoryRequest;
+import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -82,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService
         entity.setAttributeName(request.getAttributeName());
         entity.setParentId(request.getParentId());
         entity.setType((byte) request.getType().ordinal());
-        categoryRepository.updateTableCateogry(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
+        categoryRepository.updateTableCategory(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
         return CategoryModelBuilder.buildModel(entity);
     }
 
@@ -91,8 +91,27 @@ public class CategoryServiceImpl implements CategoryService
     {
         CategoryEntity category = validateCategory(tableId, categoryId);
 
+        if(category.getParentId() == null)
+            throw new InvalidOperationException("Invalid operation! Resultant table will no longer be an abstract table");
+
         // Need to prompt user with a confirmation if the selected category is the root node of the whole tree (categories are in a tree structure)
         duplicateCategories(category, category.getParentId(), category.getCategoryId());
+    }
+
+    @Override
+    public CategoryModel combineCategory(CategoryCombineRequest request)
+    {
+        CategoryEntity category1 = validateCategory(request.getTableId(), request.getCategoryId1());
+        CategoryEntity category2 = validateCategory(request.getTableId(), request.getCategoryId1());
+
+        if(category1.getType() != category2.getType())
+            throw new IncompatibleCategoryTypeException("Specified categories have different types");
+
+        categoryRepository.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId(), category1.getType());
+        combineEntries(category1, category2, request.getDataOperationType());
+
+        categoryRepository.delete(category2);
+        return CategoryModelBuilder.buildModel(category1);
     }
 
     @Override
@@ -163,6 +182,19 @@ public class CategoryServiceImpl implements CategoryService
         newEntity.setTableId(entity.getTableId());
         newEntity.setData(entity.getData());
         return tableEntryRepository.save(newEntity);
+    }
+
+    private void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType)
+    {
+        List<Integer> category1Entries = dataAccessPathRepository.getEntriesForCategory(category1.getTableId(), category1.getCategoryId());
+        List<Integer> category2Entries = dataAccessPathRepository.getEntriesForCategory(category2.getTableId(), category2.getCategoryId());
+
+        for(int index = 0; index < category2Entries.size(); index++)
+        {
+            EntryEntity entry1 = tableEntryRepository.findTableEntry(category1.getTableId(), category1Entries.get(index));
+            EntryEntity entry2 = tableEntryRepository.findTableEntry(category2.getTableId(), category2Entries.get(index));
+
+        }
     }
 
     private TableEntity validateTable(int tableId)

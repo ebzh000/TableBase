@@ -8,6 +8,7 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
+import com.ez.tablebase.rest.model.CategoryCombineRequest;
 import com.ez.tablebase.rest.model.CategoryRequest;
 import com.ez.tablebase.rest.service.CategoryService;
 import com.ez.tablebase.rest.service.TableService;
@@ -63,6 +64,12 @@ public class CategoryController
     void duplicateCategory(@PathVariable int tableId, @PathVariable int categoryId)
     {
         categoryService.duplicateCategory(tableId, categoryId);
+    }
+
+    @PostMapping(value ="/category/combine")
+    Object combineCategory(@RequestBody CategoryCombineRequest request)
+    {
+        return categoryService.combineCategory(request);
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
