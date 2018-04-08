@@ -12,6 +12,7 @@ import com.ez.tablebase.rest.model.CategoryCombineRequest;
 import com.ez.tablebase.rest.model.CategoryModel;
 import com.ez.tablebase.rest.model.CategoryRequest;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface CategoryService
@@ -21,6 +22,6 @@ public interface CategoryService
     CategoryModel getCategory(int tableId, int categoryId);
     CategoryModel updateCategory(CategoryRequest request);
     void duplicateCategory (int tableId, int categoryId);
-    CategoryModel combineCategory  (CategoryCombineRequest request);
+    CategoryModel combineCategory  (CategoryCombineRequest request) throws ParseException;
     void deleteCategory(int tableId, int categoryId);
 }

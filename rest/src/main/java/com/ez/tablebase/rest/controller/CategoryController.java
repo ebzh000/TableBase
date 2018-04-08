@@ -15,6 +15,8 @@ import com.ez.tablebase.rest.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping(value = "/tablebase/table/{tableId}")
 public class CategoryController
@@ -67,7 +69,7 @@ public class CategoryController
     }
 
     @PostMapping(value ="/category/combine")
-    Object combineCategory(@RequestBody CategoryCombineRequest request)
+    Object combineCategory(@RequestBody CategoryCombineRequest request) throws ParseException
     {
         return categoryService.combineCategory(request);
     }

@@ -14,7 +14,7 @@ public class CategoryCombineRequest
     private int categoryId1;
     private int categoryId2;
     private String newCategoryName;
-    private OperationType dataOperationType;
+    private byte dataOperationType;
 
     public int getTableId()
     {
@@ -56,12 +56,12 @@ public class CategoryCombineRequest
         this.newCategoryName = newCategoryName;
     }
 
-    public OperationType getDataOperationType()
+    public byte getDataOperationType()
     {
         return dataOperationType;
     }
 
-    public void setDataOperationType(OperationType dataOperationType)
+    public void setDataOperationType(byte dataOperationType)
     {
         this.dataOperationType = dataOperationType;
     }

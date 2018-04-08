@@ -10,5 +10,6 @@ package com.ez.tablebase.rest.model;
 
 public enum OperationType
 {
-    MAX, MIN, MEAN, MEDIAN, CONVERT_TO_STIRNG
+    MAX, MIN, MEAN, CONCATENATE_STRING
+    //Median?
 }

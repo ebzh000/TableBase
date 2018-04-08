@@ -11,6 +11,7 @@ package com.ez.tablebase.rest.service;
 import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
 import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
+import com.ez.tablebase.rest.common.OperationUtils;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
@@ -23,6 +24,7 @@ import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService
         entity.setParentId(request.getParentId());
         entity.setType((byte) request.getType().ordinal());
         categoryRepository.save(entity);
+        entity = categoryRepository.findCategory(entity.getTableId(), entity.getCategoryId());
         return CategoryModelBuilder.buildModel(entity);
     }
 
@@ -99,18 +102,19 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public CategoryModel combineCategory(CategoryCombineRequest request)
+    public CategoryModel combineCategory(CategoryCombineRequest request) throws ParseException
     {
         CategoryEntity category1 = validateCategory(request.getTableId(), request.getCategoryId1());
-        CategoryEntity category2 = validateCategory(request.getTableId(), request.getCategoryId1());
+        CategoryEntity category2 = validateCategory(request.getTableId(), request.getCategoryId2());
 
         if(category1.getType() != category2.getType())
             throw new IncompatibleCategoryTypeException("Specified categories have different types");
 
         categoryRepository.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId(), category1.getType());
-        combineEntries(category1, category2, request.getDataOperationType());
+        combineEntries(category1, category2, OperationType.values()[request.getDataOperationType()]);
 
         categoryRepository.delete(category2);
+        category1 = categoryRepository.findCategory(category1.getTableId(), category1.getCategoryId());
         return CategoryModelBuilder.buildModel(category1);
     }
 
@@ -184,7 +188,7 @@ public class CategoryServiceImpl implements CategoryService
         return tableEntryRepository.save(newEntity);
     }
 
-    private void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType)
+    private void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType) throws ParseException
     {
         List<Integer> category1Entries = dataAccessPathRepository.getEntriesForCategory(category1.getTableId(), category1.getCategoryId());
         List<Integer> category2Entries = dataAccessPathRepository.getEntriesForCategory(category2.getTableId(), category2.getCategoryId());
@@ -194,6 +198,32 @@ public class CategoryServiceImpl implements CategoryService
             EntryEntity entry1 = tableEntryRepository.findTableEntry(category1.getTableId(), category1Entries.get(index));
             EntryEntity entry2 = tableEntryRepository.findTableEntry(category2.getTableId(), category2Entries.get(index));
 
+            String data1 = entry1.getData();
+            String data2 = entry2.getData();
+
+            System.out.println("Data1: " + data1 + ", Data2: " + data2);
+
+            switch (operationType)
+            {
+                case MAX:
+                    data1 = OperationUtils.max(data1, data2, category1.getType());
+                    break;
+                case MIN:
+                    data1 = OperationUtils.min(data1, data2, category1.getType());
+                    break;
+                case MEAN:
+                    data1 = OperationUtils.mean(data1, data2, category1.getType());
+                    break;
+//                case MEDIAN:
+//                    data1 = OperationUtils.median(data1, data2, category1.getType());
+//                    break;
+                case CONCATENATE_STRING:
+                    data1 = OperationUtils.concatenateString(data1, data2, category1.getType());
+                    break;
+            }
+
+            System.out.println("Result: " + data1);
+            tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), data1);
         }
     }
 
