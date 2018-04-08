@@ -10,11 +10,11 @@ package com.ez.tablebase.rest.service;
 
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
-import com.ez.tablebase.rest.database.TableDataEntity;
+import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.DataAccessPathModel;
-import com.ez.tablebase.rest.model.DataModel;
-import com.ez.tablebase.rest.model.DataModelBuilder;
+import com.ez.tablebase.rest.model.EntryModel;
+import com.ez.tablebase.rest.model.EntryModelBuilder;
 import com.ez.tablebase.rest.model.DataRequest;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -41,23 +41,23 @@ public class DataServiceImpl implements DataService
     }
 
     @Override
-    public DataModel createTableEntry(DataRequest request)
+    public EntryModel createTableEntry(DataRequest request)
     {
         /*
          * TODO : Need to figure out how to pass this endpoint a list of categories.
          * This means how the GUI will grab all related categories and send them to the end point.
          */
-        TableDataEntity entity = new TableDataEntity();
+        EntryEntity entity = new EntryEntity();
         entity.setTableId(request.getTableId());
         entity.setData(request.getData());
         tableEntryRepository.save(entity);
 
         saveDataAccessPath(request.getCategories(), entity);
 
-        return DataModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
+        return EntryModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
 
-    private void saveDataAccessPath(List<Integer> categories, TableDataEntity entity)
+    private void saveDataAccessPath(List<Integer> categories, EntryEntity entity)
     {
         for(Integer category : categories)
         {
@@ -71,30 +71,30 @@ public class DataServiceImpl implements DataService
 
     @Override
     @Transactional(readOnly = true)
-    public List<DataModel> getTableEntries(int tableId)
+    public List<EntryModel> getTableEntries(int tableId)
     {
         TableEntity tableEntity = validateTable(tableId);
-        List<TableDataEntity> entities = tableEntryRepository.findAllTableEntries(tableEntity.getTableId());
-        List<DataModel> models = new ArrayList<>();
-        entities.forEach(row -> models.add(DataModelBuilder.buildModel(row.getTableId(), row.getEntryId(), row.getData())));
+        List<EntryEntity> entities = tableEntryRepository.findAllTableEntries(tableEntity.getTableId());
+        List<EntryModel> models = new ArrayList<>();
+        entities.forEach(row -> models.add(EntryModelBuilder.buildModel(row.getTableId(), row.getEntryId(), row.getData())));
         return models;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public DataModel getTableEntry(int tableId, int entryId)
+    public EntryModel getTableEntry(int tableId, int entryId)
     {
-        TableDataEntity entity = validateTableEntry(tableId, entryId);
-        return DataModelBuilder.buildModel(entity.getTableId(),entity.getEntryId(),entity.getData());
+        EntryEntity entity = validateTableEntry(tableId, entryId);
+        return EntryModelBuilder.buildModel(entity.getTableId(),entity.getEntryId(),entity.getData());
     }
 
     @Override
-    public DataModel updateTableEntry(DataRequest request)
+    public EntryModel updateTableEntry(DataRequest request)
     {
-        TableDataEntity entity = validateTableEntry(request.getTableId(), request.getEntryId());
+        EntryEntity entity = validateTableEntry(request.getTableId(), request.getEntryId());
         entity.setData(request.getData());
         tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getEntryId(), entity.getData());
-        return DataModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
+        return EntryModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
 
     @Override
@@ -113,11 +113,11 @@ public class DataServiceImpl implements DataService
         return entity;
     }
 
-    private TableDataEntity validateTableEntry(int tableId, int entryId)
+    private EntryEntity validateTableEntry(int tableId, int entryId)
     {
         TableEntity tableEntity = validateTable(tableId);
         List<DataAccessPathEntity> accessPathEntity = validateAccessPath(tableEntity.getTableId(), entryId);
-        TableDataEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), accessPathEntity.get(0).getEntryId());
+        EntryEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), accessPathEntity.get(0).getEntryId());
 
         if(entity == null)
             throw new ObjectNotFoundException("No Entry found for the combination; entry id: " + entryId + " in table id: " + tableId);

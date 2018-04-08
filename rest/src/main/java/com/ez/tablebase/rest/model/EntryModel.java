@@ -10,7 +10,7 @@ package com.ez.tablebase.rest.model;
 
 import org.springframework.hateoas.ResourceSupport;
 
-public class DataModel extends ResourceSupport
+public class EntryModel extends ResourceSupport
 {
     private int tableId;
     private int entryId;
@@ -49,7 +49,7 @@ public class DataModel extends ResourceSupport
     @Override
     public String toString()
     {
-        return "DataModel{" +
+        return "EntryModel{" +
                 "tableId=" + tableId +
                 ", entryId=" + entryId +
                 ", data='" + data + '\'' +

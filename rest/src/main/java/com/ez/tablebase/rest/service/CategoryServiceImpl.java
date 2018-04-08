@@ -4,23 +4,26 @@ package com.ez.tablebase.rest.service;
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
  * The copyright notice above does not evidence any actual or intended
  * publication of such source code.
- * 
+ *
  * Created by ErikZ on 27/11/2017.
  */
 
+import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
+import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.DataAccessPathEntity;
+import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.model.CategoryModel;
-import com.ez.tablebase.rest.model.CategoryModelBuilder;
-import com.ez.tablebase.rest.model.CategoryRequest;
+import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.repository.CategoryRepository;
+import com.ez.tablebase.rest.repository.DataAccessPathRepository;
+import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -29,11 +32,16 @@ public class CategoryServiceImpl implements CategoryService
 {
     private final CategoryRepository categoryRepository;
     private final TableRepository tableRepository;
+    private final DataAccessPathRepository dataAccessPathRepository;
+    private final TableEntryRepository tableEntryRepository;
 
-    public CategoryServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository)
+    public CategoryServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository,
+                               DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
         this.categoryRepository = categoryRepository;
         this.tableRepository = tableRepository;
+        this.dataAccessPathRepository = dataAccessPathRepository;
+        this.tableEntryRepository = tableEntryRepository;
     }
 
     @Override
@@ -74,23 +82,36 @@ public class CategoryServiceImpl implements CategoryService
         entity.setAttributeName(request.getAttributeName());
         entity.setParentId(request.getParentId());
         entity.setType((byte) request.getType().ordinal());
-        categoryRepository.updateTableCateogry(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
+        categoryRepository.updateTableCategory(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
         return CategoryModelBuilder.buildModel(entity);
     }
 
     @Override
     public void duplicateCategory(int tableId, int categoryId)
     {
-        CategoryEntity newCategory = new CategoryEntity();
         CategoryEntity category = validateCategory(tableId, categoryId);
-        newCategory.setTableId(tableId);
-        newCategory.setAttributeName(category.getAttributeName().concat("(1)"));
-        newCategory.setParentId(category.getParentId());
-        newCategory.setType(category.getType());
-        categoryRepository.save(newCategory);
 
-        List<CategoryEntity> children = categoryRepository.findAllChildren(tableId, categoryId);
-        System.out.println(Arrays.toString(children.toArray()));
+        if(category.getParentId() == null)
+            throw new InvalidOperationException("Invalid operation! Resultant table will no longer be an abstract table");
+
+        // Need to prompt user with a confirmation if the selected category is the root node of the whole tree (categories are in a tree structure)
+        duplicateCategories(category, category.getParentId(), category.getCategoryId());
+    }
+
+    @Override
+    public CategoryModel combineCategory(CategoryCombineRequest request)
+    {
+        CategoryEntity category1 = validateCategory(request.getTableId(), request.getCategoryId1());
+        CategoryEntity category2 = validateCategory(request.getTableId(), request.getCategoryId1());
+
+        if(category1.getType() != category2.getType())
+            throw new IncompatibleCategoryTypeException("Specified categories have different types");
+
+        categoryRepository.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId(), category1.getType());
+        combineEntries(category1, category2, request.getDataOperationType());
+
+        categoryRepository.delete(category2);
+        return CategoryModelBuilder.buildModel(category1);
     }
 
     @Override
@@ -100,6 +121,80 @@ public class CategoryServiceImpl implements CategoryService
         entity.setTableId(tableId);
         entity.setCategoryId(categoryId);
         categoryRepository.delete(entity);
+    }
+
+    private void duplicateCategories(CategoryEntity entity, Integer newParentId, Integer rootCategoryId)
+    {
+        CategoryEntity newCategory = new CategoryEntity();
+        newCategory.setTableId(entity.getTableId());
+        newCategory.setAttributeName(entity.getAttributeName());
+        newCategory.setParentId(newParentId);
+        newCategory.setType(entity.getType());
+        categoryRepository.save(newCategory);
+
+        // Get the all children that are being duplicated so we can then duplicate the dataAccessPaths correctly.
+        List<Integer> affectedCategories = categoryRepository.getAllChildren(entity.getTableId(), rootCategoryId);
+
+        List<CategoryEntity> children = categoryRepository.findChildren(entity.getTableId(), entity.getCategoryId());
+        if(!children.isEmpty())
+        {
+            // If the first child is not null then we must recursively duplicate the children of this node
+            if(children.get(0) != null)
+                for (CategoryEntity child : children)
+                    duplicateCategories(child, newCategory.getCategoryId(),rootCategoryId);
+
+            // If the first child is null then we must now duplicate all entries for each DataAccessPaths (DAP) that ends with this child's category_id
+            // 1. Get all DAPs that end with this category
+            // 2. Loop through
+            //    a. Get entry for DAP
+            //    b. Clone the entry and then the new DAP
+            else
+            {
+                List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(entity.getTableId(), entity.getCategoryId());
+                if(!entries.isEmpty())
+                {
+                    for (Integer entry : entries)
+                    {
+                        EntryEntity newEntry = duplicateEntry(entity.getTableId(), entry);
+
+                        // Need to get full path of the current entry
+                        List<DataAccessPathEntity> origPath = dataAccessPathRepository.getEntryAccessPath(entity.getTableId(), entry);
+                        for(DataAccessPathEntity pathEntity : origPath)
+                        {
+                            // Duplicate DataAccessPath
+                            DataAccessPathEntity newPath = new DataAccessPathEntity();
+                            newPath.setEntryId(newEntry.getEntryId());
+                            newPath.setTableId(newEntry.getTableId());
+                            newPath.setCategoryId((affectedCategories.contains(pathEntity.getCategoryId())) ? newCategory.getCategoryId() : pathEntity.getCategoryId());
+                            dataAccessPathRepository.save(newPath);
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    private EntryEntity duplicateEntry(Integer tableId, Integer entryId)
+    {
+        EntryEntity entity = validateEntry(tableId, entryId);
+        EntryEntity newEntity = new EntryEntity();
+        newEntity.setTableId(entity.getTableId());
+        newEntity.setData(entity.getData());
+        return tableEntryRepository.save(newEntity);
+    }
+
+    private void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType)
+    {
+        List<Integer> category1Entries = dataAccessPathRepository.getEntriesForCategory(category1.getTableId(), category1.getCategoryId());
+        List<Integer> category2Entries = dataAccessPathRepository.getEntriesForCategory(category2.getTableId(), category2.getCategoryId());
+
+        for(int index = 0; index < category2Entries.size(); index++)
+        {
+            EntryEntity entry1 = tableEntryRepository.findTableEntry(category1.getTableId(), category1Entries.get(index));
+            EntryEntity entry2 = tableEntryRepository.findTableEntry(category2.getTableId(), category2Entries.get(index));
+
+        }
     }
 
     private TableEntity validateTable(int tableId)
@@ -119,6 +214,17 @@ public class CategoryServiceImpl implements CategoryService
 
         if(entity == null)
             throw new ObjectNotFoundException("No Category found for category id: " + categoryId + ", in table id: " + tableId);
+
+        return entity;
+    }
+
+    private EntryEntity validateEntry(int tableId, int entryId)
+    {
+        TableEntity tableEntity = validateTable(tableId);
+        EntryEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), entryId);
+
+        if(entity == null)
+            throw new ObjectNotFoundException("No Entry found for entry id: " + entryId + ", in table id: " + tableId);
 
         return entity;
     }

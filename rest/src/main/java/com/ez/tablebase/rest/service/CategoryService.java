@@ -8,6 +8,7 @@ package com.ez.tablebase.rest.service;
  * Created by ErikZ on 27/11/2017.
  */
 
+import com.ez.tablebase.rest.model.CategoryCombineRequest;
 import com.ez.tablebase.rest.model.CategoryModel;
 import com.ez.tablebase.rest.model.CategoryRequest;
 
@@ -20,5 +21,6 @@ public interface CategoryService
     CategoryModel getCategory(int tableId, int categoryId);
     CategoryModel updateCategory(CategoryRequest request);
     void duplicateCategory (int tableId, int categoryId);
+    CategoryModel combineCategory  (CategoryCombineRequest request);
     void deleteCategory(int tableId, int categoryId);
 }

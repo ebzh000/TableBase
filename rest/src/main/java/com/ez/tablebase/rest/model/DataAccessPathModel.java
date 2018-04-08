@@ -12,9 +12,20 @@ import org.springframework.hateoas.ResourceSupport;
 
 public class DataAccessPathModel extends ResourceSupport
 {
+    private int id;
     private int tableId;
     private int entryId;
     private int categoryId;
+
+    public int getPathId()
+    {
+        return id;
+    }
+
+    public void setPathId(int id)
+    {
+        this.id = id;
+    }
 
     public int getTableId()
     {
@@ -50,7 +61,8 @@ public class DataAccessPathModel extends ResourceSupport
     public String toString()
     {
         return "DataAccessPathModel{" +
-                "tableId=" + tableId +
+                "id=" + id +
+                ", tableId=" + tableId +
                 ", entryId=" + entryId +
                 ", categoryId=" + categoryId +
                 '}';

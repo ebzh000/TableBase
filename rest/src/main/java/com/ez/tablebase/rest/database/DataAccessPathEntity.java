@@ -18,7 +18,10 @@ public class DataAccessPathEntity implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "entry_id", insertable = false, updatable = false)
+    @Column(name = "id", insertable = false, updatable = false)
+    private int id;
+
+    @Column(name = "entry_id")
     private int entryId;
 
     @Column(name = "table_id", nullable = false)
@@ -27,14 +30,15 @@ public class DataAccessPathEntity implements Serializable
     @Column(name = "category_id")
     private int categoryId;
 
-    public int getTableId()
+
+    public int getId()
     {
-        return tableId;
+        return id;
     }
 
-    public void setTableId(int tableId)
+    public void setId(int id)
     {
-        this.tableId = tableId;
+        this.id = id;
     }
 
     public int getEntryId()
@@ -45,6 +49,16 @@ public class DataAccessPathEntity implements Serializable
     public void setEntryId(int entryId)
     {
         this.entryId = entryId;
+    }
+
+    public int getTableId()
+    {
+        return tableId;
+    }
+
+    public void setTableId(int tableId)
+    {
+        this.tableId = tableId;
     }
 
     public int getCategoryId()
@@ -61,8 +75,9 @@ public class DataAccessPathEntity implements Serializable
     public String toString()
     {
         return "DataAccessPathEntity{" +
-                "tableId=" + tableId +
+                "id=" + id +
                 ", entryId=" + entryId +
+                ", tableId=" + tableId +
                 ", categoryId=" + categoryId +
                 '}';
     }

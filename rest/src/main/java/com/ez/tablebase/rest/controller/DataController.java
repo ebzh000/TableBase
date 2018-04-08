@@ -9,10 +9,9 @@ package com.ez.tablebase.rest.controller;
  */
 
 import com.ez.tablebase.rest.model.DataAccessPathModel;
-import com.ez.tablebase.rest.model.DataModel;
+import com.ez.tablebase.rest.model.EntryModel;
 import com.ez.tablebase.rest.model.DataRequest;
 import com.ez.tablebase.rest.service.DataService;
-import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,26 +33,26 @@ public class DataController
     }
 
     @PostMapping(value = "/entry/create")
-    public DataModel createTableEntry(@PathVariable int tableId, DataRequest request)
+    public EntryModel createTableEntry(@PathVariable int tableId, DataRequest request)
     {
         request.setTableId(tableId);
         return dataService.createTableEntry(request);
     }
 
     @GetMapping(value = "/entries")
-    public List<DataModel> getTableEntries(@PathVariable int tableId)
+    public List<EntryModel> getTableEntries(@PathVariable int tableId)
     {
         return dataService.getTableEntries(tableId);
     }
 
     @GetMapping(value = "/entry/{entryId}")
-    public DataModel getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
+    public EntryModel getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
     {
         return dataService.getTableEntry(tableId, entryId);
     }
 
     @PostMapping(value = "/entry/{entryId}")
-    public DataModel updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request)
+    public EntryModel updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request)
     {
         request.setTableId(tableId);
         request.setEntryId(entryId);
