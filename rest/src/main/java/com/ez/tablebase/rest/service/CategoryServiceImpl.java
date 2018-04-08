@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     @Transactional(readOnly = true)
-    public List<CategoryModel> getTableCategories(Integer tableId)
+    public List<CategoryModel> getTableCategories(int tableId)
     {
         TableEntity tableEntity = validateTable(tableId);
         List<CategoryEntity> entities = categoryRepository.findAllTableCategories(tableEntity.getTableId());
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     @Transactional(readOnly = true)
-    public CategoryModel getCategory(Integer tableId, Integer categoryId)
+    public CategoryModel getCategory(int tableId, int categoryId)
     {
         CategoryEntity entity = validateCategory(tableId, categoryId);
         return CategoryModelBuilder.buildModel(entity);
@@ -79,33 +79,22 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public void duplicateCategory(Integer tableId, Integer categoryId, Integer parentId)
+    public void duplicateCategory(int tableId, int categoryId)
     {
         CategoryEntity newCategory = new CategoryEntity();
         CategoryEntity category = validateCategory(tableId, categoryId);
         newCategory.setTableId(tableId);
-        newCategory.setAttributeName(category.getAttributeName());
-        newCategory.setParentId((parentId == null) ? category.getParentId() : parentId);
+        newCategory.setAttributeName(category.getAttributeName().concat("(1)"));
+        newCategory.setParentId(category.getParentId());
         newCategory.setType(category.getType());
         categoryRepository.save(newCategory);
 
-        List<CategoryEntity> children = categoryRepository.findChildren(tableId, categoryId);
+        List<CategoryEntity> children = categoryRepository.findAllChildren(tableId, categoryId);
         System.out.println(Arrays.toString(children.toArray()));
-        if(children.isEmpty())
-        {
-            System.out.println("No children");
-            return;
-        }
-
-
-        for(CategoryEntity entity : children)
-        {
-            duplicateCategory(entity.getTableId(), entity.getCategoryId(), entity.getParentId());
-        }
     }
 
     @Override
-    public void deleteCategory(Integer tableId, Integer categoryId)
+    public void deleteCategory(int tableId, int categoryId)
     {
         CategoryEntity entity = new CategoryEntity();
         entity.setTableId(tableId);
@@ -113,7 +102,7 @@ public class CategoryServiceImpl implements CategoryService
         categoryRepository.delete(entity);
     }
 
-    private TableEntity validateTable(Integer tableId)
+    private TableEntity validateTable(int tableId)
     {
         TableEntity entity = tableRepository.findTable(tableId);
 
@@ -123,7 +112,7 @@ public class CategoryServiceImpl implements CategoryService
         return entity;
     }
 
-    private CategoryEntity validateCategory(Integer tableId, Integer categoryId)
+    private CategoryEntity validateCategory(int tableId, int categoryId)
     {
         TableEntity tableEntity = validateTable(tableId);
         CategoryEntity entity = categoryRepository.findCategory(tableEntity.getTableId(), categoryId);

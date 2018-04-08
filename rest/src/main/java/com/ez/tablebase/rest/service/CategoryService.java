@@ -16,9 +16,9 @@ import java.util.List;
 public interface CategoryService
 {
     CategoryModel createCategory(CategoryRequest request);
-    List<CategoryModel> getTableCategories(Integer tableId);
-    CategoryModel getCategory(Integer tableId, Integer categoryId);
+    List<CategoryModel> getTableCategories(int tableId);
+    CategoryModel getCategory(int tableId, int categoryId);
     CategoryModel updateCategory(CategoryRequest request);
-    void duplicateCategory (Integer tableId, Integer categoryId, Integer parentId);
-    void deleteCategory(Integer tableId, Integer categoryId);
+    void duplicateCategory (int tableId, int categoryId);
+    void deleteCategory(int tableId, int categoryId);
 }
