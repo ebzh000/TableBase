@@ -214,16 +214,27 @@ public class CategoryServiceImpl implements CategoryService
                 case MEAN:
                     data1 = OperationUtils.mean(data1, data2, category1.getType());
                     break;
-//                case MEDIAN:
-//                    data1 = OperationUtils.median(data1, data2, category1.getType());
-//                    break;
+                case SUM:
+                    data1 = OperationUtils.sum(data1, data2, category1.getType());
+                    break;
+                case DIFFERENCE:
+                    data1 = OperationUtils.difference(data1, data2, category1.getType());
+                    break;
                 case CONCATENATE_STRING:
                     data1 = OperationUtils.concatenateString(data1, data2, category1.getType());
+                    break;
+                case LEFT:
+                    break;
+                case RIGHT:
+                    data1 = data2;
+                    break;
+                case NO_OPERATION:
                     break;
             }
 
             System.out.println("Result: " + data1);
             tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), data1);
+            tableEntryRepository.delete(entry2);
         }
     }
 
