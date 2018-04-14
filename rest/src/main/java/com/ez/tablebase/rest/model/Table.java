@@ -8,16 +8,17 @@ package com.ez.tablebase.rest.model;
  * Created by erikz on 15/09/2017.
  */
 
+import com.ez.tablebase.rest.database.TableEntity;
 import org.springframework.hateoas.ResourceSupport;
 
-public class TableModel extends ResourceSupport
+public class Table extends ResourceSupport
 {
     private int tableId;
     private int userId;
     private String tableName;
     private String tags;
     private boolean isPublic;
-
+    
     public int getTableId()
     {
         return tableId;
@@ -68,10 +69,21 @@ public class TableModel extends ResourceSupport
         isPublic = aPublic;
     }
 
+    public static Table buildModel(TableEntity entity)
+    {
+        Table model = new Table();
+        model.setTableId(entity.getTableId());
+        model.setUserId(entity.getUserId());
+        model.setTableName(entity.getTableName());
+        model.setTags(entity.getTags());
+        model.setPublic(entity.isPublic());
+        return model;
+    }
+
     @Override
     public String toString()
     {
-        return "TableModel{" +
+        return "Table{" +
                 "tableId=" + tableId +
                 ", userId=" + userId +
                 ", tableName='" + tableName + '\'' +

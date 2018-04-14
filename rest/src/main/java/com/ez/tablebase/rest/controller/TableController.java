@@ -1,7 +1,6 @@
 package com.ez.tablebase.rest.controller;
 
-import com.ez.tablebase.rest.model.CategoryRequest;
-import com.ez.tablebase.rest.model.TableRequest;
+import com.ez.tablebase.rest.model.requests.TableRequest;
 import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

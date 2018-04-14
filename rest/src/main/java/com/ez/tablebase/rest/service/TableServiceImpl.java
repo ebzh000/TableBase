@@ -3,6 +3,7 @@ package com.ez.tablebase.rest.service;
 import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.model.requests.TableRequest;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -30,7 +31,7 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
-    public TableModel createTable(TableRequest request)
+    public Table createTable(TableRequest request)
     {
         TableEntity newTable = new TableEntity();
         newTable.setUserId(request.getUserId());
@@ -38,40 +39,43 @@ public class TableServiceImpl implements TableService
         newTable.setTags(request.getTags());
         newTable.setPublic(request.getPublic());
         TableEntity entity = tableRepository.save(newTable);
-        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic());
+
+        
+
+        return Table.buildModel(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TableModel getTable(int tableId)
+    public Table getTable(int tableId)
     {
         TableEntity entity = validateTable(tableId);
-        return TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic());
+        return Table.buildModel(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TableModel getUserTables(int userId)
+    public Table getUserTables(int userId)
     {
         return null;
     }
 
     @Override
     @Transactional(readOnly=true)
-    public List<TableModel> searchTable(String keyword)
+    public List<Table> searchTable(String keyword)
     {
         List<TableEntity> entities = tableRepository.searchTable(keyword);
-        List<TableModel> models = new ArrayList<>();
-        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic())));
+        List<Table> models = new ArrayList<>();
+        entities.forEach(entity -> models.add(Table.buildModel(entity)));
         return models;
     }
 
     @Transactional(readOnly = true)
-    public List<TableModel> getTables() throws RuntimeException
+    public List<Table> getTables() throws RuntimeException
     {
         Iterable<TableEntity> entities = tableRepository.findAll();
-        List<TableModel> models = new ArrayList<>();
-        entities.forEach(entity -> models.add(TableModelBuilder.buildModel(entity.getTableId(), entity.getUserId(), entity.getTableName(), entity.getTags(), entity.isPublic())));
+        List<Table> models = new ArrayList<>();
+        entities.forEach(entity -> models.add(Table.buildModel(entity)));
         return models;
     }
 

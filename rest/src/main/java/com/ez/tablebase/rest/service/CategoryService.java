@@ -8,20 +8,22 @@ package com.ez.tablebase.rest.service;
  * Created by ErikZ on 27/11/2017.
  */
 
-import com.ez.tablebase.rest.model.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.CategoryModel;
-import com.ez.tablebase.rest.model.CategoryRequest;
+import com.ez.tablebase.rest.model.Category;
+import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
+import com.ez.tablebase.rest.model.requests.CategoryRequest;
+import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
 
 import java.text.ParseException;
 import java.util.List;
 
 public interface CategoryService
 {
-    CategoryModel createCategory(CategoryRequest request);
-    List<CategoryModel> getTableCategories(int tableId);
-    CategoryModel getCategory(int tableId, int categoryId);
-    CategoryModel updateCategory(CategoryRequest request);
+    Category createCategory(CategoryRequest request);
+    List<Category> getTableCategories(int tableId);
+    Category getCategory(int tableId, int categoryId);
+    Category updateCategory(CategoryRequest request);
     void duplicateCategory (int tableId, int categoryId);
-    CategoryModel combineCategory  (CategoryCombineRequest request) throws ParseException;
+    Category combineCategory (CategoryCombineRequest request) throws ParseException;
+    void splitCategory (CategorySplitRequest request);
     void deleteCategory(int tableId, int categoryId);
 }

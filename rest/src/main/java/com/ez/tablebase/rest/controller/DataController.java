@@ -8,9 +8,9 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
-import com.ez.tablebase.rest.model.DataAccessPathModel;
-import com.ez.tablebase.rest.model.EntryModel;
-import com.ez.tablebase.rest.model.DataRequest;
+import com.ez.tablebase.rest.model.DataAccessPath;
+import com.ez.tablebase.rest.model.Entry;
+import com.ez.tablebase.rest.model.requests.DataRequest;
 import com.ez.tablebase.rest.service.DataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,26 +33,26 @@ public class DataController
     }
 
     @PostMapping(value = "/entry/create")
-    public EntryModel createTableEntry(@PathVariable int tableId, DataRequest request)
+    public Entry createTableEntry(@PathVariable int tableId, DataRequest request)
     {
         request.setTableId(tableId);
         return dataService.createTableEntry(request);
     }
 
     @GetMapping(value = "/entries")
-    public List<EntryModel> getTableEntries(@PathVariable int tableId)
+    public List<Entry> getTableEntries(@PathVariable int tableId)
     {
         return dataService.getTableEntries(tableId);
     }
 
     @GetMapping(value = "/entry/{entryId}")
-    public EntryModel getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
+    public Entry getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
     {
         return dataService.getTableEntry(tableId, entryId);
     }
 
     @PostMapping(value = "/entry/{entryId}")
-    public EntryModel updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request)
+    public Entry updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request)
     {
         request.setTableId(tableId);
         request.setEntryId(entryId);
@@ -60,7 +60,7 @@ public class DataController
     }
 
     @GetMapping(value = "/entry/{entryId}/getAccessPath")
-    public List<DataAccessPathModel> getDataAccessPath(@PathVariable int tableId, @PathVariable int entryId)
+    public List<DataAccessPath> getDataAccessPath(@PathVariable int tableId, @PathVariable int entryId)
     {
         return dataService.getDataAccessPath(tableId, entryId);
     }

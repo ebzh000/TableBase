@@ -10,7 +10,7 @@ package com.ez.tablebase.rest.model;
 
 import org.springframework.hateoas.ResourceSupport;
 
-public class DataAccessPathModel extends ResourceSupport
+public class DataAccessPath extends ResourceSupport
 {
     private int id;
     private int tableId;
@@ -60,7 +60,7 @@ public class DataAccessPathModel extends ResourceSupport
     @Override
     public String toString()
     {
-        return "DataAccessPathModel{" +
+        return "DataAccessPath{" +
                 "id=" + id +
                 ", tableId=" + tableId +
                 ", entryId=" + entryId +

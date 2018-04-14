@@ -12,10 +12,9 @@ import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.model.DataAccessPathModel;
-import com.ez.tablebase.rest.model.EntryModel;
-import com.ez.tablebase.rest.model.EntryModelBuilder;
-import com.ez.tablebase.rest.model.DataRequest;
+import com.ez.tablebase.rest.model.DataAccessPath;
+import com.ez.tablebase.rest.model.Entry;
+import com.ez.tablebase.rest.model.requests.DataRequest;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
@@ -41,7 +40,7 @@ public class DataServiceImpl implements DataService
     }
 
     @Override
-    public EntryModel createTableEntry(DataRequest request)
+    public Entry createTableEntry(DataRequest request)
     {
         /*
          * TODO : Need to figure out how to pass this endpoint a list of categories.
@@ -54,7 +53,7 @@ public class DataServiceImpl implements DataService
 
         saveDataAccessPath(request.getCategories(), entity);
 
-        return EntryModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
+        return Entry.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
 
     private void saveDataAccessPath(List<Integer> categories, EntryEntity entity)
@@ -71,34 +70,34 @@ public class DataServiceImpl implements DataService
 
     @Override
     @Transactional(readOnly = true)
-    public List<EntryModel> getTableEntries(int tableId)
+    public List<Entry> getTableEntries(int tableId)
     {
         TableEntity tableEntity = validateTable(tableId);
         List<EntryEntity> entities = tableEntryRepository.findAllTableEntries(tableEntity.getTableId());
-        List<EntryModel> models = new ArrayList<>();
-        entities.forEach(row -> models.add(EntryModelBuilder.buildModel(row.getTableId(), row.getEntryId(), row.getData())));
+        List<Entry> models = new ArrayList<>();
+        entities.forEach(row -> models.add(Entry.buildModel(row.getTableId(), row.getEntryId(), row.getData())));
         return models;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public EntryModel getTableEntry(int tableId, int entryId)
+    public Entry getTableEntry(int tableId, int entryId)
     {
         EntryEntity entity = validateTableEntry(tableId, entryId);
-        return EntryModelBuilder.buildModel(entity.getTableId(),entity.getEntryId(),entity.getData());
+        return Entry.buildModel(entity.getTableId(),entity.getEntryId(),entity.getData());
     }
 
     @Override
-    public EntryModel updateTableEntry(DataRequest request)
+    public Entry updateTableEntry(DataRequest request)
     {
         EntryEntity entity = validateTableEntry(request.getTableId(), request.getEntryId());
         entity.setData(request.getData());
         tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getEntryId(), entity.getData());
-        return EntryModelBuilder.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
+        return Entry.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
 
     @Override
-    public List<DataAccessPathModel> getDataAccessPath(int tableId, int entryId)
+    public List<DataAccessPath> getDataAccessPath(int tableId, int entryId)
     {
         return null;
     }

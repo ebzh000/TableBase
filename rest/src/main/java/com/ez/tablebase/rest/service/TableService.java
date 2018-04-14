@@ -1,8 +1,7 @@
 package com.ez.tablebase.rest.service;
 
-        import com.ez.tablebase.rest.database.CategoryEntity;
         import com.ez.tablebase.rest.model.*;
-        import com.ez.tablebase.rest.repository.CategoryRepository;
+        import com.ez.tablebase.rest.model.requests.TableRequest;
 
         import java.util.List;
 
@@ -13,10 +12,10 @@ package com.ez.tablebase.rest.service;
 public interface TableService
 {
     // Table Operations
-    TableModel createTable(TableRequest request);
-    TableModel getTable(int tableId);
-    TableModel getUserTables(int userId);
-    List<TableModel> searchTable(String keyword);
-    List<TableModel> getTables();
+    Table createTable(TableRequest request);
+    Table getTable(int tableId);
+    Table getUserTables(int userId);
+    List<Table> searchTable(String keyword);
+    List<Table> getTables();
     void deleteTable(int tableId);
 }

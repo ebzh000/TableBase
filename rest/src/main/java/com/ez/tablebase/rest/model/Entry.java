@@ -5,16 +5,15 @@ package com.ez.tablebase.rest.model;
  * The copyright notice above does not evidence any actual or intended
  * publication of such source code.
  * 
- * Created by ErikZ on 24/09/2017.
+ * Created by ErikZ on 19/09/2017.
  */
 
-import java.util.List;
+import org.springframework.hateoas.ResourceSupport;
 
-public class DataRequest
+public class Entry extends ResourceSupport
 {
-    private int entryId;
-    private List<Integer> categories;
     private int tableId;
+    private int entryId;
     private String data;
 
     public int getEntryId()
@@ -25,16 +24,6 @@ public class DataRequest
     public void setEntryId(int entryId)
     {
         this.entryId = entryId;
-    }
-
-    public List<Integer> getCategories()
-    {
-        return categories;
-    }
-
-    public void setCategories(List<Integer> categories)
-    {
-        this.categories = categories;
     }
 
     public int getTableId()
@@ -57,12 +46,22 @@ public class DataRequest
         this.data = data;
     }
 
+    public static Entry buildModel(int tableId, int entryId, String data)
+    {
+        Entry model = new Entry();
+
+        model.setTableId(tableId);
+        model.setEntryId(entryId);
+        model.setData(data);
+        return model;
+    }
+
     @Override
     public String toString()
     {
-        return "DataRequest{" +
-                "entryId=" + entryId +
-                ", tableId=" + tableId +
+        return "Entry{" +
+                "tableId=" + tableId +
+                ", entryId=" + entryId +
                 ", data='" + data + '\'' +
                 '}';
     }

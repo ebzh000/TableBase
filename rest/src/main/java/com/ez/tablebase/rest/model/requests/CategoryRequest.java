@@ -1,4 +1,6 @@
-package com.ez.tablebase.rest.model;
+package com.ez.tablebase.rest.model.requests;
+
+import com.ez.tablebase.rest.model.DataType;
 
 public class CategoryRequest
 {

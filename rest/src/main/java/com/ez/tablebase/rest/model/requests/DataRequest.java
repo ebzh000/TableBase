@@ -1,19 +1,20 @@
-package com.ez.tablebase.rest.model;
+package com.ez.tablebase.rest.model.requests;
 /*
  * Copyright (C) 2017 Symbio Networks Pty Ltd. All Rights Reserved.
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
  * The copyright notice above does not evidence any actual or intended
  * publication of such source code.
  * 
- * Created by ErikZ on 19/09/2017.
+ * Created by ErikZ on 24/09/2017.
  */
 
-import org.springframework.hateoas.ResourceSupport;
+import java.util.List;
 
-public class EntryModel extends ResourceSupport
+public class DataRequest
 {
-    private int tableId;
     private int entryId;
+    private List<Integer> categories;
+    private int tableId;
     private String data;
 
     public int getEntryId()
@@ -24,6 +25,16 @@ public class EntryModel extends ResourceSupport
     public void setEntryId(int entryId)
     {
         this.entryId = entryId;
+    }
+
+    public List<Integer> getCategories()
+    {
+        return categories;
+    }
+
+    public void setCategories(List<Integer> categories)
+    {
+        this.categories = categories;
     }
 
     public int getTableId()
@@ -49,9 +60,9 @@ public class EntryModel extends ResourceSupport
     @Override
     public String toString()
     {
-        return "EntryModel{" +
-                "tableId=" + tableId +
-                ", entryId=" + entryId +
+        return "DataRequest{" +
+                "entryId=" + entryId +
+                ", tableId=" + tableId +
                 ", data='" + data + '\'' +
                 '}';
     }

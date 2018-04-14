@@ -1,8 +1,9 @@
 package com.ez.tablebase.rest.model;
 
+import com.ez.tablebase.rest.database.CategoryEntity;
 import org.springframework.hateoas.ResourceSupport;
 
-public class CategoryModel extends ResourceSupport
+public class Category extends ResourceSupport
 {
     private int categoryId;
     private int tableId;
@@ -60,10 +61,22 @@ public class CategoryModel extends ResourceSupport
         this.type = type;
     }
 
+    public static Category buildModel(CategoryEntity entity)
+    {
+        Category model = new Category();
+
+        model.setTableId(entity.getTableId());
+        model.setCategoryId(entity.getCategoryId());
+        model.setAttributeName(entity.getAttributeName());
+        model.setParentId(entity.getParentId());
+        model.setType(DataType.values()[entity.getType()]);
+        return model;
+    }
+
     @Override
     public String toString()
     {
-        return "CategoryModel{" +
+        return "Category{" +
                 "categoryId=" + categoryId +
                 ", tableId=" + tableId +
                 ", attributeName='" + attributeName + '\'' +

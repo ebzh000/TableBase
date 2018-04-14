@@ -8,18 +8,18 @@ package com.ez.tablebase.rest.service;
  * Created by ErikZ on 27/11/2017.
  */
 
-import com.ez.tablebase.rest.model.DataAccessPathModel;
-import com.ez.tablebase.rest.model.EntryModel;
-import com.ez.tablebase.rest.model.DataRequest;
+import com.ez.tablebase.rest.model.DataAccessPath;
+import com.ez.tablebase.rest.model.Entry;
+import com.ez.tablebase.rest.model.requests.DataRequest;
 
 import java.util.List;
 
 public interface DataService
 {
-    EntryModel createTableEntry(DataRequest request);
-    List<EntryModel> getTableEntries(int tableId);
-    EntryModel getTableEntry(int tableId, int entryId);
-    EntryModel updateTableEntry(DataRequest request);
+    Entry createTableEntry(DataRequest request);
+    List<Entry> getTableEntries(int tableId);
+    Entry getTableEntry(int tableId, int entryId);
+    Entry updateTableEntry(DataRequest request);
 
-    List<DataAccessPathModel> getDataAccessPath(int tableId, int entryId);
+    List<DataAccessPath> getDataAccessPath(int tableId, int entryId);
 }

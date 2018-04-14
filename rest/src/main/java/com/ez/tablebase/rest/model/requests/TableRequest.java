@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.model;
+package com.ez.tablebase.rest.model.requests;
 
 /**
  * Created by Erik Zhong on 9/11/2017.

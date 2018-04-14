@@ -8,10 +8,10 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
-import com.ez.tablebase.rest.model.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.CategoryRequest;
+import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
+import com.ez.tablebase.rest.model.requests.CategoryRequest;
+import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
 import com.ez.tablebase.rest.service.CategoryService;
-import com.ez.tablebase.rest.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,6 +72,12 @@ public class CategoryController
     Object combineCategory(@RequestBody CategoryCombineRequest request) throws ParseException
     {
         return categoryService.combineCategory(request);
+    }
+
+    @PostMapping(value = "/category/split")
+    void splitCategory(@RequestBody CategorySplitRequest request)
+    {
+        categoryService.splitCategory(request);
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
