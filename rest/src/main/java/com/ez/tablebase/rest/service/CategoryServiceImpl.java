@@ -95,7 +95,7 @@ public class CategoryServiceImpl implements CategoryService
         CategoryEntity category = validateCategory(tableId, categoryId);
 
         if(category.getParentId() == null)
-            throw new InvalidOperationException("Invalid operation! Resultant table will no longer be an abstract table");
+            throw new InvalidOperationException("Invalid Operation! Resultant table will no longer be an abstract table");
 
         // Need to prompt user with a confirmation if the selected category is the root node of the whole tree (categories are in a tree structure)
         duplicateCategories(category, category.getParentId(), category.getCategoryId());
@@ -107,8 +107,14 @@ public class CategoryServiceImpl implements CategoryService
         CategoryEntity category1 = validateCategory(request.getTableId(), request.getCategoryId1());
         CategoryEntity category2 = validateCategory(request.getTableId(), request.getCategoryId2());
 
-        if(category1.getType() != category2.getType())
+        if (category1.getType() != category2.getType())
             throw new IncompatibleCategoryTypeException("Specified categories have different types");
+
+        List<CategoryEntity> children1 = categoryRepository.findChildren(category1.getTableId(), category1.getCategoryId());
+        List<CategoryEntity> children2 = categoryRepository.findChildren(category2.getTableId(), category2.getCategoryId());
+
+        if(children1.get(0) != null || children2.get(0) != null)
+            throw new InvalidOperationException("Invalid Operation! Select categories must not have any subcategories");
 
         categoryRepository.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId(), category1.getType());
         combineEntries(category1, category2, OperationType.values()[request.getDataOperationType()]);
@@ -201,8 +207,6 @@ public class CategoryServiceImpl implements CategoryService
             String data1 = entry1.getData();
             String data2 = entry2.getData();
 
-            System.out.println("Data1: " + data1 + ", Data2: " + data2);
-
             switch (operationType)
             {
                 case MAX:
@@ -232,7 +236,6 @@ public class CategoryServiceImpl implements CategoryService
                     break;
             }
 
-            System.out.println("Result: " + data1);
             tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), data1);
             tableEntryRepository.delete(entry2);
         }
