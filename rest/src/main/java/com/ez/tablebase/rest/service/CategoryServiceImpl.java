@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -39,6 +40,8 @@ public class CategoryServiceImpl implements CategoryService
     private final TableRepository tableRepository;
     private final DataAccessPathRepository dataAccessPathRepository;
     private final TableEntryRepository tableEntryRepository;
+
+    private final static String EMPTY_STRING = "";
 
     public CategoryServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository,
                                DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
@@ -53,6 +56,20 @@ public class CategoryServiceImpl implements CategoryService
     public Category createCategory(CategoryRequest request)
     {
         CategoryEntity entity = createCategory(request.getTableId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
+
+        // We need to create the entries and data access paths related to the new category
+        List<CategoryEntity> rootCategories = categoryRepository.findRootNodes(entity.getTableId());
+        CategoryEntity category1 = rootCategories.get(0);
+        CategoryEntity category2 = rootCategories.get(1);
+
+        List<Integer> categoryList1 = categoryRepository.getAllChildren(category1.getTableId(), category1.getCategoryId());
+        List<Integer> categoryList2 = categoryRepository.getAllChildren(category2.getTableId(), category2.getCategoryId());
+
+        if (categoryList1.contains(entity.getCategoryId()))
+            initialiseEntries(entity, categoryList1, categoryList2);
+        else if (categoryList2.contains(entity.getCategoryId()))
+            initialiseEntries(entity, categoryList2, categoryList1);
+
         return Category.buildModel(entity);
     }
 
@@ -146,7 +163,7 @@ public class CategoryServiceImpl implements CategoryService
         categoryRepository.delete(entity);
     }
 
-    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type)
+    private CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type)
     {
         CategoryEntity entity = new CategoryEntity();
         entity.setTableId(tableId);
@@ -256,6 +273,42 @@ public class CategoryServiceImpl implements CategoryService
 
     private void splitCategory(CategoryEntity category, CategoryEntity newCategory, String threshold)
     {
+        // Get entries of both categories
+
+        // Perform Operation that can be one of: NO_OPERATION, COPY, THRESHOLD
+        // This will involve moving the
+    }
+
+    private EntryEntity createEntry(Integer tableId, String data)
+    {
+        EntryEntity entry = new EntryEntity();
+        entry.setTableId(tableId);
+        entry.setData(data);
+        return tableEntryRepository.save(entry);
+    }
+
+    private DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
+    {
+        DataAccessPathEntity dap = new DataAccessPathEntity();
+        dap.setTableId(tableId);
+        dap.setEntryId(entryId);
+        dap.setCategoryId(categoryId);
+        return dataAccessPathRepository.save(dap);
+    }
+
+    private void initialiseEntries(CategoryEntity entity, List<Integer> relativeCategoryTree, List<Integer> accessCategoryList)
+    {
+        List<CategoryEntity> accessLeafNodes = new LinkedList<>();
+
+        // We must find all leaf nodes of the access category list
+        for(Integer categoryId : accessCategoryList)
+        {
+            CategoryEntity category = validateCategory(entity.getTableId(), categoryId);
+            List<CategoryEntity> children = categoryRepository.findChildren(category.getTableId(), category.getCategoryId());
+            if(children.get(0) == null)
+                accessLeafNodes.add(category);
+        }
+
 
     }
 

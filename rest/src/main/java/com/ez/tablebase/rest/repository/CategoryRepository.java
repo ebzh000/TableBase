@@ -27,4 +27,7 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
 
     @Query(value = "select category_id from (select * from categories where table_id = :tableId order by parent_id, category_id) categories_sorted, (select @pv \\:= :categoryId) initialisation where find_in_set(parent_id, @pv) and length(@pv \\:= concat(@pv, ',', category_id))", nativeQuery = true)
     List<Integer> getAllChildren(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
+
+    @Query(value = "SELECT * FROM categories c WHERE c.table_id = :tableId AND c.parent_id IS NULL", nativeQuery = true)
+    List<CategoryEntity> findRootNodes(@Param("tableId") int tableId);
 }

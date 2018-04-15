@@ -1,5 +1,8 @@
 package com.ez.tablebase.rest.service;
 
+import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.DataAccessPathEntity;
+import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
@@ -24,10 +27,18 @@ import java.util.List;
 public class TableServiceImpl implements TableService
 {
     private final TableRepository tableRepository;
+    private final CategoryRepository categoryRepository;
+    private final TableEntryRepository tableEntryRepository;
+    private final DataAccessPathRepository dataAccessPathRepository;
+
+    private static final String EMPTY_STRING = "";
 
     public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository, DataAccessPathRepository dataAccessPathRepository)
     {
         this.tableRepository = tableRepository;
+        this.categoryRepository = categoryRepository;
+        this.tableEntryRepository = tableEntryRepository;
+        this.dataAccessPathRepository = dataAccessPathRepository;
     }
 
     @Override
@@ -38,11 +49,12 @@ public class TableServiceImpl implements TableService
         newTable.setTableName(request.getTableName());
         newTable.setTags(request.getTags());
         newTable.setPublic(request.getPublic());
-        TableEntity entity = tableRepository.save(newTable);
+        newTable = tableRepository.save(newTable);
 
-        
+        // We need to set up a basic table
+        initialiseBasicTable(newTable);
 
-        return Table.buildModel(entity);
+        return Table.buildModel(newTable);
     }
 
     @Override
@@ -86,6 +98,61 @@ public class TableServiceImpl implements TableService
         entity.setUserId(1);
         entity.setTableId(tableId);
         tableRepository.delete(entity);
+    }
+
+    /* We need to create 2 parent categories that have 1 category each
+     *
+     * +-----------------------+--------------------+
+     * | New Access Category   | New Category       |
+     * +-----------------------+--------------------+
+     * | New Access            | New Entry          |
+     * +-----------------------+--------------------+
+     *
+     * Where new category is contained within a Virtual Header (VH)
+     *
+     * We also need to create a data access path and an entry.
+     */
+    private void initialiseBasicTable(TableEntity entity)
+    {
+        // Creating categories
+        CategoryEntity virtualHeader = createCategory(entity.getTableId(), "VH", null, DataType.UNKNOWN);
+        CategoryEntity accessHeader = createCategory(entity.getTableId(), "Access Category", null, DataType.UNKNOWN);
+        CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", accessHeader.getCategoryId(), DataType.UNKNOWN);
+        CategoryEntity newCategory = createCategory(entity.getTableId(), "Category", virtualHeader.getCategoryId(), DataType.UNKNOWN);
+
+        // Creating Entry
+        EntryEntity newEntry = createEntry(entity.getTableId(), EMPTY_STRING);
+
+        // Create Data Access Path for the new entry
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId());
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId());
+    }
+
+    private CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, DataType type)
+    {
+        CategoryEntity category = new CategoryEntity();
+        category.setTableId(tableId);
+        category.setAttributeName(attributeName);
+        category.setParentId(parentId);
+        category.setType((byte) type.ordinal());
+        return categoryRepository.save(category);
+    }
+
+    private EntryEntity createEntry(Integer tableId, String data)
+    {
+        EntryEntity entry = new EntryEntity();
+        entry.setTableId(tableId);
+        entry.setData(data);
+        return tableEntryRepository.save(entry);
+    }
+
+    private DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
+    {
+        DataAccessPathEntity dap = new DataAccessPathEntity();
+        dap.setTableId(tableId);
+        dap.setEntryId(entryId);
+        dap.setCategoryId(categoryId);
+        return dataAccessPathRepository.save(dap);
     }
 
     private TableEntity validateTable(int tableId)
