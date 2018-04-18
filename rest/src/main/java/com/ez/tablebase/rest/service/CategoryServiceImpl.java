@@ -68,92 +68,15 @@ public class CategoryServiceImpl implements CategoryService
         List<List<CategoryEntity>> category1Tree = getPaths(category1);
         List<List<CategoryEntity>> category2Tree = getPaths(category2);
 
-        Map<CategoryEntity, List<CategoryEntity>> category1Map = constructTreeMap(category1Tree);
+        Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(category1Tree);
+        Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(category2Tree);
 
-//
-//        if (categoryList1.contains(entity.getCategoryId()))
-//            initialiseEntries(entity, categoryList1, categoryList2);
-//        else if (categoryList2.contains(entity.getCategoryId()))
-//            initialiseEntries(entity, categoryList2, categoryList1);
+        if (categoryList1.contains(entity.getCategoryId()))
+            initialiseEntries(entity, treeMap1.get(entity.getCategoryId()), treeMap2);
+        else if (categoryList2.contains(entity.getCategoryId()))
+            initialiseEntries(entity, treeMap2.get(entity.getCategoryId()), treeMap1);
 
         return Category.buildModel(entity);
-    }
-
-    private void initialiseEntries(CategoryEntity entity, List<Integer> relativeCategoryTree, List<Integer> accessCategoryList)
-    {
-        List<CategoryEntity> accessLeafNodes = new LinkedList<>();
-
-        // We must find all leaf nodes of the access category list
-        for(Integer categoryId : accessCategoryList)
-        {
-            CategoryEntity category = validateCategory(entity.getTableId(), categoryId);
-            List<CategoryEntity> children = categoryRepository.findChildren(category.getTableId(), category.getCategoryId());
-            if(children.get(0) == null)
-                accessLeafNodes.add(category);
-        }
-
-
-    }
-
-    private List<List<CategoryEntity>> getPaths(CategoryEntity node)
-    {
-        if (node == null)
-            return new LinkedList<>();
-        else
-            return findPaths(node);
-    }
-
-    private List<List<CategoryEntity>> findPaths(CategoryEntity node)
-    {
-        List<List<CategoryEntity>> retLists = new LinkedList<>();
-
-        List<CategoryEntity> children = categoryRepository.findChildren(node.getTableId(), node.getCategoryId());
-        children.removeAll(Collections.singleton(null));
-
-        System.out.print("For node: " + node.getCategoryId() + "; children(" + children.size() + "): ");
-        children.forEach(data -> System.out.print(data.getCategoryId() + "-"));
-        System.out.println();
-
-        if (children.size() == 0)
-        {
-            List<CategoryEntity> leafList = new LinkedList<>();
-            leafList.add(node);
-            retLists.add(leafList);
-        }
-        else
-        {
-            for (CategoryEntity child : children)
-            {
-                List<List<CategoryEntity>> nodeLists = findPaths(child);
-                for (List<CategoryEntity> nodeList : nodeLists)
-                {
-                    nodeList.add(0, child);
-                    retLists.add(nodeList);
-                }
-            }
-        }
-
-        return retLists;
-    }
-
-    private Map<CategoryEntity, List<CategoryEntity>> constructTreeMap (List<List<CategoryEntity>> paths)
-    {
-        for(List<CategoryEntity> path : paths)
-        {
-            path.forEach(data -> System.out.print(data.getCategoryId() + " "));
-            System.out.println();
-            for(int count = 0; count < path.size(); count++)
-            {
-                System.out.print(path.get(count).getCategoryId());
-                if(count != path.size() - 1)
-                {
-                    System.out.print('-');
-                }
-            }
-            System.out.println();
-        }
-
-        return null;
     }
 
     @Override
@@ -179,11 +102,38 @@ public class CategoryServiceImpl implements CategoryService
     public Category updateCategory(CategoryRequest request)
     {
         CategoryEntity entity = validateCategory(request.getTableId(), request.getCategoryId());
+        Integer oldParentId = entity.getParentId();
+        Integer newParentId = request.getParentId();
+
         entity.setAttributeName(request.getAttributeName());
         entity.setParentId(request.getParentId());
         entity.setType((byte) request.getType().ordinal());
         categoryRepository.updateTableCategory(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
+
+        // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
+        if(!newParentId.equals(oldParentId))
+            updateDataAccessPaths(entity);
+
         return Category.buildModel(entity);
+    }
+
+    private void updateDataAccessPaths(CategoryEntity entity)
+    {
+        // We need to create the entries and data access paths related to the new category
+        List<CategoryEntity> rootCategories = categoryRepository.findRootNodes(entity.getTableId());
+        CategoryEntity category1 = rootCategories.get(0);
+        CategoryEntity category2 = rootCategories.get(1);
+
+        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
+        List<Integer> categoryList1 = categoryRepository.getAllChildren(category1.getTableId(), category1.getCategoryId());
+        List<Integer> categoryList2 = categoryRepository.getAllChildren(category2.getTableId(), category2.getCategoryId());
+
+        // We shall construct a 2D list of the two trees
+        List<List<CategoryEntity>> category1Tree = getPaths(category1);
+        List<List<CategoryEntity>> category2Tree = getPaths(category2);
+
+        Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(category1Tree);
+        Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(category2Tree);
     }
 
     @Override
@@ -257,6 +207,102 @@ public class CategoryServiceImpl implements CategoryService
         entity = categoryRepository.findCategory(entity.getTableId(), entity.getCategoryId());
 
         return entity;
+    }
+
+    private EntryEntity createEntry(Integer tableId, String data)
+    {
+        EntryEntity entry = new EntryEntity();
+        entry.setTableId(tableId);
+        entry.setData(data);
+        return tableEntryRepository.save(entry);
+    }
+
+    private DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
+    {
+        DataAccessPathEntity dap = new DataAccessPathEntity();
+        dap.setTableId(tableId);
+        dap.setEntryId(entryId);
+        dap.setCategoryId(categoryId);
+        return dataAccessPathRepository.save(dap);
+    }
+
+    private void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap)
+    {
+        Set<Integer> accessKeys = accessMap.keySet();
+        for (Integer key : accessKeys)
+        {
+            EntryEntity entry = createEntry(entity.getTableId(), EMPTY_STRING);
+
+            // Create rows for path in access categories
+            for (CategoryEntity accessCategory : accessMap.get(key))
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId());
+
+            // Create rows for path in categories
+            for (CategoryEntity categoryEntity : categoryPath)
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId());
+        }
+    }
+
+    private List<List<CategoryEntity>> getPaths(CategoryEntity node)
+    {
+        if (node == null)
+            return new LinkedList<>();
+        else
+            return findPaths(node);
+    }
+
+    private List<List<CategoryEntity>> findPaths(CategoryEntity node)
+    {
+        List<List<CategoryEntity>> retLists = new LinkedList<>();
+
+        List<CategoryEntity> children = categoryRepository.findChildren(node.getTableId(), node.getCategoryId());
+        // MySQL will return a list with a null element if there's no children
+        children.removeAll(Collections.singleton(null));
+
+        if (children.size() == 0)
+        {
+            List<CategoryEntity> leafList = new LinkedList<>();
+            leafList.add(node);
+            retLists.add(leafList);
+        }
+        else
+        {
+            for (CategoryEntity child : children)
+            {
+                List<List<CategoryEntity>> nodeLists = findPaths(child);
+                for (List<CategoryEntity> nodeList : nodeLists)
+                {
+                    nodeList.add(0, node);
+                    retLists.add(nodeList);
+                }
+            }
+        }
+
+        return retLists;
+    }
+
+    private Map<Integer, List<CategoryEntity>> constructTreeMap (List<List<CategoryEntity>> paths)
+    {
+        Map<Integer, List<CategoryEntity>> treeMap = new HashMap<>();
+
+        for(List<CategoryEntity> path : paths)
+            treeMap.put(path.get(path.size()-1).getCategoryId(), path);
+
+        return treeMap;
+    }
+
+    private void printTreeList(List<List<CategoryEntity>> paths)
+    {
+        for(List<CategoryEntity> path : paths)
+        {
+            for(int count = 0; count < path.size(); count ++)
+            {
+                System.out.print(path.get(count).getCategoryId());
+                if(count != path.size() -1 )
+                    System.out.print('-');
+            }
+            System.out.println();
+        }
     }
 
     private void duplicateCategories(CategoryEntity entity, Integer newParentId, Integer rootCategoryId)
@@ -360,23 +406,6 @@ public class CategoryServiceImpl implements CategoryService
 
         // Perform Operation that can be one of: NO_OPERATION, COPY, THRESHOLD
         // This will involve moving the
-    }
-
-    private EntryEntity createEntry(Integer tableId, String data)
-    {
-        EntryEntity entry = new EntryEntity();
-        entry.setTableId(tableId);
-        entry.setData(data);
-        return tableEntryRepository.save(entry);
-    }
-
-    private DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
-    {
-        DataAccessPathEntity dap = new DataAccessPathEntity();
-        dap.setTableId(tableId);
-        dap.setEntryId(entryId);
-        dap.setCategoryId(categoryId);
-        return dataAccessPathRepository.save(dap);
     }
 
     private TableEntity validateTable(int tableId)
