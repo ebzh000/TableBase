@@ -4,11 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /*
- * Copyright (C) 2017 Symbio Networks Pty Ltd. All Rights Reserved.
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
- * The copyright notice above does not evidence any actual or intended
- * publication of such source code.
- * 
+
  * Created by ErikZ on 8/10/2017.
  */
 

@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.common;
+package com.ez.tablebase.rest.common.utils;
 /*
  * Copyright (C) 2018 Symbio Networks Pty Ltd. All Rights Reserved.
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class TimestampUtil
+public final class TimestampUtils
 {
     //TODO: Need to add support for timezones
 

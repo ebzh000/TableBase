@@ -115,15 +115,15 @@ public class TableServiceImpl implements TableService
     private void initialiseBasicTable(TableEntity entity)
     {
         // Creating categories
-        CategoryEntity virtualHeader = createCategory(entity.getTableId(), "VH", null, DataType.UNKNOWN);
-        CategoryEntity accessHeader = createCategory(entity.getTableId(), "Access Category", null, DataType.UNKNOWN);
-        CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", accessHeader.getCategoryId(), DataType.UNKNOWN);
-        CategoryEntity newCategory = createCategory(entity.getTableId(), "Category", virtualHeader.getCategoryId(), DataType.UNKNOWN);
+        CategoryEntity newAccessHeader = createCategory(entity.getTableId(), "Access Header", null, DataType.UNKNOWN);
+        CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", newAccessHeader.getCategoryId(), DataType.UNKNOWN);
+        CategoryEntity newCategory = createCategory(entity.getTableId(), "Category", null, DataType.UNKNOWN);
 
         // Creating Entry
         EntryEntity newEntry = createEntry(entity.getTableId(), EMPTY_STRING);
 
         // Create Data Access Path for the new entry
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccessHeader.getCategoryId());
         createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId());
         createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId());
     }

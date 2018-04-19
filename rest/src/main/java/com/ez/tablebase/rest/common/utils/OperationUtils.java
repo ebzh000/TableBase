@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.common;
+package com.ez.tablebase.rest.common.utils;
 /*
  * Copyright (C) 2018 Symbio Networks Pty Ltd. All Rights Reserved.
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
@@ -10,7 +10,6 @@ package com.ez.tablebase.rest.common;
 
 import com.ez.tablebase.rest.model.DataType;
 
-import javax.swing.text.DateFormatter;
 import java.math.BigDecimal;
 import java.text.*;
 import java.util.Date;
@@ -42,7 +41,7 @@ public class OperationUtils
             Date date1 = convertToDate(data1);
             Date date2 = convertToDate(data2);
 
-            String dateFormat = TimestampUtil.determineDateFormat(data1);
+            String dateFormat = TimestampUtils.determineDateFormat(data1);
             if(dateFormat == null)
                 throw new ParseException("Failed to parse date string", 0);
 
@@ -104,7 +103,7 @@ public class OperationUtils
             Date date1 = convertToDate(data1);
             Date date2 = convertToDate(data2);
 
-            String dateFormat = TimestampUtil.determineDateFormat(data1);
+            String dateFormat = TimestampUtils.determineDateFormat(data1);
             if(dateFormat == null)
                 throw new ParseException("Failed to parse date string", 0);
 
@@ -255,7 +254,7 @@ public class OperationUtils
 
     private static Date convertToDate(String data) throws ParseException
     {
-        Date date = TimestampUtil.parse(data);
+        Date date = TimestampUtils.parse(data);
 
         if(date == null)
             throw new ParseException("Failed to parse date", 0);
