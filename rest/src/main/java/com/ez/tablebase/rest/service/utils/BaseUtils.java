@@ -236,9 +236,15 @@ public class BaseUtils
         return children;
     }
 
+    /* 1. Find all DAPs that contain the sub path "oldParent -> category"
+     * 2. Store the path to the oldParent category
+     * 3. Store the path to the newParent category
+     * 4. Replace the path to the old parent with the path to the new parent for each DAP returned from step 1
+     * 5. If the old parent does not have any children then we must create a data access path to the old parent and empty entries
+     */
     public void updateDataAccessPaths(CategoryEntity category, CategoryEntity oldParent, CategoryEntity newParent)
     {
-        // We must
+        
     }
 
     public List<CategoryEntity> findChildren(Integer tableId, Integer categoryId)
