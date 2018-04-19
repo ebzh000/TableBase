@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.common.utils;
+package com.ez.tablebase.rest.service.utils;
 /*
  * Copyright (C) 2018 Symbio Networks Pty Ltd. All Rights Reserved.
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.
@@ -11,7 +11,6 @@ package com.ez.tablebase.rest.common.utils;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
-import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -25,22 +24,6 @@ public class CategoryUtils extends BaseUtils
     public CategoryUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
-    }
-
-    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type)
-    {
-        TableEntity table = validateTable(tableId);
-        CategoryEntity parent = validateCategory(table.getTableId(), parentId);
-
-        CategoryEntity entity = new CategoryEntity();
-        entity.setTableId(table.getTableId());
-        entity.setAttributeName(attributeName);
-        entity.setParentId(parent.getCategoryId());
-        entity.setType(type);
-        categoryRepository.save(entity);
-        entity = categoryRepository.findCategory(entity.getTableId(), entity.getCategoryId());
-
-        return entity;
     }
 
     public void duplicateCategories(CategoryEntity entity, Integer newParentId, Integer rootCategoryId)

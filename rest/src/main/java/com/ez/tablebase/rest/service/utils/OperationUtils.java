@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.common.utils;
+package com.ez.tablebase.rest.service.utils;
 /*
  * Copyright (C) 2018 Symbio Networks Pty Ltd. All Rights Reserved.
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Symbio Networks.

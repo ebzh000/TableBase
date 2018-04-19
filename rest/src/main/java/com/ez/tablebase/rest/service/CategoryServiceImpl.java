@@ -5,9 +5,9 @@ package com.ez.tablebase.rest.service;
  */
 
 import com.ez.tablebase.rest.common.*;
-import com.ez.tablebase.rest.common.utils.CategoryUtils;
-import com.ez.tablebase.rest.common.utils.DataAccessPathUtils;
-import com.ez.tablebase.rest.common.utils.TableEntryUtils;
+import com.ez.tablebase.rest.service.utils.CategoryUtils;
+import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
+import com.ez.tablebase.rest.service.utils.TableEntryUtils;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.*;

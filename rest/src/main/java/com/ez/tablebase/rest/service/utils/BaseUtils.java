@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.common.utils;
+package com.ez.tablebase.rest.service.utils;
 /*
  * Created by ErikZ on 19/04/2018.
  */
@@ -8,6 +8,7 @@ import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.model.DataType;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -30,13 +31,57 @@ public class BaseUtils
         this.tableEntryRepository = tableEntryRepository;
     }
 
-    DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
+    public TableEntity createTable(Integer userId, String tableName, String tags, boolean isPublic)
+    {
+        TableEntity newTable = new TableEntity();
+        newTable.setUserId(userId);
+        newTable.setTableName(tableName);
+        newTable.setTags(tags);
+        newTable.setPublic(isPublic);
+        return tableRepository.save(newTable);
+    }
+
+    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, DataType type)
+    {
+        CategoryEntity category = new CategoryEntity();
+        category.setTableId(tableId);
+        category.setAttributeName(attributeName);
+        category.setParentId(parentId);
+        category.setType((byte) type.ordinal());
+        return categoryRepository.save(category);
+    }
+
+    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type)
+    {
+        TableEntity table = validateTable(tableId);
+        CategoryEntity parent = validateCategory(table.getTableId(), parentId);
+
+        CategoryEntity entity = new CategoryEntity();
+        entity.setTableId(table.getTableId());
+        entity.setAttributeName(attributeName);
+        entity.setParentId(parent.getCategoryId());
+        entity.setType(type);
+        categoryRepository.save(entity);
+        entity = categoryRepository.findCategory(entity.getTableId(), entity.getCategoryId());
+
+        return entity;
+    }
+
+    public DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
     {
         DataAccessPathEntity dap = new DataAccessPathEntity();
         dap.setTableId(tableId);
         dap.setEntryId(entryId);
         dap.setCategoryId(categoryId);
         return dataAccessPathRepository.save(dap);
+    }
+
+    public EntryEntity createEntry(Integer tableId, String data)
+    {
+        EntryEntity entry = new EntryEntity();
+        entry.setTableId(tableId);
+        entry.setData(data);
+        return tableEntryRepository.save(entry);
     }
 
     EntryEntity duplicateEntry (Integer tableId, Integer entryId)

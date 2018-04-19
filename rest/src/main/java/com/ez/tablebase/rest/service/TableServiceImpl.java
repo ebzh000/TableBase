@@ -1,16 +1,16 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.database.CategoryEntity;
-import com.ez.tablebase.rest.database.DataAccessPathEntity;
-import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.model.*;
-import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.requests.TableRequest;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
+import com.ez.tablebase.rest.service.utils.CategoryUtils;
+import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
+import com.ez.tablebase.rest.service.utils.TableEntryUtils;
+import com.ez.tablebase.rest.service.utils.TableUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,33 +26,28 @@ import java.util.List;
 @javax.transaction.Transactional
 public class TableServiceImpl implements TableService
 {
-    private final TableRepository tableRepository;
-    private final CategoryRepository categoryRepository;
-    private final TableEntryRepository tableEntryRepository;
-    private final DataAccessPathRepository dataAccessPathRepository;
+    private TableUtils tableUtils;
+    private CategoryUtils categoryUtils;
+    private DataAccessPathUtils dapUtils;
+    private TableEntryUtils entryUtils;
 
     private static final String EMPTY_STRING = "";
 
     public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository, DataAccessPathRepository dataAccessPathRepository)
     {
-        this.tableRepository = tableRepository;
-        this.categoryRepository = categoryRepository;
-        this.tableEntryRepository = tableEntryRepository;
-        this.dataAccessPathRepository = dataAccessPathRepository;
+        this.tableUtils = new TableUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
+        this.categoryUtils = new CategoryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
+        this.dapUtils = new DataAccessPathUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
+        this.entryUtils = new TableEntryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
     @Override
     public Table createTable(TableRequest request)
     {
-        TableEntity newTable = new TableEntity();
-        newTable.setUserId(request.getUserId());
-        newTable.setTableName(request.getTableName());
-        newTable.setTags(request.getTags());
-        newTable.setPublic(request.getPublic());
-        newTable = tableRepository.save(newTable);
+        TableEntity newTable = tableUtils.createTable(request.getUserId(), request.getTableName(), request.getTags(), request.getPublic());
 
         // We need to set up a basic table
-        initialiseBasicTable(newTable);
+        tableUtils.initialiseBasicTable(newTable);
 
         return Table.buildModel(newTable);
     }
@@ -61,22 +56,25 @@ public class TableServiceImpl implements TableService
     @Transactional(readOnly = true)
     public Table getTable(int tableId)
     {
-        TableEntity entity = validateTable(tableId);
+        TableEntity entity = tableUtils.validateTable(tableId);
         return Table.buildModel(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Table getUserTables(int userId)
+    public List<Table> getUserTables(int userId)
     {
-        return null;
+        List<TableEntity> tables = tableUtils.getUserTables(userId);
+        List<Table> models = new ArrayList<>();
+        tables.forEach(table -> models.add(Table.buildModel(table)));
+        return models;
     }
 
     @Override
     @Transactional(readOnly=true)
     public List<Table> searchTable(String keyword)
     {
-        List<TableEntity> entities = tableRepository.searchTable(keyword);
+        List<TableEntity> entities = tableUtils.searchTable(keyword);
         List<Table> models = new ArrayList<>();
         entities.forEach(entity -> models.add(Table.buildModel(entity)));
         return models;
@@ -85,7 +83,7 @@ public class TableServiceImpl implements TableService
     @Transactional(readOnly = true)
     public List<Table> getTables() throws RuntimeException
     {
-        Iterable<TableEntity> entities = tableRepository.findAll();
+        Iterable<TableEntity> entities = tableUtils.findAll();
         List<Table> models = new ArrayList<>();
         entities.forEach(entity -> models.add(Table.buildModel(entity)));
         return models;
@@ -94,74 +92,7 @@ public class TableServiceImpl implements TableService
     @Override
     public void deleteTable(int tableId)
     {
-        TableEntity entity = new TableEntity();
-        entity.setUserId(1);
-        entity.setTableId(tableId);
-        tableRepository.delete(entity);
-    }
-
-    /* We need to create 2 parent categories that have 1 category each
-     *
-     * +-----------------------+--------------------+
-     * | New Access Category   | New Category       |
-     * +-----------------------+--------------------+
-     * | New Access            | New Entry          |
-     * +-----------------------+--------------------+
-     *
-     * Where new category is contained within a Virtual Header (VH)
-     *
-     * We also need to create a data access path and an entry.
-     */
-    private void initialiseBasicTable(TableEntity entity)
-    {
-        // Creating categories
-        CategoryEntity newAccessHeader = createCategory(entity.getTableId(), "Access Header", null, DataType.UNKNOWN);
-        CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", newAccessHeader.getCategoryId(), DataType.UNKNOWN);
-        CategoryEntity newCategory = createCategory(entity.getTableId(), "Category", null, DataType.UNKNOWN);
-
-        // Creating Entry
-        EntryEntity newEntry = createEntry(entity.getTableId(), EMPTY_STRING);
-
-        // Create Data Access Path for the new entry
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccessHeader.getCategoryId());
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId());
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId());
-    }
-
-    private CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, DataType type)
-    {
-        CategoryEntity category = new CategoryEntity();
-        category.setTableId(tableId);
-        category.setAttributeName(attributeName);
-        category.setParentId(parentId);
-        category.setType((byte) type.ordinal());
-        return categoryRepository.save(category);
-    }
-
-    private EntryEntity createEntry(Integer tableId, String data)
-    {
-        EntryEntity entry = new EntryEntity();
-        entry.setTableId(tableId);
-        entry.setData(data);
-        return tableEntryRepository.save(entry);
-    }
-
-    private DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
-    {
-        DataAccessPathEntity dap = new DataAccessPathEntity();
-        dap.setTableId(tableId);
-        dap.setEntryId(entryId);
-        dap.setCategoryId(categoryId);
-        return dataAccessPathRepository.save(dap);
-    }
-
-    private TableEntity validateTable(int tableId)
-    {
-        TableEntity entity = tableRepository.findTable(tableId);
-
-        if (entity == null)
-            throw new ObjectNotFoundException("No table found for the id: " + tableId);
-
-        return entity;
+        TableEntity entity = tableUtils.validateTable(tableId);
+        tableUtils.delete(entity);
     }
 }

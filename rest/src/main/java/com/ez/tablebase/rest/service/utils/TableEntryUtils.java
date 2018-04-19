@@ -1,4 +1,4 @@
-package com.ez.tablebase.rest.common.utils;
+package com.ez.tablebase.rest.service.utils;
 /*
  * Created by ErikZ on 19/04/2018.
  */
@@ -23,14 +23,6 @@ public class TableEntryUtils extends BaseUtils
     public TableEntryUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
-    }
-
-    public EntryEntity createEntry(Integer tableId, String data)
-    {
-        EntryEntity entry = new EntryEntity();
-        entry.setTableId(tableId);
-        entry.setData(data);
-        return tableEntryRepository.save(entry);
     }
 
     public void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap)

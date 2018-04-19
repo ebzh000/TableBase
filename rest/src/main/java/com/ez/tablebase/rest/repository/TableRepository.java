@@ -5,6 +5,7 @@ package com.ez.tablebase.rest.repository;
  */
 
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.model.Table;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,7 @@ public interface TableRepository extends PagingAndSortingRepository<TableEntity,
 
     @Query(value = "SELECT * FROM table_list t WHERE t.table_name LIKE %:keyword% OR t.tags LIKE %:keyword%", nativeQuery = true)
     List<TableEntity> searchTable(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM table_list t where t.user_id = :userId", nativeQuery = true)
+    List<TableEntity> getUserTables(@Param("userId") int userId);
 }

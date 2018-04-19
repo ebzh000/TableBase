@@ -14,7 +14,7 @@ public interface TableService
     // Table Operations
     Table createTable(TableRequest request);
     Table getTable(int tableId);
-    Table getUserTables(int userId);
+    List<Table> getUserTables(int userId);
     List<Table> searchTable(String keyword);
     List<Table> getTables();
     void deleteTable(int tableId);
