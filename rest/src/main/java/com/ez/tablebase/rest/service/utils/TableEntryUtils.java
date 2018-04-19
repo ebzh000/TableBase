@@ -13,33 +13,12 @@ import com.ez.tablebase.rest.repository.TableRepository;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class TableEntryUtils extends BaseUtils
 {
-    private static final String EMPTY_STRING = "";
-
     public TableEntryUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
-    }
-
-    public void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap)
-    {
-        Set<Integer> accessKeys = accessMap.keySet();
-        for (Integer key : accessKeys)
-        {
-            EntryEntity entry = createEntry(entity.getTableId(), EMPTY_STRING);
-
-            // Create rows for path in access categories
-            for (CategoryEntity accessCategory : accessMap.get(key))
-                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId());
-
-            // Create rows for path in categories
-            for (CategoryEntity categoryEntity : categoryPath)
-                createDataAccessPath(entity.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId());
-        }
     }
 
     public void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType) throws ParseException
@@ -85,5 +64,15 @@ public class TableEntryUtils extends BaseUtils
             tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), data1);
             tableEntryRepository.delete(entry2);
         }
+    }
+
+    public void updateTableEntry(Integer tableId, Integer entryId, String data)
+    {
+        tableEntryRepository.updateTableEntry(tableId, entryId, data);
+    }
+
+    public List<EntryEntity> findAllTableEntries(Integer tableId)
+    {
+        return tableEntryRepository.findAllTableEntries(tableId);
     }
 }

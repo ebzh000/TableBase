@@ -16,6 +16,4 @@ public interface DataService
     List<Entry> getTableEntries(int tableId);
     Entry getTableEntry(int tableId, int entryId);
     Entry updateTableEntry(DataRequest request);
-
-    List<DataAccessPath> getDataAccessPath(int tableId, int entryId);
 }

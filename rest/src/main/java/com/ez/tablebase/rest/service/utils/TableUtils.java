@@ -12,7 +12,6 @@ import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.DataType;
-import com.ez.tablebase.rest.model.Table;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -30,11 +29,6 @@ public class TableUtils extends BaseUtils
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
-    public void delete(TableEntity entity)
-    {
-        tableRepository.delete(entity);
-    }
-
     /* We need to create 2 parent categories that have 1 category each
      *
      * +-----------------------+--------------------+
@@ -43,9 +37,7 @@ public class TableUtils extends BaseUtils
      * | New Access            | New Entry          |
      * +-----------------------+--------------------+
      *
-     * Where new category is contained within a Virtual Header (VH)
-     *
-     * We also need to create a data access path and an entry.
+     * We also need to create a data access path and an entry
      */
     public void initialiseBasicTable(TableEntity entity)
     {
@@ -77,4 +69,10 @@ public class TableUtils extends BaseUtils
     {
         return tableRepository.findAll();
     }
+
+    public void delete(TableEntity entity)
+    {
+        tableRepository.delete(entity);
+    }
+
 }

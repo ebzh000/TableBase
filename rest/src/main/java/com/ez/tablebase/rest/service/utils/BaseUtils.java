@@ -18,12 +18,13 @@ import java.util.*;
 
 public class BaseUtils
 {
-    public final CategoryRepository categoryRepository;
-    public final TableRepository tableRepository;
-    public final DataAccessPathRepository dataAccessPathRepository;
-    public final TableEntryRepository tableEntryRepository;
+    private static final String EMPTY_STRING = "";
+    final CategoryRepository categoryRepository;
+    final TableRepository tableRepository;
+    final DataAccessPathRepository dataAccessPathRepository;
+    final TableEntryRepository tableEntryRepository;
 
-    public BaseUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
+    BaseUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
         this.categoryRepository = categoryRepository;
         this.tableRepository = tableRepository;
@@ -41,7 +42,7 @@ public class BaseUtils
         return tableRepository.save(newTable);
     }
 
-    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, DataType type)
+    CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, DataType type)
     {
         CategoryEntity category = new CategoryEntity();
         category.setTableId(tableId);
@@ -67,13 +68,14 @@ public class BaseUtils
         return entity;
     }
 
-    public DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
+    DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId)
     {
         DataAccessPathEntity dap = new DataAccessPathEntity();
         dap.setTableId(tableId);
         dap.setEntryId(entryId);
         dap.setCategoryId(categoryId);
-        return dataAccessPathRepository.save(dap);
+        dataAccessPathRepository.save(dap);
+        return dap;
     }
 
     public EntryEntity createEntry(Integer tableId, String data)
@@ -84,6 +86,24 @@ public class BaseUtils
         return tableEntryRepository.save(entry);
     }
 
+    void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap)
+    {
+        Set<Integer> accessKeys = accessMap.keySet();
+        for (Integer key : accessKeys)
+        {
+            EntryEntity entry = createEntry(entity.getTableId(), EMPTY_STRING);
+
+            // Create rows for path in access categories
+            for (CategoryEntity accessCategory : accessMap.get(key))
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId());
+
+            // Create rows for path in categories
+            for (CategoryEntity categoryEntity : categoryPath)
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId());
+        }
+    }
+
+
     EntryEntity duplicateEntry (Integer tableId, Integer entryId)
     {
         EntryEntity entity = validateEntry(tableId, entryId);
@@ -93,10 +113,11 @@ public class BaseUtils
         return tableEntryRepository.save(newEntity);
     }
 
-    public Map<Integer, List<CategoryEntity>> constructTreeMap (CategoryEntity node)
+    Map<Integer, List<CategoryEntity>> constructTreeMap(CategoryEntity node)
     {
         Map<Integer, List<CategoryEntity>> treeMap = new HashMap<>();
         List<List<CategoryEntity>> paths = buildPaths(node);
+        printPathList(paths);
 
         for(List<CategoryEntity> path : paths)
             treeMap.put(path.get(path.size()-1).getCategoryId(), path);
@@ -104,7 +125,7 @@ public class BaseUtils
         return treeMap;
     }
 
-    public List<List<CategoryEntity>> buildPaths (CategoryEntity node)
+    private List<List<CategoryEntity>> buildPaths(CategoryEntity node)
     {
         if (node == null)
             return new LinkedList<>();
@@ -112,28 +133,11 @@ public class BaseUtils
             return findPaths(node);
     }
 
-    public void printPathList (List<List<CategoryEntity>> paths)
-    {
-        for(List<CategoryEntity> path : paths)
-        {
-            for(int count = 0; count < path.size(); count ++)
-            {
-                System.out.print(path.get(count).getCategoryId());
-                if(count != path.size() -1 )
-                    System.out.print('-');
-            }
-            System.out.println();
-        }
-    }
-
     private List<List<CategoryEntity>> findPaths (CategoryEntity node)
     {
         List<List<CategoryEntity>> retLists = new LinkedList<>();
 
-        List<CategoryEntity> children = categoryRepository.findChildren(node.getTableId(), node.getCategoryId());
-        // MySQL will return a list with a null element if there's no children
-        children.removeAll(Collections.singleton(null));
-
+        List<CategoryEntity> children = findChildren(node.getTableId(), node.getCategoryId());
         if (children.size() == 0)
         {
             List<CategoryEntity> leafList = new LinkedList<>();
@@ -154,6 +158,96 @@ public class BaseUtils
         }
 
         return retLists;
+    }
+
+    private void printPathList (List<List<CategoryEntity>> paths)
+    {
+        System.out.println("Printing Path");
+        for(List<CategoryEntity> path : paths)
+        {
+            for(int count = 0; count < path.size(); count ++)
+            {
+                System.out.print(path.get(count).getCategoryId());
+                if(count != path.size() -1 )
+                    System.out.print('-');
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    void updateDataAccessPaths(CategoryEntity newLeaf, CategoryEntity oldLeaf)
+    {
+        // Get all DAPs that contains the affected category in its path
+        List<List<DataAccessPathEntity>> daps = findPathsByCategory(oldLeaf);
+        for (List<DataAccessPathEntity> path : daps)
+        {
+            Integer entryId = path.get(0).getEntryId();
+            DataAccessPathEntity dapEntity = createDataAccessPath(newLeaf.getTableId(), entryId, newLeaf.getCategoryId());
+            path.add(dapEntity);
+        }
+    }
+
+    private List<List<DataAccessPathEntity>> findPathsByCategory(CategoryEntity category)
+    {
+        // We need to create the entries and data access paths related to the new category
+        List<CategoryEntity> rootCategories = categoryRepository.findRootNodes(category.getTableId());
+        CategoryEntity category1 = rootCategories.get(0);
+        CategoryEntity category2 = rootCategories.get(1);
+
+        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
+        List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
+        List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
+
+        List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
+        List<List<DataAccessPathEntity>> daps = new LinkedList<>();
+        for (Integer entry : entries)
+        {
+            List<DataAccessPathEntity> dap = dataAccessPathRepository.getEntryAccessPath(category.getTableId(), entry);
+
+            // We need to remove any categories that are not part of the affected tree
+            for (Iterator<DataAccessPathEntity> iter = dap.listIterator(); iter.hasNext(); )
+            {
+                DataAccessPathEntity dapEntity = iter.next();
+                if (categoryList1.contains(category.getCategoryId()))
+                {
+                    if (categoryList2.contains(dapEntity.getCategoryId()))
+                        iter.remove();
+                }
+                else if (categoryList2.contains(category.getCategoryId()))
+                {
+                    if (categoryList1.contains(dapEntity.getCategoryId()))
+                        iter.remove();
+                }
+            }
+
+            daps.add(dap);
+        }
+
+        return daps;
+    }
+
+    List<Integer> getAllCategoryChildren(Integer tableId, Integer categoryId)
+    {
+        TableEntity table = validateTable(tableId);
+        CategoryEntity category = validateCategory(table.getTableId(), categoryId);
+        List<Integer> children = categoryRepository.getAllChildren(table.getTableId(), category.getCategoryId());
+        children.add(0, category.getCategoryId());
+        return children;
+    }
+
+    public void updateDataAccessPaths(CategoryEntity category, CategoryEntity oldParent, CategoryEntity newParent)
+    {
+        // We must
+    }
+
+    public List<CategoryEntity> findChildren(Integer tableId, Integer categoryId)
+    {
+        List<CategoryEntity> children = categoryRepository.findChildren(tableId, categoryId);
+        // MySQL will return a list with a null element if there's no children
+        children.removeIf(Objects::isNull);
+
+        return children;
     }
 
     public TableEntity validateTable (int tableId)
@@ -185,17 +279,10 @@ public class BaseUtils
         if(entity == null)
             throw new ObjectNotFoundException("No Entry found for entry id: " + entryId + ", in table id: " + tableId);
 
+        List<DataAccessPathEntity> path = dataAccessPathRepository.getEntryAccessPath(tableEntity.getTableId(), entity.getEntryId());
+        if(path.isEmpty() || path.get(0) == null)
+            throw new ObjectNotFoundException("No Data Access Paths found for entry id: " + entryId + ", in table id: " + tableId);
+
         return entity;
-    }
-
-    public List<DataAccessPathEntity> validateAccessPath (int tableId, int entryId)
-    {
-        TableEntity tableEntity = validateTable(tableId);
-        List<DataAccessPathEntity> entities = dataAccessPathRepository.getEntryAccessPath(tableEntity.getTableId(), entryId);
-
-        if(entities == null)
-            throw new ObjectNotFoundException("No data access path found for the entry id: " + entryId + " in table id: " + tableId);
-
-        return entities;
     }
 }

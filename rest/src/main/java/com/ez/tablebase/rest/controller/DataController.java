@@ -4,7 +4,6 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
-import com.ez.tablebase.rest.model.DataAccessPath;
 import com.ez.tablebase.rest.model.Entry;
 import com.ez.tablebase.rest.model.requests.DataRequest;
 import com.ez.tablebase.rest.service.DataService;
@@ -53,11 +52,5 @@ public class DataController
         request.setTableId(tableId);
         request.setEntryId(entryId);
         return dataService.updateTableEntry(request);
-    }
-
-    @GetMapping(value = "/entry/{entryId}/getAccessPath")
-    public List<DataAccessPath> getDataAccessPath(@PathVariable int tableId, @PathVariable int entryId)
-    {
-        return dataService.getDataAccessPath(tableId, entryId);
     }
 }

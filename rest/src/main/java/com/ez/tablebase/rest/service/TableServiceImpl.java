@@ -7,9 +7,6 @@ import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
-import com.ez.tablebase.rest.service.utils.CategoryUtils;
-import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
-import com.ez.tablebase.rest.service.utils.TableEntryUtils;
 import com.ez.tablebase.rest.service.utils.TableUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,18 +24,10 @@ import java.util.List;
 public class TableServiceImpl implements TableService
 {
     private TableUtils tableUtils;
-    private CategoryUtils categoryUtils;
-    private DataAccessPathUtils dapUtils;
-    private TableEntryUtils entryUtils;
-
-    private static final String EMPTY_STRING = "";
 
     public TableServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository, DataAccessPathRepository dataAccessPathRepository)
     {
         this.tableUtils = new TableUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
-        this.categoryUtils = new CategoryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
-        this.dapUtils = new DataAccessPathUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
-        this.entryUtils = new TableEntryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
     @Override

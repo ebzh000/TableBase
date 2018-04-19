@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface DataAccessPathRepository extends PagingAndSortingRepository<DataAccessPathEntity, String>
 {
-    @Query(value = "SELECT * FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId ORDER BY id ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId ORDER BY entry_id, id ASC", nativeQuery = true)
     List<DataAccessPathEntity> getEntryAccessPath(@Param("tableId") int tableId, @Param("entryId") int entryId);
 
     @Query(value = "SELECT dap.entry_id FROM (SELECT b.id, b.table_id, b.entry_id, b.category_id FROM data_access_path a JOIN data_access_path b ON b.entry_id = a.entry_id AND a.table_id = :tableId AND b.table_id = :tableId AND a.category_id = :categoryId) AS dap GROUP BY dap.entry_id", nativeQuery = true)

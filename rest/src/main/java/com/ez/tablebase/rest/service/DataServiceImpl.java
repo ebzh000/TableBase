@@ -11,9 +11,14 @@ import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.DataAccessPath;
 import com.ez.tablebase.rest.model.Entry;
 import com.ez.tablebase.rest.model.requests.DataRequest;
+import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
+import com.ez.tablebase.rest.service.utils.CategoryUtils;
+import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
+import com.ez.tablebase.rest.service.utils.TableEntryUtils;
+import com.ez.tablebase.rest.service.utils.TableUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,15 +29,15 @@ import java.util.List;
 @javax.transaction.Transactional
 public class DataServiceImpl implements DataService
 {
-    private final TableRepository tableRepository;
-    private final TableEntryRepository tableEntryRepository;
-    private final DataAccessPathRepository dataAccessPathRepository;
+    private TableUtils tableUtils;
+    private DataAccessPathUtils dapUtils;
+    private TableEntryUtils entryUtils;
 
-    public DataServiceImpl (TableRepository tableRepository, TableEntryRepository tableEntryRepository, DataAccessPathRepository dataAccessPathRepository)
+    public DataServiceImpl (TableRepository tableRepository, CategoryRepository categoryRepository, TableEntryRepository tableEntryRepository, DataAccessPathRepository dataAccessPathRepository)
     {
-        this.tableRepository = tableRepository;
-        this.tableEntryRepository = tableEntryRepository;
-        this.dataAccessPathRepository = dataAccessPathRepository;
+        this.tableUtils = new TableUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
+        this.dapUtils = new DataAccessPathUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
+        this.entryUtils = new TableEntryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
     @Override
@@ -42,34 +47,18 @@ public class DataServiceImpl implements DataService
          * TODO : Need to figure out how to pass this endpoint a list of categories.
          * This means how the GUI will grab all related categories and send them to the end point.
          */
-        EntryEntity entity = new EntryEntity();
-        entity.setTableId(request.getTableId());
-        entity.setData(request.getData());
-        tableEntryRepository.save(entity);
-
-        saveDataAccessPath(request.getCategories(), entity);
+        EntryEntity entity = entryUtils.createEntry(request.getTableId(), request.getData());
+        dapUtils.createPathsForEntry(request.getCategories(), entity);
 
         return Entry.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
-    }
-
-    private void saveDataAccessPath(List<Integer> categories, EntryEntity entity)
-    {
-        for(Integer category : categories)
-        {
-            DataAccessPathEntity accessPathEntity = new DataAccessPathEntity();
-            accessPathEntity.setTableId(entity.getTableId());
-            accessPathEntity.setEntryId(entity.getEntryId());
-            accessPathEntity.setCategoryId(category);
-            dataAccessPathRepository.save(accessPathEntity);
-        }
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Entry> getTableEntries(int tableId)
     {
-        TableEntity tableEntity = validateTable(tableId);
-        List<EntryEntity> entities = tableEntryRepository.findAllTableEntries(tableEntity.getTableId());
+        TableEntity tableEntity = tableUtils.validateTable(tableId);
+        List<EntryEntity> entities = entryUtils.findAllTableEntries(tableEntity.getTableId());
         List<Entry> models = new ArrayList<>();
         entities.forEach(row -> models.add(Entry.buildModel(row.getTableId(), row.getEntryId(), row.getData())));
         return models;
@@ -79,55 +68,16 @@ public class DataServiceImpl implements DataService
     @Transactional(readOnly = true)
     public Entry getTableEntry(int tableId, int entryId)
     {
-        EntryEntity entity = validateTableEntry(tableId, entryId);
+        EntryEntity entity = entryUtils.validateEntry(tableId, entryId);
         return Entry.buildModel(entity.getTableId(),entity.getEntryId(),entity.getData());
     }
 
     @Override
     public Entry updateTableEntry(DataRequest request)
     {
-        EntryEntity entity = validateTableEntry(request.getTableId(), request.getEntryId());
+        EntryEntity entity = entryUtils.validateEntry(request.getTableId(), request.getEntryId());
         entity.setData(request.getData());
-        tableEntryRepository.updateTableEntry(entity.getTableId(), entity.getEntryId(), entity.getData());
+        entryUtils.updateTableEntry(entity.getTableId(), entity.getEntryId(), entity.getData());
         return Entry.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
-    }
-
-    @Override
-    public List<DataAccessPath> getDataAccessPath(int tableId, int entryId)
-    {
-        return null;
-    }
-
-    private TableEntity validateTable(int tableId)
-    {
-        TableEntity entity = tableRepository.findTable(tableId);
-
-        if (entity == null)
-            throw new ObjectNotFoundException("No table found for the id: " + tableId);
-
-        return entity;
-    }
-
-    private EntryEntity validateTableEntry(int tableId, int entryId)
-    {
-        TableEntity tableEntity = validateTable(tableId);
-        List<DataAccessPathEntity> accessPathEntity = validateAccessPath(tableEntity.getTableId(), entryId);
-        EntryEntity entity = tableEntryRepository.findTableEntry(tableEntity.getTableId(), accessPathEntity.get(0).getEntryId());
-
-        if(entity == null)
-            throw new ObjectNotFoundException("No Entry found for the combination; entry id: " + entryId + " in table id: " + tableId);
-
-        return entity;
-    }
-
-    private List<DataAccessPathEntity> validateAccessPath(int tableId, int entryId)
-    {
-        TableEntity tableEntity = validateTable(tableId);
-        List<DataAccessPathEntity> entities = dataAccessPathRepository.getEntryAccessPath(tableEntity.getTableId(), entryId);
-
-        if(entities == null)
-            throw new ObjectNotFoundException("No data access path found for the entry id: " + entryId + " in table id: " + tableId);
-
-        return entities;
     }
 }

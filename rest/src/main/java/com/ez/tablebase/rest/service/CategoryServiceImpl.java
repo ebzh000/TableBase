@@ -43,37 +43,12 @@ public class CategoryServiceImpl implements CategoryService
     @Override
     public Category createCategory(CategoryRequest request)
     {
-        CategoryEntity entity = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
-        CategoryEntity parentCategory = categoryUtils.validateCategory(entity.getTableId(), entity.getParentId());
+        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
+        CategoryEntity parentCategory = categoryUtils.validateCategory(category.getTableId(), category.getParentId());
 
-        // We need to create the entries and data access paths related to the new category
-        List<CategoryEntity> rootCategories = categoryUtils.findRootNodes(entity.getTableId());
-        CategoryEntity category1 = rootCategories.get(0);
-        CategoryEntity category2 = rootCategories.get(1);
-
-        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
-        List<Integer> categoryList1 = categoryUtils.getAllChildren(category1.getTableId(), category1.getCategoryId());
-        List<Integer> categoryList2 = categoryUtils.getAllChildren(category2.getTableId(), category2.getCategoryId());
-
-
-        Map<Integer, List<CategoryEntity>> treeMap1 = categoryUtils.constructTreeMap(category1);
-        Map<Integer, List<CategoryEntity>> treeMap2 = categoryUtils.constructTreeMap(category2);
-
-
-        // Need to check if the parent category has no children. This implies that the parentId currently has DAPs and Entries initialised.
-        // Which then implies that we need to update the DAPs to include the new category
-        List<CategoryEntity> children = categoryUtils.findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
-        children.removeAll(Collections.singleton(null));
-
-        if (children.size() != 0)
-        {
-            if (categoryList1.contains(entity.getCategoryId()))
-                entryUtils.initialiseEntries(entity, treeMap1.get(entity.getCategoryId()), treeMap2);
-            else if (categoryList2.contains(entity.getCategoryId()))
-                entryUtils.initialiseEntries(entity, treeMap2.get(entity.getCategoryId()), treeMap1);
-        }
-
-        return Category.buildModel(entity);
+        // Creating/Updating data access paths and entries
+        categoryUtils.createCategoryDAPsAndEntries(category, parentCategory);
+        return Category.buildModel(category);
     }
 
     @Override
@@ -98,20 +73,17 @@ public class CategoryServiceImpl implements CategoryService
     @Override
     public Category updateCategory(CategoryRequest request)
     {
-        CategoryEntity entity = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
-        Integer oldParentId = entity.getParentId();
-        Integer newParentId = request.getParentId();
+        CategoryEntity category = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
+        CategoryEntity oldParent = categoryUtils.validateCategory(category.getTableId(), category.getParentId());
+        CategoryEntity newParent = categoryUtils.validateCategory(category.getTableId(), request.getParentId());
 
-        entity.setAttributeName(request.getAttributeName());
-        entity.setParentId(request.getParentId());
-        entity.setType((byte) request.getType().ordinal());
-        categoryUtils.updateTableCategory(entity.getTableId(), entity.getCategoryId(), entity.getAttributeName(), entity.getParentId(), entity.getType());
+        categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
 
         // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
-        if(!newParentId.equals(oldParentId))
-            dapUtils.updateDataAccessPaths(entity, oldParentId, newParentId);
+        if(!newParent.getCategoryId().equals(oldParent.getCategoryId()))
+            dapUtils.updateDataAccessPaths(category, oldParent, newParent);
 
-        return Category.buildModel(entity);
+        return Category.buildModel(category);
     }
 
     @Override
