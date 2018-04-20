@@ -26,6 +26,8 @@ public class DataAccessPathEntity implements Serializable
     @Column(name = "category_id")
     private int categoryId;
 
+    @Column(name = "tree_id")
+    private int treeId;
 
     public int getId()
     {
@@ -67,6 +69,16 @@ public class DataAccessPathEntity implements Serializable
         this.categoryId = categoryId;
     }
 
+    public int getTreeId()
+    {
+        return treeId;
+    }
+
+    public void setTreeId(int treeId)
+    {
+        this.treeId = treeId;
+    }
+
     @Override
     public String toString()
     {
@@ -75,6 +87,7 @@ public class DataAccessPathEntity implements Serializable
                 ", entryId=" + entryId +
                 ", tableId=" + tableId +
                 ", categoryId=" + categoryId +
+                ", treeId=" + treeId +
                 '}';
     }
 }

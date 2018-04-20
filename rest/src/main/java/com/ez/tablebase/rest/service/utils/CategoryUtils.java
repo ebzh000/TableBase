@@ -36,6 +36,11 @@ public class CategoryUtils extends BaseUtils
         // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
         List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
         List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
+        Integer treeId = null;
+        if (categoryList1.contains(category.getCategoryId()))
+            treeId = 1;
+        else if (categoryList2.contains(category.getCategoryId()))
+            treeId = 2;
 
         // Need to check if the parent category has no children. This implies that the parentId currently has DAPs and Entries initialised.
         // Which then implies that we need to update the DAPs to include the new category
@@ -50,15 +55,15 @@ public class CategoryUtils extends BaseUtils
             Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(category2);
 
             if (categoryList1.contains(category.getCategoryId()))
-                initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2);
+                initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2, treeId);
             else if (categoryList2.contains(category.getCategoryId()))
-                initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1);
+                initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1, treeId);
         }
 
         // Since the parent category has no children we must then update the data access paths that end with the parent category
         // to now end with the new category
         else
-            updateDataAccessPaths(category, parentCategory);
+            updateDataAccessPaths(category, parentCategory, treeId);
     }
 
     public void duplicateCategories(CategoryEntity entity, Integer newParentId, Integer rootCategoryId)
@@ -94,6 +99,7 @@ public class CategoryUtils extends BaseUtils
                             newPath.setEntryId(newEntry.getEntryId());
                             newPath.setTableId(newEntry.getTableId());
                             newPath.setCategoryId((affectedCategories.contains(pathEntity.getCategoryId())) ? newCategory.getCategoryId() : pathEntity.getCategoryId());
+                            newPath.setTreeId(pathEntity.getTreeId());
                             dataAccessPathRepository.save(newPath);
                         }
                     }

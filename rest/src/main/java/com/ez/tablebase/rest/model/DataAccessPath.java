@@ -12,6 +12,7 @@ public class DataAccessPath extends ResourceSupport
     private int tableId;
     private int entryId;
     private int categoryId;
+    private int treeId;
 
     public int getPathId()
     {
@@ -53,6 +54,16 @@ public class DataAccessPath extends ResourceSupport
         this.categoryId = categoryId;
     }
 
+    public int getTreeId()
+    {
+        return treeId;
+    }
+
+    public void setTreeId(int treeId)
+    {
+        this.treeId = treeId;
+    }
+
     @Override
     public String toString()
     {
@@ -61,6 +72,7 @@ public class DataAccessPath extends ResourceSupport
                 ", tableId=" + tableId +
                 ", entryId=" + entryId +
                 ", categoryId=" + categoryId +
+                ", treeId=" + treeId +
                 '}';
     }
 }

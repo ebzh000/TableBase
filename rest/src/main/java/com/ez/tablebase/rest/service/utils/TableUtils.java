@@ -42,17 +42,17 @@ public class TableUtils extends BaseUtils
     public void initialiseBasicTable(TableEntity entity)
     {
         // Creating categories
+        CategoryEntity newCategory = createCategory(entity.getTableId(), "Category", null, DataType.UNKNOWN);
         CategoryEntity newAccessHeader = createCategory(entity.getTableId(), "Access Header", null, DataType.UNKNOWN);
         CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", newAccessHeader.getCategoryId(), DataType.UNKNOWN);
-        CategoryEntity newCategory = createCategory(entity.getTableId(), "Category", null, DataType.UNKNOWN);
 
         // Creating Entry
         EntryEntity newEntry = createEntry(entity.getTableId(), EMPTY_STRING);
 
         // Create Data Access Path for the new entry
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccessHeader.getCategoryId());
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId());
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId());
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), 1);
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccessHeader.getCategoryId(), 2);
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId(), 2);
     }
 
     public List<TableEntity> searchTable(String keyword)
