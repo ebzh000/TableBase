@@ -110,11 +110,6 @@ public class CategoryUtils extends BaseUtils
         // This will involve moving the
     }
 
-    private List<CategoryEntity> findRootNodes(Integer tableId)
-    {
-        return categoryRepository.findRootNodes(tableId);
-    }
-
     public List<CategoryEntity> findAllTableCategories(Integer tableId)
     {
         return categoryRepository.findAllTableCategories(tableId);

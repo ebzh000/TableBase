@@ -191,7 +191,7 @@ public class BaseUtils
     private List<List<DataAccessPathEntity>> findPathsByCategory(CategoryEntity category)
     {
         // We need to create the entries and data access paths related to the new category
-        List<CategoryEntity> rootCategories = categoryRepository.findRootNodes(category.getTableId());
+        List<CategoryEntity> rootCategories = findRootNodes(category.getTableId());
         CategoryEntity category1 = rootCategories.get(0);
         CategoryEntity category2 = rootCategories.get(1);
 
@@ -244,7 +244,76 @@ public class BaseUtils
      */
     public void updateDataAccessPaths(CategoryEntity category, CategoryEntity oldParent, CategoryEntity newParent)
     {
-        
+        List<CategoryEntity> rootCategories = findRootNodes(category.getTableId());
+        CategoryEntity category1 = rootCategories.get(0);
+        CategoryEntity category2 = rootCategories.get(1);
+
+        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
+        List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
+        List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
+        List<Integer> categoryList = null;
+        List<List<CategoryEntity>> pathList = null;
+
+        if (categoryList1.contains(category.getCategoryId()))
+        {
+            categoryList = categoryList1;
+            pathList = buildPaths(category1);
+        }
+        else if (categoryList2.contains(category.getCategoryId()))
+        {
+            categoryList = categoryList2;
+            pathList = buildPaths(category2);
+        }
+        else
+            throw new ObjectNotFoundException("Provided category is not contained in either category lists");
+
+        List<CategoryEntity> pathToOldParent = getPathToCategory(oldParent, pathList);
+        List<CategoryEntity> pathToNewParent = getPathToCategory(newParent, pathList);
+
+
+    }
+
+    private List<CategoryEntity> getPathToCategory(CategoryEntity category, List<List<CategoryEntity>> pathList)
+    {
+        List<CategoryEntity> pathToCategory = new LinkedList<>();
+
+        for(List<CategoryEntity> path : pathList)
+        {
+            if(!pathToCategory.isEmpty())
+                break;
+
+            if(path.contains(category))
+            {
+                for(CategoryEntity pathElement : path)
+                {
+                    if(pathElement == category)
+                        break;
+
+                    pathToCategory.add(pathElement);
+                }
+            }
+        }
+
+        return pathToCategory;
+    }
+
+    private List<Integer> getCategoryListByCategory(CategoryEntity category)
+    {
+        // We need to create the entries and data access paths related to the new category
+        List<CategoryEntity> rootCategories = findRootNodes(category.getTableId());
+        CategoryEntity category1 = rootCategories.get(0);
+        CategoryEntity category2 = rootCategories.get(1);
+
+        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
+        List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
+        List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
+
+        if (categoryList1.contains(category.getCategoryId()))
+            return categoryList1;
+        else if (categoryList2.contains(category.getCategoryId()))
+            return categoryList2;
+        else
+            throw new ObjectNotFoundException("Provided category is not within either category trees");
     }
 
     public List<CategoryEntity> findChildren(Integer tableId, Integer categoryId)
@@ -255,6 +324,12 @@ public class BaseUtils
 
         return children;
     }
+
+    List<CategoryEntity> findRootNodes(Integer tableId)
+    {
+        return categoryRepository.findRootNodes(tableId);
+    }
+
 
     public TableEntity validateTable (int tableId)
     {

@@ -5,7 +5,6 @@ package com.ez.tablebase.rest.repository;
  */
 
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.model.Table;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
