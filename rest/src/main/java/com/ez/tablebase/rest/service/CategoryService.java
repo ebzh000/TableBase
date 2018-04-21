@@ -29,5 +29,5 @@ public interface CategoryService
 
     void splitCategory(CategorySplitRequest request);
 
-    void deleteCategory(int tableId, int categoryId);
+    void deleteCategory(int tableId, int categoryId, boolean deleteChildren);
 }

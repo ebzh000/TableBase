@@ -72,8 +72,8 @@ public class CategoryController
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
-    void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId)
+    void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "deleteChildren", required = true) boolean deleteChildren)
     {
-        categoryService.deleteCategory(tableId, categoryId);
+        categoryService.deleteCategory(tableId, categoryId, deleteChildren);
     }
 }

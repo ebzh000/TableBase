@@ -87,7 +87,14 @@ public class BaseUtils
         return tableEntryRepository.save(entry);
     }
 
-    void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap, Integer treeId)
+    /**
+     * Creates all required data access paths and entries
+     *
+     * @param entity       New category
+     * @param categoryPath Path to that category
+     * @param accessMap    The treemap of the access categories to the new category
+     */
+    void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap)
     {
         Set<Integer> accessKeys = accessMap.keySet();
         for (Integer key : accessKeys)
@@ -96,11 +103,11 @@ public class BaseUtils
 
             // Create rows for path in access categories
             for (CategoryEntity accessCategory : accessMap.get(key))
-                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId(), treeId);
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId(), 2);
 
             // Create rows for path in categories
             for (CategoryEntity categoryEntity : categoryPath)
-                createDataAccessPath(entity.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), treeId);
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), 1);
         }
     }
 
@@ -256,7 +263,7 @@ public class BaseUtils
         }
         else
             throw new ObjectNotFoundException("Provided category is not contained in either category lists");
-        
+
         // Step 1 & 2 - Get a the path to the new and old parent category
         List<Integer> pathToOldParent = getPathToCategory(oldParent, pathList);
         List<Integer> pathToNewParent = getPathToCategory(newParent, pathList);
@@ -272,10 +279,10 @@ public class BaseUtils
         // Step 4 - Go through each affected path and replace the path of the old parent with the path of the new parent
         for (List<DataAccessPathEntity> dap : affectedPaths)
         {
-            for(Iterator<DataAccessPathEntity> iterator = dap.listIterator(); iterator.hasNext();)
+            for (Iterator<DataAccessPathEntity> iterator = dap.listIterator(); iterator.hasNext(); )
             {
                 DataAccessPathEntity pathEntity = iterator.next();
-                if(pathToOldParent.contains(pathEntity.getCategoryId()))
+                if (pathToOldParent.contains(pathEntity.getCategoryId()))
                 {
                     dataAccessPathRepository.delete(pathEntity);
                     iterator.remove();
@@ -295,8 +302,13 @@ public class BaseUtils
         List<CategoryEntity> oldParentChildren = findChildren(oldParent.getTableId(), oldParent.getCategoryId());
         if (oldParentChildren.size() == 0)
         {
-            Map<Integer, List<CategoryEntity>> treeMap = constructTreeMap((treeId == 1) ? category1 : category2);
-            initialiseEntries(oldParent, treeMap.get(oldParent.getCategoryId()), treeMap, treeId);
+            Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(category1);
+            Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(category2);
+
+            if (treeId == 1)
+                initialiseEntries(oldParent, treeMap1.get(oldParent.getCategoryId()), treeMap2);
+            else
+                initialiseEntries(oldParent, treeMap2.get(oldParent.getCategoryId()), treeMap1);
         }
 
     }
@@ -311,9 +323,9 @@ public class BaseUtils
             if (!pathToCategory.isEmpty())
                 break;
 
-            for(int count = 0; count < path.size(); count++)
+            for (int count = 0; count < path.size(); count++)
             {
-                if(Objects.equals(path.get(count).getCategoryId(), category.getCategoryId()))
+                if (Objects.equals(path.get(count).getCategoryId(), category.getCategoryId()))
                 {
                     index = count;
                     break;

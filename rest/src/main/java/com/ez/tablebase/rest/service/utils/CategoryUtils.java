@@ -16,6 +16,7 @@ import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +75,9 @@ public class CategoryUtils extends BaseUtils
                 Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(rootNodes.get(1));
 
                 if (treeId == 1)
-                    initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2, treeId);
+                    initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2);
                 else if (treeId == 2)
-                    initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1, treeId);
+                    initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1);
             }
         }
 
@@ -119,13 +120,9 @@ public class CategoryUtils extends BaseUtils
                         List<DataAccessPathEntity> origPath = dataAccessPathRepository.getEntryAccessPath(entity.getTableId(), entry);
                         for (DataAccessPathEntity pathEntity : origPath)
                         {
+                            Integer categoryId = (affectedCategories.contains(pathEntity.getCategoryId())) ? newCategory.getCategoryId() : pathEntity.getCategoryId();
                             // Duplicate DataAccessPath
-                            DataAccessPathEntity newPath = new DataAccessPathEntity();
-                            newPath.setEntryId(newEntry.getEntryId());
-                            newPath.setTableId(newEntry.getTableId());
-                            newPath.setCategoryId((affectedCategories.contains(pathEntity.getCategoryId())) ? newCategory.getCategoryId() : pathEntity.getCategoryId());
-                            newPath.setTreeId(pathEntity.getTreeId());
-                            dataAccessPathRepository.save(newPath);
+                            createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, pathEntity.getTreeId());
                         }
                     }
                 }
@@ -139,6 +136,62 @@ public class CategoryUtils extends BaseUtils
 
         // Perform Operation that can be one of: NO_OPERATION, COPY, THRESHOLD
         // This will involve moving the
+    }
+
+    /*
+     * There are two cases to handle when deleting a category.
+     * When we delete a category we will also delete all of the data access paths related to the selected category, as well as all the related entries.
+     *
+     * 1. If we want to delete the children, we need to check if the parent has any children left after the deletion.
+     * If there are children left then we can call it quits here. However, if there are no children left then we must create data access paths to the parent node and initialise all appropriate entries.
+     *
+     * 2. Otherwise, we shall only delete the selected category and have all the children (if any) of the selected category to now point to the parent category.
+     * We do not need to worry about modifying the data access paths as only the entry representing the deleted category is removed.
+     */
+    public void deleteCategory(CategoryEntity category, boolean deleteChildren)
+    {
+        CategoryEntity parentCategory = validateCategory(category.getTableId(), category.getParentId());
+        if(!deleteChildren)
+        {
+            List<CategoryEntity> children = findChildren(category.getTableId(), category.getCategoryId());
+            if (children.size() != 0)
+            {
+                for(CategoryEntity child : children)
+                    updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), parentCategory.getCategoryId(), child.getType());
+            }
+
+            deleteCategory(category);
+        }
+        else
+        {
+            // Delete all entries that belong to the category's leaf nodes
+            deleteCategoryEntities(category);
+
+            // Delete selected category and all its children, along with related DAPs
+            deleteCategory(category);
+
+            List<CategoryEntity> parentChildren = findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
+            if(parentChildren.size() == 0)
+            {
+                List<CategoryEntity> rootNodes = findRootNodes(category.getTableId());
+                Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(rootNodes.get(0));
+                Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(rootNodes.get(1));
+                Integer treeId = getTreeId(category);
+
+                if (treeId == 1)
+                    initialiseEntries(parentCategory, treeMap1.get(parentCategory.getCategoryId()), treeMap2);
+                else if (treeId == 2)
+                    initialiseEntries(parentCategory, treeMap2.get(parentCategory.getCategoryId()), treeMap1);
+            }
+        }
+    }
+
+    @Transactional(value = Transactional.TxType.REQUIRES_NEW)
+    void deleteCategoryEntities(CategoryEntity category)
+    {
+        List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
+        for(Integer entry : entries)
+            tableEntryRepository.delete(validateEntry(category.getTableId(), entry));
     }
 
     public List<CategoryEntity> findAllTableCategories(Integer tableId)

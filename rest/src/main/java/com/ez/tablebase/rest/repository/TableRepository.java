@@ -5,14 +5,14 @@ package com.ez.tablebase.rest.repository;
  */
 
 import com.ez.tablebase.rest.database.TableEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 
-public interface TableRepository extends PagingAndSortingRepository<TableEntity, String>
+public interface TableRepository extends JpaRepository<TableEntity, String>
 {
 
     @Query(value = "SELECT * FROM table_list WHERE table_id = :tableId", nativeQuery = true)

@@ -5,30 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d728da42-8f15-4628-8676-6f6f28220bbf" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryUpdateRequest.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryRequest.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/schema/tablebase.sql" afterPath="$PROJECT_DIR$/rest/schema/tablebase.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/RepositoryLinkProcessor.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/RepositoryLinkProcessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableEntity.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableEntity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Table.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Table.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableRepository.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableRepository.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataService.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TimestampUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TimestampUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/rest/src/main/resources/application.properties" />
     </list>
     <ignored path="TableBase.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,11 +54,11 @@
       <content type="file-editors">
         <state>
           <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="BaseUtils.java" pinned="false" current-in-tab="true">
+            <file leaf-file-name="BaseUtils.java" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="357">
-                    <caret line="258" column="8" lean-forward="false" selection-start-line="258" selection-start-column="8" selection-end-line="258" selection-end-column="8" />
+                  <state relative-caret-position="311">
+                    <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
                     <folding>
                       <element signature="imports" expanded="true" />
                     </folding>
@@ -80,14 +66,24 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="CategoryUtils.java" pinned="false" current-in-tab="false">
+            <file leaf-file-name="CategoryUtils.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="525">
-                    <caret line="82" column="18" lean-forward="true" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
+                  <state relative-caret-position="663">
+                    <caret line="184" column="13" lean-forward="true" selection-start-line="184" selection-start-column="13" selection-end-line="184" selection-end-column="13" />
                     <folding>
                       <element signature="imports" expanded="true" />
                     </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="TableEntryUtils.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="952">
+                    <caret line="65" column="42" lean-forward="false" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+                    <folding />
                   </state>
                 </provider>
               </entry>
@@ -127,7 +123,7 @@
       <file leaf-file-name="TableServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="442">
               <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -139,8 +135,8 @@
       <file leaf-file-name="CategoryServiceImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="599">
-              <caret line="69" column="13" lean-forward="true" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
+            <state relative-caret-position="430">
+              <caret line="167" column="36" lean-forward="false" selection-start-line="167" selection-start-column="22" selection-end-line="167" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,23 +144,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CategoryCreateRequest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java">
+      <file leaf-file-name="CategoryEntity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding>
-                <element signature="method#toString#0;class#CategoryCreateRequest#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="46" column="27" lean-forward="false" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
+              <caret line="11" column="51" lean-forward="false" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -918,8 +902,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/src/reducers/reducer_login.js" />
-        <option value="$PROJECT_DIR$/client/src/reducers/index.js" />
         <option value="$PROJECT_DIR$/client/index.html" />
         <option value="$PROJECT_DIR$/client/src/styles/vendor/_normalize.css" />
         <option value="$PROJECT_DIR$/client/src/containers/Dashboard.js" />
@@ -933,7 +915,6 @@
         <option value="$PROJECT_DIR$/client/package.json" />
         <option value="$PROJECT_DIR$/client/src/index.js" />
         <option value="$PROJECT_DIR$/client/src/actions/AuthActions.js" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java" />
         <option value="$PROJECT_DIR$/client/server.js" />
         <option value="$PROJECT_DIR$/client/makewebpackconfig.js" />
         <option value="$PROJECT_DIR$/rest/schema/mysql.sql" />
@@ -949,26 +930,29 @@
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Entry.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Table.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/OperationType.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/CategoryRepository.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataService.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/DataAccessPathEntity.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/DataAccessPath.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/DataController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryRequest.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryUpdateRequest.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" />
+        <option value="$PROJECT_DIR$/rest/schema/tablebase.sql" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableRepository.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/CategoryRepository.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
       </list>
     </option>
   </component>
@@ -991,8 +975,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1066" />
+    <option name="width" value="1918" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1027,7 +1011,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1114,27 +1097,6 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="rest" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="requests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="rest" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
               <item name="repository" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -1164,6 +1126,7 @@
       </pane>
       <pane id="Scratches" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1310,6 +1273,18 @@
       </option>
       <envs />
       <patterns />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="TableBase" />
+      <envs />
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
@@ -1589,18 +1564,6 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="TableBase" />
-      <envs />
-    </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="filePath" />
@@ -1691,12 +1654,13 @@
       <workItem from="1523971466288" duration="1818000" />
       <workItem from="1524142746116" duration="10311000" />
       <workItem from="1524222438370" duration="10244000" />
-      <workItem from="1524276342765" duration="15257000" />
+      <workItem from="1524276342765" duration="27290000" />
+      <workItem from="1524320730929" duration="173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="258464000" />
+    <option name="totallyTimeSpent" value="270670000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1712,29 +1676,28 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.50319827" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39892474" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.4968017" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.50319827" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3042999" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30540243" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31863284" sideWeight="0.49733475" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23987207" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994652" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39892474" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1743,6 +1706,7 @@
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1770,36 +1734,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryKey.java" />
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/1.11.0.RELEASE/2ac4423b606c3a33bd70c4c40bceaf2611ec90e0/spring-data-jpa-1.11.0.RELEASE-sources.jar!/org/springframework/data/jpa/repository/Query.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="38" column="38" lean-forward="false" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="925">
-          <caret line="25" column="1" lean-forward="false" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableDataEntity.java" />
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Integer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
@@ -1908,7 +1842,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1919,63 +1852,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="25" />
-          <folding>
-            <marker date="1524283155348" expanded="true" signature="517:599" ph="SELECT * FRO... table_data" />
-            <marker date="1524283155348" expanded="true" signature="717:791" ph="SELECT * FRO... table_data" />
-            <marker date="1524283155348" expanded="true" signature="971:1056" ph="UPDATE table... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="16" lean-forward="false" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="899">
-          <caret line="92" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding>
-            <element signature="e#708#709#0" expanded="false" />
-            <element signature="e#738#739#0" expanded="false" />
-            <element signature="e#780#781#0" expanded="false" />
-            <element signature="e#813#814#0" expanded="false" />
-            <element signature="e#870#871#0" expanded="false" />
-            <element signature="e#914#915#0" expanded="false" />
-            <element signature="e#965#966#0" expanded="false" />
-            <element signature="e#1003#1004#0" expanded="false" />
-            <element signature="e#1047#1048#0" expanded="false" />
-            <element signature="e#1083#1084#0" expanded="false" />
-            <element signature="e#1145#1146#0" expanded="false" />
-            <element signature="e#1195#1196#0" expanded="false" />
-            <element signature="e#1235#1236#0" expanded="false" />
-            <element signature="e#1266#1267#0" expanded="false" />
-            <element signature="e#1319#1320#0" expanded="false" />
-            <element signature="e#1359#1360#0" expanded="false" />
-            <element signature="e#1392#1393#0" expanded="false" />
-            <element signature="e#1419#1420#0" expanded="false" />
-            <element signature="e#1461#1462#0" expanded="false" />
-            <element signature="e#1493#1494#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/DataAccessPathEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="816">
           <caret line="82" column="18" lean-forward="false" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
-          <folding>
-            <element signature="e#142#149#0" expanded="false" />
-            <element signature="e#248#251#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1983,15 +1863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="587">
           <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-421">
-          <caret line="25" column="66" lean-forward="false" selection-start-line="25" selection-start-column="66" selection-end-line="25" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1999,9 +1870,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="44" column="107" lean-forward="false" selection-start-line="44" selection-start-column="107" selection-end-line="44" selection-end-column="107" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2009,14 +1877,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="408" column="20" lean-forward="false" selection-start-line="408" selection-start-column="20" selection-end-line="408" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/1.13.0.RELEASE/323bbf6e092205e8e46cfc70a9c9c2df29f0009b/spring-data-commons-1.13.0.RELEASE-sources.jar!/org/springframework/data/repository/CrudRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="100" column="9" lean-forward="false" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -2029,25 +1889,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="26" column="1" lean-forward="false" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
-          <folding>
-            <marker date="1524283155240" expanded="true" signature="480:604" ph="SELECT * FRO... data_access_path" />
-            <marker date="1524283155240" expanded="true" signature="761:894" ph="SELECT * FRO... data_access_path" />
-            <marker date="1524283155240" expanded="true" signature="1086:1351" ph="SELECT dap.e... id" />
-            <marker date="1524283155240" expanded="true" signature="1112:1321" ph="SELECT b.id,... data_access_path" />
-            <marker date="1524283155240" expanded="true" signature="1504:1615" ph="select entry... data_access_path" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="46" column="27" lean-forward="false" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2055,37 +1900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="23" column="14" lean-forward="true" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="26" column="5" lean-forward="false" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2093,26 +1907,64 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="method#toString#0;class#CategoryUpdateRequest#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/CategoryRepository.java">
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="73" lean-forward="false" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="73" />
-          <folding>
-            <marker date="1524283155277" expanded="true" signature="519:604" ph="SELECT * FRO... categories" />
-            <marker date="1524283155277" expanded="true" signature="728:808" ph="SELECT * FRO... categories" />
-            <marker date="1524283155277" expanded="true" signature="995:1144" ph="UPDATE categ... " />
-            <marker date="1524283155277" expanded="true" signature="1398:1601" ph="SELECT c.tab... categories" />
-            <marker date="1524283155277" expanded="true" signature="1752:2009" ph="select categ... *" />
-            <marker date="1524283155277" expanded="true" signature="1777:1859" ph="select * fro... categories" />
-            <marker date="1524283155277" expanded="true" signature="1881:1908" ph="select @pv \... " />
-            <marker date="1524283155277" expanded="true" signature="2155:2233" ph="SELECT * FRO... categories" />
-          </folding>
+        <state relative-caret-position="629">
+          <caret line="44" column="87" lean-forward="true" selection-start-line="44" selection-start-column="87" selection-end-line="44" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="76" column="29" lean-forward="false" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="33" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="65" column="42" lean-forward="false" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/1.11.0.RELEASE/2ac4423b606c3a33bd70c4c40bceaf2611ec90e0/spring-data-jpa-1.11.0.RELEASE-sources.jar!/org/springframework/data/jpa/repository/Modifying.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.transaction/javax.transaction-api/1.2/5d1fb3fe056fe51e6f6ed9b4ef4898a774ed69c0/javax.transaction-api-1.2-sources.jar!/javax/transaction/Transactional.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="81" column="47" lean-forward="true" selection-start-line="81" selection-start-column="47" selection-end-line="81" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/1.13.0.RELEASE/323bbf6e092205e8e46cfc70a9c9c2df29f0009b/spring-data-commons-1.13.0.RELEASE-sources.jar!/org/springframework/data/repository/CrudRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="599">
+          <caret line="100" column="9" lean-forward="false" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/1.11.0.RELEASE/2ac4423b606c3a33bd70c4c40bceaf2611ec90e0/spring-data-jpa-1.11.0.RELEASE-sources.jar!/org/springframework/data/jpa/repository/JpaRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -2126,18 +1978,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java">
+    <entry file="file://$PROJECT_DIR$/rest/schema/tablebase.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="44" column="87" lean-forward="true" selection-start-line="44" selection-start-column="87" selection-end-line="44" selection-end-column="87" />
+        <state relative-caret-position="340">
+          <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/4.3.6.RELEASE/49943c4c9945a5a4e256d7e360ad3872696a769e/spring-context-4.3.6.RELEASE-sources.jar!/org/springframework/stereotype/Repository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="59" column="18" lean-forward="false" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/1.13.0.RELEASE/323bbf6e092205e8e46cfc70a9c9c2df29f0009b/spring-data-commons-1.13.0.RELEASE-sources.jar!/org/springframework/data/repository/PagingAndSortingRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="59" lean-forward="false" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="11" column="51" lean-forward="false" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="69" column="13" lean-forward="true" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
+        <state relative-caret-position="442">
+          <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/CategoryRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="88" lean-forward="false" selection-start-line="25" selection-start-column="88" selection-end-line="25" selection-end-column="88" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1524319032663" expanded="true" signature="519:604" ph="SELECT * FRO... categories" />
+            <marker date="1524319032663" expanded="true" signature="728:808" ph="SELECT * FRO... categories" />
+            <marker date="1524319032663" expanded="true" signature="995:1144" ph="UPDATE categ... " />
+            <marker date="1524319032663" expanded="true" signature="1398:1601" ph="SELECT c.tab... categories" />
+            <marker date="1524319032663" expanded="true" signature="1752:2009" ph="select categ... *" />
+            <marker date="1524319032663" expanded="true" signature="1777:1859" ph="select * fro... categories" />
+            <marker date="1524319032663" expanded="true" signature="1881:1908" ph="select @pv \... " />
+            <marker date="1524319032663" expanded="true" signature="2155:2233" ph="SELECT * FRO... categories" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2146,18 +2068,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="82" column="18" lean-forward="true" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
+        <state relative-caret-position="663">
+          <caret line="184" column="13" lean-forward="true" selection-start-line="184" selection-start-column="13" selection-end-line="184" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="258" column="8" lean-forward="false" selection-start-line="258" selection-start-column="8" selection-end-line="258" selection-end-column="8" />
+        <state relative-caret-position="430">
+          <caret line="167" column="36" lean-forward="false" selection-start-line="167" selection-start-column="22" selection-end-line="167" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

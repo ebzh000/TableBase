@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@javax.transaction.Transactional
 public class CategoryServiceImpl implements CategoryService
 {
     private CategoryUtils categoryUtils;
@@ -68,7 +67,6 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Category getCategory(int tableId, int categoryId)
     {
         CategoryEntity entity = categoryUtils.validateCategory(tableId, categoryId);
@@ -76,20 +74,21 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
+    @Transactional
     public Category updateCategory(CategoryUpdateRequest request)
     {
         CategoryEntity category = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
         CategoryEntity oldParent = categoryUtils.validateCategory(category.getTableId(), category.getParentId());
         CategoryEntity newParent = categoryUtils.validateCategory(category.getTableId(), request.getParentId());
 
-        if(!Objects.equals(categoryUtils.getTreeId(category), categoryUtils.getTreeId(newParent)))
-            throw new InvalidOperationException("INVALID OPERATION! Unable to update current category's parent to a new parent that is in another category tree");
-
-        if (newParent.getType() != category.getType())
-            throw new IncompatibleCategoryTypeException("New parent and select category have incompatible types");
-
         if (!newParent.getCategoryId().equals(oldParent.getCategoryId()))
         {
+            if(!Objects.equals(categoryUtils.getTreeId(category), categoryUtils.getTreeId(newParent)))
+                throw new InvalidOperationException("INVALID OPERATION! Unable to update current category's parent to a new parent that is in another category tree");
+
+            if (newParent.getType() != category.getType())
+                throw new IncompatibleCategoryTypeException("New parent and select category have incompatible types");
+
             // Check if the new parent has any children. If not, create a child category for the new parent and update all data access paths
             List<CategoryEntity> newParentChildren = categoryUtils.findChildren(newParent.getTableId(), newParent.getCategoryId());
             if (newParentChildren.size() == 0)
@@ -162,11 +161,10 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public void deleteCategory(int tableId, int categoryId)
+    @javax.transaction.Transactional
+    public void deleteCategory(int tableId, int categoryId, boolean deleteChildren)
     {
-        CategoryEntity entity = new CategoryEntity();
-        entity.setTableId(tableId);
-        entity.setCategoryId(categoryId);
-        categoryUtils.deleteCategory(entity);
+        CategoryEntity categoryToDelete = categoryUtils.validateCategory(tableId, categoryId);
+        categoryUtils.deleteCategory(categoryToDelete, deleteChildren);
     }
 }

@@ -5,14 +5,14 @@ package com.ez.tablebase.rest.repository;
  */
 
 import com.ez.tablebase.rest.database.EntryEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface TableEntryRepository extends PagingAndSortingRepository<EntryEntity, String>
+public interface TableEntryRepository extends JpaRepository<EntryEntity, String>
 {
     @Query(value = "SELECT * FROM table_data WHERE table_id = :tableId ORDER BY table_id, entry_id ASC", nativeQuery = true)
     List<EntryEntity> findAllTableEntries(@Param("tableId") int tableId);
