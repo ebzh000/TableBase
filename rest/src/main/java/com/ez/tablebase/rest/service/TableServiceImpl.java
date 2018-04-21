@@ -1,7 +1,7 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.model.*;
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.model.Table;
 import com.ez.tablebase.rest.model.requests.TableRequest;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
@@ -60,7 +60,7 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Table> searchTable(String keyword)
     {
         List<TableEntity> entities = tableUtils.searchTable(keyword);

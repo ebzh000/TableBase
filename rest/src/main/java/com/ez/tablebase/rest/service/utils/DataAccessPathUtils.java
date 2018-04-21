@@ -27,7 +27,7 @@ public class DataAccessPathUtils extends BaseUtils
 
     public void createPathsForEntry(List<Integer> categories, EntryEntity entity)
     {
-        for(Integer category : categories)
+        for (Integer category : categories)
         {
             List<CategoryEntity> rootCategories = findRootNodes(entity.getTableId());
             CategoryEntity category1 = rootCategories.get(0);
@@ -37,9 +37,9 @@ public class DataAccessPathUtils extends BaseUtils
             List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
 
             Integer treeId = null;
-            if(categoryList1.contains(category))
+            if (categoryList1.contains(category))
                 treeId = 1;
-            else if(categoryList2.contains(category))
+            else if (categoryList2.contains(category))
                 treeId = 2;
 
             createDataAccessPath(entity.getTableId(), entity.getEntryId(), category, treeId);

@@ -26,14 +26,16 @@ public class TableEntryUtils extends BaseUtils
         List<Integer> category1Entries = dataAccessPathRepository.getEntriesForCategory(category1.getTableId(), category1.getCategoryId());
         List<Integer> category2Entries = dataAccessPathRepository.getEntriesForCategory(category2.getTableId(), category2.getCategoryId());
 
-        for (int index = 0; index < category2Entries.size(); index++) {
+        for (int index = 0; index < category2Entries.size(); index++)
+        {
             EntryEntity entry1 = tableEntryRepository.findTableEntry(category1.getTableId(), category1Entries.get(index));
             EntryEntity entry2 = tableEntryRepository.findTableEntry(category2.getTableId(), category2Entries.get(index));
 
             String data1 = entry1.getData();
             String data2 = entry2.getData();
 
-            switch (operationType) {
+            switch (operationType)
+            {
                 case MAX:
                     data1 = OperationUtils.max(data1, data2, category1.getType());
                     break;

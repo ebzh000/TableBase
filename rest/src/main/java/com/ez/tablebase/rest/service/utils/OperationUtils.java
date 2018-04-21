@@ -11,7 +11,10 @@ package com.ez.tablebase.rest.service.utils;
 import com.ez.tablebase.rest.model.DataType;
 
 import java.math.BigDecimal;
-import java.text.*;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +28,8 @@ public class OperationUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC)) {
+        if (dataType.equals(DataType.NUMERIC))
+        {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
@@ -37,12 +41,13 @@ public class OperationUtils
                 return int1.toString();
         }
 
-        else if (dataType.equals(DataType.DATE)) {
+        else if (dataType.equals(DataType.DATE))
+        {
             Date date1 = convertToDate(data1);
             Date date2 = convertToDate(data2);
 
             String dateFormat = TimestampUtils.determineDateFormat(data1);
-            if(dateFormat == null)
+            if (dateFormat == null)
                 throw new ParseException("Failed to parse date string", 0);
 
             DateFormat df = new SimpleDateFormat(dateFormat);
@@ -54,19 +59,21 @@ public class OperationUtils
                 return df.format(date1);
         }
 
-        else if (dataType.equals(DataType.PERCENT)) {
-           Double percentage1 = decimalFormat.parse(data1).doubleValue();
-           Double percentage2 = decimalFormat.parse(data2).doubleValue();
+        else if (dataType.equals(DataType.PERCENT))
+        {
+            Double percentage1 = decimalFormat.parse(data1).doubleValue();
+            Double percentage2 = decimalFormat.parse(data2).doubleValue();
 
-           if (percentage1 > percentage2)
-               return decimalFormat.format(percentage1);
-           else if (percentage1 < percentage2)
-               return decimalFormat.format(percentage2);
-           else
-               return decimalFormat.format(percentage1);
+            if (percentage1 > percentage2)
+                return decimalFormat.format(percentage1);
+            else if (percentage1 < percentage2)
+                return decimalFormat.format(percentage2);
+            else
+                return decimalFormat.format(percentage1);
         }
 
-        else if (dataType.equals(DataType.CURRENCY)) {
+        else if (dataType.equals(DataType.CURRENCY))
+        {
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
@@ -87,7 +94,8 @@ public class OperationUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC)) {
+        if (dataType.equals(DataType.NUMERIC))
+        {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
@@ -99,12 +107,13 @@ public class OperationUtils
                 return int1.toString();
         }
 
-        else if (dataType.equals(DataType.DATE)) {
+        else if (dataType.equals(DataType.DATE))
+        {
             Date date1 = convertToDate(data1);
             Date date2 = convertToDate(data2);
 
             String dateFormat = TimestampUtils.determineDateFormat(data1);
-            if(dateFormat == null)
+            if (dateFormat == null)
                 throw new ParseException("Failed to parse date string", 0);
 
             DateFormat df = new SimpleDateFormat(dateFormat);
@@ -116,7 +125,8 @@ public class OperationUtils
                 return df.format(date1);
         }
 
-        else if (dataType.equals(DataType.PERCENT)) {
+        else if (dataType.equals(DataType.PERCENT))
+        {
             Double percentage1 = decimalFormat.parse(data1).doubleValue();
             Double percentage2 = decimalFormat.parse(data2).doubleValue();
 
@@ -128,7 +138,8 @@ public class OperationUtils
                 return decimalFormat.format(percentage1);
         }
 
-        else if (dataType.equals(DataType.CURRENCY)) {
+        else if (dataType.equals(DataType.CURRENCY))
+        {
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
@@ -149,7 +160,8 @@ public class OperationUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC)) {
+        if (dataType.equals(DataType.NUMERIC))
+        {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
@@ -158,16 +170,18 @@ public class OperationUtils
             return mean.toString();
         }
 
-        else if (dataType.equals(DataType.PERCENT)) {
+        else if (dataType.equals(DataType.PERCENT))
+        {
             Double percentage1 = decimalFormat.parse(data1).doubleValue();
             Double percentage2 = decimalFormat.parse(data2).doubleValue();
 
-            Double mean = (percentage1 + percentage2)/2;
+            Double mean = (percentage1 + percentage2) / 2;
 
             return decimalFormat.format(mean);
         }
 
-        else if (dataType.equals(DataType.CURRENCY)) {
+        else if (dataType.equals(DataType.CURRENCY))
+        {
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
@@ -183,7 +197,8 @@ public class OperationUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC)) {
+        if (dataType.equals(DataType.NUMERIC))
+        {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
@@ -192,7 +207,8 @@ public class OperationUtils
             return mean.toString();
         }
 
-        else if (dataType.equals(DataType.PERCENT)) {
+        else if (dataType.equals(DataType.PERCENT))
+        {
             Double percentage1 = decimalFormat.parse(data1).doubleValue();
             Double percentage2 = decimalFormat.parse(data2).doubleValue();
 
@@ -201,7 +217,8 @@ public class OperationUtils
             return decimalFormat.format(mean);
         }
 
-        else if (dataType.equals(DataType.CURRENCY)) {
+        else if (dataType.equals(DataType.CURRENCY))
+        {
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
@@ -217,7 +234,8 @@ public class OperationUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC)) {
+        if (dataType.equals(DataType.NUMERIC))
+        {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
@@ -226,7 +244,8 @@ public class OperationUtils
             return mean.toString();
         }
 
-        else if (dataType.equals(DataType.PERCENT)) {
+        else if (dataType.equals(DataType.PERCENT))
+        {
             Double percentage1 = decimalFormat.parse(data1).doubleValue();
             Double percentage2 = decimalFormat.parse(data2).doubleValue();
 
@@ -235,7 +254,8 @@ public class OperationUtils
             return decimalFormat.format(mean);
         }
 
-        else if (dataType.equals(DataType.CURRENCY)) {
+        else if (dataType.equals(DataType.CURRENCY))
+        {
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
@@ -249,14 +269,14 @@ public class OperationUtils
 
     public static String concatenateString(String data1, String data2, byte type)
     {
-       return data1 + " " + data2;
+        return data1 + " " + data2;
     }
 
     private static Date convertToDate(String data) throws ParseException
     {
         Date date = TimestampUtils.parse(data);
 
-        if(date == null)
+        if (date == null)
             throw new ParseException("Failed to parse date", 0);
 
         return date;
@@ -266,10 +286,10 @@ public class OperationUtils
     {
         String value = null;
         Matcher currMatcher = currencyRegExp.matcher(data);
-        if(currMatcher.find())
+        if (currMatcher.find())
             value = currMatcher.group();
 
-        if(value == null)
+        if (value == null)
             throw new ParseException("Failed to parse currency string", 0);
 
         return new BigDecimal(value);
@@ -278,7 +298,7 @@ public class OperationUtils
     private static String formatCurrencyValue(BigDecimal data, String originalData)
     {
         Matcher currMatcher = currencyRegExp.matcher(originalData);
-        if(currMatcher.find())
+        if (currMatcher.find())
             return currMatcher.replaceFirst(data.toString());
         else
             return originalData;

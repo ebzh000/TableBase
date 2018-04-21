@@ -18,7 +18,7 @@ public interface TableEntryRepository extends PagingAndSortingRepository<EntryEn
     List<EntryEntity> findAllTableEntries(@Param("tableId") int tableId);
 
     @Query(value = "SELECT * FROM table_data WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
-    EntryEntity findTableEntry(@Param("tableId") int tableId, @Param("entryId")  int entryId);
+    EntryEntity findTableEntry(@Param("tableId") int tableId, @Param("entryId") int entryId);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE table_data SET data = :entry WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)

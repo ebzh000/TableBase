@@ -5,8 +5,9 @@ package com.ez.tablebase.rest.controller;
  */
 
 import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.requests.CategoryRequest;
+import com.ez.tablebase.rest.model.requests.CategoryCreateRequest;
 import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
+import com.ez.tablebase.rest.model.requests.CategoryUpdateRequest;
 import com.ez.tablebase.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +26,8 @@ public class CategoryController
         this.categoryService = categoryService;
     }
 
-    @PostMapping(value = "/categories/create")
-    Object createCategories(@PathVariable int tableId, @RequestBody CategoryRequest request)
-    {
-        return null;
-    }
-
     @PostMapping(value = "/category/create")
-    Object createCategory(@PathVariable int tableId, @RequestBody CategoryRequest request)
+    Object createCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request)
     {
         request.setTableId(tableId);
         return categoryService.createCategory(request);
@@ -51,7 +46,7 @@ public class CategoryController
     }
 
     @PostMapping(value = "/category/{categoryId}")
-    Object updateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryRequest request)
+    Object updateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryUpdateRequest request)
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
@@ -64,7 +59,7 @@ public class CategoryController
         categoryService.duplicateCategory(tableId, categoryId);
     }
 
-    @PostMapping(value ="/category/combine")
+    @PostMapping(value = "/category/combine")
     Object combineCategory(@RequestBody CategoryCombineRequest request) throws ParseException
     {
         return categoryService.combineCategory(request);

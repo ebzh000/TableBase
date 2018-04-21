@@ -13,7 +13,7 @@ public class TableEntity implements Serializable
 {
     @Id
     @Column(name = "table_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tableId;
 
     @Column(name = "user_id")

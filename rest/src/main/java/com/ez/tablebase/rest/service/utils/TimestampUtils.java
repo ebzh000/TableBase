@@ -18,7 +18,8 @@ public final class TimestampUtils
 {
     //TODO: Need to add support for timezones
 
-    private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {{
+    private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>()
+    {{
         put("^\\d{8}$", "yyyyMMdd");
         put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
         put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
@@ -48,15 +49,17 @@ public final class TimestampUtils
      * Parse the given date string to date object and return a date instance based on the given
      * date string. This makes use of the determineDateFormat function to determine
      * the SimpleDateFormat pattern to be used for parsing.
+     *
      * @param dateString The date string to be parsed to date object.
      * @return The parsed date object.
      * @throws ParseException If the date format pattern of the given date string is unknown, or if
-     * the given date string or its actual date is invalid based on the date format pattern.
+     *                        the given date string or its actual date is invalid based on the date format pattern.
      */
     public static Date parse(String dateString) throws ParseException
     {
         String dateFormat = determineDateFormat(dateString);
-        if (dateFormat == null) {
+        if (dateFormat == null)
+        {
             throw new ParseException("Unknown date format.", 0);
         }
         return parse(dateString, dateFormat);
@@ -65,14 +68,16 @@ public final class TimestampUtils
     /**
      * Validate the actual date of the given date string based on the given date format pattern and
      * return a date instance based on the given date string.
+     *
      * @param dateString The date string.
      * @param dateFormat The date format pattern which should respect the SimpleDateFormat rules.
      * @return The parsed date object.
      * @throws ParseException If the given date string or its actual date is invalid based on the
-     * given date format pattern.
+     *                        given date format pattern.
      * @see SimpleDateFormat
      */
-    private static Date parse(String dateString, String dateFormat) throws ParseException {
+    private static Date parse(String dateString, String dateFormat) throws ParseException
+    {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
         simpleDateFormat.setLenient(false); // Don't automatically convert invalid date.
         return simpleDateFormat.parse(dateString);
@@ -81,13 +86,17 @@ public final class TimestampUtils
     /**
      * Determine SimpleDateFormat pattern matching with the given date string. Returns null if
      * format is unknown. You can simply extend DateUtil with more formats if needed.
+     *
      * @param dateString The date string to determine the SimpleDateFormat pattern for.
      * @return The matching SimpleDateFormat pattern, or null if format is unknown.
      * @see SimpleDateFormat
      */
-    public static String determineDateFormat(String dateString) {
-        for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
-            if (dateString.toLowerCase().matches(regexp)) {
+    public static String determineDateFormat(String dateString)
+    {
+        for (String regexp : DATE_FORMAT_REGEXPS.keySet())
+        {
+            if (dateString.toLowerCase().matches(regexp))
+            {
                 return DATE_FORMAT_REGEXPS.get(regexp);
             }
         }

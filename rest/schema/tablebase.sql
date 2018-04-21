@@ -38,7 +38,6 @@ CREATE TABLE table_base.data_access_path (
   category_id INT NOT NULL,
   tree_id INT NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE KEY (table_id, entry_id, category_id),
   CONSTRAINT table_id_fk FOREIGN KEY (table_id) REFERENCES table_base.table_list(table_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT entry_id_fk FOREIGN KEY (entry_id) REFERENCES table_base.table_data(entry_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT category_id_fk FOREIGN KEY (category_id) REFERENCES table_base.categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE

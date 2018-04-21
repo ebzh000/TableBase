@@ -4,25 +4,30 @@ package com.ez.tablebase.rest.service;
  * Created by ErikZ on 27/11/2017.
  */
 
-import com.ez.tablebase.rest.common.*;
-import com.ez.tablebase.rest.service.utils.CategoryUtils;
-import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
-import com.ez.tablebase.rest.service.utils.TableEntryUtils;
+import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
+import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
-import com.ez.tablebase.rest.model.*;
+import com.ez.tablebase.rest.model.Category;
+import com.ez.tablebase.rest.model.OperationType;
 import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.requests.CategoryRequest;
+import com.ez.tablebase.rest.model.requests.CategoryCreateRequest;
 import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
+import com.ez.tablebase.rest.model.requests.CategoryUpdateRequest;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
+import com.ez.tablebase.rest.service.utils.CategoryUtils;
+import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
+import com.ez.tablebase.rest.service.utils.TableEntryUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @javax.transaction.Transactional
@@ -41,13 +46,13 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public Category createCategory(CategoryRequest request)
+    public Category createCategory(CategoryCreateRequest request)
     {
         CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
         CategoryEntity parentCategory = categoryUtils.validateCategory(category.getTableId(), category.getParentId());
 
         // Creating/Updating data access paths and entries
-        categoryUtils.createCategoryDAPsAndEntries(category, parentCategory);
+        categoryUtils.createCategoryDAPsAndEntries(category, parentCategory, request.isLinkChildren());
         return Category.buildModel(category);
     }
 
@@ -71,18 +76,37 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public Category updateCategory(CategoryRequest request)
+    public Category updateCategory(CategoryUpdateRequest request)
     {
         CategoryEntity category = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
         CategoryEntity oldParent = categoryUtils.validateCategory(category.getTableId(), category.getParentId());
         CategoryEntity newParent = categoryUtils.validateCategory(category.getTableId(), request.getParentId());
 
-        categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
+        if(!Objects.equals(categoryUtils.getTreeId(category), categoryUtils.getTreeId(newParent)))
+            throw new InvalidOperationException("INVALID OPERATION! Unable to update current category's parent to a new parent that is in another category tree");
 
-        // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
-        if(!newParent.getCategoryId().equals(oldParent.getCategoryId()))
+        if (newParent.getType() != category.getType())
+            throw new IncompatibleCategoryTypeException("New parent and select category have incompatible types");
+
+        if (!newParent.getCategoryId().equals(oldParent.getCategoryId()))
+        {
+            // Check if the new parent has any children. If not, create a child category for the new parent and update all data access paths
+            List<CategoryEntity> newParentChildren = categoryUtils.findChildren(newParent.getTableId(), newParent.getCategoryId());
+            if (newParentChildren.size() == 0)
+            {
+                CategoryEntity newChildCategory = categoryUtils.createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getType());
+                dapUtils.updateDataAccessPaths(newChildCategory, newParent, categoryUtils.getTreeId(newParent));
+            }
+
+            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
+
+            // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
             dapUtils.updateDataAccessPaths(category, oldParent, newParent);
+        }
+        else
+            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
 
+        category = categoryUtils.findCategory(category.getTableId(), category.getCategoryId());
         return Category.buildModel(category);
     }
 

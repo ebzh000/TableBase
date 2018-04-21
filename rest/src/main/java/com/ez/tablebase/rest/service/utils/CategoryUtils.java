@@ -16,7 +16,9 @@ import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class CategoryUtils extends BaseUtils
 {
@@ -26,21 +28,9 @@ public class CategoryUtils extends BaseUtils
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
-    public void createCategoryDAPsAndEntries(CategoryEntity category, CategoryEntity parentCategory)
+    public void createCategoryDAPsAndEntries(CategoryEntity category, CategoryEntity parentCategory, boolean linkChildren)
     {
-        // We need to create the entries and data access paths related to the new category
-        List<CategoryEntity> rootCategories = findRootNodes(category.getTableId());
-        CategoryEntity category1 = rootCategories.get(0);
-        CategoryEntity category2 = rootCategories.get(1);
-
-        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
-        List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
-        List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
-        Integer treeId = null;
-        if (categoryList1.contains(category.getCategoryId()))
-            treeId = 1;
-        else if (categoryList2.contains(category.getCategoryId()))
-            treeId = 2;
+        Integer treeId = getTreeId(category);
 
         // Need to check if the parent category has no children. This implies that the parentId currently has DAPs and Entries initialised.
         // Which then implies that we need to update the DAPs to include the new category
@@ -51,13 +41,43 @@ public class CategoryUtils extends BaseUtils
         // There are other children for the parent, we must create new DAPs and Entries with relation to the correct tree
         if (children.size() != 0)
         {
-            Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(category1);
-            Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(category2);
+            // If we want to link the current children of the parent category to the new category,
+            // we need to get all the children to point to the new category and update the current data access paths containing the child category
+            if (linkChildren)
+            {
+                for (CategoryEntity child : children)
+                {
+                    updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), category.getCategoryId(), child.getType());
 
-            if (categoryList1.contains(category.getCategoryId()))
-                initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2, treeId);
-            else if (categoryList2.contains(category.getCategoryId()))
-                initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1, treeId);
+                    List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(category.getTableId(), category.getCategoryId());
+                    List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
+
+                    for (Integer entryId : affectedEntries)
+                        affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, treeId));
+
+                    for (List<DataAccessPathEntity> dap : affectedPaths)
+                    {
+                        Integer tableId = dap.get(0).getTableId();
+                        Integer entryId = dap.get(0).getEntryId();
+
+                        createDataAccessPath(tableId, entryId, category.getCategoryId(), treeId);
+                    }
+                }
+            }
+
+            // If we don't want to link the current children of the parent category to the new category,
+            // we will then create a new child category for the parent
+            else
+            {
+                List<CategoryEntity> rootNodes = findRootNodes(category.getTableId());
+                Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(rootNodes.get(0));
+                Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(rootNodes.get(1));
+
+                if (treeId == 1)
+                    initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2, treeId);
+                else if (treeId == 2)
+                    initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1, treeId);
+            }
         }
 
         // Since the parent category has no children we must then update the data access paths that end with the parent category
@@ -74,7 +94,8 @@ public class CategoryUtils extends BaseUtils
         List<Integer> affectedCategories = getAllCategoryChildren(entity.getTableId(), rootCategoryId);
 
         List<CategoryEntity> children = categoryRepository.findChildren(entity.getTableId(), entity.getCategoryId());
-        if (!children.isEmpty()) {
+        if (!children.isEmpty())
+        {
             // If the first child is not null then we must recursively duplicate the children of this node
             if (children.get(0) != null)
                 for (CategoryEntity child : children)
@@ -85,15 +106,19 @@ public class CategoryUtils extends BaseUtils
                 // 2. Loop through
                 //    a. Get entry for DAP
                 //    b. Clone the entry and then the new DAP
-            else {
+            else
+            {
                 List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(entity.getTableId(), entity.getCategoryId());
-                if (!entries.isEmpty()) {
-                    for (Integer entry : entries) {
+                if (!entries.isEmpty())
+                {
+                    for (Integer entry : entries)
+                    {
                         EntryEntity newEntry = duplicateEntry(entity.getTableId(), entry);
 
                         // Need to get full path of the current entry
                         List<DataAccessPathEntity> origPath = dataAccessPathRepository.getEntryAccessPath(entity.getTableId(), entry);
-                        for (DataAccessPathEntity pathEntity : origPath) {
+                        for (DataAccessPathEntity pathEntity : origPath)
+                        {
                             // Duplicate DataAccessPath
                             DataAccessPathEntity newPath = new DataAccessPathEntity();
                             newPath.setEntryId(newEntry.getEntryId());

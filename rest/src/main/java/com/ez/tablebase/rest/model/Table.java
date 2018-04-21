@@ -14,7 +14,7 @@ public class Table extends ResourceSupport
     private String tableName;
     private String tags;
     private boolean isPublic;
-    
+
     public int getTableId()
     {
         return tableId;

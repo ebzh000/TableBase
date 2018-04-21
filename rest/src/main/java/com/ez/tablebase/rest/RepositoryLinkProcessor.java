@@ -1,13 +1,12 @@
 package com.ez.tablebase.rest;
 
 
+import com.ez.tablebase.rest.controller.TableController;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
 
-import com.ez.tablebase.rest.controller.TableController;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Component
 public class RepositoryLinkProcessor implements ResourceProcessor<RepositoryLinksResource>

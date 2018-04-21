@@ -2,7 +2,7 @@ package com.ez.tablebase.rest.model.requests;
 
 import com.ez.tablebase.rest.model.DataType;
 
-public class CategoryRequest
+public class CategoryUpdateRequest
 {
     private int categoryId;
     private int tableId;
@@ -60,10 +60,11 @@ public class CategoryRequest
         this.type = type;
     }
 
+
     @Override
     public String toString()
     {
-        return "CategoryRequest{" +
+        return "CategoryCreateRequest{" +
                 "categoryId=" + categoryId +
                 ", tableId=" + tableId +
                 ", attributeName='" + attributeName + '\'' +
