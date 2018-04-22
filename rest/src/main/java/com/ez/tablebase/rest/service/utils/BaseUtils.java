@@ -149,7 +149,7 @@ public class BaseUtils
         return treeMap;
     }
 
-    private List<List<CategoryEntity>> buildPaths(CategoryEntity node)
+    List<List<CategoryEntity>> buildPaths(CategoryEntity node)
     {
         if (node == null)
             return new LinkedList<>();
@@ -313,7 +313,7 @@ public class BaseUtils
 
     }
 
-    private List<Integer> getPathToCategory(CategoryEntity category, List<List<CategoryEntity>> pathList)
+    List<Integer> getPathToCategory(CategoryEntity category, List<List<CategoryEntity>> pathList)
     {
         List<Integer> pathToCategory = new LinkedList<>();
 

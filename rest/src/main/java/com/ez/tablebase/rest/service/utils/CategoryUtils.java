@@ -8,6 +8,7 @@ package com.ez.tablebase.rest.service.utils;
  * Created by ErikZ on 19/04/2018.
  */
 
+import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
@@ -15,10 +16,7 @@ import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
-import org.hibernate.Session;
-import org.springframework.transaction.annotation.Propagation;
 
-import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -89,55 +87,99 @@ public class CategoryUtils extends BaseUtils
             updateDataAccessPaths(category, parentCategory, treeId);
     }
 
-    public void duplicateCategories(CategoryEntity entity, Integer newParentId, Integer rootCategoryId)
+    public void duplicateCategories(CategoryEntity entity, Integer newParentId)
     {
         CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getType());
 
-        // Get the all children that are being duplicated so we can then duplicate the dataAccessPaths correctly.
-        List<Integer> affectedCategories = getAllCategoryChildren(entity.getTableId(), rootCategoryId);
+        List<CategoryEntity> children = findChildren(entity.getTableId(), entity.getCategoryId());
 
-        List<CategoryEntity> children = categoryRepository.findChildren(entity.getTableId(), entity.getCategoryId());
-        if (!children.isEmpty())
+        // If the first child is not null then we must recursively duplicate the children of this node
+        if (children.size() != 0)
+            for (CategoryEntity child : children)
+                duplicateCategories(child, newCategory.getCategoryId());
+
+            // If the first child is null then we must now duplicate all entries for each DataAccessPaths (DAP) that ends with this child's category_id
+            // 1. Get all DAPs that end with this category
+            // 2. Loop through
+            //    a. Get entry for DAP
+            //    b. Clone the entry and then the new DAP
+        else
         {
-            // If the first child is not null then we must recursively duplicate the children of this node
-            if (children.get(0) != null)
-                for (CategoryEntity child : children)
-                    duplicateCategories(child, newCategory.getCategoryId(), rootCategoryId);
-
-                // If the first child is null then we must now duplicate all entries for each DataAccessPaths (DAP) that ends with this child's category_id
-                // 1. Get all DAPs that end with this category
-                // 2. Loop through
-                //    a. Get entry for DAP
-                //    b. Clone the entry and then the new DAP
-            else
+            List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(entity.getTableId(), entity.getCategoryId());
+            if (!entries.isEmpty())
             {
-                List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(entity.getTableId(), entity.getCategoryId());
-                if (!entries.isEmpty())
+                for (Integer entry : entries)
                 {
-                    for (Integer entry : entries)
-                    {
-                        EntryEntity newEntry = duplicateEntry(entity.getTableId(), entry);
+                    EntryEntity newEntry = duplicateEntry(entity.getTableId(), entry);
 
-                        // Need to get full path of the current entry
-                        List<DataAccessPathEntity> origPath = dataAccessPathRepository.getEntryAccessPath(entity.getTableId(), entry);
-                        for (DataAccessPathEntity pathEntity : origPath)
-                        {
-                            Integer categoryId = (affectedCategories.contains(pathEntity.getCategoryId())) ? newCategory.getCategoryId() : pathEntity.getCategoryId();
-                            // Duplicate DataAccessPath
-                            createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, pathEntity.getTreeId());
-                        }
+                    // Get the path to the new leaf node
+                    List<CategoryEntity> rootCategories = findRootNodes(newCategory.getTableId());
+                    CategoryEntity category1 = rootCategories.get(0);
+                    CategoryEntity category2 = rootCategories.get(1);
+
+                    // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
+                    List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
+                    List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
+                    List<List<CategoryEntity>> pathList;
+                    Integer treeId;
+
+                    if (categoryList1.contains(newCategory.getCategoryId()))
+                    {
+                        treeId = 1;
+                        pathList = buildPaths(category1);
                     }
+                    else if (categoryList2.contains(newCategory.getCategoryId()))
+                    {
+                        treeId = 2;
+                        pathList = buildPaths(category2);
+                    }
+                    else
+                        throw new ObjectNotFoundException("Provided category is not contained in either category lists");
+
+                    // Step 1 & 2 - Get a the path to the new and old parent category
+                    List<Integer> pathToNewLeafNode = getPathToCategory(newCategory, pathList);
+                    for (Integer categoryId : pathToNewLeafNode)
+                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, treeId);
+
+//                    // Need to get the affected paths from the selected category's tree and duplicate DAPs
+//                    List<DataAccessPathEntity> origPath = dataAccessPathRepository.getEntryAccessPathByTree(entity.getTableId(), entry, treeId);
+//                    for (DataAccessPathEntity pathEntity : origPath)
+//                    {
+//                        System.out.println(pathEntity.getTreeId());
+//                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), pathEntity.getTreeId());
+//                    }
+
+                    // Get the relative access paths to the selected category's tree and duplicate DAPs
+                    List<DataAccessPathEntity> accessPath = dataAccessPathRepository.getEntryAccessPathByTree(entity.getTableId(), entry, (treeId == 1) ? 2 : 1);
+                    for (DataAccessPathEntity pathEntity : accessPath)
+                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
                 }
             }
         }
     }
 
+    /*
+     * Get entries of both categories
+     *
+     * Perform Operation that can be one of: NO_OPERATION, COPY, THRESHOLD
+     *
+     * 1. Get Category A and a list of entries for Category A
+     * 2. Create new Category B (on the same level), Create Entries and Data Paths
+     * 3. Get a list of entries for Category B
+     *
+     * Since the entries are created in order from the first access leaf node down,
+     * we will start applying the operations from the entry with the smallest entry_id first
+     *
+     * 4. Apply Operation
+     *    a. NO_OPERATION - We do not apply any operations and skip this step
+     *    b. COPY - We copy the entry values from Category A to Category B
+     *    c. THRESHOLD - We will be doing a check, for each entry value, against the provided threshold.
+     *                   Category A will be designated to have the values under the threshold and
+     *                   Category B will hold everything greater and equal to the threshold.
+     */
     public void splitCategory(CategoryEntity category, CategoryEntity newCategory, String threshold)
     {
-        // Get entries of both categories
 
-        // Perform Operation that can be one of: NO_OPERATION, COPY, THRESHOLD
-        // This will involve moving the
     }
 
     /*
@@ -153,7 +195,7 @@ public class CategoryUtils extends BaseUtils
     public void deleteCategory(CategoryEntity category, boolean deleteChildren)
     {
         CategoryEntity parentCategory = validateCategory(category.getTableId(), category.getParentId());
-        if(!deleteChildren)
+        if (!deleteChildren)
         {
             updateTableCategoriesForNewParent(category, parentCategory);
             deleteCategory(category);
@@ -174,7 +216,7 @@ public class CategoryUtils extends BaseUtils
             deleteCategory(category);
 
             List<CategoryEntity> parentChildren = findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
-            if(parentChildren.size() == 0)
+            if (parentChildren.size() == 0)
             {
                 List<CategoryEntity> rootNodes = findRootNodes(category.getTableId());
                 Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(rootNodes.get(0));
@@ -194,7 +236,7 @@ public class CategoryUtils extends BaseUtils
         List<CategoryEntity> children = findChildren(category.getTableId(), category.getCategoryId());
         if (children.size() != 0)
         {
-            for(CategoryEntity child : children)
+            for (CategoryEntity child : children)
                 updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), parentCategory.getCategoryId(), child.getType());
         }
     }
@@ -202,7 +244,7 @@ public class CategoryUtils extends BaseUtils
     private void deleteCategoryEntities(CategoryEntity category)
     {
         List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
-        for(Integer entry : entries)
+        for (Integer entry : entries)
             tableEntryRepository.delete(validateEntry(category.getTableId(), entry));
     }
 

@@ -45,6 +45,7 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
+    @Transactional
     public Category createCategory(CategoryCreateRequest request)
     {
         CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
@@ -83,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService
 
         if (!newParent.getCategoryId().equals(oldParent.getCategoryId()))
         {
-            if(!Objects.equals(categoryUtils.getTreeId(category), categoryUtils.getTreeId(newParent)))
+            if (!Objects.equals(categoryUtils.getTreeId(category), categoryUtils.getTreeId(newParent)))
                 throw new InvalidOperationException("INVALID OPERATION! Unable to update current category's parent to a new parent that is in another category tree");
 
             if (newParent.getType() != category.getType())
@@ -118,10 +119,11 @@ public class CategoryServiceImpl implements CategoryService
             throw new InvalidOperationException("Invalid Operation! Resultant table will no longer be an abstract table");
 
         // Need to prompt user with a confirmation if the selected category is the root node of the whole tree (categories are in a tree structure)
-        categoryUtils.duplicateCategories(category, category.getParentId(), category.getCategoryId());
+        categoryUtils.duplicateCategories(category, category.getParentId());
     }
 
     @Override
+    @Transactional
     public Category combineCategory(CategoryCombineRequest request) throws ParseException
     {
         CategoryEntity category1 = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId1());
@@ -134,7 +136,7 @@ public class CategoryServiceImpl implements CategoryService
         // In other words, we throw an exception when the selected category has children
         List<CategoryEntity> children1 = categoryUtils.findChildren(category1.getTableId(), category1.getCategoryId());
         List<CategoryEntity> children2 = categoryUtils.findChildren(category2.getTableId(), category2.getCategoryId());
-        if (children1.get(0) != null || children2.get(0) != null)
+        if (children1.size() != 0 || children2.size() != 0)
             throw new InvalidOperationException("Invalid Operation! Selected categories must not have any subcategories");
 
         categoryUtils.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId(), category1.getType());
