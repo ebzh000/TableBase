@@ -60,19 +60,22 @@ public class CategoryController
     }
 
     @PostMapping(value = "/category/combine")
-    Object combineCategory(@RequestBody CategoryCombineRequest request) throws ParseException
+    Object combineCategory(@PathVariable int tableId, @RequestBody CategoryCombineRequest request) throws ParseException
     {
+        request.setTableId(tableId);
         return categoryService.combineCategory(request);
     }
 
-    @PostMapping(value = "/category/split")
-    void splitCategory(@RequestBody CategorySplitRequest request)
+    @PostMapping(value = "/category/split/{categoryId}")
+    void splitCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategorySplitRequest request) throws ParseException
     {
+        request.setTableId(tableId);
+        request.setCategoryId(categoryId);
         categoryService.splitCategory(request);
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
-    void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "deleteChildren", required = true) boolean deleteChildren)
+    void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "deleteChildren") boolean deleteChildren)
     {
         categoryService.deleteCategory(tableId, categoryId, deleteChildren);
     }

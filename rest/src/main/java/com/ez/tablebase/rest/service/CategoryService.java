@@ -27,7 +27,7 @@ public interface CategoryService
 
     Category combineCategory(CategoryCombineRequest request) throws ParseException;
 
-    void splitCategory(CategorySplitRequest request);
+    void splitCategory(CategorySplitRequest request) throws ParseException;
 
     void deleteCategory(int tableId, int categoryId, boolean deleteChildren);
 }

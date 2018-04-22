@@ -61,6 +61,8 @@ public class TableEntryUtils extends BaseUtils
                     break;
                 case NO_OPERATION:
                     break;
+                default:
+                    break;
             }
 
             tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), data1);

@@ -12,17 +12,26 @@ import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
+import com.ez.tablebase.rest.model.DataType;
+import com.ez.tablebase.rest.model.OperationType;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CategoryUtils extends BaseUtils
 {
+    private static DecimalFormat decimalFormat = new DecimalFormat("0.0#%");
+    private static final Pattern currencyRegExp = Pattern.compile("[^0-9\\.,\\s]*");
 
     public CategoryUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
@@ -141,14 +150,6 @@ public class CategoryUtils extends BaseUtils
                     for (Integer categoryId : pathToNewLeafNode)
                         createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, treeId);
 
-//                    // Need to get the affected paths from the selected category's tree and duplicate DAPs
-//                    List<DataAccessPathEntity> origPath = dataAccessPathRepository.getEntryAccessPathByTree(entity.getTableId(), entry, treeId);
-//                    for (DataAccessPathEntity pathEntity : origPath)
-//                    {
-//                        System.out.println(pathEntity.getTreeId());
-//                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), pathEntity.getTreeId());
-//                    }
-
                     // Get the relative access paths to the selected category's tree and duplicate DAPs
                     List<DataAccessPathEntity> accessPath = dataAccessPathRepository.getEntryAccessPathByTree(entity.getTableId(), entry, (treeId == 1) ? 2 : 1);
                     for (DataAccessPathEntity pathEntity : accessPath)
@@ -159,27 +160,99 @@ public class CategoryUtils extends BaseUtils
     }
 
     /*
-     * Get entries of both categories
-     *
-     * Perform Operation that can be one of: NO_OPERATION, COPY, THRESHOLD
-     *
-     * 1. Get Category A and a list of entries for Category A
-     * 2. Create new Category B (on the same level), Create Entries and Data Paths
-     * 3. Get a list of entries for Category B
+     * 1. Get a list of entries for Category A
+     * 2. Get a list of entries for Category B
      *
      * Since the entries are created in order from the first access leaf node down,
      * we will start applying the operations from the entry with the smallest entry_id first
      *
-     * 4. Apply Operation
+     * 3. Apply Operation
      *    a. NO_OPERATION - We do not apply any operations and skip this step
      *    b. COPY - We copy the entry values from Category A to Category B
      *    c. THRESHOLD - We will be doing a check, for each entry value, against the provided threshold.
      *                   Category A will be designated to have the values under the threshold and
      *                   Category B will hold everything greater and equal to the threshold.
      */
-    public void splitCategory(CategoryEntity category, CategoryEntity newCategory, String threshold)
+    public void splitCategory(CategoryEntity categoryA, CategoryEntity categoryB, OperationType operationType, String threshold) throws ParseException
     {
+        List<Integer> categoryAEntries = dataAccessPathRepository.getEntriesForCategory(categoryA.getTableId(), categoryA.getCategoryId());
+        List<Integer> categoryBEntries = dataAccessPathRepository.getEntriesForCategory(categoryB.getTableId(), categoryB.getCategoryId());
 
+        for (int index = 0; index < categoryAEntries.size(); index++)
+        {
+            EntryEntity entry1 = tableEntryRepository.findTableEntry(categoryA.getTableId(), categoryAEntries.get(index));
+            EntryEntity entry2 = tableEntryRepository.findTableEntry(categoryB.getTableId(), categoryBEntries.get(index));
+
+            String data1 = entry1.getData();
+            DataType dataType = DataType.values()[categoryA.getType()];
+
+            switch (operationType)
+            {
+                case NO_OPERATION:
+                    break;
+                case COPY:
+                    tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), data1);
+                    break;
+                case THRESHOLD:
+                    applyThresholdOperation(entry1, entry2, data1, threshold, dataType);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void applyThresholdOperation(EntryEntity entry1, EntryEntity entry2, String data1, String threshold, DataType dataType) throws ParseException
+    {
+        if (dataType.equals(DataType.NUMERIC))
+        {
+            Integer integer1 = Integer.parseInt(data1);
+            Integer thresholdInteger = Integer.parseInt(threshold);
+
+            if (integer1 >= thresholdInteger)
+            {
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
+                tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), integer1.toString());
+            }
+        }
+
+        else if (dataType.equals(DataType.PERCENT))
+        {
+            Double percentage1 = decimalFormat.parse(data1).doubleValue();
+            Double thresholdPercentage = decimalFormat.parse(threshold).doubleValue();
+
+            if (percentage1 >= thresholdPercentage)
+            {
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
+                tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), decimalFormat.format(percentage1));
+            }
+        }
+
+        else if (dataType.equals(DataType.CURRENCY))
+        {
+            BigDecimal curr1 = extractCurrencyValue(data1);
+            BigDecimal thresholdCurr = extractCurrencyValue(threshold);
+            Integer result = curr1.compareTo(thresholdCurr);
+
+            if (result >= 0)
+            {
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
+                tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), data1);
+            }
+        }
+    }
+
+    private static BigDecimal extractCurrencyValue(String data) throws ParseException
+    {
+        String value = null;
+        Matcher currMatcher = currencyRegExp.matcher(data);
+        if (currMatcher.find())
+            value = currMatcher.group();
+
+        if (value == null)
+            throw new ParseException("Failed to parse currency string", 0);
+
+        return new BigDecimal(value);
     }
 
     /*

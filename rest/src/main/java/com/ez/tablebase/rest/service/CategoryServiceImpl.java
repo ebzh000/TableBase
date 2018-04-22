@@ -148,18 +148,21 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public void splitCategory(CategorySplitRequest request)
+    @Transactional
+    public void splitCategory(CategorySplitRequest request) throws ParseException
     {
         CategoryEntity category = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
 
         // We must restrict this operation to only leaf nodes of the category tree
         // In other words, we throw an exception when the selected category has children
         List<CategoryEntity> children = categoryUtils.findChildren(category.getTableId(), category.getCategoryId());
-        if (children.get(0) != null)
+        if (children.size() != 0)
             throw new InvalidOperationException("Invalid Operation! Selected category must not have any subcategories");
 
         CategoryEntity newCategory = categoryUtils.createCategory(category.getTableId(), request.getNewCategoryName(), category.getParentId(), category.getType());
-        categoryUtils.splitCategory(category, newCategory, request.getThreshold());
+        CategoryEntity parentCategory = categoryUtils.validateCategory(newCategory.getTableId(), newCategory.getParentId());
+        categoryUtils.createCategoryDAPsAndEntries(newCategory, parentCategory,false);
+        categoryUtils.splitCategory(category, newCategory, OperationType.values()[request.getDataOperationType()], request.getThreshold());
     }
 
     @Override

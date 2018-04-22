@@ -13,6 +13,7 @@ public class CategorySplitRequest
     private int tableId;
     private int categoryId;
     private String newCategoryName;
+    private byte dataOperationType;
     private String threshold;
 
     public int getTableId()
@@ -45,6 +46,16 @@ public class CategorySplitRequest
         this.newCategoryName = newCategoryName;
     }
 
+    public byte getDataOperationType()
+    {
+        return dataOperationType;
+    }
+
+    public void setDataOperationType(byte dataOperationType)
+    {
+        this.dataOperationType = dataOperationType;
+    }
+
     public String getThreshold()
     {
         return threshold;
@@ -62,6 +73,7 @@ public class CategorySplitRequest
                 "tableId=" + tableId +
                 ", categoryId=" + categoryId +
                 ", newCategoryName='" + newCategoryName + '\'' +
+                ", dataOperationType=" + dataOperationType +
                 ", threshold='" + threshold + '\'' +
                 '}';
     }
