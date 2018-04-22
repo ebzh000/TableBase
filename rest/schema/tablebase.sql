@@ -19,8 +19,7 @@ CREATE TABLE table_base.categories (
   parent_id INT,
   type INT NOT NULL,
   PRIMARY KEY (category_id, table_id),
-  CONSTRAINT cat_table_fk FOREIGN KEY (table_id) REFERENCES table_base.table_list(table_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT parent_id_fk FOREIGN KEY (parent_id) REFERENCES categories(category_id) ON DELETE CASCADE
+  CONSTRAINT cat_table_fk FOREIGN KEY (table_id) REFERENCES table_base.table_list(table_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 CREATE TABLE table_base.table_data (
@@ -40,7 +39,7 @@ CREATE TABLE table_base.data_access_path (
   PRIMARY KEY (id),
   CONSTRAINT table_id_fk FOREIGN KEY (table_id) REFERENCES table_base.table_list(table_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT entry_id_fk FOREIGN KEY (entry_id) REFERENCES table_base.table_data(entry_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT category_id_fk FOREIGN KEY (category_id) REFERENCES table_base.categories(category_id)
+  CONSTRAINT category_id_fk FOREIGN KEY (category_id) REFERENCES table_base.categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 INSERT INTO table_base.table_list (user_id, table_name, tags, public) VALUES (1, 'Quantifying Fuel-Saving Opportunities from Specific Driving', 'FuelSaving, Driving', true);

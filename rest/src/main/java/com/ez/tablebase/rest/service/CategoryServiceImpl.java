@@ -161,7 +161,7 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    @javax.transaction.Transactional
+    @Transactional
     public void deleteCategory(int tableId, int categoryId, boolean deleteChildren)
     {
         CategoryEntity categoryToDelete = categoryUtils.validateCategory(tableId, categoryId);

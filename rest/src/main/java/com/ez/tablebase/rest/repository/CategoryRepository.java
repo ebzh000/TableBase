@@ -19,7 +19,7 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
     CategoryEntity findCategory(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE categories SET attribute_name = :attributeName, parent_id = :parentId, type = :typeOrd WHERE table_id = :tableId AND category_id = :categoryId", nativeQuery = true)
+    @Query(value = "UPDATE CategoryEntity SET attribute_name = :attributeName, parent_id = :parentId, type = :typeOrd WHERE table_id = :tableId AND category_id = :categoryId")
     void updateTableCategory(@Param("tableId") int tableId, @Param("categoryId") int categoryId, @Param("attributeName") String attributeName, @Param("parentId") Integer parentId, @Param("typeOrd") byte type);
 
     @Query(value = "SELECT c.table_id, c.category_id, c.attribute_name, c.parent_id, c.type FROM categories p LEFT JOIN categories c ON c.parent_id = p.category_id WHERE p.table_id = :tableId AND p.category_id = :categoryId", nativeQuery = true)

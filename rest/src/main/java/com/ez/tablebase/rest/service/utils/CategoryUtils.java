@@ -15,6 +15,8 @@ import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
+import org.hibernate.Session;
+import org.springframework.transaction.annotation.Propagation;
 
 import javax.transaction.Transactional;
 import java.util.LinkedList;
@@ -153,13 +155,7 @@ public class CategoryUtils extends BaseUtils
         CategoryEntity parentCategory = validateCategory(category.getTableId(), category.getParentId());
         if(!deleteChildren)
         {
-            List<CategoryEntity> children = findChildren(category.getTableId(), category.getCategoryId());
-            if (children.size() != 0)
-            {
-                for(CategoryEntity child : children)
-                    updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), parentCategory.getCategoryId(), child.getType());
-            }
-
+            updateTableCategoriesForNewParent(category, parentCategory);
             deleteCategory(category);
         }
         else
@@ -168,6 +164,13 @@ public class CategoryUtils extends BaseUtils
             deleteCategoryEntities(category);
 
             // Delete selected category and all its children, along with related DAPs
+            List<Integer> children = getAllCategoryChildren(category.getTableId(), category.getCategoryId());
+            for (Integer child : children)
+            {
+                CategoryEntity childCategory = validateCategory(category.getTableId(), child);
+                deleteCategory(childCategory);
+            }
+
             deleteCategory(category);
 
             List<CategoryEntity> parentChildren = findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
@@ -186,8 +189,17 @@ public class CategoryUtils extends BaseUtils
         }
     }
 
-    @Transactional(value = Transactional.TxType.REQUIRES_NEW)
-    void deleteCategoryEntities(CategoryEntity category)
+    private void updateTableCategoriesForNewParent(CategoryEntity category, CategoryEntity parentCategory)
+    {
+        List<CategoryEntity> children = findChildren(category.getTableId(), category.getCategoryId());
+        if (children.size() != 0)
+        {
+            for(CategoryEntity child : children)
+                updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), parentCategory.getCategoryId(), child.getType());
+        }
+    }
+
+    private void deleteCategoryEntities(CategoryEntity category)
     {
         List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
         for(Integer entry : entries)
