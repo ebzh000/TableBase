@@ -12,6 +12,12 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Integer>
 {
+    @Query(value = "SELECT tree_id FROM categories WHERE table_id = :tableId", nativeQuery = true)
+    List<Integer> getTreeIds(@Param("tableId") int tableId);
+
+    @Query(value = "SELECT * FROM categories WHERE table_Id = :tableId AND parent_id IS NULL AND tree_id = :treeId", nativeQuery = true)
+    CategoryEntity getRootCategoryByTreeId(@Param("tableId") int tableId, @Param("treeId") int treeId);
+
     @Query(value = "SELECT * FROM categories WHERE table_id = :tableId ORDER BY table_id, category_id ASC", nativeQuery = true)
     List<CategoryEntity> findAllTableCategories(@Param("tableId") int tableId);
 

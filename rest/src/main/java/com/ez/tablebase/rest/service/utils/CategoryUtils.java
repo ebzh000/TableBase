@@ -32,16 +32,20 @@ public class CategoryUtils extends BaseUtils
 {
     private static DecimalFormat decimalFormat = new DecimalFormat("0.0#%");
     private static final Pattern currencyRegExp = Pattern.compile("[^0-9\\.,\\s]*");
+    private static final String EMPTY_STRING = "";
 
     public CategoryUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
+    public List<Integer> getTreeIds(Integer tableId)
+    {
+        return categoryRepository.getTreeIds(tableId);
+    }
+
     public void createCategoryDAPsAndEntries(CategoryEntity category, CategoryEntity parentCategory, boolean linkChildren)
     {
-        Integer treeId = getTreeId(category);
-
         // Need to check if the parent category has no children. This implies that the parentId currently has DAPs and Entries initialised.
         // Which then implies that we need to update the DAPs to include the new category
         List<CategoryEntity> children = findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
@@ -63,15 +67,10 @@ public class CategoryUtils extends BaseUtils
                     List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
 
                     for (Integer entryId : affectedEntries)
-                        affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, treeId));
+                        affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, category.getTreeId()));
 
                     for (List<DataAccessPathEntity> dap : affectedPaths)
-                    {
-                        Integer tableId = dap.get(0).getTableId();
-                        Integer entryId = dap.get(0).getEntryId();
-
-                        createDataAccessPath(tableId, entryId, category.getCategoryId(), treeId);
-                    }
+                        createDataAccessPath(category.getTableId(), dap.get(0).getEntryId(), category.getCategoryId(), category.getTreeId());
                 }
             }
 
@@ -79,26 +78,39 @@ public class CategoryUtils extends BaseUtils
             // we will then create a new child category for the parent
             else
             {
-                List<CategoryEntity> rootNodes = findRootNodes(category.getTableId());
-                Map<Integer, List<CategoryEntity>> treeMap1 = constructTreeMap(rootNodes.get(0));
-                Map<Integer, List<CategoryEntity>> treeMap2 = constructTreeMap(rootNodes.get(1));
+                Map<Integer, List<CategoryEntity>> currTreeMap = constructTreeMap(categoryRepository.getRootCategoryByTreeId(category.getTableId(), category.getTreeId()));
+                Integer numEntries = calculateNumberOfEntries(category.getTableId()) / currTreeMap.values().size();
 
-                if (treeId == 1)
-                    initialiseEntries(category, treeMap1.get(category.getCategoryId()), treeMap2);
-                else if (treeId == 2)
-                    initialiseEntries(category, treeMap2.get(category.getCategoryId()), treeMap1);
+                for (int count = 0; count < numEntries; count++)
+                {
+                    EntryEntity entry = createEntry(category.getTableId(), EMPTY_STRING);
+
+                    for (CategoryEntity categoryEntity : currTreeMap.get(category.getCategoryId()))
+                        createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId());
+
+                    List<Integer> treeIds = getTreeIds(category.getTableId());
+                    treeIds.remove(category.getTreeId());
+
+                    for (Integer treeId : treeIds)
+                    {
+                        CategoryEntity rootCategory = categoryRepository.getRootCategoryByTreeId(category.getTableId(), treeId);
+                        Map<Integer, List<CategoryEntity>> treeMap = constructTreeMap(rootCategory);
+
+                        initialiseDapsForEntries(category, entry, treeMap);
+                    }
+                }
             }
         }
 
         // Since the parent category has no children we must then update the data access paths that end with the parent category
         // to now end with the new category
         else
-            updateDataAccessPaths(category, parentCategory, treeId);
+            updateDataAccessPaths(category, parentCategory, category.getTreeId());
     }
 
     public void duplicateCategories(CategoryEntity entity, Integer newParentId)
     {
-        CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getType());
+        CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getType(), entity.getTreeId());
 
         List<CategoryEntity> children = findChildren(entity.getTableId(), entity.getCategoryId());
 

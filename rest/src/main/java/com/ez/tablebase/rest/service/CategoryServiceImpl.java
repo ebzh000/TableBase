@@ -21,6 +21,7 @@ import com.ez.tablebase.rest.repository.TableRepository;
 import com.ez.tablebase.rest.service.utils.CategoryUtils;
 import com.ez.tablebase.rest.service.utils.DataAccessPathUtils;
 import com.ez.tablebase.rest.service.utils.TableEntryUtils;
+import com.ez.tablebase.rest.service.utils.TableUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ import java.util.Objects;
 @Service
 public class CategoryServiceImpl implements CategoryService
 {
+    private TableUtils tableUtils;
     private CategoryUtils categoryUtils;
     private DataAccessPathUtils dapUtils;
     private TableEntryUtils entryUtils;
@@ -39,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService
     public CategoryServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository,
                                DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
+        this.tableUtils = new TableUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
         this.categoryUtils = new CategoryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
         this.dapUtils = new DataAccessPathUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
         this.entryUtils = new TableEntryUtils(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
@@ -46,10 +49,23 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     @Transactional
+    public Category createTopLevelCategory(CategoryCreateRequest request)
+    {
+        TableEntity table = tableUtils.validateTable(request.getTableId());
+        Integer treeId = categoryUtils.getTreeIds(table.getTableId()).size() + 1;
+        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), null, (byte) request.getType().ordinal(), treeId);
+
+        // Create data access paths?
+
+        return Category.buildModel(category);
+    }
+
+    @Override
+    @Transactional
     public Category createCategory(CategoryCreateRequest request)
     {
-        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
-        CategoryEntity parentCategory = categoryUtils.validateCategory(category.getTableId(), category.getParentId());
+        CategoryEntity parentCategory = categoryUtils.validateCategory(request.getTableId(), request.getParentId());
+        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), parentCategory.getCategoryId(), (byte) request.getType().ordinal(), parentCategory.getTreeId());
 
         // Creating/Updating data access paths and entries
         categoryUtils.createCategoryDAPsAndEntries(category, parentCategory, request.isLinkChildren());
@@ -84,7 +100,7 @@ public class CategoryServiceImpl implements CategoryService
 
         if (!newParent.getCategoryId().equals(oldParent.getCategoryId()))
         {
-            if (!Objects.equals(categoryUtils.getTreeId(category), categoryUtils.getTreeId(newParent)))
+            if (!Objects.equals(category.getTreeId(), newParent.getTreeId()))
                 throw new InvalidOperationException("INVALID OPERATION! Unable to update current category's parent to a new parent that is in another category tree");
 
             if (newParent.getType() != category.getType())
@@ -94,8 +110,8 @@ public class CategoryServiceImpl implements CategoryService
             List<CategoryEntity> newParentChildren = categoryUtils.findChildren(newParent.getTableId(), newParent.getCategoryId());
             if (newParentChildren.size() == 0)
             {
-                CategoryEntity newChildCategory = categoryUtils.createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getType());
-                dapUtils.updateDataAccessPaths(newChildCategory, newParent, categoryUtils.getTreeId(newParent));
+                CategoryEntity newChildCategory = categoryUtils.createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getType(), newParent.getTreeId());
+                dapUtils.updateDataAccessPaths(newChildCategory, newParent, newParent.getTreeId());
             }
 
             categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
@@ -159,7 +175,7 @@ public class CategoryServiceImpl implements CategoryService
         if (children.size() != 0)
             throw new InvalidOperationException("Invalid Operation! Selected category must not have any subcategories");
 
-        CategoryEntity newCategory = categoryUtils.createCategory(category.getTableId(), request.getNewCategoryName(), category.getParentId(), category.getType());
+        CategoryEntity newCategory = categoryUtils.createCategory(category.getTableId(), request.getNewCategoryName(), category.getParentId(), category.getType(), category.getTreeId());
         CategoryEntity parentCategory = categoryUtils.validateCategory(newCategory.getTableId(), newCategory.getParentId());
         categoryUtils.createCategoryDAPsAndEntries(newCategory, parentCategory,false);
         categoryUtils.splitCategory(category, newCategory, OperationType.values()[request.getDataOperationType()], request.getThreshold());

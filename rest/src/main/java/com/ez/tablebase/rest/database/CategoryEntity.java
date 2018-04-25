@@ -19,6 +19,9 @@ public class CategoryEntity implements Serializable
     @Column(name = "table_id", nullable = false)
     private Integer tableId;
 
+    @Column(name = "tree_id", nullable = false)
+    private Integer treeId;
+
     @Column(name = "attribute_name")
     private String attributeName;
 
@@ -46,6 +49,16 @@ public class CategoryEntity implements Serializable
     public void setTableId(Integer tableId)
     {
         this.tableId = tableId;
+    }
+
+    public Integer getTreeId()
+    {
+        return treeId;
+    }
+
+    public void setTreeId(Integer treeId)
+    {
+        this.treeId = treeId;
     }
 
     public String getAttributeName()
@@ -82,8 +95,9 @@ public class CategoryEntity implements Serializable
     public String toString()
     {
         return "CategoryEntity{" +
-                "categoryId=" + getCategoryId() +
-                ", tableId=" + getTableId() +
+                "categoryId=" + categoryId +
+                ", tableId=" + tableId +
+                ", treeId=" + treeId +
                 ", attributeName='" + attributeName + '\'' +
                 ", parentId=" + parentId +
                 ", type=" + type +

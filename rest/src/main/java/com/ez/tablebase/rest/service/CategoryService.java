@@ -15,6 +15,8 @@ import java.util.List;
 
 public interface CategoryService
 {
+    Category createTopLevelCategory(CategoryCreateRequest request);
+
     Category createCategory(CategoryCreateRequest request);
 
     List<Category> getTableCategories(int tableId);

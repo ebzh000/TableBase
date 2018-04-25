@@ -52,7 +52,7 @@ public class BaseUtils
         return categoryRepository.save(category);
     }
 
-    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type)
+    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type, Integer treeId)
     {
         TableEntity table = validateTable(tableId);
         CategoryEntity parent = (parentId == null) ? null : categoryRepository.findCategory(table.getTableId(), parentId);
@@ -62,6 +62,7 @@ public class BaseUtils
         entity.setAttributeName(attributeName);
         entity.setParentId((parent == null) ? null : parent.getCategoryId());
         entity.setType(type);
+        entity.setTreeId(treeId);
         categoryRepository.save(entity);
         entity = categoryRepository.findCategory(entity.getTableId(), entity.getCategoryId());
 
@@ -87,46 +88,36 @@ public class BaseUtils
         return tableEntryRepository.save(entry);
     }
 
+    Integer calculateNumberOfEntries (Integer tableId)
+    {
+        Integer numEntries = 1;
+
+        List<CategoryEntity> topLevelCategories = findRootNodes(tableId);
+        for (CategoryEntity rootNode : topLevelCategories)
+        {
+            Map<Integer,List<CategoryEntity>> treeMap = constructTreeMap(rootNode);
+            numEntries = numEntries * treeMap.keySet().size();
+        }
+
+        return numEntries;
+    }
+
     /**
      * Creates all required data access paths and entries
      *
      * @param entity       New category
-     * @param categoryPath Path to that category
+     * @param entry        The newly created entry
      * @param accessMap    The treemap of the access categories to the new category
      */
-    void initialiseEntries(CategoryEntity entity, List<CategoryEntity> categoryPath, Map<Integer, List<CategoryEntity>> accessMap)
+    void initialiseDapsForEntries(CategoryEntity entity, EntryEntity entry, Map<Integer, List<CategoryEntity>> accessMap)
     {
         Set<Integer> accessKeys = accessMap.keySet();
         for (Integer key : accessKeys)
         {
-            EntryEntity entry = createEntry(entity.getTableId(), EMPTY_STRING);
-
             // Create rows for path in access categories
             for (CategoryEntity accessCategory : accessMap.get(key))
                 createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId(), 2);
-
-            // Create rows for path in categories
-            for (CategoryEntity categoryEntity : categoryPath)
-                createDataAccessPath(entity.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), 1);
         }
-    }
-
-    public Integer getTreeId(CategoryEntity category)
-    {
-        List<CategoryEntity> rootCategories = findRootNodes(category.getTableId());
-        CategoryEntity category1 = rootCategories.get(0);
-        CategoryEntity category2 = rootCategories.get(1);
-
-        // By retrieving all children of the given root node, we are able to determine which tree the new category is located in
-        List<Integer> categoryList1 = getAllCategoryChildren(category1.getTableId(), category1.getCategoryId());
-        List<Integer> categoryList2 = getAllCategoryChildren(category2.getTableId(), category2.getCategoryId());
-
-        if (categoryList1.contains(category.getCategoryId()))
-            return 1;
-        else if (categoryList2.contains(category.getCategoryId()))
-            return 2;
-        else
-            throw new ObjectNotFoundException("Provided category is not contained in either category lists");
     }
 
     EntryEntity duplicateEntry(Integer tableId, Integer entryId)
