@@ -68,7 +68,7 @@ public class CategoryUtils extends BaseUtils
             }
 
             // If we don't want to link the current children of the parent category to the new category,
-            // we will then create a new child category for the parent
+            // we will then leave the new category as a new child and then create all DAPs and Entries
             else
                 initialiseEntries(category);
         }

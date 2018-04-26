@@ -104,14 +104,14 @@ public class BaseUtils
      * @param entry        The newly created entry
      * @param accessMap    The treemap of the access categories to the new category
      */
-    void initialiseDapsForEntries(CategoryEntity entity, EntryEntity entry, Map<Integer, List<CategoryEntity>> accessMap)
+    void initialiseDapsForEntries(CategoryEntity entity, EntryEntity entry, Map<Integer, List<CategoryEntity>> accessMap, Integer treeId)
     {
         Set<Integer> accessKeys = accessMap.keySet();
         for (Integer key : accessKeys)
         {
             // Create rows for path in access categories
             for (CategoryEntity accessCategory : accessMap.get(key))
-                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId(), 2);
+                createDataAccessPath(entity.getTableId(), entry.getEntryId(), accessCategory.getCategoryId(), treeId);
         }
     }
 
@@ -119,10 +119,10 @@ public class BaseUtils
     {
         Map<Integer, List<CategoryEntity>> currTreeMap = constructTreeMap(categoryRepository.getRootCategoryByTreeId(category.getTableId(), category.getTreeId()));
         Integer numEntries = calculateNumberOfEntries(category.getTableId()) / currTreeMap.values().size();
-
         for (int count = 0; count < numEntries; count++)
         {
             EntryEntity entry = createEntry(category.getTableId(), EMPTY_STRING);
+            System.out.println(entry.toString());
 
             for (CategoryEntity categoryEntity : currTreeMap.get(category.getCategoryId()))
                 createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId());
@@ -134,7 +134,7 @@ public class BaseUtils
                 CategoryEntity rootCategory = categoryRepository.getRootCategoryByTreeId(category.getTableId(), treeId);
                 Map<Integer, List<CategoryEntity>> treeMap = constructTreeMap(rootCategory);
 
-                initialiseDapsForEntries(category, entry, treeMap);
+                initialiseDapsForEntries(category, entry, treeMap, treeId);
             }
         }
     }
