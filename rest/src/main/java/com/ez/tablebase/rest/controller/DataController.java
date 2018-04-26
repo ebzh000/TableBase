@@ -27,13 +27,6 @@ public class DataController
         this.dataService = dataService;
     }
 
-    @PostMapping(value = "/entry/create")
-    public Entry createTableEntry(@PathVariable int tableId, DataRequest request)
-    {
-        request.setTableId(tableId);
-        return dataService.createTableEntry(request);
-    }
-
     @GetMapping(value = "/entries")
     public List<Entry> getTableEntries(@PathVariable int tableId)
     {

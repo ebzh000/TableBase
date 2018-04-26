@@ -37,19 +37,6 @@ public class DataServiceImpl implements DataService
     }
 
     @Override
-    public Entry createTableEntry(DataRequest request)
-    {
-        /*
-         * TODO : Need to figure out how to pass this endpoint a list of categories.
-         * This means how the GUI will grab all related categories and send them to the end point.
-         */
-        EntryEntity entity = entryUtils.createEntry(request.getTableId(), request.getData());
-        dapUtils.createPathsForEntry(request.getCategories(), entity);
-
-        return Entry.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public List<Entry> getTableEntries(int tableId)
     {

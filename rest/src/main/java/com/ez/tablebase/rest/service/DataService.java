@@ -11,8 +11,6 @@ import java.util.List;
 
 public interface DataService
 {
-    Entry createTableEntry(DataRequest request);
-
     List<Entry> getTableEntries(int tableId);
 
     Entry getTableEntry(int tableId, int entryId);

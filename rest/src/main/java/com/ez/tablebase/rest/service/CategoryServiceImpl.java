@@ -101,20 +101,13 @@ public class CategoryServiceImpl implements CategoryService
         if (!newParent.getCategoryId().equals(oldParent.getCategoryId()))
         {
             if (!Objects.equals(category.getTreeId(), newParent.getTreeId()))
-                throw new InvalidOperationException("INVALID OPERATION! Unable to update current category's parent to a new parent that is in another category tree");
+                throw new InvalidOperationException("INVALID OPERATION! Unable to update current category to become a new child of selected parent, as the new parent is in another category tree");
 
             if (newParent.getType() != category.getType())
                 throw new IncompatibleCategoryTypeException("New parent and select category have incompatible types");
 
-            // Check if the new parent has any children. If not, create a child category for the new parent and update all data access paths
-            List<CategoryEntity> newParentChildren = categoryUtils.findChildren(newParent.getTableId(), newParent.getCategoryId());
-            if (newParentChildren.size() == 0)
-            {
-                CategoryEntity newChildCategory = categoryUtils.createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getType(), newParent.getTreeId());
-                dapUtils.updateDataAccessPaths(newChildCategory, newParent, newParent.getTreeId());
-            }
-
-            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
+            // Update selected category to point at the new parent and along with other affected attributes
+            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), newParent.getCategoryId(), (byte) request.getType().ordinal());
 
             // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
             dapUtils.updateDataAccessPaths(category, oldParent, newParent);
