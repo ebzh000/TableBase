@@ -103,18 +103,13 @@ public class BaseUtils
         Integer numEntries = calculateNumberOfEntries(category.getTableId()) / currTreeMap.values().size();
         List<Integer> treeIds = getTreeIds(category.getTableId());
         treeIds.remove(category.getTreeId());
-        List<List<List<CategoryEntity>>> treePaths = new ArrayList<>();
+        List<List<List<CategoryEntity>>> treePaths = new LinkedList<>();
 
         for (Integer treeId : treeIds)
-        {
-            List<List<CategoryEntity>> paths = buildPaths(categoryRepository.getRootCategoryByTreeId(category.getTableId(), treeId));
-            treePaths.add(paths);
-        }
+            treePaths.add(buildPaths(categoryRepository.getRootCategoryByTreeId(category.getTableId(), treeId)));
 
         List<List<CategoryEntity>> permPaths = new ArrayList<>();
-        generatePermutations(treePaths, permPaths, 0, new ArrayList<>());
-
-        printPathList(permPaths);
+        generatePermutations(treePaths, permPaths, 0, new LinkedList<>());
 
         for (int count = 0; count < numEntries; count++)
         {
@@ -124,38 +119,28 @@ public class BaseUtils
             for (CategoryEntity categoryEntity : currTreeMap.get(category.getCategoryId()))
                 createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId());
 
-
-            for (Integer treeId : treeIds)
+            List<CategoryEntity> dapsToCreate = permPaths.get(count);
+            for(CategoryEntity pathEntity : dapsToCreate)
             {
-                CategoryEntity rootCategory = categoryRepository.getRootCategoryByTreeId(category.getTableId(), treeId);
-                Map<Integer, List<CategoryEntity>> treeMap = constructTreeMap(rootCategory);
-
-                Set<Integer> accessKeys = treeMap.keySet();
-                for (Integer key : accessKeys)
-                {
-                    // Create rows for path in access categories
-                    for (CategoryEntity accessCategory : treeMap.get(key))
-                        createDataAccessPath(category.getTableId(), entry.getEntryId(), accessCategory.getCategoryId(), treeId);
-                }
+                System.out.println("Creating: " + pathEntity.getTableId() + ", " + entry.getEntryId() + ", " + pathEntity.getCategoryId() + ", " + pathEntity.getTreeId());
+                createDataAccessPath(pathEntity.getTableId(), entry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
             }
         }
     }
 
-    void generatePermutations(List<List<List<CategoryEntity>>> lists, List<List<CategoryEntity>> result, int depth, List<CategoryEntity> current)
-    {
-        if(depth == lists.size())
-        {
-            result.add(current);
+    private static void generatePermutations(List<List<List<CategoryEntity>>> paths, List<List<CategoryEntity>> res, int d, List<CategoryEntity> current) {
+        // if depth equals number of original collections, final reached, add and return
+        if (d == paths.size()) {
+            res.add(current);
             return;
         }
 
-        for(int depth2 = 0; depth2 < lists.get(depth).size(); ++depth2)
-        {
-            for (int i = 0; i < lists.get(depth).get(depth2).size(); ++i)
-            {
-                current.add(lists.get(depth).get(depth2).get(i));
-                generatePermutations(lists, result, depth + 1, current);
-            }
+        // iterate from current collection and copy 'current' element N times, one for each element
+        List<List<CategoryEntity>> currentCollection = paths.get(d);
+        for (List<CategoryEntity> element : currentCollection) {
+            List<CategoryEntity> copy = new LinkedList<>(current);
+            copy.addAll(element);
+            generatePermutations(paths, res, d + 1, copy);
         }
     }
 
