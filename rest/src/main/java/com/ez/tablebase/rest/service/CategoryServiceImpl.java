@@ -108,7 +108,7 @@ public class CategoryServiceImpl implements CategoryService
 
             // Update selected category to point at the new parent and along with other affected attributes
             categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), newParent.getCategoryId(), (byte) request.getType().ordinal());
-
+            category = categoryUtils.findCategory(category.getTableId(), category.getCategoryId());
             // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
             dapUtils.updateDataAccessPaths(category, oldParent, newParent);
         }
@@ -179,6 +179,8 @@ public class CategoryServiceImpl implements CategoryService
     public void deleteCategory(int tableId, int categoryId, boolean deleteChildren)
     {
         CategoryEntity categoryToDelete = categoryUtils.validateCategory(tableId, categoryId);
+        if (categoryToDelete.getParentId() == null)
+            throw new InvalidOperationException("Invalid Operation! Selected category must not be the root node");
         categoryUtils.deleteCategory(categoryToDelete, deleteChildren);
     }
 }

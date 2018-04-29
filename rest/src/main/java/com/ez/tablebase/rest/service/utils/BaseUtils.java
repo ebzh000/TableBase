@@ -75,7 +75,7 @@ public class BaseUtils
         return dap;
     }
 
-    public EntryEntity createEntry(Integer tableId, String data)
+    EntryEntity createEntry(Integer tableId, String data)
     {
         EntryEntity entry = new EntryEntity();
         entry.setTableId(tableId);
@@ -83,7 +83,7 @@ public class BaseUtils
         return tableEntryRepository.save(entry);
     }
 
-    Integer calculateNumberOfEntries (Integer tableId)
+    private Integer calculateNumberOfEntries(Integer tableId)
     {
         Integer numEntries = 1;
 
@@ -114,15 +114,12 @@ public class BaseUtils
         for (int count = 0; count < numEntries; count++)
         {
             EntryEntity entry = createEntry(category.getTableId(), EMPTY_STRING);
-            System.out.println(entry.toString());
-
             for (CategoryEntity categoryEntity : currTreeMap.get(category.getCategoryId()))
                 createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId());
 
             List<CategoryEntity> dapsToCreate = permPaths.get(count);
             for(CategoryEntity pathEntity : dapsToCreate)
             {
-                System.out.println("Creating: " + pathEntity.getTableId() + ", " + entry.getEntryId() + ", " + pathEntity.getCategoryId() + ", " + pathEntity.getTreeId());
                 createDataAccessPath(pathEntity.getTableId(), entry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
             }
         }
@@ -153,7 +150,7 @@ public class BaseUtils
         return tableEntryRepository.save(newEntity);
     }
 
-    Map<Integer, List<CategoryEntity>> constructTreeMap(CategoryEntity node)
+    private Map<Integer, List<CategoryEntity>> constructTreeMap(CategoryEntity node)
     {
         Map<Integer, List<CategoryEntity>> treeMap = new HashMap<>();
         List<List<CategoryEntity>> paths = buildPaths(node);
@@ -235,7 +232,7 @@ public class BaseUtils
         return children;
     }
 
-    public void updateDataAccessPaths(CategoryEntity newLeaf, CategoryEntity oldLeaf, Integer treeId)
+    void updateDataAccessPaths(CategoryEntity newLeaf, CategoryEntity oldLeaf, Integer treeId)
     {
         // Get all DAPs that contains the affected category in its path
         List<List<DataAccessPathEntity>> daps = findPathsByCategory(oldLeaf, treeId);
@@ -251,8 +248,9 @@ public class BaseUtils
      * 1. Store the path to the oldParent category
      * 2. Store the path to the newParent category
      * 3. Find all DAPs that contain the sub path "oldParent -> category"
-     * 4. Replace the path to the old parent with the path to the new parent for each DAP returned from step 1
-     * 5. If the old parent does not have any children then we must create a data access path to the old parent and empty entries
+     * 4. If the new parent has no children then we must create a new category to store the current entries and update the data access paths
+     * 5. Replace the path to the old parent with the path to the new parent for each DAP returned from step 1
+     * 6. If the old parent does not have any children then we must create a data access path to the old parent and empty entries
      */
     public void updateDataAccessPaths(CategoryEntity category, CategoryEntity oldParent, CategoryEntity newParent)
     {
@@ -266,12 +264,21 @@ public class BaseUtils
         // Step 3 - Get a list of all data access paths that contains selected category
         List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(category.getTableId(), category.getCategoryId());
         List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
-
-        // We need to remove any pathElements that are not contained in the selected category's tree
         for (Integer entryId : affectedEntries)
             affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, category.getTreeId()));
 
-        // Step 4 - Go through each affected path and replace the path of the old parent with the path of the new parent
+        // Step 4 - If the new parent has no children then we must create a new category to store the current entries and update the data access paths
+        List<CategoryEntity> newParentChildren = findChildren(newParent.getTableId(), newParent.getCategoryId());
+        newParentChildren.remove(category);
+        if (newParentChildren.size() == 0)
+        {
+            CategoryEntity newChild = createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getType(), newParent.getTreeId());
+            List<Integer> newParentEntries = dataAccessPathRepository.getEntryByPathContainingCategory(newParent.getTableId(), newParent.getCategoryId());
+            for (Integer entryId : newParentEntries)
+                createDataAccessPath(newChild.getTableId(), entryId, newChild.getCategoryId(), newChild.getTreeId());
+        }
+
+        // Step 3 - Go through each affected path and replace the path of the old parent with the path of the new parent
         for (List<DataAccessPathEntity> dap : affectedPaths)
         {
             for (Iterator<DataAccessPathEntity> iterator = dap.listIterator(); iterator.hasNext(); )
@@ -293,7 +300,7 @@ public class BaseUtils
             }
         }
 
-        // Step 5 - Check if the old parent has any children left. If not, create a data access path with the path to the old parent and create new entries
+        // Step 6 - Check if the old parent has any children left. If not, create a data access path with the path to the old parent and create new entries
         List<CategoryEntity> oldParentChildren = findChildren(oldParent.getTableId(), oldParent.getCategoryId());
         if (oldParentChildren.size() == 0)
             initialiseEntries(oldParent);
