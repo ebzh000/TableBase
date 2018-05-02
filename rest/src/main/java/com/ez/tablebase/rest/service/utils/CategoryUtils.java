@@ -21,10 +21,10 @@ import com.ez.tablebase.rest.repository.TableRepository;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CategoryUtils extends BaseUtils
 {
@@ -262,6 +262,8 @@ public class CategoryUtils extends BaseUtils
      * We must get all data access paths that now share the same paths after the deletion of the selected top level category.
      * Then we need to apply the specified operation to a "n" number of entries.
      *
+     * We will only apply 3 operations: MIN, MAX, MEAN
+     *
      * After we have applied the operation, we can then delete all but one data access path that is related to the entry
      */
     public void deleteTopLevelCategory(CategoryEntity category, OperationType operationType)
@@ -271,11 +273,44 @@ public class CategoryUtils extends BaseUtils
         for (Integer child : children)
         {
             CategoryEntity childCategory = findCategory(category.getTableId(), child);
-            System.out.println(childCategory);
             deleteCategory(childCategory);
         }
 
         deleteCategory(category);
+
+        // Let's create a map that will hold the entry Ids as their keys and the values will be a list of category ids (indicating path)
+        Map<Integer, String> entryMap = new HashMap<>();
+        List<EntryEntity> entries = tableEntryRepository.findAllTableEntries(category.getTableId());
+        for(EntryEntity entry : entries)
+        {
+            List<Integer> dap = dataAccessPathRepository.getDapCategoriesByEntry(entry.getTableId(), entry.getEntryId());
+            StringBuilder dapString = new StringBuilder();
+            for(Integer dapEntity : dap)
+            {
+                dapString.append(dapEntity).append("-");
+            }
+
+            dapString.deleteCharAt(dapString.length() - 1);
+            entryMap.put(entry.getEntryId(), dapString.toString());
+        }
+
+        Map<String, ArrayList<Integer>> reverseMap = new HashMap<>(
+                entryMap.entrySet().stream()
+                        .collect(Collectors.groupingBy(Map.Entry::getValue)).values().stream()
+                        .collect(Collectors.toMap(
+                                item -> item.get(0).getValue(),
+                                item -> new ArrayList<>(
+                                        item.stream()
+                                                .map(Map.Entry::getKey)
+                                                .collect(Collectors.toList())
+                                ))
+                        ));
+
+        Collection<ArrayList<Integer>> reverseMapValues = reverseMap.values();
+        for(ArrayList<Integer> map : reverseMapValues)
+        {
+            
+        }
     }
 
     private void updateTableCategoriesForNewParent(CategoryEntity category, CategoryEntity parentCategory)
