@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Integer>
 {
-    @Query(value = "SELECT tree_id FROM categories WHERE table_id = :tableId G", nativeQuery = true)
+    @Query(value = "SELECT tree_id FROM categories WHERE table_id = :tableId", nativeQuery = true)
     List<Integer> getTreeIds(@Param("tableId") int tableId);
 
     @Query(value = "SELECT * FROM categories WHERE table_Id = :tableId AND parent_id IS NULL AND tree_id = :treeId", nativeQuery = true)
@@ -36,4 +36,8 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
 
     @Query(value = "SELECT * FROM categories c WHERE c.table_id = :tableId AND c.parent_id IS NULL", nativeQuery = true)
     List<CategoryEntity> findRootNodes(@Param("tableId") int tableId);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "DELETE FROM categories where table_id = :tableId and category_id = :categoryId", nativeQuery = true)
+    void deleteCategory(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 }

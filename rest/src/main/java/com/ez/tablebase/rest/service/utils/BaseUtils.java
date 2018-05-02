@@ -83,6 +83,11 @@ public class BaseUtils
         return tableEntryRepository.save(entry);
     }
 
+    public void deleteTableEntry(Integer tableId, Integer entryId)
+    {
+        tableEntryRepository.deleteTableEntry(tableId, entryId);
+    }
+
     private Integer calculateNumberOfEntries(Integer tableId)
     {
         Integer numEntries = 1;

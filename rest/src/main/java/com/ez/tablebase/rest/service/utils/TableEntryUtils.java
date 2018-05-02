@@ -66,7 +66,7 @@ public class TableEntryUtils extends BaseUtils
             }
 
             tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), data1);
-            tableEntryRepository.delete(entry2);
+            deleteTableEntry(entry2.getTableId(), entry2.getEntryId());
         }
     }
 

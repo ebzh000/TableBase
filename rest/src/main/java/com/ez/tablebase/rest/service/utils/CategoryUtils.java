@@ -292,7 +292,7 @@ public class CategoryUtils extends BaseUtils
     {
         List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
         for (Integer entry : entries)
-            tableEntryRepository.delete(validateEntry(category.getTableId(), entry));
+            deleteTableEntry(category.getTableId(), entry);
     }
 
     public List<CategoryEntity> findAllTableCategories(Integer tableId)
@@ -307,7 +307,7 @@ public class CategoryUtils extends BaseUtils
 
     public void deleteCategory(CategoryEntity category)
     {
-        categoryRepository.delete(category);
+        categoryRepository.deleteCategory(category.getTableId(), category.getCategoryId());
     }
 
     public CategoryEntity findCategory(Integer tableId, Integer categoryId)
