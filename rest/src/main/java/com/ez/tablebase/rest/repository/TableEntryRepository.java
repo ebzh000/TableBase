@@ -9,9 +9,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TableEntryRepository extends JpaRepository<EntryEntity, String>
 {
     @Query(value = "SELECT * FROM table_data WHERE table_id = :tableId ORDER BY table_id, entry_id ASC", nativeQuery = true)

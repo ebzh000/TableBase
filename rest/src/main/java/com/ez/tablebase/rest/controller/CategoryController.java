@@ -4,10 +4,7 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
-import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.requests.CategoryCreateRequest;
-import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
-import com.ez.tablebase.rest.model.requests.CategoryUpdateRequest;
+import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +21,13 @@ public class CategoryController
     public CategoryController(CategoryService categoryService)
     {
         this.categoryService = categoryService;
+    }
+
+    @PostMapping(value = "/category/createTopLevelCategory")
+    Object createTopLevelCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request)
+    {
+        request.setTableId(tableId);
+        return categoryService.createTopLevelCategory(request);
     }
 
     @PostMapping(value = "/category/create")
@@ -72,6 +76,14 @@ public class CategoryController
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
         categoryService.splitCategory(request);
+    }
+
+    @DeleteMapping(value = "/category/{categoryId}/deleteTopLevelCategory")
+    void deleteTopLevelCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryDeleteRequest request)
+    {
+        request.setTableId(tableId);
+        request.setCategoryId(categoryId);
+        categoryService.deleteTopLevelCategory(request);
     }
 
     @DeleteMapping(value = "/category/{categoryId}")

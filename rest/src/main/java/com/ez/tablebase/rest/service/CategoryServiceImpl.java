@@ -10,10 +10,7 @@ import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.Category;
 import com.ez.tablebase.rest.model.OperationType;
-import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.requests.CategoryCreateRequest;
-import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
-import com.ez.tablebase.rest.model.requests.CategoryUpdateRequest;
+import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
@@ -182,5 +179,16 @@ public class CategoryServiceImpl implements CategoryService
         if (categoryToDelete.getParentId() == null)
             throw new InvalidOperationException("Invalid Operation! Selected category must not be the root node");
         categoryUtils.deleteCategory(categoryToDelete, deleteChildren);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTopLevelCategory(CategoryDeleteRequest request)
+    {
+        CategoryEntity categoryToDelete = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
+        if (categoryToDelete.getParentId() != null)
+            throw new InvalidOperationException("Invalid Operation! Selected Category must be a top level category");
+
+        categoryUtils.deleteTopLevelCategory(categoryToDelete, OperationType.values()[request.getDataOperationType()]);
     }
 }

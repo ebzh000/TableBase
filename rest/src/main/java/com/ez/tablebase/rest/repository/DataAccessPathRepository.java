@@ -8,9 +8,11 @@ import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DataAccessPathRepository extends JpaRepository<DataAccessPathEntity, String>
 {
     @Query(value = "SELECT * FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId ORDER BY entry_id, tree_id, category_id ASC", nativeQuery = true)

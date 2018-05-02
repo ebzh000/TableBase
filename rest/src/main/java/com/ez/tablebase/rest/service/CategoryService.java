@@ -5,10 +5,7 @@ package com.ez.tablebase.rest.service;
  */
 
 import com.ez.tablebase.rest.model.Category;
-import com.ez.tablebase.rest.model.requests.CategoryCombineRequest;
-import com.ez.tablebase.rest.model.requests.CategoryCreateRequest;
-import com.ez.tablebase.rest.model.requests.CategorySplitRequest;
-import com.ez.tablebase.rest.model.requests.CategoryUpdateRequest;
+import com.ez.tablebase.rest.model.requests.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -32,4 +29,6 @@ public interface CategoryService
     void splitCategory(CategorySplitRequest request) throws ParseException;
 
     void deleteCategory(int tableId, int categoryId, boolean deleteChildren);
+
+    void deleteTopLevelCategory(CategoryDeleteRequest request);
 }

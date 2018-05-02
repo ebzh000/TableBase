@@ -23,7 +23,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -257,6 +256,26 @@ public class CategoryUtils extends BaseUtils
             if (parentChildren.size() == 0)
                 initialiseEntries(parentCategory);
         }
+    }
+
+    /*
+     * We must get all data access paths that now share the same paths after the deletion of the selected top level category.
+     * Then we need to apply the specified operation to a "n" number of entries.
+     *
+     * After we have applied the operation, we can then delete all but one data access path that is related to the entry
+     */
+    public void deleteTopLevelCategory(CategoryEntity category, OperationType operationType)
+    {
+        // Delete selected category and all its children, along with related DAPs
+        List<Integer> children = getAllCategoryChildren(category.getTableId(), category.getCategoryId());
+        for (Integer child : children)
+        {
+            CategoryEntity childCategory = findCategory(category.getTableId(), child);
+            System.out.println(childCategory);
+            deleteCategory(childCategory);
+        }
+
+        deleteCategory(category);
     }
 
     private void updateTableCategoriesForNewParent(CategoryEntity category, CategoryEntity parentCategory)
