@@ -7,6 +7,7 @@ package com.ez.tablebase.rest.repository;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -30,4 +31,8 @@ public interface DataAccessPathRepository extends JpaRepository<DataAccessPathEn
 
     @Query(value = "SELECT entry_id FROM data_access_path WHERE table_id = :tableId AND category_id = :categoryId GROUP BY entry_id", nativeQuery = true)
     List<Integer> getEntryByPathContainingCategory(@Param("tableId") int tableId, @Param("categoryId") int cateogryId);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "DELETE FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
+    void deleteDAPByEntryId(@Param("tableId") int tableID, @Param("entryId") int entryId);
 }

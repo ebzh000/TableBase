@@ -8,21 +8,32 @@ package com.ez.tablebase.rest.service.utils;
  * Created by Erik on 08-Apr-18.
  */
 
+import com.ez.tablebase.rest.common.InvalidOperationException;
+import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.model.DataType;
+import com.ez.tablebase.rest.repository.CategoryRepository;
+import com.ez.tablebase.rest.repository.DataAccessPathRepository;
+import com.ez.tablebase.rest.repository.TableEntryRepository;
+import com.ez.tablebase.rest.repository.TableRepository;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OperationUtils
+public class OperationUtils extends BaseUtils
 {
     private static DecimalFormat decimalFormat = new DecimalFormat("0.0#%");
     private static final Pattern currencyRegExp = Pattern.compile("[^0-9\\.,\\s]*");
+
+    OperationUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
+    {
+        super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
+    }
 
     public static String max(String data1, String data2, byte type) throws ParseException
     {
@@ -303,4 +314,22 @@ public class OperationUtils
         else
             return originalData;
     }
+
+    public static class IntegerComparator implements Comparator<EntryEntity>
+    {
+        @Override
+        public int compare(EntryEntity o1, EntryEntity o2)
+        {
+            Integer data1 = Integer.parseInt(o1.getData());
+            Integer data2 = Integer.parseInt(o2.getData());
+            if (data1 > data2)
+                return -1;
+            else if (Objects.equals(data1, data2))
+                return 0;
+            else
+                return 1;
+        }
+    }
+
+
 }

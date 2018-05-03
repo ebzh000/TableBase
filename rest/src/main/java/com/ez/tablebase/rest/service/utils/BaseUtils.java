@@ -75,6 +75,11 @@ public class BaseUtils
         return dap;
     }
 
+    void deleteDAPByEntryId(Integer tableId, Integer entryId)
+    {
+        dataAccessPathRepository.deleteDAPByEntryId(tableId, entryId);
+    }
+
     EntryEntity createEntry(Integer tableId, String data)
     {
         EntryEntity entry = new EntryEntity();
@@ -83,7 +88,12 @@ public class BaseUtils
         return tableEntryRepository.save(entry);
     }
 
-    public void deleteTableEntry(Integer tableId, Integer entryId)
+    public void updateTableEntry(Integer tableId, Integer entryId, String data)
+    {
+        tableEntryRepository.updateTableEntry(tableId, entryId, data);
+    }
+
+    void deleteTableEntry(Integer tableId, Integer entryId)
     {
         tableEntryRepository.deleteTableEntry(tableId, entryId);
     }

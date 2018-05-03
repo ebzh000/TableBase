@@ -70,11 +70,6 @@ public class TableEntryUtils extends BaseUtils
         }
     }
 
-    public void updateTableEntry(Integer tableId, Integer entryId, String data)
-    {
-        tableEntryRepository.updateTableEntry(tableId, entryId, data);
-    }
-
     public List<EntryEntity> findAllTableEntries(Integer tableId)
     {
         return tableEntryRepository.findAllTableEntries(tableId);

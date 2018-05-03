@@ -8,6 +8,7 @@ package com.ez.tablebase.rest.service.utils;
  * Created by ErikZ on 19/04/2018.
  */
 
+import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
@@ -294,7 +295,7 @@ public class CategoryUtils extends BaseUtils
             entryMap.put(entry.getEntryId(), dapString.toString());
         }
 
-        Map<String, ArrayList<Integer>> reverseMap = new HashMap<>(
+        Map<String, List<Integer>> reverseMap = new HashMap<>(
                 entryMap.entrySet().stream()
                         .collect(Collectors.groupingBy(Map.Entry::getValue)).values().stream()
                         .collect(Collectors.toMap(
@@ -306,11 +307,74 @@ public class CategoryUtils extends BaseUtils
                                 ))
                         ));
 
-        Collection<ArrayList<Integer>> reverseMapValues = reverseMap.values();
-        for(ArrayList<Integer> map : reverseMapValues)
+        Collection<List<Integer>> reverseMapValues = reverseMap.values();
+        List<List<EntryEntity>> entryEntityList = new LinkedList<>();
+        for(List<Integer> map : reverseMapValues)
         {
-            
+            List<EntryEntity> entityList = new LinkedList<>();
+            for(Integer element : map)
+                entityList.add(validateEntry(category.getTableId(), element));
+
+            entryEntityList.add(entityList);
         }
+
+        for(List<EntryEntity> entryList : entryEntityList)
+        {
+            List<EntryEntity> entriesToDelete = new LinkedList<>();
+
+            switch (operationType)
+            {
+                case MAX:
+                    entriesToDelete = max(entryList, );
+                    break;
+                case MIN:
+                    break;
+                case MEAN:
+                    break;
+                default:
+                    throw new InvalidOperationException("Specified Operation Type is invalid. Supported Operations are Min, Max and Mean.");
+            }
+
+            for(EntryEntity entryToDelete : entriesToDelete)
+            {
+                deleteDAPByEntryId(entryToDelete.getTableId(), entryToDelete.getEntryId());
+                deleteTableEntry(entryToDelete.getTableId(), entryToDelete.getEntryId());
+            }
+        }
+    }
+
+    private List<EntryEntity> max(List<EntryEntity> entries, DataType type)
+    {
+        List<EntryEntity> retList = new LinkedList<>();
+        EntryEntity maxEntry;
+        if(type.equals(DataType.NUMERIC))
+            maxEntry = Collections.max(entries, new OperationUtils.IntegerComparator());
+        else
+            throw new InvalidOperationException("Operation does not support data type: " + type);
+
+        EntryEntity firstEntry = entries.get(0);
+        updateTableEntry(firstEntry.getTableId(), firstEntry.getEntryId(), maxEntry.getData());
+
+        for(EntryEntity entry : entries)
+            if(!Objects.equals(entry.getEntryId(), maxEntry.getEntryId()))
+                retList.add(entry);
+
+        return retList;
+    }
+
+    public static List<EntryEntity> min(List<EntryEntity> entries)
+    {
+        List<EntryEntity> retList = new LinkedList<>();
+
+
+        return retList;
+    }
+
+    public static List<EntryEntity> mean(List<EntryEntity> entries)
+    {
+        List<EntryEntity> retList = new LinkedList<>();
+
+        return retList;
     }
 
     private void updateTableCategoriesForNewParent(CategoryEntity category, CategoryEntity parentCategory)
