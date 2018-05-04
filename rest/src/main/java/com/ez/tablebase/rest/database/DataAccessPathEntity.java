@@ -29,6 +29,9 @@ public class DataAccessPathEntity implements Serializable
     @Column(name = "tree_id")
     private int treeId;
 
+    @Column(name = "type")
+    private byte type;
+
     public int getId()
     {
         return id;
@@ -79,6 +82,16 @@ public class DataAccessPathEntity implements Serializable
         this.treeId = treeId;
     }
 
+    public byte getType()
+    {
+        return type;
+    }
+
+    public void setType(byte type)
+    {
+        this.type = type;
+    }
+
     @Override
     public String toString()
     {
@@ -88,6 +101,7 @@ public class DataAccessPathEntity implements Serializable
                 ", tableId=" + tableId +
                 ", categoryId=" + categoryId +
                 ", treeId=" + treeId +
+                ", type=" + type +
                 '}';
     }
 }

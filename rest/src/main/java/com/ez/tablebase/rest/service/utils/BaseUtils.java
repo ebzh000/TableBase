@@ -47,7 +47,7 @@ public class BaseUtils
         return tableRepository.save(newTable);
     }
 
-    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, byte type, Integer treeId)
+    public CategoryEntity createCategory(Integer tableId, String attributeName, Integer parentId, Integer treeId)
     {
         TableEntity table = validateTable(tableId);
         CategoryEntity parent = (parentId == null) ? null : categoryRepository.findCategory(table.getTableId(), parentId);
@@ -56,7 +56,6 @@ public class BaseUtils
         entity.setTableId(table.getTableId());
         entity.setAttributeName(attributeName);
         entity.setParentId((parent == null) ? null : parent.getCategoryId());
-        entity.setType(type);
         entity.setTreeId(treeId);
         categoryRepository.save(entity);
         entity = categoryRepository.findCategory(entity.getTableId(), entity.getCategoryId());
@@ -64,13 +63,14 @@ public class BaseUtils
         return entity;
     }
 
-    DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId, Integer treeId)
+    DataAccessPathEntity createDataAccessPath(Integer tableId, Integer entryId, Integer categoryId, Integer treeId, byte type)
     {
         DataAccessPathEntity dap = new DataAccessPathEntity();
         dap.setTableId(tableId);
         dap.setEntryId(entryId);
         dap.setCategoryId(categoryId);
         dap.setTreeId(treeId);
+        dap.setType(type);
         dataAccessPathRepository.save(dap);
         return dap;
     }
@@ -130,12 +130,12 @@ public class BaseUtils
         {
             EntryEntity entry = createEntry(category.getTableId(), EMPTY_STRING);
             for (CategoryEntity categoryEntity : currTreeMap.get(category.getCategoryId()))
-                createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId());
+                createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId(), (byte) DataType.TEXT.ordinal());
 
             List<CategoryEntity> dapsToCreate = permPaths.get(count);
             for(CategoryEntity pathEntity : dapsToCreate)
             {
-                createDataAccessPath(pathEntity.getTableId(), entry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
+                createDataAccessPath(pathEntity.getTableId(), entry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId(), (byte) DataType.TEXT.ordinal());
             }
         }
     }
@@ -254,7 +254,8 @@ public class BaseUtils
         for (List<DataAccessPathEntity> path : daps)
         {
             Integer entryId = path.get(0).getEntryId();
-            DataAccessPathEntity dapEntity = createDataAccessPath(newLeaf.getTableId(), entryId, newLeaf.getCategoryId(), treeId);
+            byte type = dataAccessPathRepository.getTypeByEntryId(newLeaf.getTableId(), entryId);
+            DataAccessPathEntity dapEntity = createDataAccessPath(newLeaf.getTableId(), entryId, newLeaf.getCategoryId(), treeId, type);
             path.add(dapEntity);
         }
     }
@@ -287,10 +288,10 @@ public class BaseUtils
         newParentChildren.remove(category);
         if (newParentChildren.size() == 0)
         {
-            CategoryEntity newChild = createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getType(), newParent.getTreeId());
+            CategoryEntity newChild = createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getTreeId());
             List<Integer> newParentEntries = dataAccessPathRepository.getEntryByPathContainingCategory(newParent.getTableId(), newParent.getCategoryId());
             for (Integer entryId : newParentEntries)
-                createDataAccessPath(newChild.getTableId(), entryId, newChild.getCategoryId(), newChild.getTreeId());
+                createDataAccessPath(newChild.getTableId(), entryId, newChild.getCategoryId(), newChild.getTreeId(), dataAccessPathRepository.getTypeByEntryId(newChild.getTableId(), entryId));
         }
 
         // Step 3 - Go through each affected path and replace the path of the old parent with the path of the new parent
@@ -311,7 +312,7 @@ public class BaseUtils
                 Integer tableId = dap.get(0).getTableId();
                 Integer entryId = dap.get(0).getEntryId();
 
-                dap.add(createDataAccessPath(tableId, entryId, categoryId, category.getTreeId()));
+                dap.add(createDataAccessPath(tableId, entryId, categoryId, category.getTreeId(), dataAccessPathRepository.getTypeByEntryId(tableId, entryId)));
             }
         }
 

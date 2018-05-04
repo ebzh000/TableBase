@@ -69,7 +69,6 @@ public class Category extends ResourceSupport
         model.setCategoryId(entity.getCategoryId());
         model.setAttributeName(entity.getAttributeName());
         model.setParentId(entity.getParentId());
-        model.setType(DataType.values()[entity.getType()]);
         return model;
     }
 

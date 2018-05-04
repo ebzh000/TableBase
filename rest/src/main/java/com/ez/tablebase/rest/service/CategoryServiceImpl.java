@@ -4,7 +4,6 @@ package com.ez.tablebase.rest.service;
  * Created by ErikZ on 27/11/2017.
  */
 
-import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
 import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
@@ -50,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService
     {
         TableEntity table = tableUtils.validateTable(request.getTableId());
         Integer treeId = categoryUtils.getTreeIds(table.getTableId()).size() + 1;
-        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), null, (byte) request.getType().ordinal(), treeId);
+        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), null, treeId);
 
         // Create data access paths?
 
@@ -62,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService
     public Category createCategory(CategoryCreateRequest request)
     {
         CategoryEntity parentCategory = categoryUtils.validateCategory(request.getTableId(), request.getParentId());
-        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), parentCategory.getCategoryId(), (byte) request.getType().ordinal(), parentCategory.getTreeId());
+        CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), parentCategory.getCategoryId(), parentCategory.getTreeId());
 
         // Creating/Updating data access paths and entries
         categoryUtils.createCategoryDAPsAndEntries(category, parentCategory, request.isLinkChildren());
@@ -100,17 +99,14 @@ public class CategoryServiceImpl implements CategoryService
             if (!Objects.equals(category.getTreeId(), newParent.getTreeId()))
                 throw new InvalidOperationException("INVALID OPERATION! Unable to update current category to become a new child of selected parent, as the new parent is in another category tree");
 
-            if (newParent.getType() != category.getType())
-                throw new IncompatibleCategoryTypeException("New parent and select category have incompatible types");
-
             // Update selected category to point at the new parent and along with other affected attributes
-            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), newParent.getCategoryId(), (byte) request.getType().ordinal());
+            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), newParent.getCategoryId());
             category = categoryUtils.findCategory(category.getTableId(), category.getCategoryId());
             // If the desired category has a new parent, we must now update all of the data access paths that are affected by this operation.
             dapUtils.updateDataAccessPaths(category, oldParent, newParent);
         }
         else
-            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId(), (byte) request.getType().ordinal());
+            categoryUtils.updateTableCategory(category.getTableId(), category.getCategoryId(), request.getAttributeName(), request.getParentId());
 
         category = categoryUtils.findCategory(category.getTableId(), category.getCategoryId());
         return Category.buildModel(category);
@@ -135,9 +131,6 @@ public class CategoryServiceImpl implements CategoryService
         CategoryEntity category1 = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId1());
         CategoryEntity category2 = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId2());
 
-        if (category1.getType() != category2.getType())
-            throw new IncompatibleCategoryTypeException("Specified categories have different types");
-
         // We must restrict this operation to only leaf nodes of the category tree
         // In other words, we throw an exception when the selected category has children
         List<CategoryEntity> children1 = categoryUtils.findChildren(category1.getTableId(), category1.getCategoryId());
@@ -145,7 +138,7 @@ public class CategoryServiceImpl implements CategoryService
         if (children1.size() != 0 || children2.size() != 0)
             throw new InvalidOperationException("Invalid Operation! Selected categories must not have any subcategories");
 
-        categoryUtils.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId(), category1.getType());
+        categoryUtils.updateTableCategory(category1.getTableId(), category1.getCategoryId(), request.getNewCategoryName(), category1.getParentId());
         entryUtils.combineEntries(category1, category2, OperationType.values()[request.getDataOperationType()]);
 
         categoryUtils.deleteCategory(category2);
@@ -165,7 +158,7 @@ public class CategoryServiceImpl implements CategoryService
         if (children.size() != 0)
             throw new InvalidOperationException("Invalid Operation! Selected category must not have any subcategories");
 
-        CategoryEntity newCategory = categoryUtils.createCategory(category.getTableId(), request.getNewCategoryName(), category.getParentId(), category.getType(), category.getTreeId());
+        CategoryEntity newCategory = categoryUtils.createCategory(category.getTableId(), request.getNewCategoryName(), category.getParentId(), category.getTreeId());
         CategoryEntity parentCategory = categoryUtils.validateCategory(newCategory.getTableId(), newCategory.getParentId());
         categoryUtils.createCategoryDAPsAndEntries(newCategory, parentCategory,false);
         categoryUtils.splitCategory(category, newCategory, OperationType.values()[request.getDataOperationType()], request.getThreshold());

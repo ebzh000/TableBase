@@ -28,9 +28,6 @@ public class CategoryEntity implements Serializable
     @Column(name = "parent_id")
     private Integer parentId;
 
-    @Column(name = "type")
-    private byte type;
-
     public Integer getTableId()
     {
         return tableId;
@@ -81,16 +78,6 @@ public class CategoryEntity implements Serializable
         this.parentId = parentId;
     }
 
-    public byte getType()
-    {
-        return type;
-    }
-
-    public void setType(byte type)
-    {
-        this.type = type;
-    }
-
     @Override
     public String toString()
     {
@@ -100,7 +87,6 @@ public class CategoryEntity implements Serializable
                 ", treeId=" + treeId +
                 ", attributeName='" + attributeName + '\'' +
                 ", parentId=" + parentId +
-                ", type=" + type +
                 '}';
     }
 }

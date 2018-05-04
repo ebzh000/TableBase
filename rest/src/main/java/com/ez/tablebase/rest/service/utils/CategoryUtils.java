@@ -8,6 +8,7 @@ package com.ez.tablebase.rest.service.utils;
  * Created by ErikZ on 19/04/2018.
  */
 
+import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
 import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
@@ -54,7 +55,7 @@ public class CategoryUtils extends BaseUtils
             {
                 for (CategoryEntity child : children)
                 {
-                    updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), category.getCategoryId(), child.getType());
+                    updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), category.getCategoryId());
 
                     List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(category.getTableId(), category.getCategoryId());
                     List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
@@ -63,7 +64,7 @@ public class CategoryUtils extends BaseUtils
                         affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, category.getTreeId()));
 
                     for (List<DataAccessPathEntity> dap : affectedPaths)
-                        createDataAccessPath(category.getTableId(), dap.get(0).getEntryId(), category.getCategoryId(), category.getTreeId());
+                        createDataAccessPath(category.getTableId(), dap.get(0).getEntryId(), category.getCategoryId(), category.getTreeId(), dap.get(0).getType());
                 }
             }
 
@@ -81,8 +82,7 @@ public class CategoryUtils extends BaseUtils
 
     public void duplicateCategories(CategoryEntity entity, Integer newParentId)
     {
-        CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getType(), entity.getTreeId());
-
+        CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getTreeId());
         List<CategoryEntity> children = findChildren(entity.getTableId(), entity.getCategoryId());
 
         // If the first child is not null then we must recursively duplicate the children of this node
@@ -108,7 +108,7 @@ public class CategoryUtils extends BaseUtils
                     // Step 1 & 2 - Get a the path to the new and old parent category
                     List<Integer> pathToNewLeafNode = getPathToCategory(newCategory, pathList);
                     for (Integer categoryId : pathToNewLeafNode)
-                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, newCategory.getTreeId());
+                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, newCategory.getTreeId(), dataAccessPathRepository.getTypeByEntryId(entity.getTableId(), entry));
 
                     // Get the relative access paths to the selected category's tree and duplicate DAPs
                     List<Integer> treeIds = getTreeIds(newCategory.getTableId());
@@ -117,7 +117,7 @@ public class CategoryUtils extends BaseUtils
                     {
                         List<DataAccessPathEntity> accessPath = dataAccessPathRepository.getEntryAccessPathByTree(entity.getTableId(), entry, treeId);
                         for (DataAccessPathEntity pathEntity : accessPath)
-                            createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
+                            createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId(), dataAccessPathRepository.getTypeByEntryId(entity.getTableId(), entry));
                     }
                 }
             }
@@ -147,9 +147,14 @@ public class CategoryUtils extends BaseUtils
         {
             EntryEntity entry1 = tableEntryRepository.findTableEntry(categoryA.getTableId(), categoryAEntries.get(index));
             EntryEntity entry2 = tableEntryRepository.findTableEntry(categoryB.getTableId(), categoryBEntries.get(index));
+            byte type1 = dataAccessPathRepository.getTypeByEntryId(entry1.getTableId(), entry1.getEntryId());
+            byte type2 = dataAccessPathRepository.getTypeByEntryId(entry2.getTableId(), entry2.getEntryId());
+
+            if(type1 != type2)
+                throw new IncompatibleCategoryTypeException("Specified categories have entries of different types");
 
             String data1 = entry1.getData();
-            DataType dataType = DataType.values()[categoryA.getType()];
+            DataType dataType = DataType.values()[type1];
 
             switch (operationType)
             {
@@ -320,16 +325,18 @@ public class CategoryUtils extends BaseUtils
 
         for(List<EntryEntity> entryList : entryEntityList)
         {
-            List<EntryEntity> entriesToDelete = new LinkedList<>();
-
+            List<EntryEntity> entriesToDelete;
+            byte type = dataAccessPathRepository.getTypeByEntryId(entryList.get(0).getTableId(), entryList.get(0).getEntryId());
             switch (operationType)
             {
                 case MAX:
-                    entriesToDelete = max(entryList, );
+                    entriesToDelete = max(entryList, DataType.values()[type]);
                     break;
                 case MIN:
+                    entriesToDelete = min(entryList, DataType.values()[type]);
                     break;
                 case MEAN:
+                    entriesToDelete = mean(entryList, DataType.values()[type]);
                     break;
                 default:
                     throw new InvalidOperationException("Specified Operation Type is invalid. Supported Operations are Min, Max and Mean.");
@@ -356,23 +363,53 @@ public class CategoryUtils extends BaseUtils
         updateTableEntry(firstEntry.getTableId(), firstEntry.getEntryId(), maxEntry.getData());
 
         for(EntryEntity entry : entries)
-            if(!Objects.equals(entry.getEntryId(), maxEntry.getEntryId()))
+            if(!Objects.equals(entry.getEntryId(), firstEntry.getEntryId()))
                 retList.add(entry);
 
         return retList;
     }
 
-    public static List<EntryEntity> min(List<EntryEntity> entries)
+    private List<EntryEntity> min(List<EntryEntity> entries, DataType type)
     {
         List<EntryEntity> retList = new LinkedList<>();
+        EntryEntity minEntry;
+        if(type.equals(DataType.NUMERIC))
+            minEntry = Collections.min(entries, new OperationUtils.IntegerComparator());
+        else
+            throw new InvalidOperationException("Operation does not support data type: " + type);
 
+        EntryEntity firstEntry = entries.get(0);
+        updateTableEntry(firstEntry.getTableId(), firstEntry.getEntryId(), minEntry.getData());
+
+        for(EntryEntity entry : entries)
+            if(!Objects.equals(entry.getEntryId(), firstEntry.getEntryId()))
+                retList.add(entry);
 
         return retList;
     }
 
-    public static List<EntryEntity> mean(List<EntryEntity> entries)
+    private List<EntryEntity> mean(List<EntryEntity> entries, DataType type)
     {
         List<EntryEntity> retList = new LinkedList<>();
+        String meanVal;
+        if(type.equals(DataType.NUMERIC))
+        {
+            Integer mean = 0;
+            for(EntryEntity entry : entries)
+                mean = mean + Integer.parseInt(entry.getData());
+
+            mean = mean / entries.size();
+            meanVal = mean.toString();
+        }
+        else
+            throw new InvalidOperationException("Operation does not support data type: " + type);
+
+        EntryEntity firstEntry = entries.get(0);
+        updateTableEntry(firstEntry.getTableId(), firstEntry.getEntryId(), meanVal);
+
+        for(EntryEntity entry : entries)
+            if(!Objects.equals(entry.getEntryId(), firstEntry.getEntryId()))
+                retList.add(entry);
 
         return retList;
     }
@@ -383,7 +420,7 @@ public class CategoryUtils extends BaseUtils
         if (children.size() != 0)
         {
             for (CategoryEntity child : children)
-                updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), parentCategory.getCategoryId(), child.getType());
+                updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), parentCategory.getCategoryId());
         }
     }
 
@@ -399,9 +436,9 @@ public class CategoryUtils extends BaseUtils
         return categoryRepository.findAllTableCategories(tableId);
     }
 
-    public void updateTableCategory(Integer tableId, Integer categoryId, String attributeName, Integer parentId, byte type)
+    public void updateTableCategory(Integer tableId, Integer categoryId, String attributeName, Integer parentId)
     {
-        categoryRepository.updateTableCategory(tableId, categoryId, attributeName, parentId, type);
+        categoryRepository.updateTableCategory(tableId, categoryId, attributeName, parentId);
     }
 
     public void deleteCategory(CategoryEntity category)

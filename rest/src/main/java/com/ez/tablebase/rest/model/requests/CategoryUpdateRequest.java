@@ -8,7 +8,6 @@ public class CategoryUpdateRequest
     private int tableId;
     private String attributeName;
     private Integer parentId;
-    private DataType type;
 
     public int getCategoryId()
     {
@@ -50,17 +49,6 @@ public class CategoryUpdateRequest
         this.parentId = parentId;
     }
 
-    public DataType getType()
-    {
-        return type;
-    }
-
-    public void setType(DataType type)
-    {
-        this.type = type;
-    }
-
-
     @Override
     public String toString()
     {
@@ -69,7 +57,6 @@ public class CategoryUpdateRequest
                 ", tableId=" + tableId +
                 ", attributeName='" + attributeName + '\'' +
                 ", parentId=" + parentId +
-                ", type=" + type +
                 '}';
     }
 }

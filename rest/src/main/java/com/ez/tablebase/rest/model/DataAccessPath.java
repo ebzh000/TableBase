@@ -13,6 +13,7 @@ public class DataAccessPath extends ResourceSupport
     private int entryId;
     private int categoryId;
     private int treeId;
+    private byte type;
 
     public int getPathId()
     {
@@ -64,6 +65,16 @@ public class DataAccessPath extends ResourceSupport
         this.treeId = treeId;
     }
 
+    public byte getType()
+    {
+        return type;
+    }
+
+    public void setType(byte type)
+    {
+        this.type = type;
+    }
+
     @Override
     public String toString()
     {
@@ -73,6 +84,7 @@ public class DataAccessPath extends ResourceSupport
                 ", entryId=" + entryId +
                 ", categoryId=" + categoryId +
                 ", treeId=" + treeId +
-                '}';
+                ", type=" + type +
+                "} " + super.toString();
     }
 }

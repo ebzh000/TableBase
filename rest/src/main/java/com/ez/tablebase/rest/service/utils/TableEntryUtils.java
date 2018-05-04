@@ -34,25 +34,26 @@ public class TableEntryUtils extends BaseUtils
             String data1 = entry1.getData();
             String data2 = entry2.getData();
 
+            byte type = dataAccessPathRepository.getTypeByEntryId(category1.getTableId(), entry1.getEntryId());
             switch (operationType)
             {
                 case MAX:
-                    data1 = OperationUtils.max(data1, data2, category1.getType());
+                    data1 = OperationUtils.max(data1, data2, type);
                     break;
                 case MIN:
-                    data1 = OperationUtils.min(data1, data2, category1.getType());
+                    data1 = OperationUtils.min(data1, data2, type);
                     break;
                 case MEAN:
-                    data1 = OperationUtils.mean(data1, data2, category1.getType());
+                    data1 = OperationUtils.mean(data1, data2, type);
                     break;
                 case SUM:
-                    data1 = OperationUtils.sum(data1, data2, category1.getType());
+                    data1 = OperationUtils.sum(data1, data2, type);
                     break;
                 case DIFFERENCE:
-                    data1 = OperationUtils.difference(data1, data2, category1.getType());
+                    data1 = OperationUtils.difference(data1, data2, type);
                     break;
                 case CONCATENATE_STRING:
-                    data1 = OperationUtils.concatenateString(data1, data2, category1.getType());
+                    data1 = OperationUtils.concatenateString(data1, data2, type);
                     break;
                 case LEFT:
                     break;

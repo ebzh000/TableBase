@@ -8,7 +8,6 @@ public class CategoryCreateRequest
     private int tableId;
     private String attributeName;
     private Integer parentId;
-    private DataType type;
     private boolean linkChildren;
 
     public int getCategoryId()
@@ -51,16 +50,6 @@ public class CategoryCreateRequest
         this.parentId = parentId;
     }
 
-    public DataType getType()
-    {
-        return type;
-    }
-
-    public void setType(DataType type)
-    {
-        this.type = type;
-    }
-
     public boolean isLinkChildren()
     {
         return linkChildren;
@@ -79,7 +68,6 @@ public class CategoryCreateRequest
                 ", tableId=" + tableId +
                 ", attributeName='" + attributeName + '\'' +
                 ", parentId=" + parentId +
-                ", type=" + type +
                 ", linkChildren=" + linkChildren +
                 '}';
     }

@@ -323,11 +323,11 @@ public class OperationUtils extends BaseUtils
             Integer data1 = Integer.parseInt(o1.getData());
             Integer data2 = Integer.parseInt(o2.getData());
             if (data1 > data2)
-                return -1;
+                return 1;
             else if (Objects.equals(data1, data2))
                 return 0;
             else
-                return 1;
+                return -1;
         }
     }
 
