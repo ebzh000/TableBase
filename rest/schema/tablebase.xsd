@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://tablebase.com/tablebase/xml"
+           targetNamespace="http://tablebase.com/tablebase/xml">
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            Tablebase XSD schema definitions
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType name="DataAccessPath">
+        <xs:sequence>
+            <xs:element name="id" type="xs:integer"/>
+            <xs:element name="tableId" type="xs:integer"/>
+            <xs:element name="entryId" type="xs:integer"/>
+            <xs:element name="entryData" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CategoryList">
+        <xs:sequence>
+            <xs:element name="category" type="Category"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Category">
+        <xs:sequence>
+            <xs:element name="tableId" type="xs:integer"/>
+            <xs:element name="categoryId" type="xs:integer"/>
+            <xs:element name="treeId" type="xs:integer"/>
+            <xs:element name="parentId" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

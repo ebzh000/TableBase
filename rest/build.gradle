@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.github.jacobono.jaxb'
 
 jar {
     baseName = 'tablebase-rest'
@@ -36,12 +37,35 @@ repositories {
 }
 
 dependencies {
+    jaxb 'com.sun.xml.bind:jaxb-xjc:2.2.7'
+    jaxb "org.jvnet.jaxb2_commons:jaxb2-basics-ant:0.6.5"
+    jaxb "org.jvnet.jaxb2_commons:jaxb2-basics:0.6.4"
+    jaxb "org.jvnet.jaxb2_commons:jaxb2-basics-annotate:0.6.4"
+
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.data:spring-data-rest-hal-browser')
     compile('org.springframework.boot:spring-boot-starter-hateoas')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.hibernate:hibernate-core:5.2.11.Final')
+    compile('com.github.jacobono:gradle-jaxb-plugin')
     runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+configurations {
+    jaxb
+}
+
+task jaxb(){
+    description 'Converts xsds to classes'
+    def jaxbTargetDir = file("generated")
+    doLast {
+        jaxbTargetDir.mkdirs()
+        ant.taskdef(name: 'xjc', classname: 'org.jvnet.jaxb2_commons.xjc.XJC2Task', classpath: configurations.jaxb.asPath)
+        ant.jaxbTargetDir = jaxbTargetDir
+        ant.xjc(destdir: '${jaxbTargetDir}', package: 'com.sample.jaxbclasses', schema:'generated/schema.xsd', binding:'generated/binding.xjb', extension:'true'){
+            arg(value: "-Xannotate")
+        }
+    }
 }
