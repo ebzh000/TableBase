@@ -18,9 +18,11 @@ public interface TableService
 
     List<Table> getUserTables(int userId);
 
-    List<Table> searchTable(String keyword);
-
     List<Table> getTables();
+
+    String toHtml(int tableId);
+
+    List<Table> searchTable(String keyword);
 
     void deleteTable(int tableId);
 }

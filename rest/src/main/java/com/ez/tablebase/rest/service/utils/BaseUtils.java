@@ -4,6 +4,8 @@ package com.ez.tablebase.rest.service.utils;
  */
 
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
+import com.ez.tablebase.rest.common.html.Cell;
+import com.ez.tablebase.rest.common.html.Table;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
@@ -15,6 +17,7 @@ import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class BaseUtils
 {
@@ -357,11 +360,122 @@ public class BaseUtils
         return children;
     }
 
-    List<CategoryEntity> findRootNodes(Integer tableId)
+    private List<CategoryEntity> findRootNodes(Integer tableId)
     {
         return categoryRepository.findRootNodes(tableId);
     }
 
+    private CategoryEntity findRootNodeByTreeId(Integer tableId, Integer treeId)
+    {
+        return categoryRepository.getRootCategoryByTreeId(tableId, treeId);
+    }
+
+    public String converTableToTHtml(int tableId)
+    {
+        Table htmlTable = new Table();
+
+        List<Integer> treeIds = getTreeIds(tableId);
+        Integer deepestTreeId = getDeepestTree(tableId, treeIds);
+        // We want to have all other trees to be in the access categories and the deepest tree to be in the header categories
+        treeIds.remove(deepestTreeId);
+
+        CategoryEntity deepestRootNode = findRootNodeByTreeId(tableId, deepestTreeId);
+        // We will get the total number of paths that indicate a unique leaf node of the deepest tree
+        Integer numHeaderColumns = getNumberOfPaths(deepestRootNode);
+        Integer maxDepth = getMaxDepthByTreeId(tableId, deepestTreeId);
+        // This is going to add all top level categories to the first row of the table
+        htmlTable.addNewRow();
+        for(Integer treeId : treeIds)
+        {
+            CategoryEntity rootNode = findRootNodeByTreeId(tableId, treeId);
+            htmlTable.addCell(htmlTable.getRowCount(), new Cell(rootNode.getCategoryId(), rootNode.getAttributeName(), 1, maxDepth));
+        }
+        htmlTable.addCell(htmlTable.getRowCount(), new Cell(deepestRootNode.getCategoryId(), deepestRootNode.getAttributeName(), numHeaderColumns, 1));
+
+        // Time to populate the deeper layers of the deepest tree
+        htmlTable = createChildNodes(tableId, deepestRootNode, maxDepth, htmlTable);
+        return htmlTable.toHtml();
+    }
+
+    private Table createChildNodes(int tableId, CategoryEntity rootNode, Integer maxDepth, Table htmlTable)
+    {
+        List<CategoryEntity> children = findChildren(tableId, rootNode.getCategoryId());
+        // Since we already added the root node of the tree (root node has a depth of 1), we shall start with the direct children of the root node (depth of 2)
+        LinkedBlockingQueue<CategoryEntity> queue = new LinkedBlockingQueue<>(children);
+        Integer depth = 2;
+
+//        return breadthFirstRecursive(tableId, queue, depth, maxDepth, htmlTable);
+        return htmlTable;
+    }
+
+//    private Table breadthFirstRecursive(Integer tableId, LinkedBlockingQueue<CategoryEntity> queue, Integer depth, Integer maxDepth, Table htmlTable)
+//    {
+//        if (queue.isEmpty())
+//            return htmlTable;
+//
+//        CategoryEntity node = queue.poll();
+//        List<CategoryEntity> children = findChildren(tableId, node.getCategoryId());
+//        int rowSpan;
+//        int colSpan;
+//
+//        // The current node is a leaf node
+//        if (children.size() == 0)
+//        {
+//            colSpan = 1;
+//            // if the current depth is less than maxDepth, then we currently have a leaf node
+//            rowSpan = (depth < maxDepth) ? depth : 1;
+//        }
+//
+//        // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of children>
+//        else
+//        {
+//            rowSpan = 1;
+//            colSpan = children.size();
+//        }
+//
+//        htmlTable.addCell
+//        return htmlTable;
+//    }
+
+    private Integer getNumberOfPaths(CategoryEntity rootNode)
+    {
+        return buildPaths(rootNode).size();
+    }
+
+    private Integer getDeepestTree(Integer tableId, List<Integer> treeIds)
+    {
+        Map<Integer, Integer> depthStore = new HashMap<>();
+        for(Integer treeId : treeIds)
+        {
+            Integer depth = getMaxDepthByTreeId(tableId, treeId);
+            depthStore.put(treeId, depth);
+        }
+
+        Map.Entry<Integer, Integer> maxEntry = null;
+        for (Map.Entry<Integer, Integer> entry : depthStore.entrySet())
+        {
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+            {
+                maxEntry = entry;
+            }
+        }
+
+        return maxEntry != null ? maxEntry.getKey() : null;
+    }
+
+    private Integer getMaxDepthByTreeId(Integer tableId, Integer treeId)
+    {
+        Integer depth = 0;
+
+        List<List<CategoryEntity>> paths = buildPaths(findRootNodeByTreeId(tableId, treeId));
+        for(List<CategoryEntity> path : paths)
+        {
+            if(path.size() > depth)
+                depth = path.size();
+        }
+
+        return depth;
+    }
 
     public TableEntity validateTable(int tableId)
     {

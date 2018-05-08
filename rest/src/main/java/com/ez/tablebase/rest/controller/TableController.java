@@ -42,6 +42,12 @@ public class TableController
         return tableService.getTable(tableId);
     }
 
+    @GetMapping(value = "/table/{tableId}/html")
+    Object getHtmlTable(@PathVariable int tableId)
+    {
+        return tableService.toHtml(tableId);
+    }
+
     @GetMapping(value = "/search")
     Object searchTable(@RequestParam("keyword") String keyword)
     {
@@ -53,5 +59,4 @@ public class TableController
     {
         tableService.deleteTable(tableId);
     }
-
 }

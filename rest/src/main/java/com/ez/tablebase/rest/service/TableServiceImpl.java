@@ -59,6 +59,15 @@ public class TableServiceImpl implements TableService
         return models;
     }
 
+    @Transactional(readOnly = true)
+    public List<Table> getTables() throws RuntimeException
+    {
+        Iterable<TableEntity> entities = tableUtils.findAll();
+        List<Table> models = new ArrayList<>();
+        entities.forEach(entity -> models.add(Table.buildModel(entity)));
+        return models;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<Table> searchTable(String keyword)
@@ -69,13 +78,10 @@ public class TableServiceImpl implements TableService
         return models;
     }
 
-    @Transactional(readOnly = true)
-    public List<Table> getTables() throws RuntimeException
+    @Override
+    public String toHtml(int tableId)
     {
-        Iterable<TableEntity> entities = tableUtils.findAll();
-        List<Table> models = new ArrayList<>();
-        entities.forEach(entity -> models.add(Table.buildModel(entity)));
-        return models;
+        return tableUtils.converTableToTHtml(tableId);
     }
 
     @Override
