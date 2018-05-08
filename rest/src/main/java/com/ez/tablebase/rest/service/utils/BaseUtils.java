@@ -15,7 +15,6 @@ import com.ez.tablebase.rest.repository.CategoryRepository;
 import com.ez.tablebase.rest.repository.DataAccessPathRepository;
 import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
-import javafx.util.Pair;
 
 import java.util.*;
 
@@ -487,21 +486,19 @@ public class BaseUtils
                         int leafCellDepth = htmlTable.getLeafCells().get(i).getKey();
                         int leafCellOffset = htmlTable.getLeafCells().get(i).getValue();
 
-                        if(htmlTable.getLeafCells().get(i).equals(new Pair<>(1,1)))
-                        {
-                            System.out.print("current: " + currDepth + "=" + currRowCellOffset + " ");
-                            System.out.println("leaf: " + htmlTable.getLeafCells().get(i));
-                            System.out.println((currDepth + " <= " + leafCellDepth + " && " + currRowCellOffset + " <= " + leafCellOffset) + " || " + (leafCellDepth + " <= " + currDepth + " && " + leafCellOffset + " == " + currRowCellOffset));
-                            System.out.println((currDepth <= leafCellDepth) + " && " + (currRowCellOffset <= leafCellOffset) + " || " + (leafCellDepth <= currDepth) + " && " + (leafCellOffset == currRowCellOffset));
-                        }
+                        System.out.print("current: " + currDepth + "=" + currRowCellOffset + " ");
+                        System.out.println("leaf: " + htmlTable.getLeafCells().get(i));
+                        System.out.println((currDepth + " <= " + leafCellDepth + " && " + currRowCellOffset + " <= " + leafCellOffset) + " || " + (leafCellDepth + " <= " + currDepth + " && " + leafCellOffset + " == " + currRowCellOffset));
+                        System.out.println((currDepth <= leafCellDepth) + " && " + (currRowCellOffset <= leafCellOffset) + " || " + (leafCellDepth <= currDepth) + " && " + (leafCellOffset == currRowCellOffset));
 
                         if((currDepth <= leafCellDepth && currRowCellOffset <= leafCellOffset) || (leafCellDepth <= currDepth && leafCellOffset == currRowCellOffset))
                         {
                             System.out.println("Injecting Null");
-                            System.out.println();
                             htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
                         }
                     }
+                    System.out.println();
+
                 }
 
                 if (index >= categoryList.size())
