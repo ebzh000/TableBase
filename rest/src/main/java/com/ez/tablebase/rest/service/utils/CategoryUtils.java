@@ -292,9 +292,7 @@ public class CategoryUtils extends BaseUtils
             List<Integer> dap = dataAccessPathRepository.getDapCategoriesByEntry(entry.getTableId(), entry.getEntryId());
             StringBuilder dapString = new StringBuilder();
             for(Integer dapEntity : dap)
-            {
                 dapString.append(dapEntity).append("-");
-            }
 
             dapString.deleteCharAt(dapString.length() - 1);
             entryMap.put(entry.getEntryId(), dapString.toString());

@@ -4,7 +4,6 @@ package com.ez.tablebase.rest.repository;
  * Created by ErikZ on 8/10/2017.
  */
 
-import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

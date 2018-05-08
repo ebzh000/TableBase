@@ -8,13 +8,15 @@ package com.ez.tablebase.rest.common.html;
  * Created by erikz on 8/05/2018.
  */
 
+import java.util.List;
+
 public class Cell
 {
     public Integer categoryId;
     public String label;
     public int colSpan;
     public int rowSpan;
-    public String dataAccessPath;
+    public List<Integer> dataAccessPath;
 
     public Cell(Integer categoryId, String label, int colSpan, int rowSpan)
     {
@@ -65,12 +67,12 @@ public class Cell
         this.rowSpan = rowSpan;
     }
 
-    public String getDataAccessPath()
+    public List<Integer> getDataAccessPath()
     {
         return dataAccessPath;
     }
 
-    public void setDataAccessPath(String dataAccessPath)
+    public void setDataAccessPath(List<Integer> dataAccessPath)
     {
         this.dataAccessPath = dataAccessPath;
     }

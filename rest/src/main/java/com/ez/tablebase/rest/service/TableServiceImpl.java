@@ -81,7 +81,8 @@ public class TableServiceImpl implements TableService
     @Override
     public String toHtml(int tableId)
     {
-        return tableUtils.converTableToTHtml(tableId);
+        TableEntity table = tableUtils.validateTable(tableId);
+        return tableUtils.converTableToTHtml(table.getTableId(), table.getTableName());
     }
 
     @Override
