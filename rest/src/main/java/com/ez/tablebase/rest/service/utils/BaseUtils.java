@@ -399,13 +399,35 @@ public class BaseUtils
 
     private Table createChildNodes(int tableId, CategoryEntity rootNode, Integer maxDepth, Table htmlTable)
     {
-        List<CategoryEntity> children = findChildren(tableId, rootNode.getCategoryId());
-        // Since we already added the root node of the tree (root node has a depth of 1), we shall start with the direct children of the root node (depth of 2)
-        LinkedBlockingQueue<CategoryEntity> queue = new LinkedBlockingQueue<>(children);
-        Integer depth = 2;
+        Map<Integer, List<CategoryEntity>> treeByDepth = new HashMap<>();
+        for (int depth = 2; depth < maxDepth; depth++)
+        {
+            dls(tableId, rootNode, depth, treeByDepth);
+        }
 
-//        return breadthFirstRecursive(tableId, queue, depth, maxDepth, htmlTable);
         return htmlTable;
+    }
+
+    private void dls(int tableId, CategoryEntity rootNode, int depth, Map<Integer, List<CategoryEntity>> treeByDepth)
+    {
+//        List<CategoryEntity> categoriesForDepth = new LinkedList<>();
+//        if(depth == 0)
+//        {
+//            System.out.println(rootNode.getAttributeName());
+//        }
+
+        if(depth > 0)
+        {
+            List<CategoryEntity> children = findChildren(tableId, rootNode.getCategoryId());
+            System.out.println("depth: " + depth);
+            children.forEach(data -> System.out.println(data.getAttributeName() + " "));
+            System.out.println();
+            for (CategoryEntity child : children)
+            {
+                dls(tableId, child, depth - 1, treeByDepth);
+            }
+        }
+        System.out.println();
     }
 
 //    private Table breadthFirstRecursive(Integer tableId, LinkedBlockingQueue<CategoryEntity> queue, Integer depth, Integer maxDepth, Table htmlTable)
