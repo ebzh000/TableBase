@@ -10,8 +10,7 @@ package com.ez.tablebase.rest.common.html;
 
 import javafx.util.Pair;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Table
 {
@@ -32,7 +31,7 @@ public class Table
     private List<List<Cell>> table;
 
     // A list that contains Pairs of the row index and the row cell offset
-    private List<Pair<Integer, Integer>> leafCells;
+    private Map<Integer, Cell> leafCells;
     private Integer headerGroupDepth;
 
     public Table(Integer tableId, String tableName)
@@ -40,7 +39,7 @@ public class Table
         this.tableId = tableId;
         this.tableName = tableName;
         this.table = new LinkedList<>();
-        this.leafCells = new LinkedList<>();
+        this.leafCells = new HashMap<>();
     }
 
     public List<List<Cell>> getTable()
@@ -73,14 +72,14 @@ public class Table
         this.table.get(row).add(cell);
     }
 
-    public List<Pair<Integer, Integer>> getLeafCells()
+    public Map<Integer, Cell> getLeafCells()
     {
         return this.leafCells;
     }
 
-    public void saveLeafCell(Integer row, Integer rowCellOffset)
+    public void saveLeafCell(Integer colOffset, Cell cell)
     {
-        this.leafCells.add(new Pair<>(row, rowCellOffset));
+        this.leafCells.put(colOffset, cell);
     }
 
     public String toHtml()

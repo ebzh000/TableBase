@@ -478,29 +478,16 @@ public class BaseUtils
                 // This also null cell injection imitates rowspan
                 if(htmlTable.getLeafCells().size() != 0)
                 {
-                    int currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
-
-                    for(int i = 0; i < htmlTable.getLeafCells().size(); i++)
+                    Set<Integer> leafColOffsetSet = htmlTable.getLeafCells().keySet();
+                    Integer currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
+                    while (leafColOffsetSet.contains(currRowCellOffset))
                     {
-                        int currDepth = depth - 1;
-                        int leafCellDepth = htmlTable.getLeafCells().get(i).getKey();
-                        int leafCellOffset = htmlTable.getLeafCells().get(i).getValue();
-
-                        System.out.print("current: " + currDepth + "=" + currRowCellOffset + " ");
-                        System.out.println("leaf: " + htmlTable.getLeafCells().get(i));
-                        System.out.println((currDepth + " <= " + leafCellDepth + " && " + currRowCellOffset + " <= " + leafCellOffset) + " || " + (leafCellDepth + " <= " + currDepth + " && " + leafCellOffset + " == " + currRowCellOffset));
-                        System.out.println((currDepth <= leafCellDepth) + " && " + (currRowCellOffset <= leafCellOffset) + " || " + (leafCellDepth <= currDepth) + " && " + (leafCellOffset == currRowCellOffset));
-
-                        if((currDepth <= leafCellDepth && currRowCellOffset <= leafCellOffset) || (leafCellDepth <= currDepth && leafCellOffset == currRowCellOffset))
-                        {
-                            System.out.println("Injecting Null");
-                            htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
-                        }
+                        htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
+                        currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
                     }
-                    System.out.println();
-
                 }
 
+                // The current depth's categoryList may be smaller than the total number of header columns
                 if (index >= categoryList.size())
                     break;
 
@@ -522,7 +509,7 @@ public class BaseUtils
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), cell);
 
                     // Since there are possible leaf nodes on different rows, we must save their locations for future processing
-                    htmlTable.saveLeafCell(htmlTable.getLatestRowIndex(), htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size() - 1);
+                    htmlTable.saveLeafCell(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size() - 1, cell);
                 }
 
                 // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of children>
