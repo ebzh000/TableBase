@@ -580,10 +580,9 @@ public class BaseUtils
         // First, we need to determine the total depth of the combined trees
         Integer rowDAPDepth = 1;
         for(Integer treeId : treeIds)
-            rowDAPDepth = rowDAPDepth + (getTreeDepth(tableId, treeId - 1));
+            rowDAPDepth = rowDAPDepth + (getTreeDepth(tableId, treeId) - 1);
 
         htmlTable.setAccessTreeDepth(rowDAPDepth);
-
         for(int depth = 0; depth < rowDAPDepth; depth++)
         {
             List<CategoryEntity> categoryList = new LinkedList<>();
