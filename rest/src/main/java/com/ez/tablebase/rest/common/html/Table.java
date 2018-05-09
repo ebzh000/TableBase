@@ -8,7 +8,7 @@ package com.ez.tablebase.rest.common.html;
  * Created by erikz on 8/05/2018.
  */
 
-import javafx.util.Pair;
+import com.ez.tablebase.rest.database.CategoryEntity;
 
 import java.util.*;
 
@@ -30,21 +30,29 @@ public class Table
     private String tableName;
     private List<List<Cell>> table;
 
-    // A list that contains Pairs of the row index and the row cell offset
-    private Map<Integer, Cell> leafCells;
+    // A Map populated with Entry<ColIndex, colDAP>
+    private Map<Integer, List<Integer>> colDAPs;
+
+    // A Map populated with Entry<rowIndex, rowDAP>
+    private Map<Integer, List<Integer>> rowDAPs;
+
     private Integer headerGroupDepth;
+    private Integer headerGroupWidth;
+    private Integer rowCount;
+    private Integer accessTreeDepth;
 
     public Table(Integer tableId, String tableName)
     {
         this.tableId = tableId;
         this.tableName = tableName;
         this.table = new LinkedList<>();
-        this.leafCells = new HashMap<>();
+        this.colDAPs = new HashMap<>();
+        this.rowDAPs = new HashMap<>();
     }
 
     public List<List<Cell>> getTable()
     {
-        return this.table;
+        return table;
     }
 
     public Integer getHeaderGroupDepth()
@@ -57,29 +65,91 @@ public class Table
         this.headerGroupDepth = headerGroupDepth;
     }
 
+    public Integer getHeaderGroupWidth()
+    {
+        return headerGroupWidth;
+    }
+
+    public void setHeaderGroupWidth(Integer headerGroupWidth)
+    {
+        this.headerGroupWidth = headerGroupWidth;
+    }
+
+    public Integer getRowCount()
+    {
+        return rowCount;
+    }
+
+    public void setRowCount(Integer rowCount)
+    {
+        this.rowCount = rowCount;
+    }
+
+    public Integer getAccessTreeDepth()
+    {
+        return accessTreeDepth;
+    }
+
+    public void setAccessTreeDepth(Integer accessTreeDepth)
+    {
+        this.accessTreeDepth = accessTreeDepth;
+    }
+
     public void addNewRow()
     {
-        this.table.add(new LinkedList<>());
+        table.add(new LinkedList<>());
     }
 
     public Integer getLatestRowIndex()
     {
-        return this.table.size() - 1;
+        return table.size() - 1;
     }
 
     public void addCell(Integer row, Cell cell)
     {
-        this.table.get(row).add(cell);
+        table.get(row).add(cell);
     }
 
-    public Map<Integer, Cell> getLeafCells()
+    public Map<Integer, List<Integer>> getColDAPs()
     {
-        return this.leafCells;
+        return colDAPs;
     }
 
-    public void saveLeafCell(Integer colOffset, Cell cell)
+    public void saveColDAP(Integer colOffset, List<Integer> colDap)
     {
-        this.leafCells.put(colOffset, cell);
+        colDAPs.put(colOffset, colDap);
+    }
+
+    public Map<Integer, List<Integer>> getRowDAPs()
+    {
+        return rowDAPs;
+    }
+
+    public void saveRowDAPS(List<List<CategoryEntity>> allRowDAPs)
+    {
+        for(int index = 0; index < allRowDAPs.size(); index++)
+        {
+            List<Integer> rowDAP = new LinkedList<>();
+            allRowDAPs.get(index).forEach(category -> rowDAP.add(category.getCategoryId()));
+
+            rowDAPs.put(index, rowDAP);
+        }
+    }
+
+    public void printTable()
+    {
+        for (List<Cell> row : this.table)
+        {
+            for (int count = 0; count < row.size(); count++)
+            {
+                Cell cell = row.get(count);
+                System.out.print(count + "|" + ((cell != null)? cell.getLabel() : null));
+                if (count != row.size() - 1)
+                    System.out.print(" - ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     public String toHtml()

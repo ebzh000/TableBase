@@ -6,6 +6,7 @@ package com.ez.tablebase.rest.service.utils;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.common.html.Cell;
 import com.ez.tablebase.rest.common.html.Table;
+import com.ez.tablebase.rest.common.html.TreeNode;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
@@ -143,12 +144,13 @@ public class BaseUtils
     {
         List<List<List<CategoryEntity>>> treePaths = new LinkedList<>();
         for (Integer treeId : treeIds)
-            treePaths.add(buildPaths(categoryRepository.getRootCategoryByTreeId(tableId, treeId)));
+        {
+            CategoryEntity rootNode = categoryRepository.getRootCategoryByTreeId(tableId, treeId);
+            treePaths.add(buildPaths(rootNode));
+        }
 
         List<List<CategoryEntity>> permPaths = new ArrayList<>();
         generatePermutations(treePaths, permPaths, 0, new LinkedList<>());
-        //TODO: REMOVE
-        printPathList(permPaths);
         return permPaths;
     }
 
@@ -403,113 +405,79 @@ public class BaseUtils
 
         List<Integer> treeIds = getTreeIds(tableId);
         Integer deepestTreeId = getDeepestTree(tableId, treeIds);
-        // We want to have all other trees to be in the access categories and the deepest tree to be in the header categories
+        CategoryEntity deepestRootNode = findRootNodeByTreeId(tableId, deepestTreeId);
+
+        // We want to have all other trees to be in the access categories and the deepest tree to be in the header categories (treeIds will be in asc order)
         treeIds.remove(deepestTreeId);
 
-        CategoryEntity deepestRootNode = findRootNodeByTreeId(tableId, deepestTreeId);
-        // We will get the total number of paths that indicate a unique leaf node of the deepest tree
-        Integer numHeaderColumns = getNumberOfPaths(deepestRootNode);
-        Integer maxDepth = getMaxDepthByTreeId(tableId, deepestTreeId);
-        htmlTable.setHeaderGroupDepth(maxDepth - 1);
+        // Save the total number of columns that will be created
+        htmlTable.setHeaderGroupWidth(getNumberOfPaths(deepestRootNode));
+
+        // Save the depth of the header category group
+        htmlTable.setHeaderGroupDepth(getTreeDepth(tableId, deepestTreeId));
 
         // This is going to add all top level categories to the first row of the table
-        htmlTable = createTopLevelCategories(htmlTable, tableId, treeIds, deepestRootNode, maxDepth, numHeaderColumns);
+        htmlTable = createTopLevelCategories(htmlTable, tableId, treeIds, deepestRootNode);
 
         // Time to populate the deeper layers of the deepest tree
-        htmlTable = createChildCategories(htmlTable, tableId, deepestRootNode, maxDepth);
+        htmlTable = createChildCategories(htmlTable, tableId, deepestRootNode);
+        htmlTable.printTable();
 
-        for (List<Cell> row : htmlTable.getTable())
-        {
-            for (int count = 0; count < row.size(); count++)
-            {
-                Cell cell = row.get(count);
-                System.out.print((cell != null)? cell.getLabel() : null);
-                if (count != row.size() - 1)
-                    System.out.print(" - ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+        // Time to populate the rows of the table (This function also includes the creation of access categories)
+        htmlTable = createRows(htmlTable, tableId, treeIds);
 
-        // Time to populate the rows of the table
-        htmlTable = createRows(htmlTable, tableId, treeIds, numHeaderColumns);
-
-        System.out.println(htmlTable.getLeafCells());
         return htmlTable.toHtml();
     }
 
-    private Table createTopLevelCategories(Table htmlTable, Integer tableId, List<Integer> treeIds, CategoryEntity deepestRootNode, Integer maxDepth, Integer numHeaderColumns)
+    private Table createTopLevelCategories(Table htmlTable, Integer tableId, List<Integer> treeIds, CategoryEntity deepestRootNode)
     {
         htmlTable.addNewRow();
         for(Integer treeId : treeIds)
         {
             CategoryEntity rootNode = findRootNodeByTreeId(tableId, treeId);
-            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(rootNode.getCategoryId(), rootNode.getAttributeName(), 1, maxDepth));
+            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(rootNode.getCategoryId(), rootNode.getAttributeName(), getTreeDepth(tableId, treeId) - 1, htmlTable.getHeaderGroupDepth()));
         }
 
         // The VH Category is an internal Category. Users do not need to see this.
         if (!deepestRootNode.getAttributeName().matches("VH"))
-            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(deepestRootNode.getCategoryId(), deepestRootNode.getAttributeName(), numHeaderColumns, 1));
+            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(deepestRootNode.getCategoryId(), deepestRootNode.getAttributeName(), htmlTable.getHeaderGroupWidth(), 1));
 
         return htmlTable;
     }
 
-    private Table createChildCategories(Table htmlTable, int tableId, CategoryEntity rootNode, Integer maxDepth)
+    private Table createChildCategories(Table htmlTable, int tableId, CategoryEntity rootNode)
     {
         Map<Integer, List<CategoryEntity>> treeByDepth = new HashMap<>();
 
         // The root node of a tree will begin at depth level 1
         // We start at 2 because we have already added the root node to the HTML table
-        for (int depth = 2; depth < maxDepth; depth++)
+        for (int depth = 2; depth < htmlTable.getHeaderGroupDepth(); depth++)
             dls(tableId, rootNode, depth, treeByDepth);
 
         // Initialise map to store paths to each leaf node in deepest tree
         Map<Integer, List<Integer>> treePaths = constructTreePaths(rootNode);
 
         // Time to complete the header groups for the html table
-        for (Integer depth: treeByDepth.keySet())
+        for (Integer depth : treeByDepth.keySet())
         {
             htmlTable.addNewRow();
 
             List<CategoryEntity> categoryList = treeByDepth.get(depth);
-            for(int index = 0; index <= categoryList.size(); index++)
+            for (CategoryEntity category : categoryList)
             {
-                // If we have leaf nodes from high depths then we need to offset current row with nulls so we can properly retrieve data access paths later on
-                // This also null cell injection imitates rowspan
-                if(htmlTable.getLeafCells().size() != 0)
-                {
-                    Set<Integer> leafColOffsetSet = htmlTable.getLeafCells().keySet();
-                    Integer currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
-                    while (leafColOffsetSet.contains(currRowCellOffset))
-                    {
-                        htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
-                        currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
-                    }
-                }
-
-                // The current depth's categoryList may be smaller than the total number of header columns
-                if (index >= categoryList.size())
-                    break;
-
-                CategoryEntity category = categoryList.get(index);
                 List<CategoryEntity> children = findChildren(tableId, category.getCategoryId());
                 int rowSpan;
                 int colSpan;
+
                 // The current node is a leaf node
                 if (children.size() == 0)
                 {
-                    colSpan = 1;
                     // If the current depth is less than maxDepth, then we currently have a leaf node
-                    rowSpan = (depth < maxDepth) ? depth : 1;
-                    Cell cell = new Cell(category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan);
+                    rowSpan = (depth < htmlTable.getHeaderGroupDepth()) ? depth : 1;
+                    colSpan = 1;
 
-                    // We shall now save the data access path to this leaf node for further processing
-                    List<Integer> path = treePaths.get(category.getCategoryId());
-                    cell.setDataAccessPath(path);
-                    htmlTable.addCell(htmlTable.getLatestRowIndex(), cell);
-
-                    // Since there are possible leaf nodes on different rows, we must save their locations for future processing
-                    htmlTable.saveLeafCell(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size() - 1, cell);
+                    // Save current column's data access path to the leaf node
+                    htmlTable.saveColDAP(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size(), treePaths.get(category.getCategoryId()));
                 }
 
                 // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of children>
@@ -517,23 +485,15 @@ public class BaseUtils
                 {
                     rowSpan = 1;
                     colSpan = children.size();
-                    htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
 
-                    // We need to inject some null cells to imitate colspan, so we can correctly retrieve the data access path of the leaf node
+                    // We need to inject some null cells to imitate colspan, so we can correctly save the data access paths of leaf nodes later on
                     for(int count = 0; count < children.size() - 1; count++)
-                    {
                         htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
-                    }
                 }
+
+                htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
             }
         }
-        return htmlTable;
-    }
-
-    private Table createRows(Table htmlTable, int tableId, List<Integer> treeIds, Integer numHeaderColumns)
-    {
-        List<List<CategoryEntity>> permPaths = generatePermPaths(tableId, treeIds);
-
         return htmlTable;
     }
 
@@ -553,6 +513,135 @@ public class BaseUtils
                     dls(tableId, child, depth + 1, treeByDepth);
             }
         }
+    }
+
+    private Table createRows(Table htmlTable, int tableId, List<Integer> treeIds)
+    {
+        List<List<Cell>> accessCells = createAccessCells(htmlTable, tableId, treeIds);
+
+        return htmlTable;
+    }
+
+    private List<List<Cell>> createAccessCells(Table htmlTable, int tableId, List<Integer> treeIds)
+    {
+        List<List<Cell>> accessCells = new LinkedList<>();
+        List<List<CategoryEntity>> permPaths = generatePermPaths(tableId, treeIds);
+        // Since we now have all possible data access paths for each row, we can just add it to the html table's cache of rowDAPs
+        htmlTable.saveRowDAPS(permPaths);
+        htmlTable.setRowCount(permPaths.size());
+
+        // Now to apply rowspan and colspan on access cells
+        List<List<CategoryEntity>> permPathsNoRoots = removeRootNodes(tableId, treeIds, permPaths);
+
+        //TODO: SUS OUT IF COLSPAN AND ROWSPAN IS POSSIBLE ON ACCESS CATEGORIES
+        Map<Integer, List<CategoryEntity>> accessTreeByDepth = constructTreeMapByDepth(htmlTable, tableId, treeIds, permPathsNoRoots);
+        printMap(accessTreeByDepth);
+
+//        // Time to complete the header groups for the html table
+//        for (Integer depth: accessTreeByDepth.keySet())
+//        {
+//            List<CategoryEntity> categoryList = accessTreeByDepth.get(depth);
+//            for (CategoryEntity category : categoryList)
+//            {
+//                List<CategoryEntity> children = findChildren(tableId, category.getCategoryId());
+//                int rowSpan;
+//                int colSpan;
+//
+//                // The current node is a leaf node
+//                if (children.size() == 0)
+//                {
+//                    // If the current depth is less than maxDepth, then we currently have a leaf node
+//                    rowSpan = (depth < htmlTable.getHeaderGroupDepth()) ? depth : 1;
+//                    colSpan = 1;
+//                }
+//
+//                // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of children>
+//                else
+//                {
+//                    rowSpan = 1;
+//                    colSpan = children.size();
+//
+//                    // We need to inject some null cells to imitate colspan, so we can correctly save the data access paths of leaf nodes later on
+//                    for(int count = 0; count < children.size() - 1; count++)
+//                        htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
+//                }
+//
+//                htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
+//            }
+//        }
+
+        return accessCells;
+    }
+
+    private Map<Integer, List<CategoryEntity>> constructTreeMapByDepth(Table htmlTable, int tableId, List<Integer> treeIds, List<List<CategoryEntity>> permPathsNoRoots)
+    {
+        Map<Integer, List<CategoryEntity>> accessTreeByDepth = new HashMap<>();
+
+        // First, we need to determine the total depth of the combined trees
+        Integer rowDAPDepth = 1;
+        for(Integer treeId : treeIds)
+            rowDAPDepth = rowDAPDepth + (getTreeDepth(tableId, treeId - 1));
+
+        htmlTable.setAccessTreeDepth(rowDAPDepth);
+
+        for(int depth = 0; depth < rowDAPDepth; depth++)
+        {
+            List<CategoryEntity> categoryList = new LinkedList<>();
+            for(List<CategoryEntity> path : permPathsNoRoots)
+            {
+                CategoryEntity category = path.get(depth);
+                categoryList.add(category);
+            }
+            accessTreeByDepth.put(depth, categoryList);
+        }
+
+//        TreeNode root = new TreeNode(new CategoryEntity());
+//        {
+//            TreeNode node0 = root.addChild("node0");
+//            TreeNode node1 = root.addChild("node1");
+//            TreeNode node2 = root.addChild("node2");
+//            {
+//                TreeNode node20 = node2.addChild(null);
+//                TreeNode node21 = node2.addChild("node21");
+//                {
+//                    TreeNode<String> node210 = node20.addChild("node210");
+//                }
+//            }
+//        }
+
+
+        return accessTreeByDepth;
+    }
+
+    private List<List<CategoryEntity>> removeRootNodes(int tableId, List<Integer> treeIds, List<List<CategoryEntity>> permPaths)
+    {
+        List<List<CategoryEntity>> permPathsNoRoots = new LinkedList<>();
+        List<Integer> rootNodes = new LinkedList<>();
+        for (Integer treeId : treeIds)
+            rootNodes.add(findRootNodeByTreeId(tableId, treeId).getCategoryId());
+
+        for(List<CategoryEntity> path : permPaths)
+        {
+            List<CategoryEntity> pathWithNoRoot = new LinkedList<>();
+            for (CategoryEntity currCategory : path)
+            {
+                if(!rootNodes.contains(currCategory.getCategoryId()))
+                    pathWithNoRoot.add(currCategory);
+            }
+            permPathsNoRoots.add(pathWithNoRoot);
+        }
+
+        for (List<CategoryEntity> path : permPathsNoRoots)
+        {
+            CategoryEntity dummyRoot = new CategoryEntity();
+            dummyRoot.setCategoryId(-1);
+            dummyRoot.setAttributeName("VA");
+            path.add(0, dummyRoot);
+        }
+
+        printPathList(permPathsNoRoots);
+
+        return permPathsNoRoots;
     }
 
     // This is for debugging
@@ -576,7 +665,7 @@ public class BaseUtils
         Map<Integer, Integer> depthStore = new HashMap<>();
         for(Integer treeId : treeIds)
         {
-            Integer depth = getMaxDepthByTreeId(tableId, treeId);
+            Integer depth = getTreeDepth(tableId, treeId);
             depthStore.put(treeId, depth);
         }
 
@@ -592,7 +681,7 @@ public class BaseUtils
         return maxEntry != null ? maxEntry.getKey() : null;
     }
 
-    private Integer getMaxDepthByTreeId(Integer tableId, Integer treeId)
+    private Integer getTreeDepth(Integer tableId, Integer treeId)
     {
         Integer depth = 0;
 

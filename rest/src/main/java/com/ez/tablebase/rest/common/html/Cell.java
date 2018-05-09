@@ -8,15 +8,12 @@ package com.ez.tablebase.rest.common.html;
  * Created by erikz on 8/05/2018.
  */
 
-import java.util.List;
-
 public class Cell
 {
-    public Integer categoryId;
-    public String label;
-    public int colSpan;
-    public int rowSpan;
-    public List<Integer> dataAccessPath;
+    private Integer categoryId;
+    private String label;
+    private int colSpan;
+    private int rowSpan;
 
     public Cell(Integer categoryId, String label, int colSpan, int rowSpan)
     {
@@ -24,7 +21,6 @@ public class Cell
         this.label = label;
         this.colSpan = colSpan;
         this.rowSpan = rowSpan;
-        this.dataAccessPath = null;
     }
 
     public Integer getCategoryId()
@@ -37,45 +33,21 @@ public class Cell
         this.categoryId = categoryId;
     }
 
-    public String getLabel()
+    String getLabel()
     {
         return label;
     }
 
-    public void setLabel(String label)
-    {
-        this.label = label;
-    }
-
-    public int getColSpan()
+    int getColSpan()
     {
         return colSpan;
     }
 
-    public void setColSpan(int colSpan)
-    {
-        this.colSpan = colSpan;
-    }
-
-    public int getRowSpan()
+    int getRowSpan()
     {
         return rowSpan;
     }
 
-    public void setRowSpan(int rowSpan)
-    {
-        this.rowSpan = rowSpan;
-    }
-
-    public List<Integer> getDataAccessPath()
-    {
-        return dataAccessPath;
-    }
-
-    public void setDataAccessPath(List<Integer> dataAccessPath)
-    {
-        this.dataAccessPath = dataAccessPath;
-    }
 
     @Override
     public String toString()
@@ -84,7 +56,6 @@ public class Cell
                 "label='" + label + '\'' +
                 ", colSpan=" + colSpan +
                 ", rowSpan=" + rowSpan +
-                ", dataAccessPath='" + dataAccessPath + '\'' +
                 '}';
     }
 }
