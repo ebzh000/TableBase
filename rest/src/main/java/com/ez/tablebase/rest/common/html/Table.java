@@ -163,20 +163,23 @@ public class Table
         sb.append("<table name=\"TableId:").append(this.tableId).append("\" align=\"center\">");
 
         for(List<Cell> row : table){
-            sb.append(NEW_LINE).append(TAB).append("<tr>").append(NEW_LINE);
-            for(Cell cell : row)
+            if(!row.isEmpty())
             {
-                if(cell != null)
+                sb.append(NEW_LINE).append(TAB).append("<tr>").append(NEW_LINE);
+                for (Cell cell : row)
                 {
-                    sb.append(TAB).append(TAB).append("<td ")
-                            .append("name=\"CategoryId:").append(cell.getCategoryId()).append("\" ")
-                            .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
-                            .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")
-                            .append(cell.getLabel()).append("</td>")
-                            .append(NEW_LINE);
+                    if (cell != null)
+                    {
+                        sb.append(TAB).append(TAB).append("<td ")
+                                .append("name=\"CategoryId:").append(cell.getCategoryId()).append("\" ")
+                                .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
+                                .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")
+                                .append(cell.getLabel()).append("</td>")
+                                .append(NEW_LINE);
+                    }
                 }
+                sb.append(TAB).append("</tr>");
             }
-            sb.append(TAB).append("</tr>");
         }
 
         sb.append(NEW_LINE).append("</table>").append(NEW_LINE);

@@ -33,7 +33,7 @@ public class Cell
         this.categoryId = categoryId;
     }
 
-    String getLabel()
+    public String getLabel()
     {
         return label;
     }
