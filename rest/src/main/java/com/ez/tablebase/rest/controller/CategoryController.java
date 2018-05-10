@@ -4,14 +4,17 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
+import com.ez.tablebase.rest.model.Category;
 import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(value = "/tablebase/table/{tableId}")
 public class CategoryController
 {
@@ -24,17 +27,25 @@ public class CategoryController
     }
 
     @PostMapping(value = "/category/createTopLevelCategory")
-    Object createTopLevelCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request)
+    Object createTopLevelCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request, @RequestParam(value = "toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
-        return categoryService.createTopLevelCategory(request);
+        Category category = categoryService.createTopLevelCategory(request);
+        if(toHtml)
+           return categoryService.toHtml(tableId);
+        else
+            return category;
     }
 
     @PostMapping(value = "/category/create")
-    Object createCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request)
+    Object createCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request, @RequestParam(value = "toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
-        return categoryService.createCategory(request);
+        Category category = categoryService.createCategory(request);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return category;
     }
 
     @GetMapping(value = "/categories")
@@ -50,45 +61,69 @@ public class CategoryController
     }
 
     @PostMapping(value = "/category/{categoryId}")
-    Object updateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryUpdateRequest request)
+    Object updateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryUpdateRequest request, @RequestParam(value = "toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
-        return categoryService.updateCategory(request);
+        Category category = categoryService.updateCategory(request);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return category;
     }
 
     @PostMapping(value = "/category/duplicate/{categoryId}")
-    void duplicateCategory(@PathVariable int tableId, @PathVariable int categoryId)
+    Object duplicateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "toHtml") boolean toHtml)
     {
-        categoryService.duplicateCategory(tableId, categoryId);
+        Category category = categoryService.duplicateCategory(tableId, categoryId);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return category;
     }
 
     @PostMapping(value = "/category/combine")
-    Object combineCategory(@PathVariable int tableId, @RequestBody CategoryCombineRequest request) throws ParseException
+    Object combineCategory(@PathVariable int tableId, @RequestBody CategoryCombineRequest request, @RequestParam(value = "toHtml") boolean toHtml) throws ParseException
     {
         request.setTableId(tableId);
-        return categoryService.combineCategory(request);
+        Category category = categoryService.combineCategory(request);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return category;
     }
 
     @PostMapping(value = "/category/split/{categoryId}")
-    void splitCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategorySplitRequest request) throws ParseException
+    Object splitCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategorySplitRequest request, @RequestParam(value = "toHtml") boolean toHtml) throws ParseException
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
-        categoryService.splitCategory(request);
+        Category category = categoryService.splitCategory(request);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return category;
     }
 
     @DeleteMapping(value = "/category/{categoryId}/deleteTopLevelCategory")
-    void deleteTopLevelCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryDeleteRequest request)
+    Object deleteTopLevelCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryDeleteRequest request, @RequestParam(value = "toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
         categoryService.deleteTopLevelCategory(request);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return HttpStatus.OK;
     }
 
     @DeleteMapping(value = "/category/{categoryId}")
-    void deleteCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "deleteChildren") boolean deleteChildren)
+    Object deleteCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "deleteChildren") boolean deleteChildren, @RequestParam(value = "toHtml") boolean toHtml)
     {
         categoryService.deleteCategory(tableId, categoryId, deleteChildren);
+        if(toHtml)
+            return categoryService.toHtml(tableId);
+        else
+            return HttpStatus.OK;
     }
 }

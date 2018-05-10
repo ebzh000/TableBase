@@ -12,9 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(value = "/tablebase/table/{tableId}")
 public class DataController
 {
@@ -28,22 +27,26 @@ public class DataController
     }
 
     @GetMapping(value = "/entries")
-    public List<Entry> getTableEntries(@PathVariable int tableId)
+    public Object getTableEntries(@PathVariable int tableId)
     {
         return dataService.getTableEntries(tableId);
     }
 
     @GetMapping(value = "/entry/{entryId}")
-    public Entry getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
+    public Object getTableEntry(@PathVariable int tableId, @PathVariable int entryId)
     {
         return dataService.getTableEntry(tableId, entryId);
     }
 
     @PostMapping(value = "/entry/{entryId}")
-    public Entry updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request)
+    public Object updateTableEntry(@PathVariable int tableId, @PathVariable int entryId, @RequestBody DataRequest request, @RequestParam("toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
         request.setEntryId(entryId);
-        return dataService.updateTableEntry(request);
+        Entry entry =  dataService.updateTableEntry(request);
+        if(toHtml)
+            return dataService.toHtml(tableId);
+        else
+            return entry;
     }
 }

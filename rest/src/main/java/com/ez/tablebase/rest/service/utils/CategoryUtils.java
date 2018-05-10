@@ -80,7 +80,7 @@ public class CategoryUtils extends BaseUtils
             updateDataAccessPaths(category, parentCategory, category.getTreeId());
     }
 
-    public void duplicateCategories(CategoryEntity entity, Integer newParentId)
+    public CategoryEntity duplicateCategories(CategoryEntity entity, Integer newParentId)
     {
         CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getTreeId());
         List<CategoryEntity> children = findChildren(entity.getTableId(), entity.getCategoryId());
@@ -122,6 +122,8 @@ public class CategoryUtils extends BaseUtils
                 }
             }
         }
+
+        return newCategory;
     }
 
     /*

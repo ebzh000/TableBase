@@ -22,13 +22,15 @@ public interface CategoryService
 
     Category updateCategory(CategoryUpdateRequest request);
 
-    void duplicateCategory(int tableId, int categoryId);
+    Category duplicateCategory(int tableId, int categoryId);
 
     Category combineCategory(CategoryCombineRequest request) throws ParseException;
 
-    void splitCategory(CategorySplitRequest request) throws ParseException;
+    Category splitCategory(CategorySplitRequest request) throws ParseException;
 
     void deleteCategory(int tableId, int categoryId, boolean deleteChildren);
 
     void deleteTopLevelCategory(CategoryDeleteRequest request);
+
+    String toHtml(int tableId);
 }

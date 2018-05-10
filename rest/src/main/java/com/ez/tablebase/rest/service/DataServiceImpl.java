@@ -63,4 +63,10 @@ public class DataServiceImpl implements DataService
         entryUtils.updateTableEntry(entity.getTableId(), entity.getEntryId(), entity.getData());
         return Entry.buildModel(entity.getTableId(), entity.getEntryId(), entity.getData());
     }
+
+    @Override
+    public String toHtml(int tableId)
+    {
+        return entryUtils.convertTableToTHtml(tableId);
+    }
 }

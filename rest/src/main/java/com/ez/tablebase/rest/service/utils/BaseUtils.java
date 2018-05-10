@@ -398,9 +398,10 @@ public class BaseUtils
         return categoryRepository.getRootCategoryByTreeId(tableId, treeId);
     }
 
-    public String converTableToTHtml(int tableId, String tableName)
+    public String convertTableToTHtml(int tableId)
     {
-        Table htmlTable = new Table(tableId, tableName);
+        TableEntity table = validateTable(tableId);
+        Table htmlTable = new Table(table.getTableId(), table.getTableName());
 
         List<Integer> treeIds = getTreeIds(tableId);
         Integer deepestTreeId = getDeepestTree(tableId, treeIds);

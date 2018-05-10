@@ -113,7 +113,8 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
-    public void duplicateCategory(int tableId, int categoryId)
+    @Transactional
+    public Category duplicateCategory(int tableId, int categoryId)
     {
         CategoryEntity category = categoryUtils.validateCategory(tableId, categoryId);
 
@@ -121,7 +122,7 @@ public class CategoryServiceImpl implements CategoryService
             throw new InvalidOperationException("Invalid Operation! Resultant table will no longer be an abstract table");
 
         // Need to prompt user with a confirmation if the selected category is the root node of the whole tree (categories are in a tree structure)
-        categoryUtils.duplicateCategories(category, category.getParentId());
+        return Category.buildModel(categoryUtils.duplicateCategories(category, category.getParentId()));
     }
 
     @Override
@@ -148,7 +149,7 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     @Transactional
-    public void splitCategory(CategorySplitRequest request) throws ParseException
+    public Category splitCategory(CategorySplitRequest request) throws ParseException
     {
         CategoryEntity category = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
 
@@ -162,6 +163,7 @@ public class CategoryServiceImpl implements CategoryService
         CategoryEntity parentCategory = categoryUtils.validateCategory(newCategory.getTableId(), newCategory.getParentId());
         categoryUtils.createCategoryDAPsAndEntries(newCategory, parentCategory,false);
         categoryUtils.splitCategory(category, newCategory, OperationType.values()[request.getDataOperationType()], request.getThreshold());
+        return Category.buildModel(newCategory);
     }
 
     @Override
@@ -183,5 +185,11 @@ public class CategoryServiceImpl implements CategoryService
             throw new InvalidOperationException("Invalid Operation! Selected Category must be a top level category");
 
         categoryUtils.deleteTopLevelCategory(categoryToDelete, OperationType.values()[request.getDataOperationType()]);
+    }
+
+    @Override
+    public String toHtml(int tableId)
+    {
+        return categoryUtils.convertTableToTHtml(tableId);
     }
 }

@@ -16,4 +16,6 @@ public interface DataService
     Entry getTableEntry(int tableId, int entryId);
 
     Entry updateTableEntry(DataRequest request);
+
+    String toHtml(int tableId);
 }
