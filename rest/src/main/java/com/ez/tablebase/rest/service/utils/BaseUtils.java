@@ -465,6 +465,17 @@ public class BaseUtils
             List<CategoryEntity> categoryList = treeByDepth.get(depth);
             for (CategoryEntity category : categoryList)
             {
+                if(htmlTable.getColDAPs().size() != 0)
+                {
+                    Set<Integer> leafColOffsetSet = htmlTable.getColDAPs().keySet();
+                    Integer currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
+                    while (leafColOffsetSet.contains(currRowCellOffset))
+                    {
+                        htmlTable.addCell(htmlTable.getLatestRowIndex(), null);
+                        currRowCellOffset = htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size();
+                    }
+                }
+
                 List<CategoryEntity> children = findChildren(tableId, category.getCategoryId());
                 int rowSpan;
                 int colSpan;
@@ -478,7 +489,7 @@ public class BaseUtils
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell(category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
 
                     // Save current column's data access path to the leaf node
-                    htmlTable.saveColDAP(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size(), treePaths.get(category.getCategoryId()));
+                    htmlTable.saveColDAP(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size() - 1, treePaths.get(category.getCategoryId()));
                 }
 
                 // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of children>
@@ -518,6 +529,15 @@ public class BaseUtils
     private Table createRows(Table htmlTable, int tableId, List<Integer> treeIds)
     {
         List<List<Cell>> accessCells = createAccessCells(htmlTable, tableId, treeIds);
+        Map<HashSet<Integer>, EntryEntity> entryDAPMap = new HashMap<>();
+        List<EntryEntity> entries = tableEntryRepository.findAllTableEntries(tableId);
+        htmlTable.printTable();
+        for(EntryEntity entry : entries)
+        {
+            List<Integer> path = dataAccessPathRepository.getDapCategoriesByEntry(tableId, entry.getEntryId());
+            entryDAPMap.put(new HashSet<>(path), entry);
+        }
+
         for(List<Cell> cellList : accessCells)
         {
             htmlTable.addNewRow();
@@ -529,8 +549,28 @@ public class BaseUtils
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), cell);
             }
 
-            //TODO: THIS IS WHERE YOU NEED TO START CREATING DATA ENTRIES
+            System.out.println(htmlTable.getColDAPs());
+            int dataRowIndex = htmlTable.getLatestRowIndex() - htmlTable.getHeaderGroupDepth();
+            System.out.println("RowIndex: " + dataRowIndex);
+            for(int dataColIndex = 0; dataColIndex < htmlTable.getHeaderGroupWidth(); dataColIndex++)
+            {
+                System.out.println("ColIndex: " + dataColIndex);
+                List<Integer> colDAP = htmlTable.getColDAPs().get(dataColIndex);
+                List<Integer> rowDAP = htmlTable.getRowDAPs().get(dataRowIndex);
+                System.out.println(colDAP);
+                HashSet<Integer> dap = new HashSet<>();
+                dap.addAll(rowDAP);
+                dap.addAll(colDAP);
+
+                if(entryDAPMap.containsKey(dap))
+                {
+                    EntryEntity entry = entryDAPMap.get(dap);
+                    Cell cell = new Cell(entry.getEntryId(), entry.getData(), 1, 1);
+                    htmlTable.addCell(htmlTable.getLatestRowIndex(), cell);
+                }
+            }
         }
+
         return htmlTable;
     }
 

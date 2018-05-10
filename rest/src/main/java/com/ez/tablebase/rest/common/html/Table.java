@@ -171,7 +171,7 @@ public class Table
                     if (cell != null)
                     {
                         sb.append(TAB).append(TAB).append("<td ")
-                                .append("name=\"CategoryId:").append(cell.getCategoryId()).append("\" ")
+                                .append("name=\"CategoryId:").append(cell.getCellId()).append("\" ")
                                 .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
                                 .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")
                                 .append(cell.getLabel()).append("</td>")
