@@ -1,17 +1,22 @@
 package com.ez.tablebase.rest.controller;
 
+import com.ez.tablebase.rest.model.Table;
 import com.ez.tablebase.rest.model.requests.TableRequest;
+import com.ez.tablebase.rest.model.requests.TableSearchResponse;
 import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by Erik Zhong on 9/6/2017.
  */
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(value = "/tablebase")
 public class TableController
 {
@@ -51,7 +56,9 @@ public class TableController
     @GetMapping(value = "/search")
     Object searchTable(@RequestParam("keyword") String keyword)
     {
-        return tableService.searchTable(keyword);
+        List<Table> tableList = tableService.searchTable(keyword);
+        logger.info("Found " + tableList.size() + " tables");
+        return tableList;
     }
 
     @DeleteMapping(value = "/table/{tableId}")

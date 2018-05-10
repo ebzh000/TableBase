@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
-import LoginReducer from './LoginReducer';
+import { combineReducers } from 'redux'
+import TableReducer from './reducer_table'
 
 const rootReducer = combineReducers({
-    loginReducer: LoginReducer
+  table: TableReducer
 })
 
-export default rootReducer;
+export default rootReducer

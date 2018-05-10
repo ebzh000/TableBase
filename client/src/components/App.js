@@ -1,29 +1,15 @@
-import React, {Component} from 'react';
-import Nav from './Nav';
-import {connect} from 'react-redux';
+import React, { Component } from 'react'
+import SearchBar from '../containers/search_bar.js'
+import TableList from '../containers/table_list.js'
 
-class App extends Component {
-    render() {
-        return (
-            <div className="wrapper">
-                <Nav loggedIn={this.props.data.loggedIn} history={this.props.history} location={this.props.location}
-                     dispatch={this.props.dispatch} currentlySending={this.props.data.currentlySending}/>
-                {this.props.children}
-            </div>
-        )
-    }
+export default class App extends Component {
+  render () {
+    return (
+      <div>
+        <h1>TableBase</h1>
+        <SearchBar />
+        <TableList />
+      </div>
+    )
+  }
 }
-
-export default App;
-
-// REDUX STUFF
-
-// Which props do we want to inject, given the global state?
-function select(state) {
-    return {
-        data: state
-    };
-}
-
-// Wrap the component to inject dispatch and state into it
-export default connect(select)(App);
