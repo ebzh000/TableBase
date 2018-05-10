@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link, browserhistory } from 'react-router'
+import { Link } from 'react-router'
 
 class TableList extends Component {
   constructor (props) {
