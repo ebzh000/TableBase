@@ -549,15 +549,11 @@ public class BaseUtils
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), cell);
             }
 
-            System.out.println(htmlTable.getColDAPs());
             int dataRowIndex = htmlTable.getLatestRowIndex() - htmlTable.getHeaderGroupDepth();
-            System.out.println("RowIndex: " + dataRowIndex);
             for(int dataColIndex = 0; dataColIndex < htmlTable.getHeaderGroupWidth(); dataColIndex++)
             {
-                System.out.println("ColIndex: " + dataColIndex);
                 List<Integer> colDAP = htmlTable.getColDAPs().get(dataColIndex);
                 List<Integer> rowDAP = htmlTable.getRowDAPs().get(dataRowIndex);
-                System.out.println(colDAP);
                 HashSet<Integer> dap = new HashSet<>();
                 dap.addAll(rowDAP);
                 dap.addAll(colDAP);

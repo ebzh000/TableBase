@@ -174,7 +174,7 @@ public class CategoryUtils extends BaseUtils
 
     private void applyThresholdOperation(EntryEntity entry1, EntryEntity entry2, String data1, String threshold, DataType dataType) throws ParseException
     {
-        if (dataType.equals(DataType.NUMERIC))
+        if (dataType.equals(DataType.INTEGER))
         {
             Integer integer1 = Integer.parseInt(data1);
             Integer thresholdInteger = Integer.parseInt(threshold);
@@ -352,7 +352,7 @@ public class CategoryUtils extends BaseUtils
     {
         List<EntryEntity> retList = new LinkedList<>();
         EntryEntity maxEntry;
-        if(type.equals(DataType.NUMERIC))
+        if(type.equals(DataType.INTEGER))
             maxEntry = Collections.max(entries, new OperationUtils.IntegerComparator());
         else
             throw new InvalidOperationException("Operation does not support data type: " + type);
@@ -371,7 +371,7 @@ public class CategoryUtils extends BaseUtils
     {
         List<EntryEntity> retList = new LinkedList<>();
         EntryEntity minEntry;
-        if(type.equals(DataType.NUMERIC))
+        if(type.equals(DataType.INTEGER))
             minEntry = Collections.min(entries, new OperationUtils.IntegerComparator());
         else
             throw new InvalidOperationException("Operation does not support data type: " + type);
@@ -390,7 +390,7 @@ public class CategoryUtils extends BaseUtils
     {
         List<EntryEntity> retList = new LinkedList<>();
         String meanVal;
-        if(type.equals(DataType.NUMERIC))
+        if(type.equals(DataType.INTEGER))
         {
             Integer mean = 0;
             for(EntryEntity entry : entries)

@@ -8,7 +8,6 @@ package com.ez.tablebase.rest.service.utils;
  * Created by Erik on 08-Apr-18.
  */
 
-import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.model.DataType;
 import com.ez.tablebase.rest.repository.CategoryRepository;
@@ -39,7 +38,7 @@ public class OperationUtils extends BaseUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC))
+        if (dataType.equals(DataType.INTEGER))
         {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
@@ -105,7 +104,7 @@ public class OperationUtils extends BaseUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC))
+        if (dataType.equals(DataType.INTEGER))
         {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
@@ -171,7 +170,7 @@ public class OperationUtils extends BaseUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC))
+        if (dataType.equals(DataType.INTEGER))
         {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
@@ -208,7 +207,7 @@ public class OperationUtils extends BaseUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC))
+        if (dataType.equals(DataType.INTEGER))
         {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
@@ -245,7 +244,7 @@ public class OperationUtils extends BaseUtils
     {
         DataType dataType = DataType.values()[type];
 
-        if (dataType.equals(DataType.NUMERIC))
+        if (dataType.equals(DataType.INTEGER))
         {
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
