@@ -15,7 +15,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <Router history={browserHistory}>
       <Route path={'/'} component={Main} />
-      <Route path={'/table/:tableId'} component={TableEditor} />
+      <Route path={'table/:tableId'} component={TableEditor} />
     </Router>
   </Provider>,
   document.querySelector('.container')

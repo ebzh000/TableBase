@@ -1,4 +1,4 @@
-import { LOAD_CATEGORIES } from '../actions/constants'
+import { LOAD_CATEGORIES } from '../actions/category'
 
 export default function (state = [], action) {
   switch (action.type) {

@@ -22,7 +22,7 @@ import java.util.List;
 public class TableUtils extends BaseUtils
 {
 
-    private static final String EMPTY_STRING = "";
+    private static final String NEW_ENTRY = "new";
 
     public TableUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
@@ -42,17 +42,17 @@ public class TableUtils extends BaseUtils
     public void initialiseBasicTable(TableEntity entity)
     {
         // Creating categories
-        CategoryEntity newCategoryHeader = createCategory(entity.getTableId(), "Category", null, categoryRepository.getTreeIds(entity.getTableId()).size());
+        CategoryEntity newCategoryHeader = createCategory(entity.getTableId(), "Category", null, categoryRepository.getTreeIds(entity.getTableId()).size() + 1);
 //        CategoryEntity newAccessHeader = createCategory(entity.getTableId(), "Access Header", null, categoryRepository.getTreeIds(entity.getTableId()).size());
 //        CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", newAccessHeader.getCategoryId(), newAccessHeader.getTreeId());
-//        CategoryEntity newCategory = createCategory(entity.getTableId(), "Header Category", newCategoryHeader.getCategoryId(), newCategoryHeader.getTreeId());
+        CategoryEntity newCategory = createCategory(entity.getTableId(), "Header Category", newCategoryHeader.getCategoryId(), newCategoryHeader.getTreeId());
 
         // Creating Entry
-        EntryEntity newEntry = createEntry(entity.getTableId(), EMPTY_STRING);
+        EntryEntity newEntry = createEntry(entity.getTableId(), NEW_ENTRY);
 
         // Create Data Access Path for the new entry
         createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategoryHeader.getCategoryId(), newCategoryHeader.getTreeId(), (byte) DataType.TEXT.ordinal());
-//        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), newCategory.getTreeId(), (byte) DataType.TEXT.ordinal());
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), newCategory.getTreeId(), (byte) DataType.TEXT.ordinal());
 //        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccessHeader.getCategoryId(), newAccessHeader.getTreeId(), (byte) DataType.TEXT.ordinal());
 //        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId(), newAccess.getTreeId(), (byte) DataType.TEXT.ordinal());
     }

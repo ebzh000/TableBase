@@ -7,11 +7,14 @@ package com.ez.tablebase.rest.controller;
 import com.ez.tablebase.rest.model.Category;
 import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.service.CategoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
@@ -19,6 +22,7 @@ import java.text.ParseException;
 public class CategoryController
 {
     private CategoryService categoryService;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public CategoryController(CategoryService categoryService)
@@ -30,6 +34,7 @@ public class CategoryController
     Object createTopLevelCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request, @RequestParam(value = "toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
+        request.setLinkChildren(false);
         Category category = categoryService.createTopLevelCategory(request);
         if(toHtml)
            return categoryService.toHtml(tableId);
@@ -51,7 +56,9 @@ public class CategoryController
     @GetMapping(value = "/categories")
     Object getCategories(@PathVariable int tableId)
     {
-        return categoryService.getTableCategories(tableId);
+        List<Category> categories = categoryService.getTableCategories(tableId);
+        logger.info("Returning "+ categories.size() + " categories");
+        return categories;
     }
 
     @GetMapping(value = "/category/{categoryId}")

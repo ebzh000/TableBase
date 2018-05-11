@@ -8,6 +8,7 @@ import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.Category;
+import com.ez.tablebase.rest.model.DataType;
 import com.ez.tablebase.rest.model.OperationType;
 import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.repository.CategoryRepository;
@@ -34,6 +35,8 @@ public class CategoryServiceImpl implements CategoryService
     private DataAccessPathUtils dapUtils;
     private TableEntryUtils entryUtils;
 
+    private static final String NEW_SUBCATEGORY = "New Category";
+
     public CategoryServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository,
                                DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
@@ -50,8 +53,9 @@ public class CategoryServiceImpl implements CategoryService
         TableEntity table = tableUtils.validateTable(request.getTableId());
         Integer treeId = categoryUtils.getTreeIds(table.getTableId()).size() + 1;
         CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), null, treeId);
-
-        // TODO: Create data access path entries for all entries
+        categoryUtils.createDAPForNewTopLevelCategory(category);
+        CategoryEntity subCategory = categoryUtils.createCategory(request.getTableId(), NEW_SUBCATEGORY, category.getCategoryId(), category.getTreeId());
+        categoryUtils.createCategoryDAPsAndEntries(subCategory, category, request.isLinkChildren());
 
         return Category.buildModel(category);
     }

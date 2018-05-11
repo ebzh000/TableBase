@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
-import { loadTableHtml, loadTable, loadCategories } from '../actions/table'
+import { loadTableHtml, loadTable } from '../actions/table'
+import { loadCategories } from '../actions/category'
+import { browserHistory } from 'react-router'
 
 class TableList extends Component {
   constructor (props) {
@@ -17,6 +18,7 @@ class TableList extends Component {
     e.preventDefault()
     this.props.loadTable(e.target.id)
     this.props.loadTableHtml(e.target.id)
+    this.props.loadCategories(e.target.id)
     setTimeout(2000)
     browserHistory.push('/table/' + e.target.id)
   }
@@ -42,17 +44,19 @@ class TableList extends Component {
 
   render () {
     return (
-      <table className='table search-table table-hover'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Table Name</th>
-            <th>Tags</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{this.props.tableList.map(this.renderTable)}</tbody>
-      </table>
+      <div className='search-table-div'>
+        <table className='search-table table table-hover'>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Table Name</th>
+              <th>Tags</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>{this.props.tableList.map(this.renderTable)}</tbody>
+        </table>
+      </div>
     )
   }
 }

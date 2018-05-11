@@ -80,6 +80,16 @@ public class CategoryUtils extends BaseUtils
             updateDataAccessPaths(category, parentCategory, category.getTreeId());
     }
 
+    public void createDAPForNewTopLevelCategory(CategoryEntity rootNode)
+    {
+        List<EntryEntity> entries = tableEntryRepository.findAllTableEntries(rootNode.getTableId());
+        for(EntryEntity entry : entries)
+        {
+            byte type = dataAccessPathRepository.getTypeByEntryId(entry.getTableId(), entry.getEntryId());
+            createDataAccessPath(entry.getTableId(), entry.getEntryId(), rootNode.getCategoryId(), rootNode.getTreeId(), type);
+        }
+    }
+
     public CategoryEntity duplicateCategories(CategoryEntity entity, Integer newParentId)
     {
         CategoryEntity newCategory = createCategory(entity.getTableId(), entity.getAttributeName(), newParentId, entity.getTreeId());

@@ -49,7 +49,12 @@ public class TableController
     @GetMapping(value = "/table/{tableId}/html")
     String getHtmlTable(@PathVariable int tableId)
     {
-        return tableService.toHtml(tableId);
+        String htmlTable = tableService.toHtml(tableId);
+        if(!htmlTable.isEmpty())
+            logger.info("Returning Table: " + tableId);
+        else
+            logger.error("Couldn't generate html table");
+        return htmlTable;
     }
 
     @GetMapping(value = "/search")

@@ -1,4 +1,4 @@
-import { SEARCH_TABLE } from '../actions/constants'
+import { SEARCH_TABLE } from '../actions/table'
 
 export default function (state = [], action) {
   switch (action.type) {
