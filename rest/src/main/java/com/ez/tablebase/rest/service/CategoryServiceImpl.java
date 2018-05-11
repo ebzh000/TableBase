@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService
         Integer treeId = categoryUtils.getTreeIds(table.getTableId()).size() + 1;
         CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), null, treeId);
 
-        // Create data access paths?
+        // TODO: Create data access path entries for all entries
 
         return Category.buildModel(category);
     }

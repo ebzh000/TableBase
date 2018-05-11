@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
-import { loadTableHtml, loadTable } from '../actions/table'
+import { loadTableHtml, loadTable, loadCategories } from '../actions/table'
 
 class TableList extends Component {
   constructor (props) {
@@ -17,7 +17,6 @@ class TableList extends Component {
     e.preventDefault()
     this.props.loadTable(e.target.id)
     this.props.loadTableHtml(e.target.id)
-    this.props.loadCategories(e.target.id)
     setTimeout(2000)
     browserHistory.push('/table/' + e.target.id)
   }

@@ -70,11 +70,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BaseUtils.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="259">
+              <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1062">
-              <caret line="408" column="0" lean-forward="true" selection-start-line="408" selection-start-column="0" selection-end-line="408" selection-end-column="0" />
+            <state relative-caret-position="742">
+              <caret line="561" column="0" lean-forward="false" selection-start-line="561" selection-start-column="0" selection-end-line="561" selection-end-column="0" />
               <folding>
                 <element signature="e#1582#1583#0" expanded="true" />
                 <element signature="e#1643#1644#0" expanded="true" />
@@ -82,19 +92,65 @@
                 <element signature="e#4059#4060#0" expanded="true" />
                 <element signature="e#16671#16672#0" expanded="true" />
                 <element signature="e#16735#16736#0" expanded="true" />
-                <marker date="1526042821779" expanded="false" signature="33797:33812" ph=" { " />
-                <marker date="1526042821779" expanded="false" signature="33847:33853" ph=" }" />
+                <marker date="1526043521652" expanded="false" signature="33798:33813" ph=" { " />
+                <marker date="1526043521652" expanded="false" signature="33848:33854" ph=" }" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableServiceImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CategoryServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="53" column="64" lean-forward="false" selection-start-line="53" selection-start-column="64" selection-end-line="53" selection-end-column="64" />
+              <folding>
+                <element signature="e#9945#9946#0" expanded="true" />
+                <element signature="e#10010#10011#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CategoryUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="37">
+              <caret line="44" column="40" lean-forward="true" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1074">
-              <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="556">
+              <caret line="44" column="79" lean-forward="true" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="629">
+              <caret line="30" column="31" lean-forward="false" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+              <folding>
+                <element signature="e#1017#1018#0" expanded="true" />
+                <element signature="e#1064#1065#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -102,34 +158,29 @@
       <file leaf-file-name="CategoryController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1176">
-              <caret line="114" column="51" lean-forward="false" selection-start-line="114" selection-start-column="51" selection-end-line="114" selection-end-column="51" />
+            <state relative-caret-position="259">
+              <caret line="32" column="49" lean-forward="false" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/DataController.java">
+      <file leaf-file-name="CategoryService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1443">
-              <caret line="45" column="39" lean-forward="false" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="370">
+              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java">
+      <file leaf-file-name="CategoryCreateRequest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
-              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-              <folding>
-                <element signature="e#2906#2907#0" expanded="true" />
-                <element signature="e#2968#2969#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="407">
+              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,7 +198,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>./src/index.js</find>
       <find>react.create</find>
       <find>cache</find>
       <find>sect</find>
@@ -177,6 +227,7 @@
       <find>, type\n</find>
       <find>\);</find>
       <find>typ</find>
+      <find>getCategories</find>
     </findStrings>
     <replaceStrings>
       <replace>header1_id, header2_id, header3_id, header4_id, header5_id, header6_id, header7_id, headr8_id, header9_id, header10_id,</replace>
@@ -1155,12 +1206,10 @@
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/DataAccessPathEntity.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/DataAccessPath.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryUpdateRequest.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java" />
         <option value="$PROJECT_DIR$/rest/schema/tablebase.xsd" />
@@ -1169,17 +1218,19 @@
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/CategoryRepository.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Cell.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Table.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/DataController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataService.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Table.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/resources/application.properties" />
       </list>
     </option>
   </component>
@@ -1247,6 +1298,24 @@
             <path>
               <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
               <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="client_dev" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="client_dev" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="client_dev" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
@@ -1918,12 +1987,12 @@
       <workItem from="1525420454624" duration="11548000" />
       <workItem from="1525842175857" duration="11000" />
       <workItem from="1525850519748" duration="4186000" />
-      <workItem from="1525960660771" duration="1912000" />
+      <workItem from="1525960660771" duration="3890000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="392976000" />
+    <option name="totallyTimeSpent" value="394954000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1940,15 +2009,16 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32681563" sideWeight="0.4968017" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.50319827" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44713655" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44692737" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31863284" sideWeight="0.49733475" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31843576" sideWeight="0.49733475" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25573334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1968,7 +2038,6 @@
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270925" sideWeight="0.4968017" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1998,13 +2067,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/1.11.0.RELEASE/2ac4423b606c3a33bd70c4c40bceaf2611ec90e0/spring-data-jpa-1.11.0.RELEASE-sources.jar!/org/springframework/data/jpa/repository/Modifying.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.transaction/javax.transaction-api/1.2/5d1fb3fe056fe51e6f6ed9b4ef4898a774ed69c0/javax.transaction-api-1.2-sources.jar!/javax/transaction/Transactional.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -2140,13 +2202,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/4.3.6.RELEASE/c6d15c225b300c981060c8c2beb26bf4a8914232/spring-aop-4.3.6.RELEASE-sources.jar!/org/springframework/aop/framework/JdkDynamicAopProxy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
@@ -2174,14 +2229,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2226,22 +2273,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="3" column="33" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2183">
-          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/TableSearchResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="444">
@@ -2258,54 +2289,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="125" column="27" lean-forward="false" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1099">
-          <caret line="165" column="48" lean-forward="false" selection-start-line="165" selection-start-column="48" selection-end-line="165" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/4.3.6.RELEASE/e41b15afc71764f982eec257729ac3fddda78f3e/spring-web-4.3.6.RELEASE-sources.jar!/org/springframework/http/HttpStatus.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="581">
           <caret line="73" column="4" lean-forward="false" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1176">
-          <caret line="114" column="51" lean-forward="false" selection-start-line="114" selection-start-column="51" selection-end-line="114" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="740">
-          <caret line="39" column="40" lean-forward="false" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
-          <folding>
-            <element signature="e#1162#1163#0" expanded="true" />
-            <element signature="e#1215#1216#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2329,8 +2317,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+        <state relative-caret-position="1333">
+          <caret line="69" column="25" lean-forward="false" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
           <folding>
             <element signature="e#2906#2907#0" expanded="true" />
             <element signature="e#2968#2969#0" expanded="true" />
@@ -2338,10 +2326,106 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="42" column="11" lean-forward="false" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_dev/src/actions/AuthActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6216">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#30#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryCreateRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/CategoryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="32" column="49" lean-forward="false" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="44" column="40" lean-forward="true" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="53" column="64" lean-forward="false" selection-start-line="53" selection-start-column="64" selection-end-line="53" selection-end-column="64" />
+          <folding>
+            <element signature="e#9945#9946#0" expanded="true" />
+            <element signature="e#10010#10011#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="44" column="79" lean-forward="true" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="30" column="31" lean-forward="false" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+          <folding>
+            <element signature="e#1017#1018#0" expanded="true" />
+            <element signature="e#1064#1065#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
-          <caret line="408" column="0" lean-forward="true" selection-start-line="408" selection-start-column="0" selection-end-line="408" selection-end-column="0" />
+        <state relative-caret-position="742">
+          <caret line="561" column="0" lean-forward="false" selection-start-line="561" selection-start-column="0" selection-end-line="561" selection-end-column="0" />
           <folding>
             <element signature="e#1582#1583#0" expanded="true" />
             <element signature="e#1643#1644#0" expanded="true" />
@@ -2349,17 +2433,9 @@
             <element signature="e#4059#4060#0" expanded="true" />
             <element signature="e#16671#16672#0" expanded="true" />
             <element signature="e#16735#16736#0" expanded="true" />
-            <marker date="1526042821779" expanded="false" signature="33797:33812" ph=" { " />
-            <marker date="1526042821779" expanded="false" signature="33847:33853" ph=" }" />
+            <marker date="1526043521652" expanded="false" signature="33798:33813" ph=" { " />
+            <marker date="1526043521652" expanded="false" signature="33848:33854" ph=" }" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1074">
-          <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

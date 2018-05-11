@@ -403,7 +403,7 @@ public class BaseUtils
         return categoryRepository.getRootCategoryByTreeId(tableId, treeId);
     }
 
-    public String converTableToTHtml(int tableId)
+    public String convertTableToTHtml(int tableId)
     {
         Table htmlTable = new Table(tableId);
 

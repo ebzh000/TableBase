@@ -1,7 +1,5 @@
 package com.ez.tablebase.rest.model.requests;
 
-import com.ez.tablebase.rest.model.DataType;
-
 public class CategoryCreateRequest
 {
     private int categoryId;
