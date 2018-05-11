@@ -27,7 +27,6 @@ public class Table
 
 
     private Integer tableId;
-    private String tableName;
     private List<List<Cell>> table;
 
     // A Map populated with Entry<ColIndex, colDAP>
@@ -41,10 +40,9 @@ public class Table
     private Integer rowCount;
     private Integer accessTreeDepth;
 
-    public Table(Integer tableId, String tableName)
+    public Table(Integer tableId)
     {
         this.tableId = tableId;
-        this.tableName = tableName;
         this.table = new LinkedList<>();
         this.colDAPs = new HashMap<>();
         this.rowDAPs = new HashMap<>();
@@ -160,15 +158,22 @@ public class Table
 //        sb.append("<title>TableBase - ").append(this.tableName).append("</title>").append(NEW_LINE).append(TAB);
 //        sb.append(STYLE).append(NEW_LINE);
 //        sb.append("<body>").append(NEW_LINE);
-        sb.append("<table className=\"table\" name=\"TableId:").append(this.tableId).append("\" align=\"center\">");
+        sb.append("<table class=\"tablebase-table\" name=\"TableId:").append(this.tableId).append("\" align=\"center\">");
 
         for(int rowIndex = 0; rowIndex < table.size(); rowIndex++){
             List<Cell> row = table.get(rowIndex);
             String tdOrTh;
+            String classTdOrTh;
             if(rowIndex < headerGroupDepth)
+            {
                 tdOrTh = "th";
+                classTdOrTh = "tablebase-th";
+            }
             else
+            {
                 tdOrTh = "td";
+                classTdOrTh = "tablebase-td";
+            }
 
             if(!row.isEmpty())
             {
@@ -177,7 +182,11 @@ public class Table
                 {
                     if (cell != null)
                     {
-                        sb.append(TAB).append(TAB).append("<").append(tdOrTh).append(" ")
+                        String boldStyle = "";
+                        if(cell.getType().equals(CellType.ACCESS_CATEGORY))
+                                boldStyle = "access-bold";
+
+                        sb.append(TAB).append(TAB).append("<").append(tdOrTh).append(" class=\"").append(classTdOrTh).append(" ").append(boldStyle).append("\" ")
                                 .append("id=\"").append(cell.getCellId()).append("\" ")
                                 .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
                                 .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")

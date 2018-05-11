@@ -1,10 +1,7 @@
 import axios from 'axios'
+import { SEARCH_TABLE, LOAD_TABLE, LOAD_TABLE_HTML } from './constants'
 
 const ROOT_URL = `http://localhost:8081/tablebase`
-
-export const SEARCH_TABLE = 'SEARCH_TABLE'
-export const LOAD_TABLE_HTML = 'LOAD_TABLE_HTML'
-export const LOAD_TABLE = 'LOAD_TABLE'
 
 export function searchTable (term) {
   const url = `${ROOT_URL}/search?keyword=${term}`

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { searchTable } from '../actions/index'
+import { searchTable } from '../actions/table'
 
 class SearchBar extends Component {
   constructor (props) {

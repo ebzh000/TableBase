@@ -12,13 +12,15 @@ public class Cell
 {
     private String cellId;
     private String label;
+    private CellType type;
     private int colSpan;
     private int rowSpan;
 
-    public Cell(String cellId, String label, int colSpan, int rowSpan)
+    public Cell(String cellId, String label, CellType type, int colSpan, int rowSpan)
     {
         this.cellId = cellId;
         this.label = label;
+        this.type = type;
         this.colSpan = colSpan;
         this.rowSpan = rowSpan;
     }
@@ -31,6 +33,11 @@ public class Cell
     public String getLabel()
     {
         return label;
+    }
+
+    public CellType getType()
+    {
+        return type;
     }
 
     int getColSpan()

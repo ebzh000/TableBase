@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import SearchBar from '../components/search_bar'
 import TableList from '../components/table_list'
 
-export default class App extends Component {
+export default class Main extends Component {
   render () {
     return (
       <div>

@@ -5,6 +5,7 @@ package com.ez.tablebase.rest.service.utils;
 
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.common.html.Cell;
+import com.ez.tablebase.rest.common.html.CellType;
 import com.ez.tablebase.rest.common.html.Table;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.DataAccessPathEntity;
@@ -402,9 +403,9 @@ public class BaseUtils
         return categoryRepository.getRootCategoryByTreeId(tableId, treeId);
     }
 
-    public String converTableToTHtml(int tableId, String tableName)
+    public String converTableToTHtml(int tableId)
     {
-        Table htmlTable = new Table(tableId, tableName);
+        Table htmlTable = new Table(tableId);
 
         List<Integer> treeIds = getTreeIds(tableId);
         Integer deepestTreeId = getDeepestTree(tableId, treeIds);
@@ -437,12 +438,12 @@ public class BaseUtils
         for(Integer treeId : treeIds)
         {
             CategoryEntity rootNode = findRootNodeByTreeId(tableId, treeId);
-            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + rootNode.getCategoryId(), rootNode.getAttributeName(), getTreeDepth(tableId, treeId) - 1, htmlTable.getHeaderGroupDepth()));
+            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + rootNode.getCategoryId(), rootNode.getAttributeName(), CellType.ACCESS_CATEGORY, getTreeDepth(tableId, treeId) - 1, htmlTable.getHeaderGroupDepth()));
         }
 
         // The VH Category is an internal Category. Users do not need to see this.
         if (!deepestRootNode.getAttributeName().matches("VH"))
-            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + deepestRootNode.getCategoryId(), deepestRootNode.getAttributeName(), htmlTable.getHeaderGroupWidth(), 1));
+            htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + deepestRootNode.getCategoryId(), deepestRootNode.getAttributeName(), CellType.HEADER_CATEGORY, htmlTable.getHeaderGroupWidth(), 1));
 
         return htmlTable;
     }
@@ -488,7 +489,7 @@ public class BaseUtils
                     // If the current depth is less than maxDepth, then we currently have a leaf node
                     rowSpan = (depth < htmlTable.getHeaderGroupDepth()) ? depth : 1;
                     colSpan = 1;
-                    htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
+                    htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), CellType.HEADER_CATEGORY, colSpan, rowSpan));
 
                     // Save current column's data access path to the leaf node
                     htmlTable.saveColDAP(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size() - 1, treePaths.get(category.getCategoryId()));
@@ -499,7 +500,7 @@ public class BaseUtils
                 {
                     rowSpan = 1;
                     colSpan = children.size();
-                    htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
+                    htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), CellType.HEADER_CATEGORY, colSpan, rowSpan));
 
                     // We need to inject some null cells to imitate colspan, so we can correctly save the data access paths of leaf nodes later on
                     for(int count = 0; count < children.size() - 1; count++)
@@ -563,7 +564,7 @@ public class BaseUtils
                 if(entryDAPMap.containsKey(dap))
                 {
                     EntryEntity entry = entryDAPMap.get(dap);
-                    Cell cell = new Cell(entry.getEntryId().toString(), entry.getData(), 1, 1);
+                    Cell cell = new Cell(entry.getEntryId().toString(), entry.getData(), CellType.DATA, 1, 1);
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), cell);
                 }
             }
@@ -619,7 +620,7 @@ public class BaseUtils
                     // If the current depth is less than maxDepth, then we currently have a leaf node
                     colSpan = (depth < htmlTable.getAccessTreeDepth()) ? depth : 1;
                     rowSpan = 1;
-                    accessCells.get(rowCount).add(new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
+                    accessCells.get(rowCount).add(new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), CellType.ACCESS_CATEGORY, colSpan, rowSpan));
                     rowCount++;
                 }
 
@@ -628,7 +629,7 @@ public class BaseUtils
                 {
                     rowSpan = children.size();
                     colSpan = 1;
-                    accessCells.get(rowCount).add(new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), colSpan, rowSpan));
+                    accessCells.get(rowCount).add(new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), CellType.ACCESS_CATEGORY, colSpan, rowSpan));
                     rowCount++;
 
                     for(int offset = 0; offset < children.size() - 1; offset++)

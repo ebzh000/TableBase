@@ -3,11 +3,6 @@ td,th,tr {
   text-align: center !important;
 }
 
-table {
-  border: 1px solid #eceeef;
-  border-collapse: collapse; 
-}
-
 h1,h2 {
   vertical-align: middle !important;
   text-align: center !important;
@@ -25,8 +20,30 @@ h1,h2 {
   padding-top: 5%;
 }
 
+.no-table-found {
+  padding-top: 10%;
+}
+
 .search-box {
   padding-top: 10%;
+}
+
+.tablebase-table {
+  width: 75%;
+}
+
+.tablebase-th, .tablebase-td, .tablebase-table {
+  border:1px solid #a5a6a7;
+  border-collapse: collapse;
+}
+
+.access-bold {
+  font-weight: bold;
+}
+
+.search-table {
+  border: 1px solid #eceeef;
+  border-collapse: collapse; 
 }
 
 svg {

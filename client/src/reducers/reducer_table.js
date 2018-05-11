@@ -1,4 +1,4 @@
-import { LOAD_TABLE } from '../actions/index'
+import { LOAD_TABLE } from '../actions/constants'
 
 const initState = {
   tableId: 0,

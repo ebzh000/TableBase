@@ -1,8 +1,8 @@
-import { SEARCH_TABLE } from '../actions/constants'
+import { LOAD_CATEGORIES } from '../actions/constants'
 
 export default function (state = [], action) {
   switch (action.type) {
-    case SEARCH_TABLE:
+    case LOAD_CATEGORIES:
       return action.payload.data
   }
   return state

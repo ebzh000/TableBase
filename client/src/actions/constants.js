@@ -1,0 +1,4 @@
+export const SEARCH_TABLE = 'SEARCH_TABLE'
+export const LOAD_TABLE_HTML = 'LOAD_TABLE_HTML'
+export const LOAD_TABLE = 'LOAD_TABLE'
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES'
