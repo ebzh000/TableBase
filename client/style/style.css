@@ -1,18 +1,49 @@
-td,
-th {
+td,th,tr {
   vertical-align: middle !important;
   text-align: center !important;
 }
 
-h1 {
-  padding-top: 10%;
-  padding-bottom: 10%;
+h1,h2 {
   vertical-align: middle !important;
   text-align: center !important;
 }
 
 .input-group {
   margin: 20px 0px;
+}
+
+.page-title {
+  padding-top: 10%;
+}
+
+.table-title {
+  padding-top: 5%;
+}
+
+.no-table-found {
+  padding-top: 10%;
+}
+
+.search-box {
+  padding-top: 10%;
+}
+
+.tablebase-table {
+  width: 75%;
+}
+
+.tablebase-th, .tablebase-td, .tablebase-table {
+  border:1px solid #a5a6a7;
+  border-collapse: collapse;
+}
+
+.access-bold {
+  font-weight: bold;
+}
+
+.search-table {
+  border: 1px solid #eceeef;
+  border-collapse: collapse; 
 }
 
 svg {

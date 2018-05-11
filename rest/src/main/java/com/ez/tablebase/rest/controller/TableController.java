@@ -47,7 +47,7 @@ public class TableController
     }
 
     @GetMapping(value = "/table/{tableId}/html")
-    Object getHtmlTable(@PathVariable int tableId)
+    String getHtmlTable(@PathVariable int tableId)
     {
         return tableService.toHtml(tableId);
     }

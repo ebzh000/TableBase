@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { searchTable } from '../actions/index'
+import { searchTable } from '../actions/table'
 
 class SearchBar extends Component {
   constructor (props) {
@@ -28,7 +28,7 @@ class SearchBar extends Component {
 
   render () {
     return (
-      <form onSubmit={this.onFormSubmit} className='input-group'>
+      <form onSubmit={this.onFormSubmit} className='input-group search-box'>
         <input
           placeholder='Search for all the tables...'
           className='form-control'
