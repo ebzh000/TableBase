@@ -10,12 +10,12 @@ package com.ez.tablebase.rest.common.html;
 
 public class Cell
 {
-    private Integer cellId;
+    private String cellId;
     private String label;
     private int colSpan;
     private int rowSpan;
 
-    public Cell(Integer cellId, String label, int colSpan, int rowSpan)
+    public Cell(String cellId, String label, int colSpan, int rowSpan)
     {
         this.cellId = cellId;
         this.label = label;
@@ -23,7 +23,7 @@ public class Cell
         this.rowSpan = rowSpan;
     }
 
-    Integer getCellId()
+    String getCellId()
     {
         return cellId;
     }

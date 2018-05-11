@@ -155,14 +155,21 @@ public class Table
     public String toHtml()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append("<html>").append(NEW_LINE);
-        sb.append("<head>").append(NEW_LINE).append(TAB);
-        sb.append("<title>TableBase - ").append(this.tableName).append("</title>").append(NEW_LINE).append(TAB);
-        sb.append(STYLE).append(NEW_LINE);
-        sb.append("<body>").append(NEW_LINE);
-        sb.append("<table name=\"TableId:").append(this.tableId).append("\" align=\"center\">");
+//        sb.append("<html>").append(NEW_LINE);
+//        sb.append("<head>").append(NEW_LINE).append(TAB);
+//        sb.append("<title>TableBase - ").append(this.tableName).append("</title>").append(NEW_LINE).append(TAB);
+//        sb.append(STYLE).append(NEW_LINE);
+//        sb.append("<body>").append(NEW_LINE);
+        sb.append("<table className=\"table\" name=\"TableId:").append(this.tableId).append("\" align=\"center\">");
 
-        for(List<Cell> row : table){
+        for(int rowIndex = 0; rowIndex < table.size(); rowIndex++){
+            List<Cell> row = table.get(rowIndex);
+            String tdOrTh;
+            if(rowIndex < headerGroupDepth)
+                tdOrTh = "th";
+            else
+                tdOrTh = "td";
+
             if(!row.isEmpty())
             {
                 sb.append(NEW_LINE).append(TAB).append("<tr>").append(NEW_LINE);
@@ -170,11 +177,11 @@ public class Table
                 {
                     if (cell != null)
                     {
-                        sb.append(TAB).append(TAB).append("<td ")
-                                .append("name=\"CategoryId:").append(cell.getCellId()).append("\" ")
+                        sb.append(TAB).append(TAB).append("<").append(tdOrTh).append(" ")
+                                .append("id=\"").append(cell.getCellId()).append("\" ")
                                 .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
                                 .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")
-                                .append(cell.getLabel()).append("</td>")
+                                .append(cell.getLabel()).append("</").append(tdOrTh).append(">")
                                 .append(NEW_LINE);
                     }
                 }
@@ -183,8 +190,8 @@ public class Table
         }
 
         sb.append(NEW_LINE).append("</table>").append(NEW_LINE);
-        sb.append("</body>").append(NEW_LINE);
-        sb.append("</html>");
+//        sb.append("</body>").append(NEW_LINE);
+//        sb.append("</html>");
         return sb.toString();
     }
 }

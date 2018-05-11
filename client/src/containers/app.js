@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import SearchBar from '../containers/search_bar.js'
-import TableList from '../containers/table_list.js'
+import SearchBar from '../components/search_bar'
+import TableList from '../components/table_list'
 
 export default class App extends Component {
   render () {
     return (
       <div>
-        <h1>TableBase</h1>
+        <h1 className='page-title'>TableBase</h1>
         <SearchBar />
         <TableList />
       </div>

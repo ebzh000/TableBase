@@ -1,11 +1,15 @@
-import { SEARCH_TABLE, LOAD_TABLE } from '../actions/index'
+import { LOAD_TABLE } from '../actions/index'
 
-export default function (state = [], action) {
+const initState = {
+  tableId: 0,
+  tableName: 'No Table Yet',
+  tags: 'No Tags'
+}
+
+export default function (state = initState, action) {
   switch (action.type) {
-    case SEARCH_TABLE:
-      return [action.payload.data, ...state]
     case LOAD_TABLE:
-      return [action.payload.data, ...state]
+      return action.payload.data
   }
   return state
 }
