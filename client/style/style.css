@@ -8,32 +8,25 @@ h1,h2 {
   text-align: center !important;
 }
 
-.warper {
-  width: 100%;
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  border: 1px #cfcece dashed;
+.popup-form-div {
+  margin-left: 25%;
+  margin-top: 10%;
 }
 
 .input-group {
+  z-index: 0;
   margin: 20px 0px;
 }
 
-.page-title {
-  padding-top: 10%;
-}
-
-.search-box, .table-title, .search-table-div{
+.pad-top-5 {
   padding-top: 5%;
 }
 
-.no-table-found {
-  padding-top: 10%;
+.pad-top-1 {
+  padding-top: 1%;
 }
 
-.edit-buttons{
+.pad-top-10, .page-title, .no-table-found {
   padding-top: 10%;
 }
 
@@ -59,109 +52,23 @@ svg {
   height: 150px;
 }
 
-.warper {
+.popup {
+  position: fixed;
   width: 100%;
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  border: 1px #cfcece dashed;
-}
-
-.button {
-  font-family: "Roboto", Arial, sans-serif;
-  color: #000000;
-  cursor: pointer;
-  padding: 0px 30px;
-  display: inline-block;
-  margin: 10px 15px;
-  text-transform: uppercase;
-  line-height: 2em;
-  letter-spacing: 1.5px;
-  font-size: 1em;
-  outline: none;
-  position: relative;
-  font-size: 14px;
-  border: 3px solid #cfcece;
-  background-color: #ffffff;
-  border-radius: 15px 15px 15px 15px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.button:hover,
-.button.hover {
-  border-color: #2980b9;
-}
-/*
-card 
-*/
-.card {
-  font-size: 12px;
-}
-.card > .header {
-  width: 100%;
-  border-bottom: 1px solid gray;
-  font-size: 14px;
-  text-align: center;
-}
-
-.modal {
-  font-size: 12px;
-}
-.modal > .header {
-  width: 100%;
-  border-bottom: 1px solid gray;
-  font-size: 18px;
-  text-align: center;
-  padding: 5px;
-}
-.modal > .content {
-  width: 100%;
-  padding: 10px 5px;
-}
-.modal > .actions {
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   margin: auto;
+  background-color: rgba(0,0,0, 0.5);
 }
-.modal > .actions {
-  width: 100%;
-  padding: 10px 5px;
-  text-align: center;
-}
-.modal > .close {
-  cursor: pointer;
+.popup_inner {
   position: absolute;
-  display: block;
-  padding: 2px 5px;
-  line-height: 20px;
-  right: -10px;
-  top: -10px;
-  font-size: 24px;
-  background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid #cfcece;
-}
-
-.example-warper-start {
-  width: 100%;
-  padding: 20px 5%;
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px #cfcece dashed;
-}
-
-.menu {
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-}
-.menu-item {
-  cursor: pointer;
-  padding: 5px;
-  height: 28px;
-  border-top: 1px solid rgb(187, 187, 187);
-}
-.menu-item:hover {
-  color: #2980b9;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+  margin: auto;
+  background: white;
 }

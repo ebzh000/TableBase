@@ -19,7 +19,7 @@ export function createTable (tableName, tags, userId) {
 
   return {
     type: CREATE_TABLE,
-    payload: reqest
+    payload: request
   }
 }
 

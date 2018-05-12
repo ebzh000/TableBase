@@ -1,14 +1,49 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import CreateTopLevelCategory from './forms/createTopLevelCategoryPopup'
+import CreateCategory from './forms/createCategoryPopup'
 
 class Buttons extends Component {
+  constructor () {
+    super()
+
+    this.state = {
+      showCreateTopLevelCategoryPopup: false,
+      showCreateCategoryPopup: false
+    }
+
+    this.toggleCreateTopLevelCategoryPopup = this.toggleCreateTopLevelCategoryPopup.bind(this)
+    this.toggleCreateCategoryPopup = this.toggleCreateCategoryPopup.bind(this)
+  }
+
+  toggleCreateTopLevelCategoryPopup () {
+    this.setState({
+      showCreateTopLevelCategoryPopup: !this.state.showCreateTopLevelCategoryPopup
+    })
+  }
+
+  toggleCreateCategoryPopup () {
+    this.setState({
+      showCreateCategoryPopup: !this.state.showCreateCategoryPopup
+    })
+  }
+
   render () {
-    console.log(this.props.categories)
     return (
       <div className='edit-buttons'>
-        <button>Create Top Level Category</button>
-        <button>Create Category</button>
+        <button onClick={this.toggleCreateTopLevelCategoryPopup}>Create Top Level Category</button>
+        {this.state.showCreateTopLevelCategoryPopup ?
+          <CreateTopLevelCategory closeCreateTopLevelCategoryPopup={this.toggleCreateTopLevelCategoryPopup} />
+          : null
+        }
+
+        <button onClick={this.toggleCreateCategoryPopup}>Create Category</button>
+        {this.state.showCreateCategoryPopup ?
+          <CreateCategory closeCreateCategoryPopup={this.toggleCreateCategoryPopup} />
+          : null
+        }
+
         <button>Update Category</button>
         <button>Duplicate Category</button>
         <button>Split Category</button>
@@ -20,13 +55,4 @@ class Buttons extends Component {
   }
 }
 
-Buttons.propTypes = {
-  table: PropTypes.object,
-  categories: PropTypes.array
-}
-
-function mapStateToProps ({ categories, table }) {
-  return { categories, table }
-}
-
-export default connect(mapStateToProps, null)(Buttons)
+export default Buttons

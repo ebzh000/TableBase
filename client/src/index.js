@@ -6,7 +6,7 @@ import ReduxPromise from 'redux-promise'
 import { Router, Route, browserHistory } from 'react-router'
 
 import Main from './containers/main'
-import TableEditor from './containers/table_editor'
+import TableEditor from './containers/table-editor'
 import reducers from './reducers'
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore)

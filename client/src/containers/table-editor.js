@@ -4,7 +4,6 @@ import Buttons from '../components/edit-buttons'
 
 class TableEditor extends Component {
   render () {
-    console.log(this.props)
     const tableId = this.props.params.tableId
     return (
       <div>

@@ -31,7 +31,9 @@ public class TableController
     @PostMapping(value = "/create")
     Object createTable(@RequestBody TableRequest request)
     {
-        return tableService.createTable(request);
+        Table table = tableService.createTable(request);
+        logger.info("Created Table: " + table.getTableName());
+        return table;
     }
 
     @GetMapping(value = "/tables")

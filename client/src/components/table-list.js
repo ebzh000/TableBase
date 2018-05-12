@@ -16,11 +16,13 @@ class TableList extends Component {
 
   handleClick (e) {
     e.preventDefault()
-    this.props.loadTable(e.target.id)
-    this.props.loadTableHtml(e.target.id)
-    this.props.loadCategories(e.target.id)
-    setTimeout(2000)
-    browserHistory.push('/table/' + e.target.id)
+    const tableId = e.target.id
+    this.props.loadTable(tableId)
+    this.props.loadTableHtml(tableId)
+    this.props.loadCategories(tableId)
+    setTimeout(() => {
+      browserHistory.push('/table/' + tableId)
+    }, 300)
   }
 
   renderTable (tableData) {
@@ -44,7 +46,7 @@ class TableList extends Component {
 
   render () {
     return (
-      <div className='search-table-div'>
+      <div className='pad-top-1'>
         <table className='search-table table table-hover'>
           <thead>
             <tr>

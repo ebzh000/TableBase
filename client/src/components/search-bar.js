@@ -28,7 +28,7 @@ class SearchBar extends Component {
 
   render () {
     return (
-      <form onSubmit={this.onFormSubmit} className='input-group search-box'>
+      <form onSubmit={this.onFormSubmit} className='input-group pad-top-10'>
         <input
           placeholder='Search for all the tables...'
           className='form-control'

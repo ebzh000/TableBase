@@ -7,7 +7,7 @@ class Table extends Component {
     const tableHtml = this.props.tableHtml
     return (
       <div>
-        <h2 className='table-title'>{this.props.table.tableName}</h2>
+        <h2 className='pad-top-5'>{this.props.table.tableName}</h2>
         <br />
         <div dangerouslySetInnerHTML={{__html: tableHtml}} />
       </div>
