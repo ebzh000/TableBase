@@ -1,0 +1,111 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { loadTableHtml } from '../../actions/table'
+import { loadCategories, loadCategoriesNoRoot, deleteCategory } from '../../actions/category'
+
+class DeleteCategory extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = { carentCategoryId: this.props.categoriesNoRoot[0], deleteChildren: false }
+
+    this.renderCategoryOptions = this.renderCategoryOptions.bind(this)
+    this.onCategoryChange = this.onCategoryChange.bind(this)
+    this.toggleDeleteChildren = this.toggleDeleteChildren.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onClose = this.onClose.bind(this)
+  }
+
+  onFormSubmit (event) {
+    event.preventDefault()
+
+    this.props.deleteCategory(this.props.table.tableId, this.state.categoryId, this.state.deleteChildren)
+    this.setState({ categoryId: this.props.categoriesNoRoot[0], deleteChildren: false })
+
+    setTimeout(() => {
+      this.props.loadTableHtml(this.props.table.tableId)
+      this.props.loadCategories(this.props.table.tableId)
+      this.props.loadCategoriesNoRoot(this.props.table.tableId)
+      this.props.closeDeleteCategoryPopup()
+    }, 100)
+  }
+
+  onCategoryChange (event) {
+    this.setState({
+      categoryId: event.target.value
+    })
+  }
+
+  toggleDeleteChildren (event) {
+    this.setState({ deleteChildren: !this.state.deleteChildren })
+  }
+
+  onClose (event) {
+    event.preventDefault()
+
+    this.setState({ carentCategoryId: this.props.categoriesNoRoot[0], deleteChildren: false })
+    this.props.closeDeleteCategoryPopup()
+  }
+
+  renderCategoryOptions (category) {
+    return <option key={category.categoryId} value={category.categoryId}>{category.attributeName}</option>
+  }
+
+  render () {
+    return (
+      <div className='popup'>
+        <div className='popup_inner'>
+          <h1>Delete Category</h1>
+          <div className='popup-form-div'>
+            <form className='popup-form' onSubmit={this.onFormSubmit}>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><label>Select Category: </label></td>
+                    <td>
+                      <select className='form-control' value={this.state.categoryId} onChange={this.onCategoryChange} required>
+                        {this.props.categoriesNoRoot.map(this.renderCategoryOptions)}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Delete Children: </label></td>
+                    <td>
+                      <input type='checkbox' name='deleteChildren' checked={this.state.deleteChildren} onChange={this.toggleDeleteChildren} />
+                    </td>
+                  </tr>
+                  <tr><td><label /></td></tr>
+                  <tr>
+                    <td></td>
+                    <td><button type='submit'>Delete</button> <button onClick={this.onClose}>Cancel</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+DeleteCategory.propTypes = {
+  deleteCategory: PropTypes.func,
+  loadTableHtml: PropTypes.func,
+  loadCategories: PropTypes.func,
+  loadCategoriesNoRoot: PropTypes.func,
+  categoriesNoRoot: PropTypes.array,
+  table: PropTypes.object
+}
+
+function mapStateToProps ({ table, categoriesNoRoot }) {
+  return { table, categoriesNoRoot }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({ deleteCategory, loadTableHtml, loadCategories, loadCategoriesNoRoot }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteCategory)

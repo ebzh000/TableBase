@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { loadTableHtml, loadTable } from '../actions/table'
-import { loadCategories } from '../actions/category'
+import { loadCategories, loadCategoriesNoRoot, loadRootCategories } from '../actions/category'
 import { browserHistory } from 'react-router'
 
 class TableList extends Component {
@@ -20,6 +20,9 @@ class TableList extends Component {
     this.props.loadTable(tableId)
     this.props.loadTableHtml(tableId)
     this.props.loadCategories(tableId)
+    this.props.loadCategoriesNoRoot(tableId)
+    this.props.loadRootCategories(tableId)
+
     setTimeout(() => {
       browserHistory.push('/table/' + tableId)
     }, 300)
@@ -67,7 +70,9 @@ TableList.propTypes = {
   tableList: PropTypes.array,
   loadTableHtml: PropTypes.func,
   loadTable: PropTypes.func,
-  loadCategories: PropTypes.func
+  loadCategories: PropTypes.func,
+  loadCategoriesNoRoot: PropTypes.func,
+  loadRootCategories: PropTypes.func
 }
 
 function mapStateToProps ({ tableList }) {
@@ -75,7 +80,7 @@ function mapStateToProps ({ tableList }) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ loadTable, loadTableHtml, loadCategories }, dispatch)
+  return bindActionCreators({ loadTable, loadTableHtml, loadCategories, loadCategoriesNoRoot, loadRootCategories }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableList)

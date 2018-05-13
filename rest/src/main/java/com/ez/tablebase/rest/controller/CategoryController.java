@@ -54,9 +54,17 @@ public class CategoryController
     }
 
     @GetMapping(value = "/categories")
-    Object getCategories(@PathVariable int tableId)
+    Object getCategories(@PathVariable int tableId, @RequestParam("excludeRoot") boolean excludeRoot)
     {
-        List<Category> categories = categoryService.getTableCategories(tableId);
+        List<Category> categories = categoryService.getTableCategories(tableId, excludeRoot);
+        logger.info("Returning "+ categories.size() + " categories");
+        return categories;
+    }
+
+    @GetMapping(value = "/rootCategories")
+    Object getRootCategories(@PathVariable int tableId)
+    {
+        List<Category> categories = categoryService.getTableRootCategories(tableId);
         logger.info("Returning "+ categories.size() + " categories");
         return categories;
     }

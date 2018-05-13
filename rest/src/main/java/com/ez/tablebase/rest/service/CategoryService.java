@@ -16,7 +16,9 @@ public interface CategoryService
 
     Category createCategory(CategoryCreateRequest request);
 
-    List<Category> getTableCategories(int tableId);
+    List<Category> getTableCategories(int tableId, boolean excludeRoot);
+
+    List<Category> getTableRootCategories(int tableId);
 
     Category getCategory(int tableId, int categoryId);
 

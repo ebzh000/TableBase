@@ -446,6 +446,16 @@ public class CategoryUtils extends BaseUtils
         return categoryRepository.findAllTableCategories(tableId);
     }
 
+    public List<CategoryEntity> findTableCategoriesWithoutRoot(Integer tableId)
+    {
+        return categoryRepository.findAllTableCategoriesWithoutRoot(tableId);
+    }
+
+    public List<CategoryEntity> findTableRootCategories(Integer tableId)
+    {
+        return categoryRepository.findTableRootCategories(tableId);
+    }
+
     public void updateTableCategory(Integer tableId, Integer categoryId, String attributeName, Integer parentId)
     {
         categoryRepository.updateTableCategory(tableId, categoryId, attributeName, parentId);

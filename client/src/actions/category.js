@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES'
+export const LOAD_CATEGORIES_NO_ROOT = 'LOAD_CATEGORIES_NO_ROOT'
+export const LOAD_ROOT_CATEGORIES = 'LOAD_ROOT_CATEGORIES'
 export const CREATE_TOP_LEVEL_CATEGORY = 'CREATE_TOP_LEVEL_CATEGORY'
 export const CREATE_CATEGORY = 'CREATE_CATEGORY'
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
@@ -13,11 +15,31 @@ export const DELETE_TOP_LEVEL_CATEGORY = 'DELETE_TOP_LEVEL_CATEGORY'
 const ROOT_URL = `http://localhost:8081/tablebase`
 
 export function loadCategories (tableId) {
-  const url = `${ROOT_URL}/table/${tableId}/categories`
+  const url = `${ROOT_URL}/table/${tableId}/categories?excludeRoot=false`
   const request = axios.get(url)
 
   return {
     type: LOAD_CATEGORIES,
+    payload: request
+  }
+}
+
+export function loadCategoriesNoRoot (tableId) {
+  const url = `${ROOT_URL}/table/${tableId}/categories?excludeRoot=true`
+  const request = axios.get(url)
+
+  return {
+    type: LOAD_CATEGORIES_NO_ROOT,
+    payload: request
+  }
+}
+
+export function loadRootCategories (tableId) {
+  const url = `${ROOT_URL}/table/${tableId}/rootCategories`
+  const request = axios.get(url)
+
+  return {
+    type: LOAD_ROOT_CATEGORIES,
     payload: request
   }
 }
@@ -67,9 +89,10 @@ export function updateCategory (tableId, categoryId, categoryName, parentId) {
   }
 }
 
-export function deleteCategory (tableId, categoryId) {
-  const url = `${ROOT_URL}/table/${tableId}/category/${categoryId}?toHtml=true`
-  const request = axios.post(url)
+export function deleteCategory (tableId, categoryId, deleteChildren) {
+  const url = `${ROOT_URL}/table/${tableId}/category/${categoryId}?deleteChildren=${deleteChildren}&toHtml=true`
+  console.log(url)
+  const request = axios.delete(url)
 
   return {
     type: DELETE_CATEGORY,
@@ -118,9 +141,13 @@ export function combineCategory (tableId, categoryId1, categoryId2, newCategoryN
   }
 }
 
-export function deleteTopLevelCategpry (tableId, categoryId) {
+export function deleteTopLevelCategory (tableId, categoryId, dataOperationType) {
   const url = `${ROOT_URL}/table/${tableId}/category/${categoryId}/deleteTopLevelCategory?toHtml=true`
-  const request = axios.post(url)
+  const body = {
+    dataOperationType: dataOperationType
+  }
+
+  const request = axios({method: 'delete', url: url, data: body})
 
   return {
     type: DELETE_TOP_LEVEL_CATEGORY,

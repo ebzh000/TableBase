@@ -74,10 +74,25 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     @Transactional(readOnly = true)
-    public List<Category> getTableCategories(int tableId)
+    public List<Category> getTableCategories(int tableId, boolean excludeRoot)
     {
         TableEntity tableEntity = categoryUtils.validateTable(tableId);
-        List<CategoryEntity> entities = categoryUtils.findAllTableCategories(tableEntity.getTableId());
+        List<CategoryEntity> entities;
+        if(!excludeRoot)
+            entities = categoryUtils.findAllTableCategories(tableEntity.getTableId());
+        else
+            entities = categoryUtils.findTableCategoriesWithoutRoot(tableEntity.getTableId());
+        List<Category> models = new ArrayList<>();
+        entities.forEach(entity -> models.add(Category.buildModel(entity)));
+        return models;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Category> getTableRootCategories(int tableId)
+    {
+        TableEntity tableEntity = categoryUtils.validateTable(tableId);
+        List<CategoryEntity> entities = categoryUtils.findTableRootCategories(tableEntity.getTableId());
         List<Category> models = new ArrayList<>();
         entities.forEach(entity -> models.add(Category.buildModel(entity)));
         return models;

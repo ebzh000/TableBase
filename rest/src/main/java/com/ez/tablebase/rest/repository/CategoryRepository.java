@@ -21,6 +21,12 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Intege
     @Query(value = "SELECT * FROM categories WHERE table_id = :tableId ORDER BY table_id, category_id ASC", nativeQuery = true)
     List<CategoryEntity> findAllTableCategories(@Param("tableId") int tableId);
 
+    @Query(value = "SELECT * FROM categories WHERE table_id = :tableId and parent_id IS NOT NULL ORDER BY table_id, category_id ASC", nativeQuery = true)
+    List<CategoryEntity> findAllTableCategoriesWithoutRoot(@Param("tableId") int tableId);
+
+    @Query(value = "SELECT * FROM categories WHERE table_id = :tableId and parent_id IS NULL ORDER BY table_id, category_id ASC", nativeQuery = true)
+    List<CategoryEntity> findTableRootCategories(@Param("tableId") int tableId);
+
     @Query(value = "SELECT * FROM categories WHERE table_id = :tableId AND category_id = :categoryId", nativeQuery = true)
     CategoryEntity findCategory(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 
