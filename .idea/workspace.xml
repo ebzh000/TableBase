@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d728da42-8f15-4628-8676-6f6f28220bbf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/createCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/createCategoryPopup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/actions/category.js" afterPath="$PROJECT_DIR$/client/src/actions/category.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/edit-buttons.js" afterPath="$PROJECT_DIR$/client/src/components/edit-buttons.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/combineCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/combineCategoryPopup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/createTopLevelCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/createTopLevelCategoryPopup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/duplicateCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/duplicateCategoryPopup.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/splitCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/splitCategoryPopup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/updateCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/updateCategoryPopup.js" />
     </list>
     <ignored path="TableBase.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,11 +77,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CategoryServiceImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BaseUtils.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="848" column="0" lean-forward="false" selection-start-line="848" selection-start-column="0" selection-end-line="848" selection-end-column="0" />
+              <folding>
+                <element signature="method#BaseUtils#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#createTable#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#createDataAccessPath#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#deleteDAPByEntryId#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#createEntry#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#updateTableEntry#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#calculateNumberOfEntries#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#initialiseEntries#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#generatePermPaths#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#generatePermutations#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#duplicateEntry#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#constructTreeMap#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#constructTreePaths#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#buildPaths#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#findPaths#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#printPathList#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#findPathsByCategory#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#getAllCategoryChildren#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#updateDataAccessPaths#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#updateDataAccessPaths#1;class#BaseUtils#0" expanded="false" />
+                <element signature="method#getPathToCategory#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#findChildren#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#findRootNodeByTreeId#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#createTopLevelCategories#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#copy#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#constructTreeMapByDepth#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#constructParentChildMap#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#removeRootNodes#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#getDeepestTree#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#getTreeDepth#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#validateTable#0;class#BaseUtils#0" expanded="false" />
+                <element signature="method#validateEntry#0;class#BaseUtils#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CategoryServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="196">
-              <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+              <caret line="150" column="0" lean-forward="false" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableEntryUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-204">
+              <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -88,11 +143,10 @@
       <file leaf-file-name="CategoryUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="145" column="25" lean-forward="true" selection-start-line="145" selection-start-column="25" selection-end-line="145" selection-end-column="25" />
+            <state relative-caret-position="196">
+              <caret line="40" column="16" lean-forward="false" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
               <folding>
                 <element signature="method#CategoryUtils#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#createCategoryDAPsAndEntries#0;class#CategoryUtils#0" expanded="false" />
                 <element signature="e#1840#1971#0" expanded="false" />
                 <element signature="e#2447#2533#0" expanded="false" />
                 <element signature="e#3675#3767#0" expanded="false" />
@@ -1942,12 +1996,12 @@
       <workItem from="1525960660771" duration="3890000" />
       <workItem from="1526049615432" duration="6007000" />
       <workItem from="1526093380904" duration="10584000" />
-      <workItem from="1526178461457" duration="9276000" />
+      <workItem from="1526178461457" duration="12633000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="420821000" />
+    <option name="totallyTimeSpent" value="424178000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1960,7 +2014,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1971,7 +2024,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.50319827" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29768467" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29768467" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31843576" sideWeight="0.49733475" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -2109,14 +2162,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
           <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2260,49 +2305,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2142">
-          <caret line="427" column="83" lean-forward="false" selection-start-line="427" selection-start-column="83" selection-end-line="427" selection-end-column="83" />
-          <folding>
-            <element signature="method#BaseUtils#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createTable#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createDataAccessPath#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#deleteDAPByEntryId#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createEntry#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#updateTableEntry#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#calculateNumberOfEntries#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#initialiseEntries#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#generatePermPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#generatePermutations#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#duplicateEntry#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructTreeMap#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructTreePaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#buildPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#printPathList#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findPathsByCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getAllCategoryChildren#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#updateDataAccessPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#updateDataAccessPaths#1;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getPathToCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findChildren#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findRootNodeByTreeId#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createTopLevelCategories#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#copy#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructTreeMapByDepth#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructParentChildMap#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#removeRootNodes#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getDeepestTree#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getTreeDepth#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#validateTable#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#validateCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#validateEntry#0;class#BaseUtils#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-51">
@@ -2392,13 +2394,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/OperationType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategorySplitRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="145" column="25" lean-forward="true" selection-start-line="145" selection-start-column="25" selection-end-line="145" selection-end-column="25" />
+        <state relative-caret-position="196">
+          <caret line="40" column="16" lean-forward="false" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
           <folding>
             <element signature="method#CategoryUtils#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#createCategoryDAPsAndEntries#0;class#CategoryUtils#0" expanded="false" />
             <element signature="e#1840#1971#0" expanded="false" />
             <element signature="e#2447#2533#0" expanded="false" />
             <element signature="e#3675#3767#0" expanded="false" />
@@ -2421,18 +2438,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/OperationType.java">
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategorySplitRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        <state relative-caret-position="-204">
+          <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -2440,8 +2449,49 @@
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
-          <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <caret line="150" column="0" lean-forward="false" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="848" column="0" lean-forward="false" selection-start-line="848" selection-start-column="0" selection-end-line="848" selection-end-column="0" />
+          <folding>
+            <element signature="method#BaseUtils#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#createTable#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#createDataAccessPath#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#deleteDAPByEntryId#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#createEntry#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#updateTableEntry#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#calculateNumberOfEntries#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#initialiseEntries#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#generatePermPaths#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#generatePermutations#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#duplicateEntry#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#constructTreeMap#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#constructTreePaths#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#buildPaths#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#findPaths#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#printPathList#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#findPathsByCategory#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#getAllCategoryChildren#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#updateDataAccessPaths#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#updateDataAccessPaths#1;class#BaseUtils#0" expanded="false" />
+            <element signature="method#getPathToCategory#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#findChildren#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#findRootNodeByTreeId#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#createTopLevelCategories#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#copy#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#constructTreeMapByDepth#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#constructParentChildMap#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#removeRootNodes#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#getDeepestTree#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#getTreeDepth#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#validateTable#0;class#BaseUtils#0" expanded="false" />
+            <element signature="method#validateEntry#0;class#BaseUtils#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

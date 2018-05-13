@@ -133,6 +133,7 @@ export function combineCategory (tableId, categoryId1, categoryId2, newCategoryN
     newCategoryName: newCategoryName,
     dataOperationType: dataOperationType
   }
+
   const request = axios.post(url, body)
 
   return {

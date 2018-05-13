@@ -6,6 +6,7 @@ import DuplicateCategory from './forms/duplicateCategoryPopup'
 import DeleteCategory from './forms/deleteCategoryPopup'
 import DeleteTopLevelCategory from './forms/deleteTopLevelCategoryPopup'
 import SplitCategory from './forms/splitCategoryPopup'
+import CombineCategory from './forms/combineCategoryPopup'
 
 class Buttons extends Component {
   constructor () {
@@ -17,6 +18,7 @@ class Buttons extends Component {
       showUpdateCategoryPopup: false,
       showDuplicateCategoryPopup: false,
       showSplitCategoryPopup: false,
+      showCombineCategoryPopup: false,
       showDeleteTopLevelCategoryPopup: false,
       showDeleteCategoryPopup: false
     }
@@ -26,6 +28,7 @@ class Buttons extends Component {
     this.toggleUpdateCategoryPopup = this.toggleUpdateCategoryPopup.bind(this)
     this.toggleDuplicateCategoryPopup = this.toggleDuplicateCategoryPopup.bind(this)
     this.toggleSplitCategoryPopup = this.toggleSplitCategoryPopup.bind(this)
+    this.toggleCombineCategoryPopup = this.toggleCombineCategoryPopup.bind(this)
     this.toggleDeleteTopLevelCategoryPopup = this.toggleDeleteTopLevelCategoryPopup.bind(this)
     this.toggleDeleteCategoryPopup = this.toggleDeleteCategoryPopup.bind(this)
   }
@@ -72,6 +75,12 @@ class Buttons extends Component {
     })
   }
 
+  toggleCombineCategoryPopup () {
+    this.setState({
+      showCombineCategoryPopup: !this.state.showCombineCategoryPopup
+    })
+  }
+
   render () {
     return (
       <div className='edit-buttons'>
@@ -105,7 +114,11 @@ class Buttons extends Component {
           : null
         }
 
-        <button>Combine Category</button>
+        <button onClick={this.toggleCombineCategoryPopup}>Combine Category</button>
+        {this.state.showCombineCategoryPopup ?
+          <CombineCategory closeCombineCategoryPopup={this.toggleCombineCategoryPopup} />
+          : null
+        }
 
         <button onClick={this.toggleDeleteTopLevelCategoryPopup}>Delete Top Level Category</button>
         {this.state.showDeleteTopLevelCategoryPopup ?

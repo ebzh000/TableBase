@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loadTableHtml } from '../../actions/table'
-import { loadCategories, createTopLevelCategory } from '../../actions/category'
+import { loadCategories, loadCategoriesNoRoot, loadRootCategories, createTopLevelCategory } from '../../actions/category'
 
 class CreateTopLevelCategory extends Component {
   constructor (props) {
@@ -29,6 +29,8 @@ class CreateTopLevelCategory extends Component {
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
       this.props.loadCategories(this.props.table.tableId)
+      this.props.loadRootCategories(this.props.table.tableId)
+      this.props.loadCategoriesNoRoot(this.props.table.tableId)
       this.props.closeCreateTopLevelCategoryPopup()
     }, 100)
   }
@@ -78,6 +80,8 @@ CreateTopLevelCategory.propTypes = {
   createTopLevelCategory: PropTypes.func,
   loadTableHtml: PropTypes.func,
   loadCategories: PropTypes.func,
+  loadRootCategories: PropTypes.func,
+  loadCategoriesNoRoot: PropTypes.func,
   table: PropTypes.object
 }
 
@@ -86,7 +90,7 @@ function mapStateToProps ({ table }) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ createTopLevelCategory, loadTableHtml, loadCategories }, dispatch)
+  return bindActionCreators({ createTopLevelCategory, loadTableHtml, loadCategories, loadCategoriesNoRoot, loadRootCategories }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTopLevelCategory)

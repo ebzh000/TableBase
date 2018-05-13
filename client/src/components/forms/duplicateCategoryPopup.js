@@ -9,7 +9,7 @@ class DuplicateCategory extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { carentCategoryId: this.props.categoriesNoRoot[0] }
+    this.state = { categoryId: this.props.categoriesNoRoot[0] }
 
     this.renderCategoryOptions = this.renderCategoryOptions.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)

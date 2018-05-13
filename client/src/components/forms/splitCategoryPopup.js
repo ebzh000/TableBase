@@ -10,7 +10,7 @@ class SplitCategory extends Component {
     super(props)
 
     this.state = {
-      carentCategoryId: this.props.categoriesNoRoot[0],
+      categoryId: this.props.categoriesNoRoot[0],
       categoryName: '',
       dataOperationType: 8,
       threshold: 0
@@ -46,17 +46,14 @@ class SplitCategory extends Component {
 
   onCategoryChange (event) {
     this.setState({
-      categoryId: event.target.value
+      categoryId: parseInt(event.target.value, 10)
     })
   }
 
   onDataOperationTypeChange (event) {
-    console.log(event.target.value)
-    setTimeout(this.setState({
-      dataOperationType: event.target.value
-    }), 100)
-
-    console.log(this.state.dataOperationType)
+    this.setState({
+      dataOperationType: parseInt(event.target.value, 10)
+    })
   }
 
   onThresholdChange (event) {
@@ -68,7 +65,7 @@ class SplitCategory extends Component {
   onClose (event) {
     event.preventDefault()
 
-    this.setState({ carentCategoryId: this.props.categoriesNoRoot[0] })
+    this.setState({ categoryId: this.props.categoriesNoRoot[0] })
     this.props.closeSplitCategoryPopup()
   }
 
@@ -77,7 +74,6 @@ class SplitCategory extends Component {
   }
 
   renderOperationTypeOptions (dataOperationType) {
-    console.log(dataOperationType)
     return <option key={dataOperationType.id} value={dataOperationType.id}>{dataOperationType.name}</option>
   }
 
