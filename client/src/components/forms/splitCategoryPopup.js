@@ -9,10 +9,19 @@ class SplitCategory extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { carentCategoryId: this.props.categoriesNoRoot[0] }
+    this.state = {
+      carentCategoryId: this.props.categoriesNoRoot[0],
+      categoryName: '',
+      dataOperationType: 8,
+      threshold: 0
+    }
 
     this.renderCategoryOptions = this.renderCategoryOptions.bind(this)
+    this.renderOperationTypeOptions = this.renderOperationTypeOptions.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)
+    this.onNameChange = this.onNameChange.bind(this)
+    this.onDataOperationTypeChange = this.onDataOperationTypeChange.bind(this)
+    this.onThresholdChange = this.onThresholdChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onClose = this.onClose.bind(this)
   }
@@ -20,15 +29,19 @@ class SplitCategory extends Component {
   onFormSubmit (event) {
     event.preventDefault()
 
-    this.props.splitCategory(this.props.table.tableId, this.state.categoryId)
+    this.props.splitCategory(this.props.table.tableId, this.state.categoryId, this.state.categoryName, this.state.dataOperationType, this.state.threshold)
     this.setState({ categoryId: this.props.categoriesNoRoot[0] })
 
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
       this.props.loadCategories(this.props.table.tableId)
       this.props.loadCategoriesNoRoot(this.props.table.tableId)
-      this.props.closeDuplicateCategoryPopup()
+      this.props.closeSplitCategoryPopup()
     }, 100)
+  }
+
+  onNameChange (event) {
+    this.setState({ categoryName: event.target.value })
   }
 
   onCategoryChange (event) {
@@ -37,22 +50,47 @@ class SplitCategory extends Component {
     })
   }
 
+  onDataOperationTypeChange (event) {
+    console.log(event.target.value)
+    setTimeout(this.setState({
+      dataOperationType: event.target.value
+    }), 100)
+
+    console.log(this.state.dataOperationType)
+  }
+
+  onThresholdChange (event) {
+    this.setState({
+      threshold: event.target.value
+    })
+  }
+
   onClose (event) {
     event.preventDefault()
 
     this.setState({ carentCategoryId: this.props.categoriesNoRoot[0] })
-    this.props.closeDuplicateCategoryPopup()
+    this.props.closeSplitCategoryPopup()
   }
 
   renderCategoryOptions (category) {
     return <option key={category.categoryId} value={category.categoryId}>{category.attributeName}</option>
   }
 
+  renderOperationTypeOptions (dataOperationType) {
+    console.log(dataOperationType)
+    return <option key={dataOperationType.id} value={dataOperationType.id}>{dataOperationType.name}</option>
+  }
+
   render () {
+    const dataOperationTypes = [
+      {id: 8, name: 'NO OPERATION'},
+      {id: 9, name: 'COPY'},
+      {id: 10, name: 'THRESHOLD'}
+    ]
     return (
       <div className='popup'>
         <div className='popup_inner'>
-          <h1>Duplicate Category</h1>
+          <h1>Split Category</h1>
           <div className='popup-form-div'>
             <form className='popup-form' onSubmit={this.onFormSubmit}>
               <table>
@@ -65,6 +103,37 @@ class SplitCategory extends Component {
                       </select>
                     </td>
                   </tr>
+                  <tr>
+                    <td><label>Category Name: </label></td>
+                    <td><input
+                      placeholder='Enter New Category Name'
+                      className='form-control'
+                      value={this.state.categoryName}
+                      onChange={this.onNameChange}
+                      required
+                    /></td>
+                  </tr>
+                  <tr>
+                    <td><label>Select Data Operation Type: </label></td>
+                    <td>
+                      <select className='form-control' value={this.state.dataOperationType} onChange={this.onDataOperationTypeChange} required>
+                        {dataOperationTypes.map(this.renderOperationTypeOptions)}
+                      </select>
+                    </td>
+                  </tr>
+                  {this.state.dataOperationType === 10 ?
+                    <tr>
+                      <td><label>Threshold: </label></td>
+                      <td><input
+                        placeholder='Enter Threshold'
+                        className='form-control'
+                        value={this.state.threshold}
+                        onChange={this.onThresholdChange}
+                        required
+                      /></td>
+                    </tr>
+                    : null
+                  }
                   <tr><td><label /></td></tr>
                   <tr>
                     <td></td>

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loadTableHtml } from '../../actions/table'
-import { loadCategories, createCategory } from '../../actions/category'
+import { loadCategories, createCategory, loadCategoriesNoRoot } from '../../actions/category'
 
 class CreateCategory extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { categoryName: '', parentCategoryId: this.props.categories[0], linkChildren: false }
+    this.state = { categoryName: '', parentCategoryId: this.props.categories[0].categoryId, linkChildren: false }
 
     this.renderCategoryOptions = this.renderCategoryOptions.bind(this)
     this.onCategoryNameChange = this.onCategoryNameChange.bind(this)
@@ -26,11 +26,12 @@ class CreateCategory extends Component {
   onFormSubmit (event) {
     event.preventDefault()
     this.props.createCategory(this.props.table.tableId, this.state.categoryName, this.state.parentCategoryId, this.state.linkChildren)
-    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0], parentName: 'Select', linkChildren: false })
+    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
 
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
       this.props.loadCategories(this.props.table.tableId)
+      this.props.loadCategoriesNoRoot(this.props.table.tableId)
       this.props.closeCreateCategoryPopup()
     }, 100)
   }
@@ -48,7 +49,7 @@ class CreateCategory extends Component {
   onClose (event) {
     event.preventDefault()
 
-    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0], parentName: 'Select', linkChildren: false })
+    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
     this.props.closeCreateCategoryPopup()
   }
 
@@ -108,6 +109,7 @@ CreateCategory.propTypes = {
   createCategory: PropTypes.func,
   loadTableHtml: PropTypes.func,
   loadCategories: PropTypes.func,
+  loadCategoriesNoRoot: PropTypes.func,
   categories: PropTypes.array,
   table: PropTypes.object
 }
@@ -117,7 +119,7 @@ function mapStateToProps ({ table, categories }) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ createCategory, loadTableHtml, loadCategories }, dispatch)
+  return bindActionCreators({ createCategory, loadTableHtml, loadCategories, loadCategoriesNoRoot }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCategory)

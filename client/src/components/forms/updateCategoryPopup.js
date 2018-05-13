@@ -11,8 +11,8 @@ class UpdateCategory extends Component {
 
     this.state = {
       categoryName: '',
-      parentCategoryId: this.props.categories[0],
-      categoryId: this.props.categories[0],
+      parentId: this.props.categories[0].categoryId,
+      categoryId: this.props.categoriesNoRoot[0].categoryId,
       linkChildren: false
     }
 
@@ -31,9 +31,11 @@ class UpdateCategory extends Component {
 
   onFormSubmit (event) {
     event.preventDefault()
-    console.log(this.state.parentCategoryId)
-    this.props.updateCategory(this.props.table.tableId, this.state.categoryName, this.state.parentCategoryId, this.state.linkChildren)
-    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0], parentName: 'Select', linkChildren: false })
+    const categoryId = parseInt(this.state.categoryId, 10)
+    const parentId = parseInt(this.state.parentId, 10)
+
+    this.props.updateCategory(this.props.table.tableId, categoryId, this.state.categoryName, parentId, this.state.linkChildren)
+    this.setState({ categoryName: '', categoryId: this.props.categoriesNoRoot[0].categoryId, parentId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
 
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
@@ -43,19 +45,16 @@ class UpdateCategory extends Component {
   }
 
   onParentCategoryChange (event) {
-    console.log(event.target.value)
     this.setState({
-      parentCategoryId: event.target.value
+      parentId: event.target.value
     })
   }
 
   onCategoryChange (event) {
-    const category = this.props.categories[event.target.value]
-    console.log(category)
-    console.log(category.categoryId)
+    const category = this.props.categories.find((category) => category.categoryId == event.target.value)
     this.setState({
-      categoryId: event.target.value,
-      parentCategoryId: category.parentId,
+      categoryId: category.categoryId,
+      parentId: category.parentId,
       categoryName: category.attributeName
     })
   }
@@ -67,7 +66,7 @@ class UpdateCategory extends Component {
   onClose (event) {
     event.preventDefault()
 
-    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0], parentName: 'Select', linkChildren: false })
+    this.setState({ categoryName: '', catergoryId: this.props.categoriesNoRoot[0].categoryId, parentId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
     this.props.closeUpdateCategoryPopup()
   }
 
@@ -75,15 +74,14 @@ class UpdateCategory extends Component {
     setTimeout(
       this.setState({
         categoryId: this.props.categoriesNoRoot[0].categoryId,
-        parentCategoryId: this.props.categoriesNoRoot[0].parentId,
+        parentId: this.props.categoriesNoRoot[0].parentId,
         categoryName: this.props.categoriesNoRoot[0].attributeName
       }), 100)
-    console.log(this.state)
   }
 
   renderCategoryOptions (category) {
     // console.log(category)
-    return <option key={category.categoryId} value={category.categoryId}>{category.attributeName}</option>
+    return <option key={category.categoryId} value={category.categoryId}>{category.categoryId}| {category.attributeName}</option>
   }
 
   render () {
@@ -98,7 +96,7 @@ class UpdateCategory extends Component {
                   <tr>
                     <td><label>Select Category: </label></td>
                     <td>
-                      <select className='form-control' value={this.state.categoryId} onChange={this.onCategoryChange} required>
+                      <select value={this.state.categoryId} onChange={this.onCategoryChange} required>
                         {this.props.categoriesNoRoot.map(this.renderCategoryOptions)}
                       </select>
                     </td>
@@ -116,7 +114,7 @@ class UpdateCategory extends Component {
                   <tr>
                     <td><label>Select Parent: </label></td>
                     <td>
-                      <select className='form-control' value={this.state.parentCategoryId} onChange={this.onParentCategoryChange} required>
+                      <select value={this.state.parentId} onChange={this.onParentCategoryChange} required>
                         {this.props.categories.map(this.renderCategoryOptions)}
                       </select>
                     </td>
