@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class OperationUtils extends BaseUtils
 {
-    private static DecimalFormat decimalFormat = new DecimalFormat("0.0#%");
+    private static DecimalFormat percentageFormat = new DecimalFormat("0.0#%");
     private static final Pattern currencyRegExp = Pattern.compile("[^0-9\\.,\\s]*");
 
     OperationUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
@@ -71,15 +71,28 @@ public class OperationUtils extends BaseUtils
 
         else if (dataType.equals(DataType.PERCENT))
         {
-            Double percentage1 = decimalFormat.parse(data1).doubleValue();
-            Double percentage2 = decimalFormat.parse(data2).doubleValue();
+            Double percentage1 = percentageFormat.parse(data1).doubleValue();
+            Double percentage2 = percentageFormat.parse(data2).doubleValue();
 
             if (percentage1 > percentage2)
-                return decimalFormat.format(percentage1);
+                return percentageFormat.format(percentage1);
             else if (percentage1 < percentage2)
-                return decimalFormat.format(percentage2);
+                return percentageFormat.format(percentage2);
             else
-                return decimalFormat.format(percentage1);
+                return percentageFormat.format(percentage1);
+        }
+
+        else if (dataType.equals(DataType.DECIMAL))
+        {
+            Double decimal1 = Double.parseDouble(data1);
+            Double decimal2 = Double.parseDouble(data2);
+
+            if (decimal1 > decimal2)
+                return decimal1.toString();
+            else if (decimal1 < decimal2)
+                return decimal2.toString();
+            else
+                return decimal1.toString();
         }
 
         else if (dataType.equals(DataType.CURRENCY))
@@ -137,15 +150,28 @@ public class OperationUtils extends BaseUtils
 
         else if (dataType.equals(DataType.PERCENT))
         {
-            Double percentage1 = decimalFormat.parse(data1).doubleValue();
-            Double percentage2 = decimalFormat.parse(data2).doubleValue();
+            Double percentage1 = percentageFormat.parse(data1).doubleValue();
+            Double percentage2 = percentageFormat.parse(data2).doubleValue();
 
             if (percentage1 < percentage2)
-                return decimalFormat.format(percentage1);
+                return percentageFormat.format(percentage1);
             else if (percentage1 > percentage2)
-                return decimalFormat.format(percentage2);
+                return percentageFormat.format(percentage2);
             else
-                return decimalFormat.format(percentage1);
+                return percentageFormat.format(percentage1);
+        }
+
+        else if (dataType.equals(DataType.DECIMAL))
+        {
+            Double decimal1 = Double.parseDouble(data1);
+            Double decimal2 = Double.parseDouble(data2);
+
+            if (decimal1 < decimal2)
+                return decimal1.toString();
+            else if (decimal1 > decimal2)
+                return decimal2.toString();
+            else
+                return decimal1.toString();
         }
 
         else if (dataType.equals(DataType.CURRENCY))
@@ -182,12 +208,22 @@ public class OperationUtils extends BaseUtils
 
         else if (dataType.equals(DataType.PERCENT))
         {
-            Double percentage1 = decimalFormat.parse(data1).doubleValue();
-            Double percentage2 = decimalFormat.parse(data2).doubleValue();
+            Double percentage1 = percentageFormat.parse(data1).doubleValue();
+            Double percentage2 = percentageFormat.parse(data2).doubleValue();
 
             Double mean = (percentage1 + percentage2) / 2;
 
-            return decimalFormat.format(mean);
+            return percentageFormat.format(mean);
+        }
+
+        else if (dataType.equals(DataType.DECIMAL))
+        {
+            Double decimal1 = Double.parseDouble(data1);
+            Double decimal2 = Double.parseDouble(data2);
+
+            Double mean = (decimal1 + decimal2) / 2;
+
+            return mean.toString();
         }
 
         else if (dataType.equals(DataType.CURRENCY))
@@ -212,19 +248,29 @@ public class OperationUtils extends BaseUtils
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
-            Integer mean = int1 + int2;
+            Integer sum = int1 + int2;
 
-            return mean.toString();
+            return sum.toString();
         }
 
         else if (dataType.equals(DataType.PERCENT))
         {
-            Double percentage1 = decimalFormat.parse(data1).doubleValue();
-            Double percentage2 = decimalFormat.parse(data2).doubleValue();
+            Double percentage1 = percentageFormat.parse(data1).doubleValue();
+            Double percentage2 = percentageFormat.parse(data2).doubleValue();
 
-            Double mean = percentage1 + percentage2;
+            Double sum = percentage1 + percentage2;
 
-            return decimalFormat.format(mean);
+            return percentageFormat.format(sum);
+        }
+
+        else if (dataType.equals(DataType.DECIMAL))
+        {
+            Double decimal1 = Double.parseDouble(data1);
+            Double decimal2 = Double.parseDouble(data2);
+
+            Double sum = decimal1 + decimal2;
+
+            return sum.toString();
         }
 
         else if (dataType.equals(DataType.CURRENCY))
@@ -232,9 +278,9 @@ public class OperationUtils extends BaseUtils
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
-            BigDecimal mean = curr1.add(curr2);
+            BigDecimal sum = curr1.add(curr2);
 
-            return formatCurrencyValue(mean, data1);
+            return formatCurrencyValue(sum, data1);
         }
 
         return data1;
@@ -249,19 +295,29 @@ public class OperationUtils extends BaseUtils
             Integer int1 = Integer.parseInt(data1);
             Integer int2 = Integer.parseInt(data2);
 
-            Integer mean = Math.abs(int1 - int2);
+            Integer diff = Math.abs(int1 - int2);
 
-            return mean.toString();
+            return diff.toString();
         }
 
         else if (dataType.equals(DataType.PERCENT))
         {
-            Double percentage1 = decimalFormat.parse(data1).doubleValue();
-            Double percentage2 = decimalFormat.parse(data2).doubleValue();
+            Double percentage1 = percentageFormat.parse(data1).doubleValue();
+            Double percentage2 = percentageFormat.parse(data2).doubleValue();
 
-            Double mean = Math.abs(percentage1 - percentage2);
+            Double diff = Math.abs(percentage1 - percentage2);
 
-            return decimalFormat.format(mean);
+            return percentageFormat.format(diff);
+        }
+
+        else if (dataType.equals(DataType.DECIMAL))
+        {
+            Double decimal1 = Double.parseDouble(data1);
+            Double decimal2 = Double.parseDouble(data2);
+
+            Double diff = Math.abs(decimal1 - decimal2);
+
+            return diff.toString();
         }
 
         else if (dataType.equals(DataType.CURRENCY))
@@ -269,17 +325,17 @@ public class OperationUtils extends BaseUtils
             BigDecimal curr1 = extractCurrencyValue(data1);
             BigDecimal curr2 = extractCurrencyValue(data2);
 
-            BigDecimal mean = curr1.subtract(curr2).abs();
+            BigDecimal diff = curr1.subtract(curr2).abs();
 
-            return formatCurrencyValue(mean, data1);
+            return formatCurrencyValue(diff, data1);
         }
 
         return data1;
     }
 
-    public static String concatenateString(String data1, String data2, byte type)
+    public static String concatenateString(String data1, String data2)
     {
-        return data1 + " " + data2;
+        return data1 + "; " + data2;
     }
 
     private static Date convertToDate(String data) throws ParseException
@@ -330,5 +386,51 @@ public class OperationUtils extends BaseUtils
         }
     }
 
+    public static class PercentageComparator implements Comparator<EntryEntity>
+    {
+        @Override
+        public int compare(EntryEntity o1, EntryEntity o2)
+        {
+            Double data1 = null;
+            Double data2 = null;
+            try
+            {
+                data1 = percentageFormat.parse(o1.getData()).doubleValue();
+                data2 = percentageFormat.parse(o2.getData()).doubleValue();
+            }
+            catch (ParseException e)
+            {
+                System.out.println("Failed to parse percentage");
+                e.printStackTrace();
+            }
+
+            if(data1 == null || data2 == null)
+                System.out.println("Failed to parse percentage");
+
+            if (data1 > data2)
+                return 1;
+            else if (Objects.equals(data1, data2))
+                return 0;
+            else
+                return -1;
+        }
+    }
+
+    public static class DoubleComparator implements Comparator<EntryEntity>
+    {
+        @Override
+        public int compare(EntryEntity o1, EntryEntity o2)
+        {
+            Double data1 = Double.parseDouble(o1.getData());
+            Double data2 = Double.parseDouble(o2.getData());
+
+            if (data1 > data2)
+                return 1;
+            else if (Objects.equals(data1, data2))
+                return 0;
+            else
+                return -1;
+        }
+    }
 
 }

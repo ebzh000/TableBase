@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 public class CategoryUtils extends BaseUtils
 {
-    private static DecimalFormat decimalFormat = new DecimalFormat("0.0#%");
+    private static DecimalFormat percentageFormat = new DecimalFormat("0.0#%");
     private static final Pattern currencyRegExp = Pattern.compile("[^0-9\\.,\\s]*");
 
     public CategoryUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
@@ -38,7 +38,7 @@ public class CategoryUtils extends BaseUtils
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
-    public void createCategoryDAPsAndEntries(CategoryEntity category, CategoryEntity parentCategory, boolean linkChildren)
+    public void createCategoryDAPsAndEntries(CategoryEntity category, CategoryEntity parentCategory, boolean linkChildren, byte type)
     {
         // Need to check if the parent category has no children. This implies that the parentId currently has DAPs and Entries initialised.
         // Which then implies that we need to update the DAPs to include the new category
@@ -71,7 +71,7 @@ public class CategoryUtils extends BaseUtils
             // If we don't want to link the current children of the parent category to the new category,
             // we will then leave the new category as a new child and then create all DAPs and Entries
             else
-                initialiseEntries(category);
+                initialiseEntriesAndDAPs(category, type);
         }
 
         // Since the parent category has no children we must then update the data access paths that end with the parent category
@@ -106,7 +106,7 @@ public class CategoryUtils extends BaseUtils
             //    b. Clone the entry and then the new DAP
         else
         {
-            List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(entity.getTableId(), entity.getCategoryId());
+            List<Integer> entries = findEntriesForCategory(entity.getTableId(), entity.getCategoryId());
             if (!entries.isEmpty())
             {
                 for (Integer entry : entries)
@@ -151,21 +151,19 @@ public class CategoryUtils extends BaseUtils
      */
     public void splitCategory(CategoryEntity categoryA, CategoryEntity categoryB, OperationType operationType, String threshold) throws ParseException
     {
-        List<Integer> categoryAEntries = dataAccessPathRepository.getEntriesForCategory(categoryA.getTableId(), categoryA.getCategoryId());
-        List<Integer> categoryBEntries = dataAccessPathRepository.getEntriesForCategory(categoryB.getTableId(), categoryB.getCategoryId());
+        List<Integer> categoryAEntries = findEntriesForCategory(categoryA.getTableId(), categoryA.getCategoryId());
+        List<Integer> categoryBEntries = findEntriesForCategory(categoryB.getTableId(), categoryB.getCategoryId());
 
         for (int index = 0; index < categoryAEntries.size(); index++)
         {
             EntryEntity entry1 = tableEntryRepository.findTableEntry(categoryA.getTableId(), categoryAEntries.get(index));
             EntryEntity entry2 = tableEntryRepository.findTableEntry(categoryB.getTableId(), categoryBEntries.get(index));
-            byte type1 = dataAccessPathRepository.getTypeByEntryId(entry1.getTableId(), entry1.getEntryId());
-            byte type2 = dataAccessPathRepository.getTypeByEntryId(entry2.getTableId(), entry2.getEntryId());
 
-            if(type1 != type2)
+            if(entry1.getType() != entry2.getType())
                 throw new IncompatibleCategoryTypeException("Specified categories have entries of different types");
 
             String data1 = entry1.getData();
-            DataType dataType = DataType.values()[type1];
+            DataType dataType = DataType.values()[entry1.getType()];
 
             switch (operationType)
             {
@@ -199,13 +197,13 @@ public class CategoryUtils extends BaseUtils
 
         else if (dataType.equals(DataType.PERCENT))
         {
-            Double percentage1 = decimalFormat.parse(data1).doubleValue();
-            Double thresholdPercentage = decimalFormat.parse(threshold).doubleValue();
+            Double percentage1 = percentageFormat.parse(data1).doubleValue();
+            Double thresholdPercentage = percentageFormat.parse(threshold).doubleValue();
 
             if (percentage1 >= thresholdPercentage)
             {
                 tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
-                tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), decimalFormat.format(percentage1));
+                tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), percentageFormat.format(percentage1));
             }
         }
 
@@ -249,30 +247,43 @@ public class CategoryUtils extends BaseUtils
     public void deleteCategory(CategoryEntity category, boolean deleteChildren)
     {
         CategoryEntity parentCategory = validateCategory(category.getTableId(), category.getParentId());
-        if (!deleteChildren)
-        {
-            updateTableCategoriesForNewParent(category, parentCategory);
-            deleteCategory(category);
-        }
-        else
-        {
-            // Delete all entries that belong to the category's leaf nodes
-            deleteCategoryEntities(category);
+        List<Integer> children = getAllCategoryChildren(category.getTableId(), category.getCategoryId());
+        children.remove(category.getCategoryId());
 
-            // Delete selected category and all its children, along with related DAPs
-            List<Integer> children = getAllCategoryChildren(category.getTableId(), category.getCategoryId());
-            for (Integer child : children)
+        // we can only apply deleteChildren if there are actually children
+        if (children.size() != 0)
+        {
+            if (!deleteChildren)
             {
-                CategoryEntity childCategory = validateCategory(category.getTableId(), child);
-                deleteCategory(childCategory);
+                updateTableCategoriesForNewParent(category, parentCategory);
+                deleteCategory(category);
             }
 
-            deleteCategory(category);
-
-            List<CategoryEntity> parentChildren = findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
-            if (parentChildren.size() == 0)
-                initialiseEntries(parentCategory);
+            else
+                deleteChildrenDapsEntries(category, parentCategory, children);
         }
+
+        else
+            deleteChildrenDapsEntries(category, parentCategory, children);
+    }
+
+    private void deleteChildrenDapsEntries(CategoryEntity category, CategoryEntity parentCategory, List<Integer> children)
+    {
+        // Delete all entries that belong to the category's leaf nodes
+        deleteCategoryEntities(category);
+
+        // Delete selected category and all its children, along with related DAPs
+        for (Integer child : children)
+        {
+            CategoryEntity childCategory = validateCategory(category.getTableId(), child);
+            deleteCategory(childCategory);
+        }
+
+        deleteCategory(category);
+
+        List<CategoryEntity> parentChildren = findChildren(parentCategory.getTableId(), parentCategory.getCategoryId());
+        if (parentChildren.size() == 0)
+            initialiseEntriesAndDAPs(parentCategory, (byte) 0);
     }
 
     /*
@@ -283,7 +294,7 @@ public class CategoryUtils extends BaseUtils
      *
      * After we have applied the operation, we can then delete all but one data access path that is related to the entry
      */
-    public void deleteTopLevelCategory(CategoryEntity category, OperationType operationType)
+    public void deleteTopLevelCategory(CategoryEntity category, OperationType operationType) throws ParseException
     {
         // Delete selected category and all its children, along with related DAPs
         List<Integer> children = getAllCategoryChildren(category.getTableId(), category.getCategoryId());
@@ -335,17 +346,19 @@ public class CategoryUtils extends BaseUtils
         for(List<EntryEntity> entryList : entryEntityList)
         {
             List<EntryEntity> entriesToDelete;
-            byte type = dataAccessPathRepository.getTypeByEntryId(entryList.get(0).getTableId(), entryList.get(0).getEntryId());
             switch (operationType)
             {
                 case MAX:
-                    entriesToDelete = max(entryList, DataType.values()[type]);
+                    entriesToDelete = max(entryList);
                     break;
                 case MIN:
-                    entriesToDelete = min(entryList, DataType.values()[type]);
+                    entriesToDelete = min(entryList);
                     break;
                 case MEAN:
-                    entriesToDelete = mean(entryList, DataType.values()[type]);
+                    entriesToDelete = mean(entryList);
+                    break;
+                case CONCATENATE_STRING:
+                    entriesToDelete = concatenateString(entryList);
                     break;
                 default:
                     throw new InvalidOperationException("Specified Operation Type is invalid. Supported Operations are Min, Max and Mean.");
@@ -359,12 +372,18 @@ public class CategoryUtils extends BaseUtils
         }
     }
 
-    private List<EntryEntity> max(List<EntryEntity> entries, DataType type)
+    private List<EntryEntity> max(List<EntryEntity> entries) throws ParseException
     {
         List<EntryEntity> retList = new LinkedList<>();
         EntryEntity maxEntry;
+
+        DataType type = DataType.values()[entries.get(0).getType()];
         if(type.equals(DataType.INTEGER))
             maxEntry = Collections.max(entries, new OperationUtils.IntegerComparator());
+        else if(type.equals(DataType.PERCENT))
+            maxEntry = Collections.max(entries, new OperationUtils.PercentageComparator());
+        else if(type.equals(DataType.DECIMAL))
+            maxEntry = Collections.max(entries, new OperationUtils.DoubleComparator());
         else
             throw new InvalidOperationException("Operation does not support data type: " + type);
 
@@ -378,12 +397,18 @@ public class CategoryUtils extends BaseUtils
         return retList;
     }
 
-    private List<EntryEntity> min(List<EntryEntity> entries, DataType type)
+    private List<EntryEntity> min(List<EntryEntity> entries)
     {
         List<EntryEntity> retList = new LinkedList<>();
         EntryEntity minEntry;
+
+        DataType type = DataType.values()[entries.get(0).getType()];
         if(type.equals(DataType.INTEGER))
             minEntry = Collections.min(entries, new OperationUtils.IntegerComparator());
+        else if(type.equals(DataType.PERCENT))
+            minEntry = Collections.min(entries, new OperationUtils.PercentageComparator());
+        else if(type.equals(DataType.DECIMAL))
+            minEntry = Collections.min(entries, new OperationUtils.DoubleComparator());
         else
             throw new InvalidOperationException("Operation does not support data type: " + type);
 
@@ -397,10 +422,12 @@ public class CategoryUtils extends BaseUtils
         return retList;
     }
 
-    private List<EntryEntity> mean(List<EntryEntity> entries, DataType type)
+    private List<EntryEntity> mean(List<EntryEntity> entries) throws ParseException
     {
         List<EntryEntity> retList = new LinkedList<>();
         String meanVal;
+
+        DataType type = DataType.values()[entries.get(0).getType()];
         if(type.equals(DataType.INTEGER))
         {
             Integer mean = 0;
@@ -410,11 +437,46 @@ public class CategoryUtils extends BaseUtils
             mean = mean / entries.size();
             meanVal = mean.toString();
         }
+        else if(type.equals(DataType.PERCENT))
+        {
+            Double mean = 0d;
+            for(EntryEntity entry : entries)
+                mean = mean + percentageFormat.parse(entry.getData()).doubleValue();
+
+            mean = mean / entries.size();
+            meanVal = mean.toString();
+        }
+        else if(type.equals(DataType.DECIMAL))
+        {
+            Double mean = 0d;
+            for(EntryEntity entry : entries)
+                mean = mean + Double.parseDouble(entry.getData());
+
+            mean = mean / entries.size();
+            meanVal = mean.toString();
+        }
         else
             throw new InvalidOperationException("Operation does not support data type: " + type);
 
         EntryEntity firstEntry = entries.get(0);
         updateTableEntry(firstEntry.getTableId(), firstEntry.getEntryId(), meanVal);
+
+        for(EntryEntity entry : entries)
+            if(!Objects.equals(entry.getEntryId(), firstEntry.getEntryId()))
+                retList.add(entry);
+
+        return retList;
+    }
+
+    private List<EntryEntity> concatenateString(List<EntryEntity> entries)
+    {
+        List<EntryEntity> retList = new LinkedList<>();
+        StringBuilder newString = new StringBuilder();
+        for(EntryEntity entry : entries)
+            newString.append("; ").append(entry.getData());
+
+        EntryEntity firstEntry = entries.get(0);
+        updateTableEntry(firstEntry.getTableId(), firstEntry.getEntryId(), newString.toString());
 
         for(EntryEntity entry : entries)
             if(!Objects.equals(entry.getEntryId(), firstEntry.getEntryId()))
@@ -435,9 +497,12 @@ public class CategoryUtils extends BaseUtils
 
     private void deleteCategoryEntities(CategoryEntity category)
     {
-        List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
+        List<Integer> entries = findEntriesForCategory(category.getTableId(), category.getCategoryId());
         for (Integer entry : entries)
+        {
+            System.out.println("deleting entry: " + entry);
             deleteTableEntry(category.getTableId(), entry);
+        }
     }
 
     public List<CategoryEntity> findAllTableCategories(Integer tableId)

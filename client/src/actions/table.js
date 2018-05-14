@@ -4,6 +4,7 @@ export const CREATE_TABLE = 'CREATE_TABLE'
 export const SEARCH_TABLE = 'SEARCH_TABLE'
 export const LOAD_TABLE_HTML = 'LOAD_TABLE_HTML'
 export const LOAD_TABLE = 'LOAD_TABLE'
+export const DELETE_TABLE = 'DELETE_TABLE'
 
 const ROOT_URL = `http://localhost:8081/tablebase`
 
@@ -51,5 +52,15 @@ export function loadTable (tableId) {
   return {
     type: LOAD_TABLE,
     payload: request
+  }
+}
+
+export function deleteTable (tableId) {
+  const url = `${ROOT_URL}/table/${tableId}`
+  axios.delete(url)
+
+  return {
+    type: DELETE_TABLE,
+    payload: tableId
   }
 }

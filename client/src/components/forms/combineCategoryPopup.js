@@ -85,7 +85,7 @@ class CombineCategory extends Component {
       {id: 2, name: 'MEAN'},
       {id: 3, name: 'SUM'},
       {id: 4, name: 'DIFFERENCE'},
-      {id: 5, name: 'CONCATENATE_STRING'},
+      {id: 5, name: 'CONCATENATE'},
       {id: 6, name: 'LEFT'},
       {id: 7, name: 'RIGHT'},
       {id: 8, name: 'NO OPERATION'}

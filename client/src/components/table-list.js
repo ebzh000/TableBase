@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { loadTableHtml, loadTable } from '../actions/table'
+import { loadTableHtml, loadTable, deleteTable } from '../actions/table'
 import { loadCategories, loadCategoriesNoRoot, loadRootCategories } from '../actions/category'
 import { browserHistory } from 'react-router'
 
@@ -10,11 +10,12 @@ class TableList extends Component {
   constructor (props) {
     super(props)
 
-    this.handleClick = this.handleClick.bind(this)
+    this.handleEditClick = this.handleEditClick.bind(this)
+    this.handleDeleteClick = this.handleDeleteClick.bind(this)
     this.renderTable = this.renderTable.bind(this)
   }
 
-  handleClick (e) {
+  handleEditClick (e) {
     e.preventDefault()
     const tableId = e.target.id
     this.props.loadTable(tableId)
@@ -26,6 +27,12 @@ class TableList extends Component {
     setTimeout(() => {
       browserHistory.push('/table/' + tableId)
     }, 300)
+  }
+
+  handleDeleteClick (e) {
+    e.preventDefault()
+    const tableId = e.target.id
+    this.props.deleteTable(tableId)
   }
 
   renderTable (tableData) {
@@ -41,7 +48,10 @@ class TableList extends Component {
           {tableData.tags}
         </td>
         <td>
-          <button id={tableData.tableId} onClick={this.handleClick}>Edit</button>
+          <button id={tableData.tableId} onClick={this.handleEditClick}>Edit</button>
+        </td>
+        <td>
+          <button id={tableData.tableId} onClick={this.handleDeleteClick}>Delete</button>
         </td>
       </tr>
     )
@@ -56,6 +66,7 @@ class TableList extends Component {
               <th>ID</th>
               <th>Table Name</th>
               <th>Tags</th>
+              <th></th>
               <th></th>
             </tr>
           </thead>
@@ -72,7 +83,8 @@ TableList.propTypes = {
   loadTable: PropTypes.func,
   loadCategories: PropTypes.func,
   loadCategoriesNoRoot: PropTypes.func,
-  loadRootCategories: PropTypes.func
+  loadRootCategories: PropTypes.func,
+  deleteTable: PropTypes.func
 }
 
 function mapStateToProps ({ tableList }) {
@@ -80,7 +92,7 @@ function mapStateToProps ({ tableList }) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ loadTable, loadTableHtml, loadCategories, loadCategoriesNoRoot, loadRootCategories }, dispatch)
+  return bindActionCreators({ loadTable, loadTableHtml, loadCategories, loadCategoriesNoRoot, loadRootCategories, deleteTable }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableList)

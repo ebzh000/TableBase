@@ -3,6 +3,7 @@ package com.ez.tablebase.rest.service.utils;
  * Created by ErikZ on 19/04/2018.
  */
 
+import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.common.html.Cell;
 import com.ez.tablebase.rest.common.html.CellType;
@@ -21,7 +22,7 @@ import java.util.*;
 
 public class BaseUtils
 {
-    private static final String NEW_ENTRY =  "new";
+    private static final String NEW_ENTRY =  "---";
     final CategoryRepository categoryRepository;
     final TableRepository tableRepository;
     final DataAccessPathRepository dataAccessPathRepository;
@@ -119,27 +120,107 @@ public class BaseUtils
         return numEntries;
     }
 
-    void initialiseEntries(CategoryEntity category)
+    void initialiseEntriesAndDAPs(CategoryEntity category, byte type)
     {
         Map<Integer, List<CategoryEntity>> currTreeMap = constructTreeMap(categoryRepository.getRootCategoryByTreeId(category.getTableId(), category.getTreeId()));
+        Map<String, Byte> dapTypeMap = new HashMap<>();
         List<Integer> treeIds = getTreeIds(category.getTableId());
         treeIds.remove(category.getTreeId());
 
-        boolean rowSameType = true;
-
+        // Get parent node and then get one of its other children. We shall then find all entries that have contain that child in its DAP
         List<List<CategoryEntity>> permPaths = generatePermPaths(category.getTableId(), treeIds);
+        List<CategoryEntity> children = findChildren(category.getTableId(), category.getParentId());
+        children.remove(category);
+
+        CategoryEntity similarCategory = children.get(0);
+        List<Integer> entryIds = findEntriesForCategory(similarCategory.getTableId(),similarCategory.getCategoryId());
+
+        List<EntryEntity> entries = new LinkedList<>();
+        boolean sameType = true;
+        for (Integer entryId : entryIds)
+            entries.add(tableEntryRepository.findTableEntry(similarCategory.getTableId(), entryId));
+
+        // Find how many types are present in the resultant list of entries. If there is only 1 type then that means that we can create entries of the same type.
+        // Otherwise, we have to create entries that follow the same ordering of types shown by this set of entries.
+        // To achieve this, we need to store what type each of the 'access' daps.
+        byte entryType = entries.get(0).getType();
+        for (EntryEntity entry : entries)
+        {
+            if(entry.getType() != entryType)
+                sameType = false;
+
+            List<DataAccessPathEntity> daps = dataAccessPathRepository.getEntryAccessPathExcludingTree(entry.getTableId(), entry.getEntryId(), similarCategory.getTreeId());
+            StringBuilder dapString = new StringBuilder();
+            for(DataAccessPathEntity dapEntity : daps)
+                dapString.append(dapEntity.getCategoryId()).append("-");
+
+            dapString.deleteCharAt(dapString.length() - 1);
+            dapTypeMap.put(dapString.toString(), entry.getType());
+        }
+
         Integer numEntries = calculateNumberOfEntries(category.getTableId()) / currTreeMap.values().size();
         for (int count = 0; count < numEntries; count++)
         {
-            EntryEntity entry = createEntry(category.getTableId(), NEW_ENTRY, (byte) 0);
+            List<CategoryEntity> accessDap = permPaths.get(count);
+            EntryEntity entry;
+            if(sameType)
+            {
+                String data;
+                switch(DataType.values()[type])
+                {
+                    case INTEGER:
+                        data = "0";
+                        break;
+                    case PERCENT:
+                        data = "0%";
+                        break;
+                    case DECIMAL:
+                        data = "0.0";
+                        break;
+                    case TEXT:
+                        data = NEW_ENTRY;
+                        break;
+                    default:
+                        data = NEW_ENTRY;
+                        break;
+                }
+                entry = createEntry(category.getTableId(), data, type);
+            }
+            else
+            {
+                StringBuilder dapString = new StringBuilder();
+                for(CategoryEntity accessEntity : accessDap)
+                    dapString.append(accessEntity.getCategoryId()).append("-");
+
+                dapString.deleteCharAt(dapString.length() - 1);
+                byte accessDapType = dapTypeMap.get(dapString.toString());
+                String data;
+                switch(DataType.values()[accessDapType])
+                {
+                    case INTEGER:
+                        data = "0";
+                        break;
+                    case PERCENT:
+                        data = "0%";
+                        break;
+                    case DECIMAL:
+                        data = "0.0";
+                        break;
+                    case TEXT:
+                        data = NEW_ENTRY;
+                        break;
+                    default:
+                        data = NEW_ENTRY;
+                        break;
+                }
+                entry = createEntry(category.getTableId(), data, accessDapType);
+            }
+
             for (CategoryEntity categoryEntity : currTreeMap.get(category.getCategoryId()))
                 createDataAccessPath(category.getTableId(), entry.getEntryId(), categoryEntity.getCategoryId(), category.getTreeId());
 
-            List<CategoryEntity> dapsToCreate = permPaths.get(count);
-            for(CategoryEntity pathEntity : dapsToCreate)
-            {
+            for(CategoryEntity pathEntity : accessDap)
                 createDataAccessPath(pathEntity.getTableId(), entry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
-            }
         }
     }
 
@@ -269,7 +350,7 @@ public class BaseUtils
     {
         List<List<DataAccessPathEntity>> daps = new LinkedList<>();
 
-        List<Integer> entries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
+        List<Integer> entries = findEntriesForCategory(category.getTableId(), category.getCategoryId());
         for (Integer entry : entries)
             daps.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entry, treeId));
 
@@ -355,7 +436,7 @@ public class BaseUtils
         // Step 6 - Check if the old parent has any children left. If not, create a data access path with the path to the old parent and create new entries
         List<CategoryEntity> oldParentChildren = findChildren(oldParent.getTableId(), oldParent.getCategoryId());
         if (oldParentChildren.size() == 0)
-            initialiseEntries(oldParent);
+            initialiseEntriesAndDAPs(oldParent, (byte) 0);
     }
 
     List<Integer> getPathToCategory(CategoryEntity category, List<List<CategoryEntity>> pathList)
@@ -391,6 +472,11 @@ public class BaseUtils
         children.removeIf(Objects::isNull);
 
         return children;
+    }
+
+    public List<Integer> findEntriesForCategory(Integer tableId, Integer categoryId)
+    {
+        return dataAccessPathRepository.getEntriesForCategory(tableId, categoryId);
     }
 
     private List<CategoryEntity> findRootNodes(Integer tableId)

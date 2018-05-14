@@ -5,8 +5,10 @@ public class CategoryCreateRequest
     private int categoryId;
     private int tableId;
     private String attributeName;
+    private String attributeName2;
     private Integer parentId;
     private boolean linkChildren;
+    private byte entryType;
 
     public int getCategoryId()
     {
@@ -38,6 +40,16 @@ public class CategoryCreateRequest
         this.attributeName = attributeName;
     }
 
+    public String getAttributeName2()
+    {
+        return attributeName2;
+    }
+
+    public void setAttributeName2(String attributeName2)
+    {
+        this.attributeName2 = attributeName2;
+    }
+
     public Integer getParentId()
     {
         return parentId;
@@ -58,6 +70,16 @@ public class CategoryCreateRequest
         this.linkChildren = linkChildren;
     }
 
+    public byte getEntryType()
+    {
+        return entryType;
+    }
+
+    public void setEntryType(byte entryType)
+    {
+        this.entryType = entryType;
+    }
+
     @Override
     public String toString()
     {
@@ -67,6 +89,7 @@ public class CategoryCreateRequest
                 ", attributeName='" + attributeName + '\'' +
                 ", parentId=" + parentId +
                 ", linkChildren=" + linkChildren +
+                ", entryType=" + entryType +
                 '}';
     }
 }

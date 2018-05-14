@@ -33,7 +33,7 @@ class UpdateCategory extends Component {
     event.preventDefault()
     const categoryId = parseInt(this.state.categoryId, 10)
     const parentId = parseInt(this.state.parentId, 10)
-    
+
     this.props.updateCategory(this.props.table.tableId, categoryId, this.state.categoryName, parentId, this.state.linkChildren)
     this.setState({ categoryName: '', categoryId: this.props.categoriesNoRoot[0].categoryId, parentId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
 
@@ -81,8 +81,7 @@ class UpdateCategory extends Component {
   }
 
   renderCategoryOptions (category) {
-    // console.log(category)
-    return <option key={category.categoryId} value={category.categoryId}>{category.categoryId}| {category.attributeName}</option>
+    return <option key={category.categoryId} value={category.categoryId}>{category.attributeName}</option>
   }
 
   render () {
@@ -123,7 +122,7 @@ class UpdateCategory extends Component {
                   <tr><td><label /></td></tr>
                   <tr>
                     <td></td>
-                    <td><button type='submit'>Create</button> <button onClick={this.onClose}>Cancel</button></td>
+                    <td><button type='submit'>Update</button> <button onClick={this.onClose}>Cancel</button></td>
                   </tr>
                 </tbody>
               </table>

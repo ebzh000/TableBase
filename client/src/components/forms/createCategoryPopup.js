@@ -9,11 +9,13 @@ class CreateCategory extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { categoryName: '', parentCategoryId: this.props.categories[0].categoryId, linkChildren: false }
+    this.state = { categoryName: '', parentCategoryId: this.props.categories[0].categoryId, linkChildren: false, dataType: 1 }
 
     this.renderCategoryOptions = this.renderCategoryOptions.bind(this)
+    this.renderDataTypeOptions = this.renderDataTypeOptions.bind(this)
     this.onCategoryNameChange = this.onCategoryNameChange.bind(this)
     this.onParentCategoryChange = this.onParentCategoryChange.bind(this)
+    this.onDataTypeChange = this.onDataTypeChange.bind(this)
     this.toggleLinkChildren = this.toggleLinkChildren.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onClose = this.onClose.bind(this)
@@ -25,8 +27,8 @@ class CreateCategory extends Component {
 
   onFormSubmit (event) {
     event.preventDefault()
-    this.props.createCategory(this.props.table.tableId, this.state.categoryName, this.state.parentCategoryId, this.state.linkChildren)
-    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
+    this.props.createCategory(this.props.table.tableId, this.state.categoryName, this.state.parentCategoryId, this.state.linkChildren, this.state.dataType)
+    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false, dataType: 1 })
 
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
@@ -42,6 +44,12 @@ class CreateCategory extends Component {
     })
   }
 
+  onDataTypeChange (event) {
+    this.setState({
+      dataType: parseInt(event.target.value, 10)
+    })
+  }
+
   toggleLinkChildren (event) {
     this.setState({ linkChildren: !this.state.linkChildren })
   }
@@ -49,7 +57,7 @@ class CreateCategory extends Component {
   onClose (event) {
     event.preventDefault()
 
-    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
+    this.setState({ categoryName: '', parentCategoryId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false, dataType: 1 })
     this.props.closeCreateCategoryPopup()
   }
 
@@ -57,7 +65,17 @@ class CreateCategory extends Component {
     return <option key={category.categoryId} value={category.categoryId}>{category.attributeName}</option>
   }
 
+  renderDataTypeOptions (dataType) {
+    return <option key={dataType.id} value={dataType.id}>{dataType.name}</option>
+  }
+
   render () {
+    const types = [
+      {id: 1, name: 'INTEGER'},
+      {id: 2, name: 'TEXT'},
+      {id: 4, name: 'PERCENT'},
+      {id: 6, name: 'DECIMAL'}
+    ]
     return (
       <div className='popup'>
         <div className='popup_inner'>
@@ -81,6 +99,14 @@ class CreateCategory extends Component {
                     <td>
                       <select className='form-control' value={this.state.parentCategoryId} onChange={this.onParentCategoryChange} required>
                         {this.props.categories.map(this.renderCategoryOptions)}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>Select Data Type: </label></td>
+                    <td>
+                      <select className='form-control' value={this.state.dataType} onChange={this.onDataTypeChange} required>
+                        {types.map(this.renderDataTypeOptions)}
                       </select>
                     </td>
                   </tr>

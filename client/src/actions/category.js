@@ -44,10 +44,11 @@ export function loadRootCategories (tableId) {
   }
 }
 
-export function createTopLevelCategory (tableId, categoryName) {
+export function createTopLevelCategory (tableId, topCategoryName, categoryName) {
   const url = `${ROOT_URL}/table/${tableId}/category/createTopLevelCategory?toHtml=true`
   const body = {
-    attributeName: categoryName
+    attributeName: topCategoryName,
+    attributeName2: categoryName
   }
 
   const request = axios.post(url, body)
@@ -58,14 +59,15 @@ export function createTopLevelCategory (tableId, categoryName) {
   }
 }
 
-export function createCategory (tableId, categoryName, parentId, linkChildren) {
+export function createCategory (tableId, categoryName, parentId, linkChildren, entryType) {
   const url = `${ROOT_URL}/table/${tableId}/category/create?toHtml=true`
   const body = {
     attributeName: categoryName,
-    parentId: parentId,
-    linkChildren: linkChildren
+    parentId: parseInt(parentId, 10),
+    linkChildren: linkChildren,
+    entryType: entryType
   }
-  console.log(body)
+
   const request = axios.post(url, body)
 
   return {
@@ -91,7 +93,7 @@ export function updateCategory (tableId, categoryId, categoryName, parentId) {
 
 export function deleteCategory (tableId, categoryId, deleteChildren) {
   const url = `${ROOT_URL}/table/${tableId}/category/${categoryId}?deleteChildren=${deleteChildren}&toHtml=true`
-  console.log(url)
+
   const request = axios.delete(url)
 
   return {

@@ -3,6 +3,7 @@ package com.ez.tablebase.rest.service.utils;
  * Created by ErikZ on 19/04/2018.
  */
 
+import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.model.OperationType;
@@ -23,18 +24,21 @@ public class TableEntryUtils extends BaseUtils
 
     public void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType) throws ParseException
     {
-        List<Integer> category1Entries = dataAccessPathRepository.getEntriesForCategory(category1.getTableId(), category1.getCategoryId());
-        List<Integer> category2Entries = dataAccessPathRepository.getEntriesForCategory(category2.getTableId(), category2.getCategoryId());
+        List<Integer> category1Entries = findEntriesForCategory(category1.getTableId(), category1.getCategoryId());
+        List<Integer> category2Entries = findEntriesForCategory(category2.getTableId(), category2.getCategoryId());
 
         for (int index = 0; index < category2Entries.size(); index++)
         {
             EntryEntity entry1 = tableEntryRepository.findTableEntry(category1.getTableId(), category1Entries.get(index));
             EntryEntity entry2 = tableEntryRepository.findTableEntry(category2.getTableId(), category2Entries.get(index));
 
+            if(entry1.getType() != entry2.getType())
+                throw new IncompatibleCategoryTypeException("Specified categories have entries of different types");
+
             String data1 = entry1.getData();
             String data2 = entry2.getData();
 
-            byte type = dataAccessPathRepository.getTypeByEntryId(category1.getTableId(), entry1.getEntryId());
+            byte type = entry1.getType();
             switch (operationType)
             {
                 case MAX:
@@ -53,7 +57,7 @@ public class TableEntryUtils extends BaseUtils
                     data1 = OperationUtils.difference(data1, data2, type);
                     break;
                 case CONCATENATE_STRING:
-                    data1 = OperationUtils.concatenateString(data1, data2, type);
+                    data1 = OperationUtils.concatenateString(data1, data2);
                     break;
                 case LEFT:
                     break;
@@ -74,5 +78,10 @@ public class TableEntryUtils extends BaseUtils
     public List<EntryEntity> findAllTableEntries(Integer tableId)
     {
         return tableEntryRepository.findAllTableEntries(tableId);
+    }
+
+    public EntryEntity findTableEntry(Integer tableId, Integer entryId)
+    {
+        return tableEntryRepository.findTableEntry(tableId, entryId);
     }
 }

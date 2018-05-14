@@ -7,6 +7,7 @@ import DeleteCategory from './forms/deleteCategoryPopup'
 import DeleteTopLevelCategory from './forms/deleteTopLevelCategoryPopup'
 import SplitCategory from './forms/splitCategoryPopup'
 import CombineCategory from './forms/combineCategoryPopup'
+import UpdateEntry from './forms/updateEntryPopup'
 
 class Buttons extends Component {
   constructor () {
@@ -20,7 +21,8 @@ class Buttons extends Component {
       showSplitCategoryPopup: false,
       showCombineCategoryPopup: false,
       showDeleteTopLevelCategoryPopup: false,
-      showDeleteCategoryPopup: false
+      showDeleteCategoryPopup: false,
+      showUpdateEntryPopup: false
     }
 
     this.toggleCreateTopLevelCategoryPopup = this.toggleCreateTopLevelCategoryPopup.bind(this)
@@ -31,6 +33,7 @@ class Buttons extends Component {
     this.toggleCombineCategoryPopup = this.toggleCombineCategoryPopup.bind(this)
     this.toggleDeleteTopLevelCategoryPopup = this.toggleDeleteTopLevelCategoryPopup.bind(this)
     this.toggleDeleteCategoryPopup = this.toggleDeleteCategoryPopup.bind(this)
+    this.toggleUpdateEntryPopup = this.toggleUpdateEntryPopup.bind(this)
   }
 
   toggleCreateTopLevelCategoryPopup () {
@@ -81,6 +84,12 @@ class Buttons extends Component {
     })
   }
 
+  toggleUpdateEntryPopup () {
+    this.setState({
+      showUpdateEntryPopup: !this.state.showUpdateEntryPopup
+    })
+  }
+
   render () {
     return (
       <div className='edit-buttons pad-top-5 pad-left'>
@@ -112,6 +121,13 @@ class Buttons extends Component {
                 <button onClick={this.toggleDuplicateCategoryPopup}>Duplicate Category</button>
                 {this.state.showDuplicateCategoryPopup ?
                   <DuplicateCategory closeDuplicateCategoryPopup={this.toggleDuplicateCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleUpdateEntryPopup}>Update Entry</button>
+                {this.state.showUpdateEntryPopup ?
+                  <UpdateEntry closeUpdateEntryPopup={this.toggleUpdateEntryPopup} />
                   : null
                 }
               </td>

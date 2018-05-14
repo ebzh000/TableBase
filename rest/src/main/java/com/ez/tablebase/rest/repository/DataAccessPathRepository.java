@@ -22,7 +22,10 @@ public interface DataAccessPathRepository extends JpaRepository<DataAccessPathEn
     @Query(value = "SELECT * FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId AND tree_id = :treeId ORDER BY entry_id, tree_id ASC", nativeQuery = true)
     List<DataAccessPathEntity> getEntryAccessPathByTree(@Param("tableId") int tableId, @Param("entryId") int entryId, @Param("treeId") int treeId);
 
-    @Query(value = "select category_id from data_access_path where entry_id = :entryId and table_id = :tableId", nativeQuery = true)
+    @Query(value = "select * from data_access_path where table_id = :tableId and entry_id = :entryId and tree_id != :treeId ORDER BY entry_id, tree_id, category_id", nativeQuery = true)
+    List<DataAccessPathEntity> getEntryAccessPathExcludingTree(@Param("tableId") int tableId, @Param("entryId") int entryId, @Param("treeId") int treeId);
+
+    @Query(value = "select category_id from data_access_path where entry_id = :entryId and table_id = :tableId ORDER BY entry_id, tree_id, category_id", nativeQuery = true)
     List<Integer> getDapCategoriesByEntry(@Param("tableId") int tableId, @Param("entryId") int entryId);
 
     @Query(value = "SELECT dap.entry_id FROM (SELECT b.id, b.table_id, b.entry_id, b.category_id FROM data_access_path a JOIN data_access_path b ON b.entry_id = a.entry_id AND a.table_id = :tableId AND b.table_id = :tableId AND a.category_id = :categoryId) AS dap GROUP BY dap.entry_id", nativeQuery = true)
@@ -30,9 +33,6 @@ public interface DataAccessPathRepository extends JpaRepository<DataAccessPathEn
 
     @Query(value = "SELECT entry_id FROM data_access_path WHERE table_id = :tableId AND category_id = :categoryId GROUP BY entry_id", nativeQuery = true)
     List<Integer> getEntryByPathContainingCategory(@Param("tableId") int tableId, @Param("categoryId") int cateogryId);
-
-    @Query(value = "SELECT type FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId GROUP BY type", nativeQuery = true)
-    byte getTypeByEntryId(@Param("tableId") int tableId, @Param("entryId") int entryId);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "DELETE FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)

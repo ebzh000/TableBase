@@ -8,7 +8,6 @@ import com.ez.tablebase.rest.common.InvalidOperationException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.Category;
-import com.ez.tablebase.rest.model.DataType;
 import com.ez.tablebase.rest.model.OperationType;
 import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.repository.CategoryRepository;
@@ -35,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService
     private DataAccessPathUtils dapUtils;
     private TableEntryUtils entryUtils;
 
-    private static final String NEW_SUBCATEGORY = "New Category";
+    private static final String NEW_SUBCATEGORY = "---";
 
     public CategoryServiceImpl(TableRepository tableRepository, CategoryRepository categoryRepository,
                                DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
@@ -54,8 +53,8 @@ public class CategoryServiceImpl implements CategoryService
         Integer treeId = categoryUtils.getTreeIds(table.getTableId()).size() + 1;
         CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), null, treeId);
         categoryUtils.createDAPForNewTopLevelCategory(category);
-        CategoryEntity subCategory = categoryUtils.createCategory(request.getTableId(), NEW_SUBCATEGORY, category.getCategoryId(), category.getTreeId());
-        categoryUtils.createCategoryDAPsAndEntries(subCategory, category, request.isLinkChildren());
+        CategoryEntity subCategory = categoryUtils.createCategory(request.getTableId(), (request.getAttributeName2().isEmpty()) ? NEW_SUBCATEGORY : request.getAttributeName2(), category.getCategoryId(), category.getTreeId());
+        categoryUtils.createCategoryDAPsAndEntries(subCategory, category, request.isLinkChildren(), (byte) 0);
 
         return Category.buildModel(category);
     }
@@ -68,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService
         CategoryEntity category = categoryUtils.createCategory(request.getTableId(), request.getAttributeName(), parentCategory.getCategoryId(), parentCategory.getTreeId());
 
         // Creating/Updating data access paths and entries
-        categoryUtils.createCategoryDAPsAndEntries(category, parentCategory, request.isLinkChildren());
+        categoryUtils.createCategoryDAPsAndEntries(category, parentCategory, request.isLinkChildren(), request.getEntryType());
         return Category.buildModel(category);
     }
 
@@ -171,6 +170,8 @@ public class CategoryServiceImpl implements CategoryService
     public Category splitCategory(CategorySplitRequest request) throws ParseException
     {
         CategoryEntity category = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
+        List<Integer> entries = categoryUtils.findEntriesForCategory(category.getTableId(), category.getCategoryId());
+        byte type = entryUtils.findTableEntry(category.getTableId(), entries.get(0)).getType();
 
         // We must restrict this operation to only leaf nodes of the category tree
         // In other words, we throw an exception when the selected category has children
@@ -180,7 +181,7 @@ public class CategoryServiceImpl implements CategoryService
 
         CategoryEntity newCategory = categoryUtils.createCategory(category.getTableId(), request.getNewCategoryName(), category.getParentId(), category.getTreeId());
         CategoryEntity parentCategory = categoryUtils.validateCategory(newCategory.getTableId(), newCategory.getParentId());
-        categoryUtils.createCategoryDAPsAndEntries(newCategory, parentCategory,false);
+        categoryUtils.createCategoryDAPsAndEntries(newCategory, parentCategory,false, type);
         categoryUtils.splitCategory(category, newCategory, OperationType.values()[request.getDataOperationType()], request.getThreshold());
         return Category.buildModel(newCategory);
     }
@@ -197,7 +198,7 @@ public class CategoryServiceImpl implements CategoryService
 
     @Override
     @Transactional
-    public void deleteTopLevelCategory(CategoryDeleteRequest request)
+    public void deleteTopLevelCategory(CategoryDeleteRequest request) throws ParseException
     {
         CategoryEntity categoryToDelete = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
         if (categoryToDelete.getParentId() != null)

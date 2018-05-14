@@ -121,7 +121,7 @@ public class CategoryController
     }
 
     @DeleteMapping(value = "/category/{categoryId}/deleteTopLevelCategory")
-    Object deleteTopLevelCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryDeleteRequest request, @RequestParam(value = "toHtml") boolean toHtml)
+    Object deleteTopLevelCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestBody CategoryDeleteRequest request, @RequestParam(value = "toHtml") boolean toHtml) throws ParseException
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);

@@ -65,7 +65,8 @@ class DeleteCategory extends Component {
     const dataOperationTypes = [
       {id: 0, name: 'MAX'},
       {id: 1, name: 'MIN'},
-      {id: 2, name: 'MEAN'}
+      {id: 2, name: 'MEAN'},
+      {id: 5, name: 'CONCATENATE'}
     ]
     return (
       <div className='popup'>

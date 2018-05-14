@@ -32,7 +32,7 @@ public interface CategoryService
 
     void deleteCategory(int tableId, int categoryId, boolean deleteChildren);
 
-    void deleteTopLevelCategory(CategoryDeleteRequest request);
+    void deleteTopLevelCategory(CategoryDeleteRequest request) throws ParseException;
 
     String toHtml(int tableId);
 }

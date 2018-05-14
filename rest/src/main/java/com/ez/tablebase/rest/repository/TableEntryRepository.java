@@ -23,8 +23,8 @@ public interface TableEntryRepository extends JpaRepository<EntryEntity, String>
     EntryEntity findTableEntry(@Param("tableId") int tableId, @Param("entryId") int entryId);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE table_data SET data = :entry WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
-    void updateTableEntry(@Param("tableId") int tableId, @Param("entryId") int entryId, @Param("entry") String data);
+    @Query(value = "UPDATE EntryEntity SET data = :label WHERE table_id = :tableId AND entry_id = :entryId")
+    void updateTableEntry(@Param("tableId") int tableId, @Param("entryId") int entryId, @Param("label") String data);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "DELETE FROM table_data WHERE table_id = :tableId and entry_id = :entryId", nativeQuery = true)

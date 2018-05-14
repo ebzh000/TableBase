@@ -10,7 +10,7 @@ class SplitCategory extends Component {
     super(props)
 
     this.state = {
-      categoryId: this.props.categoriesNoRoot[0],
+      categoryId: this.props.categoriesNoRoot[0].categoryId,
       categoryName: '',
       dataOperationType: 8,
       threshold: 0
@@ -30,7 +30,7 @@ class SplitCategory extends Component {
     event.preventDefault()
 
     this.props.splitCategory(this.props.table.tableId, this.state.categoryId, this.state.categoryName, this.state.dataOperationType, this.state.threshold)
-    this.setState({ categoryId: this.props.categoriesNoRoot[0] })
+    this.setState({ categoryId: this.props.categoriesNoRoot[0].categoryId })
 
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
@@ -65,7 +65,7 @@ class SplitCategory extends Component {
   onClose (event) {
     event.preventDefault()
 
-    this.setState({ categoryId: this.props.categoriesNoRoot[0] })
+    this.setState({ categoryId: this.props.categoriesNoRoot[0].categoryId })
     this.props.closeSplitCategoryPopup()
   }
 

@@ -56,6 +56,7 @@ public class DataServiceImpl implements DataService
     }
 
     @Override
+    @Transactional
     public Entry updateTableEntry(DataRequest request)
     {
         EntryEntity entity = entryUtils.validateEntry(request.getTableId(), request.getEntryId());

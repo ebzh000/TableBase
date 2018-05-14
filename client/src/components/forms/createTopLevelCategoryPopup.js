@@ -9,9 +9,10 @@ class CreateTopLevelCategory extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { categoryName: '' }
+    this.state = { categoryName: '', topCategoryName: '' }
 
     this.onCategoryNameChange = this.onCategoryNameChange.bind(this)
+    this.onTopCategoryNameChange = this.onTopCategoryNameChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onClose = this.onClose.bind(this)
   }
@@ -20,10 +21,14 @@ class CreateTopLevelCategory extends Component {
     this.setState({ categoryName: event.target.value })
   }
 
+  onTopCategoryNameChange (event) {
+    this.setState({ topCategoryName: event.target.value })
+  }
+
   onFormSubmit (event) {
     event.preventDefault()
 
-    this.props.createTopLevelCategory(this.props.table.tableId, this.state.categoryName)
+    this.props.createTopLevelCategory(this.props.table.tableId, this.state.topCategoryName, this.state.categoryName)
     this.setState({ categoryName: '' })
 
     setTimeout(() => {
@@ -52,9 +57,19 @@ class CreateTopLevelCategory extends Component {
               <table>
                 <tbody>
                   <tr>
+                    <td><label>Top Level Category Name: </label></td>
+                    <td><input
+                      placeholder='Enter a Name'
+                      className='form-control'
+                      value={this.state.topCategoryName}
+                      onChange={this.onTopCategoryNameChange}
+                      required
+                    /></td>
+                  </tr>
+                  <tr>
                     <td><label>Category Name: </label></td>
                     <td><input
-                      placeholder='Enter a Category Name'
+                      placeholder='Enter a Name'
                       className='form-control'
                       value={this.state.categoryName}
                       onChange={this.onCategoryNameChange}

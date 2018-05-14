@@ -150,6 +150,8 @@ public class Table
         System.out.println();
     }
 
+    // This function is used to send a html string to the front end.
+    // Copy code and uncomment if you want to export this same html string to a document
     public String toHtml()
     {
         StringBuilder sb = new StringBuilder();
@@ -184,13 +186,17 @@ public class Table
                     {
                         String boldStyle = "";
                         if(cell.getType().equals(CellType.ACCESS_CATEGORY))
-                                boldStyle = "access-bold";
+                            boldStyle = "access-bold";
+
+                        String entryId = "";
+                        if(cell.getType().equals(CellType.DATA))
+                            entryId = "id: " + cell.getCellId() + " | ";
 
                         sb.append(TAB).append(TAB).append("<").append(tdOrTh).append(" class=\"").append(classTdOrTh).append(" ").append(boldStyle).append("\" ")
                                 .append("id=\"").append(cell.getCellId()).append("\" ")
                                 .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
                                 .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")
-                                .append(cell.getLabel()).append("</").append(tdOrTh).append(">")
+                                .append(entryId).append(cell.getLabel()).append("</").append(tdOrTh).append(">")
                                 .append(NEW_LINE);
                     }
                 }
