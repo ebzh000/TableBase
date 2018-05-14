@@ -203,7 +203,7 @@ public class OperationUtils extends BaseUtils
 
             Double mean = (double) ((int1 + int2) / 2);
 
-            return mean.toString();
+            return String.valueOf(mean.intValue());
         }
 
         else if (dataType.equals(DataType.PERCENT))

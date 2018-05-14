@@ -150,6 +150,8 @@ export function deleteTopLevelCategory (tableId, categoryId, dataOperationType) 
     dataOperationType: dataOperationType
   }
 
+  console.log(url)
+
   const request = axios({method: 'delete', url: url, data: body})
 
   return {

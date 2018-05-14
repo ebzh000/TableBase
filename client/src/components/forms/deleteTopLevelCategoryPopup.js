@@ -21,7 +21,7 @@ class DeleteCategory extends Component {
 
   onFormSubmit (event) {
     event.preventDefault()
-    console.log(this.state.categoryId)
+
     this.props.deleteTopLevelCategory(this.props.table.tableId, this.state.categoryId, this.state.dataOperationType)
     this.setState({ categoryId: this.props.rootCategories[0] })
 

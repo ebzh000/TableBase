@@ -5,6 +5,7 @@ package com.ez.tablebase.rest.service.utils;
 
 import com.ez.tablebase.rest.common.IncompatibleCategoryTypeException;
 import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.DataAccessPathEntity;
 import com.ez.tablebase.rest.database.EntryEntity;
 import com.ez.tablebase.rest.model.OperationType;
 import com.ez.tablebase.rest.repository.CategoryRepository;
@@ -13,7 +14,10 @@ import com.ez.tablebase.rest.repository.TableEntryRepository;
 import com.ez.tablebase.rest.repository.TableRepository;
 
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class TableEntryUtils extends BaseUtils
 {
@@ -22,15 +26,53 @@ public class TableEntryUtils extends BaseUtils
         super(categoryRepository, tableRepository, dataAccessPathRepository, tableEntryRepository);
     }
 
-    public void combineEntries(CategoryEntity category1, CategoryEntity category2, OperationType operationType) throws ParseException
+    public void combineEntries(CategoryEntity categoryA, CategoryEntity categoryB, OperationType operationType) throws ParseException
     {
-        List<Integer> category1Entries = findEntriesForCategory(category1.getTableId(), category1.getCategoryId());
-        List<Integer> category2Entries = findEntriesForCategory(category2.getTableId(), category2.getCategoryId());
-
-        for (int index = 0; index < category2Entries.size(); index++)
+        List<Integer> categoryAEntries = findEntriesForCategory(categoryA.getTableId(), categoryA.getCategoryId());
+        List<Integer> categoryBEntries = findEntriesForCategory(categoryB.getTableId(), categoryB.getCategoryId());
+        Map<String, List<Integer>> entryMapByDap = new HashMap<>();
+        // Map category A entries
+        for (Integer entryId : categoryAEntries)
         {
-            EntryEntity entry1 = tableEntryRepository.findTableEntry(category1.getTableId(), category1Entries.get(index));
-            EntryEntity entry2 = tableEntryRepository.findTableEntry(category2.getTableId(), category2Entries.get(index));
+            List<DataAccessPathEntity> daps = dataAccessPathRepository.getEntryAccessPathExcludingTree(categoryA.getTableId(), entryId, categoryA.getTreeId());
+            StringBuilder dapString = new StringBuilder();
+            for(DataAccessPathEntity dapEntity : daps)
+                dapString.append(dapEntity.getCategoryId()).append("-");
+
+            dapString.deleteCharAt(dapString.length() - 1);
+            if(entryMapByDap.containsKey(dapString.toString()))
+                entryMapByDap.get(dapString.toString()).add(entryId);
+            else
+            {
+                List<Integer> entries = new LinkedList<>();
+                entries.add(entryId);
+                entryMapByDap.put(dapString.toString(), entries);
+            }
+        }
+
+        // Map Category B Entries
+        for (Integer entryId : categoryBEntries)
+        {
+            List<DataAccessPathEntity> daps = dataAccessPathRepository.getEntryAccessPathExcludingTree(categoryB.getTableId(), entryId, categoryB.getTreeId());
+            StringBuilder dapString = new StringBuilder();
+            for(DataAccessPathEntity dapEntity : daps)
+                dapString.append(dapEntity.getCategoryId()).append("-");
+
+            dapString.deleteCharAt(dapString.length() - 1);
+            if(entryMapByDap.containsKey(dapString.toString()))
+                entryMapByDap.get(dapString.toString()).add(entryId);
+            else
+            {
+                List<Integer> entries = new LinkedList<>();
+                entries.add(entryId);
+                entryMapByDap.put(dapString.toString(), entries);
+            }
+        }
+
+        for (String dap : entryMapByDap.keySet())
+        {
+            EntryEntity entry1 = tableEntryRepository.findTableEntry(categoryA.getTableId(), entryMapByDap.get(dap).get(0));
+            EntryEntity entry2 = tableEntryRepository.findTableEntry(categoryB.getTableId(), entryMapByDap.get(dap).get(1));
 
             if(entry1.getType() != entry2.getType())
                 throw new IncompatibleCategoryTypeException("Specified categories have entries of different types");

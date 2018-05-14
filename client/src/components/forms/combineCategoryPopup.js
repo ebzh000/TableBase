@@ -13,7 +13,7 @@ class CombineCategory extends Component {
       categoryId1: this.props.categoriesNoRoot[0],
       categoryId2: this.props.categoriesNoRoot[1],
       categoryName: '',
-      dataOperationType: 8,
+      dataOperationType: 0,
       threshold: 0
     }
 
@@ -92,13 +92,13 @@ class CombineCategory extends Component {
     return (
       <div className='popup'>
         <div className='popup_inner'>
-          <h1>Split Category</h1>
+          <h1>Combine Category</h1>
           <div className='popup-form-div'>
             <form className='popup-form' onSubmit={this.onFormSubmit}>
               <table>
                 <tbody>
                   <tr>
-                    <td><label>Select Category 2: </label></td>
+                    <td><label>Select Category 1: </label></td>
                     <td>
                       <select className='form-control' value={this.state.categoryId1} onChange={this.onCategory1Change} required>
                         {this.props.categoriesNoRoot.map(this.renderCategoryOptions)}
@@ -134,7 +134,7 @@ class CombineCategory extends Component {
                   <tr><td><label /></td></tr>
                   <tr>
                     <td></td>
-                    <td><button type='submit'>Split</button> <button onClick={this.onClose}>Cancel</button></td>
+                    <td><button type='submit'>Combine</button> <button onClick={this.onClose}>Cancel</button></td>
                   </tr>
                 </tbody>
               </table>

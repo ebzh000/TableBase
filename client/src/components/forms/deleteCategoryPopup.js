@@ -71,7 +71,7 @@ class DeleteCategory extends Component {
                     </td>
                   </tr>
                   <tr>
-                    <td><label>Delete Children: </label></td>
+                    <td><label>Delete Subcategories (If any) and Entries: </label></td>
                     <td>
                       <input type='checkbox' name='deleteChildren' checked={this.state.deleteChildren} onChange={this.toggleDeleteChildren} />
                     </td>

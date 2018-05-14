@@ -201,6 +201,7 @@ public class CategoryServiceImpl implements CategoryService
     public void deleteTopLevelCategory(CategoryDeleteRequest request) throws ParseException
     {
         CategoryEntity categoryToDelete = categoryUtils.validateCategory(request.getTableId(), request.getCategoryId());
+        System.out.println(categoryToDelete);
         if (categoryToDelete.getParentId() != null)
             throw new InvalidOperationException("Invalid Operation! Selected Category must be a top level category");
 

@@ -57,7 +57,7 @@ public class CategoryUtils extends BaseUtils
                 {
                     updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), category.getCategoryId());
 
-                    List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(category.getTableId(), category.getCategoryId());
+                    List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(child.getTableId(), child.getCategoryId());
                     List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
 
                     for (Integer entryId : affectedEntries)
@@ -153,11 +153,49 @@ public class CategoryUtils extends BaseUtils
     {
         List<Integer> categoryAEntries = findEntriesForCategory(categoryA.getTableId(), categoryA.getCategoryId());
         List<Integer> categoryBEntries = findEntriesForCategory(categoryB.getTableId(), categoryB.getCategoryId());
-
-        for (int index = 0; index < categoryAEntries.size(); index++)
+        Map<String, List<Integer>> entryMapByDap = new HashMap<>();
+        // Map category A entries
+        for (Integer entryId : categoryAEntries)
         {
-            EntryEntity entry1 = tableEntryRepository.findTableEntry(categoryA.getTableId(), categoryAEntries.get(index));
-            EntryEntity entry2 = tableEntryRepository.findTableEntry(categoryB.getTableId(), categoryBEntries.get(index));
+            List<DataAccessPathEntity> daps = dataAccessPathRepository.getEntryAccessPathExcludingTree(categoryA.getTableId(), entryId, categoryA.getTreeId());
+            StringBuilder dapString = new StringBuilder();
+            for(DataAccessPathEntity dapEntity : daps)
+                dapString.append(dapEntity.getCategoryId()).append("-");
+
+            dapString.deleteCharAt(dapString.length() - 1);
+            if(entryMapByDap.containsKey(dapString.toString()))
+                entryMapByDap.get(dapString.toString()).add(entryId);
+            else
+            {
+                List<Integer> entries = new LinkedList<>();
+                entries.add(entryId);
+                entryMapByDap.put(dapString.toString(), entries);
+            }
+        }
+
+        // Map Category B Entries
+        for (Integer entryId : categoryBEntries)
+        {
+            List<DataAccessPathEntity> daps = dataAccessPathRepository.getEntryAccessPathExcludingTree(categoryB.getTableId(), entryId, categoryB.getTreeId());
+            StringBuilder dapString = new StringBuilder();
+            for(DataAccessPathEntity dapEntity : daps)
+                dapString.append(dapEntity.getCategoryId()).append("-");
+
+            dapString.deleteCharAt(dapString.length() - 1);
+            if(entryMapByDap.containsKey(dapString.toString()))
+                entryMapByDap.get(dapString.toString()).add(entryId);
+            else
+            {
+                List<Integer> entries = new LinkedList<>();
+                entries.add(entryId);
+                entryMapByDap.put(dapString.toString(), entries);
+            }
+        }
+
+        for (String dap : entryMapByDap.keySet())
+        {
+            EntryEntity entry1 = tableEntryRepository.findTableEntry(categoryA.getTableId(), entryMapByDap.get(dap).get(0));
+            EntryEntity entry2 = tableEntryRepository.findTableEntry(categoryB.getTableId(), entryMapByDap.get(dap).get(1));
 
             if(entry1.getType() != entry2.getType())
                 throw new IncompatibleCategoryTypeException("Specified categories have entries of different types");
@@ -277,7 +315,15 @@ public class CategoryUtils extends BaseUtils
         }
 
         else
-            deleteChildrenDapsEntries(category, parentCategory, children);
+        {
+            if(parentCategory.getParentId() == null && deleteChildren)
+                deleteChildrenDapsEntries(category, parentCategory, children);
+            else
+            {
+                updateTableCategoriesForNewParent(category, parentCategory);
+                deleteCategory(category);
+            }
+        }
     }
 
     private void deleteChildrenDapsEntries(CategoryEntity category, CategoryEntity parentCategory, List<Integer> children)

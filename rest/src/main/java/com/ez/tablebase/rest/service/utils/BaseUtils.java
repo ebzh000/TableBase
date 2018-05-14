@@ -263,6 +263,7 @@ public class BaseUtils
         EntryEntity newEntity = new EntryEntity();
         newEntity.setTableId(entity.getTableId());
         newEntity.setData(entity.getData());
+        newEntity.setType(entity.getType());
         return tableEntryRepository.save(newEntity);
     }
 
@@ -581,7 +582,8 @@ public class BaseUtils
                 if (children.size() == 0)
                 {
                     // If the current depth is less than maxDepth, then we currently have a leaf node
-                    rowSpan = (depth < htmlTable.getHeaderGroupDepth()) ? depth : 1;
+                    int currentRowOffset = htmlTable.getHeaderGroupDepth() - (depth - 1);
+                    rowSpan = (depth < htmlTable.getHeaderGroupDepth()) ? currentRowOffset : 1;
                     colSpan = 1;
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), CellType.HEADER_CATEGORY, colSpan, rowSpan));
 
@@ -589,11 +591,16 @@ public class BaseUtils
                     htmlTable.saveColDAP(htmlTable.getTable().get(htmlTable.getLatestRowIndex()).size() - 1, treePaths.get(category.getCategoryId()));
                 }
 
-                // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of children>
+                // The current node still has children. Add the current node with rowSpan = 1 and colSpan = <number of leaf nodes that this category contains>
                 else
                 {
+                    int numLeafNodes = 0;
+                    for(List<Integer> path : treePaths.values())
+                        if(path.contains(category.getCategoryId()))
+                            numLeafNodes++;
+
                     rowSpan = 1;
-                    colSpan = children.size();
+                    colSpan = numLeafNodes;
                     htmlTable.addCell(htmlTable.getLatestRowIndex(), new Cell("CategoryId:" + category.getCategoryId(), category.getAttributeName(), CellType.HEADER_CATEGORY, colSpan, rowSpan));
 
                     // We need to inject some null cells to imitate colspan, so we can correctly save the data access paths of leaf nodes later on
@@ -782,11 +789,15 @@ public class BaseUtils
         for(int depth = 0; depth < htmlTable.getAccessTreeDepth(); depth++)
         {
             List<CategoryEntity> categoryList = new LinkedList<>();
-            for(List<CategoryEntity> path : permPathsNoRoots)
+            for (List<CategoryEntity> path : permPathsNoRoots)
             {
-                CategoryEntity category = path.get(depth);
+                CategoryEntity category;
+                if (path.size() < depth)
+                    continue;
+
+                category = path.get(depth);
                 boolean doesExist = categoryList.stream().anyMatch(categoryEntity -> categoryEntity.getCategoryId().equals(category.getCategoryId()));
-                if(!doesExist)
+                if (!doesExist)
                     categoryList.add(category);
             }
             accessTreeByDepth.put(depth + 1, categoryList);
@@ -884,18 +895,52 @@ public class BaseUtils
     private Integer getDeepestTree(Integer tableId, List<Integer> treeIds)
     {
         Map<Integer, Integer> depthStore = new HashMap<>();
-        for(Integer treeId : treeIds)
+        for (Integer treeId : treeIds)
         {
             Integer depth = getTreeDepth(tableId, treeId);
             depthStore.put(treeId, depth);
         }
 
-        Map.Entry<Integer, Integer> maxEntry = null;
-        for (Map.Entry<Integer, Integer> entry : depthStore.entrySet())
+        boolean isSameDepth = false;
+        List<Integer> seen = new ArrayList<>();
+        for (Integer depth : depthStore.values())
         {
-            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+            if (seen.contains(depth))
             {
-                maxEntry = entry;
+                isSameDepth = true;
+                break;
+            }
+            else
+                seen.add(depth);
+        }
+
+        Map.Entry<Integer, Integer> maxEntry = null;
+        if (!isSameDepth)
+        {
+            for (Map.Entry<Integer, Integer> entry : depthStore.entrySet())
+            {
+                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+                {
+                    maxEntry = entry;
+                }
+            }
+        }
+        else
+        {
+            Map<Integer, Integer> widthStore = new HashMap<>();
+            for (Integer treeId : treeIds)
+            {
+                // Initialise map to store paths to each leaf node in deepest tree
+                Map<Integer, List<Integer>> treePaths = constructTreePaths(findRootNodeByTreeId(tableId, treeId));
+                widthStore.put(treeId,treePaths.size());
+            }
+
+            for (Map.Entry<Integer, Integer> entry : widthStore.entrySet())
+            {
+                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+                {
+                    maxEntry = entry;
+                }
             }
         }
 
