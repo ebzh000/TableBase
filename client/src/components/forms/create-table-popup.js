@@ -49,6 +49,11 @@ class CreateTablePopup extends Component {
   }
 
   render () {
+    const types = [
+      {id: 0, name: 'NUMERIC'},
+      {id: 1, name: 'TEXT'}
+    ]
+
     return (
       <div className='popup'>
         <div className='popup_inner'>

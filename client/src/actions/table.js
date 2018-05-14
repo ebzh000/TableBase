@@ -7,12 +7,13 @@ export const LOAD_TABLE = 'LOAD_TABLE'
 
 const ROOT_URL = `http://localhost:8081/tablebase`
 
-export function createTable (tableName, tags, userId) {
+export function createTable (tableName, tags, userId, type) {
   const url = `${ROOT_URL}/create`
   const body = {
     userId: userId,
     tableName: tableName,
-    tags: tags
+    tags: tags,
+    type: type
   }
 
   const request = axios.post(url, body)

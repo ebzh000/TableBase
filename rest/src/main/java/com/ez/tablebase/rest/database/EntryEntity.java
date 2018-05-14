@@ -22,6 +22,9 @@ public class EntryEntity implements Serializable
     @Column(name = "data")
     private String data;
 
+    @Column(name = "type")
+    private byte type;
+
     public Integer getTableId()
     {
         return tableId;
@@ -52,13 +55,24 @@ public class EntryEntity implements Serializable
         this.data = data;
     }
 
+    public byte getType()
+    {
+        return type;
+    }
+
+    public void setType(byte type)
+    {
+        this.type = type;
+    }
+
     @Override
     public String toString()
     {
         return "EntryEntity{" +
-                "tableId=" + tableId +
-                ", entryId=" + entryId +
+                "entryId=" + entryId +
+                ", tableId=" + tableId +
                 ", data='" + data + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

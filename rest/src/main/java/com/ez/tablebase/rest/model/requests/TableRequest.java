@@ -11,6 +11,7 @@ public class TableRequest
     private String tableName;
     private String tags;
     private boolean isPublic;
+    private byte type;
 
     public int getTableId()
     {
@@ -60,5 +61,15 @@ public class TableRequest
     public void setPublic(boolean aPublic)
     {
         isPublic = aPublic;
+    }
+
+    public byte getType()
+    {
+        return type;
+    }
+
+    public void setType(byte type)
+    {
+        this.type = type;
     }
 }

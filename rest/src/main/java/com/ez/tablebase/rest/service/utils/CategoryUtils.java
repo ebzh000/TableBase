@@ -64,7 +64,7 @@ public class CategoryUtils extends BaseUtils
                         affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, category.getTreeId()));
 
                     for (List<DataAccessPathEntity> dap : affectedPaths)
-                        createDataAccessPath(category.getTableId(), dap.get(0).getEntryId(), category.getCategoryId(), category.getTreeId(), dap.get(0).getType());
+                        createDataAccessPath(category.getTableId(), dap.get(0).getEntryId(), category.getCategoryId(), category.getTreeId());
                 }
             }
 
@@ -85,8 +85,7 @@ public class CategoryUtils extends BaseUtils
         List<EntryEntity> entries = tableEntryRepository.findAllTableEntries(rootNode.getTableId());
         for(EntryEntity entry : entries)
         {
-            byte type = dataAccessPathRepository.getTypeByEntryId(entry.getTableId(), entry.getEntryId());
-            createDataAccessPath(entry.getTableId(), entry.getEntryId(), rootNode.getCategoryId(), rootNode.getTreeId(), type);
+            createDataAccessPath(entry.getTableId(), entry.getEntryId(), rootNode.getCategoryId(), rootNode.getTreeId());
         }
     }
 
@@ -118,7 +117,7 @@ public class CategoryUtils extends BaseUtils
                     // Step 1 & 2 - Get a the path to the new and old parent category
                     List<Integer> pathToNewLeafNode = getPathToCategory(newCategory, pathList);
                     for (Integer categoryId : pathToNewLeafNode)
-                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, newCategory.getTreeId(), dataAccessPathRepository.getTypeByEntryId(entity.getTableId(), entry));
+                        createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), categoryId, newCategory.getTreeId());
 
                     // Get the relative access paths to the selected category's tree and duplicate DAPs
                     List<Integer> treeIds = getTreeIds(newCategory.getTableId());
@@ -127,7 +126,7 @@ public class CategoryUtils extends BaseUtils
                     {
                         List<DataAccessPathEntity> accessPath = dataAccessPathRepository.getEntryAccessPathByTree(entity.getTableId(), entry, treeId);
                         for (DataAccessPathEntity pathEntity : accessPath)
-                            createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId(), dataAccessPathRepository.getTypeByEntryId(entity.getTableId(), entry));
+                            createDataAccessPath(newEntry.getTableId(), newEntry.getEntryId(), pathEntity.getCategoryId(), pathEntity.getTreeId());
                     }
                 }
             }

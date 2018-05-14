@@ -22,7 +22,7 @@ import java.util.List;
 public class TableUtils extends BaseUtils
 {
 
-    private static final String NEW_ENTRY = "new";
+    private static final String NEW_ENTRY = "New";
 
     public TableUtils(CategoryRepository categoryRepository, TableRepository tableRepository, DataAccessPathRepository dataAccessPathRepository, TableEntryRepository tableEntryRepository)
     {
@@ -31,30 +31,28 @@ public class TableUtils extends BaseUtils
 
     /* We need to create 2 parent categories that have 1 category each
      *
-     * +-----------------------+--------------------+
-     * | New Access Category   | New Category       |
-     * +-----------------------+--------------------+
-     * | New Access            | New Entry          |
-     * +-----------------------+--------------------+
+     * +---------------------------+
+     * | New Header Category       |
+     * +---------------------------+
+     * | New Category              |
+     * +---------------------------+
+     * | New Entry                 |
+     * +---------------------------+
      *
      * We also need to create a data access path and an entry
      */
-    public void initialiseBasicTable(TableEntity entity)
+    public void initialiseBasicTable(TableEntity entity, byte type)
     {
         // Creating categories
         CategoryEntity newCategoryHeader = createCategory(entity.getTableId(), "Category", null, categoryRepository.getTreeIds(entity.getTableId()).size() + 1);
-//        CategoryEntity newAccessHeader = createCategory(entity.getTableId(), "Access Header", null, categoryRepository.getTreeIds(entity.getTableId()).size());
-//        CategoryEntity newAccess = createCategory(entity.getTableId(), "Access Category", newAccessHeader.getCategoryId(), newAccessHeader.getTreeId());
         CategoryEntity newCategory = createCategory(entity.getTableId(), "Header Category", newCategoryHeader.getCategoryId(), newCategoryHeader.getTreeId());
 
         // Creating Entry
-        EntryEntity newEntry = createEntry(entity.getTableId(), NEW_ENTRY);
+        EntryEntity newEntry = createEntry(entity.getTableId(), NEW_ENTRY, type);
 
         // Create Data Access Path for the new entry
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategoryHeader.getCategoryId(), newCategoryHeader.getTreeId(), (byte) DataType.TEXT.ordinal());
-        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), newCategory.getTreeId(), (byte) DataType.TEXT.ordinal());
-//        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccessHeader.getCategoryId(), newAccessHeader.getTreeId(), (byte) DataType.TEXT.ordinal());
-//        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newAccess.getCategoryId(), newAccess.getTreeId(), (byte) DataType.TEXT.ordinal());
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategoryHeader.getCategoryId(), newCategoryHeader.getTreeId());
+        createDataAccessPath(entity.getTableId(), newEntry.getEntryId(), newCategory.getCategoryId(), newCategory.getTreeId());
     }
 
     public List<TableEntity> searchTable(String keyword)

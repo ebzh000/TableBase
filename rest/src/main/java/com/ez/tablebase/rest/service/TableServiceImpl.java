@@ -36,7 +36,7 @@ public class TableServiceImpl implements TableService
         TableEntity newTable = tableUtils.createTable(request.getUserId(), request.getTableName(), request.getTags(), request.getPublic());
 
         // We need to set up a basic table
-        tableUtils.initialiseBasicTable(newTable);
+        tableUtils.initialiseBasicTable(newTable, request.getType());
 
         return Table.buildModel(newTable);
     }
