@@ -87,8 +87,7 @@ class CombineCategory extends Component {
       {id: 4, name: 'DIFFERENCE'},
       {id: 5, name: 'CONCATENATE'},
       {id: 6, name: 'LEFT'},
-      {id: 7, name: 'RIGHT'},
-      {id: 8, name: 'NO OPERATION'}
+      {id: 7, name: 'RIGHT'}
     ]
     return (
       <div className='popup'>

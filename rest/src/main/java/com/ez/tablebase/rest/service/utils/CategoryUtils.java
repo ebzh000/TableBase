@@ -190,7 +190,7 @@ public class CategoryUtils extends BaseUtils
 
             if (integer1 >= thresholdInteger)
             {
-                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "0");
                 tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), integer1.toString());
             }
         }
@@ -202,7 +202,7 @@ public class CategoryUtils extends BaseUtils
 
             if (percentage1 >= thresholdPercentage)
             {
-                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "0.0%");
                 tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), percentageFormat.format(percentage1));
             }
         }
@@ -215,7 +215,20 @@ public class CategoryUtils extends BaseUtils
 
             if (result >= 0)
             {
-                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "");
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "0");
+                tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), data1);
+            }
+        }
+
+        else if (dataType.equals(DataType.DECIMAL))
+        {
+            Double decimal1 = Double.parseDouble(data1);
+            Double thresholdDec = Double.parseDouble(threshold);
+
+            int result = decimal1.compareTo(thresholdDec);
+            if (result >= 0)
+            {
+                tableEntryRepository.updateTableEntry(entry1.getTableId(), entry1.getEntryId(), "0.0");
                 tableEntryRepository.updateTableEntry(entry2.getTableId(), entry2.getEntryId(), data1);
             }
         }
@@ -499,10 +512,7 @@ public class CategoryUtils extends BaseUtils
     {
         List<Integer> entries = findEntriesForCategory(category.getTableId(), category.getCategoryId());
         for (Integer entry : entries)
-        {
-            System.out.println("deleting entry: " + entry);
             deleteTableEntry(category.getTableId(), entry);
-        }
     }
 
     public List<CategoryEntity> findAllTableCategories(Integer tableId)
