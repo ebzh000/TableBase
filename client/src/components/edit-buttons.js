@@ -83,54 +83,71 @@ class Buttons extends Component {
 
   render () {
     return (
-      <div className='edit-buttons'>
-        <button onClick={this.toggleCreateTopLevelCategoryPopup}>Create Top Level Category</button>
-        {this.state.showCreateTopLevelCategoryPopup ?
-          <CreateTopLevelCategory closeCreateTopLevelCategoryPopup={this.toggleCreateTopLevelCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleCreateCategoryPopup}>Create Category</button>
-        {this.state.showCreateCategoryPopup ?
-          <CreateCategory closeCreateCategoryPopup={this.toggleCreateCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleUpdateCategoryPopup}>Update Category</button>
-        {this.state.showUpdateCategoryPopup ?
-          <UpdateCategory closeUpdateCategoryPopup={this.toggleUpdateCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleDuplicateCategoryPopup}>Duplicate Category</button>
-        {this.state.showDuplicateCategoryPopup ?
-          <DuplicateCategory closeDuplicateCategoryPopup={this.toggleDuplicateCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleSplitCategoryPopup}>Split Category</button>
-        {this.state.showSplitCategoryPopup ?
-          <SplitCategory closeSplitCategoryPopup={this.toggleSplitCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleCombineCategoryPopup}>Combine Category</button>
-        {this.state.showCombineCategoryPopup ?
-          <CombineCategory closeCombineCategoryPopup={this.toggleCombineCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleDeleteTopLevelCategoryPopup}>Delete Top Level Category</button>
-        {this.state.showDeleteTopLevelCategoryPopup ?
-          <DeleteTopLevelCategory closeDeleteTopLevelCategoryPopup={this.toggleDeleteTopLevelCategoryPopup} />
-          : null
-        }
-
-        <button onClick={this.toggleDeleteCategoryPopup}>Delete Category</button>
-        {this.state.showDeleteCategoryPopup ?
-          <DeleteCategory closeDeleteCategoryPopup={this.toggleDeleteCategoryPopup} />
-          : null
-        }
+      <div className='edit-buttons pad-top-5 pad-left'>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <button onClick={this.toggleCreateTopLevelCategoryPopup}>Create Top Level Category</button>
+                {this.state.showCreateTopLevelCategoryPopup ?
+                  <CreateTopLevelCategory closeCreateTopLevelCategoryPopup={this.toggleCreateTopLevelCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleCreateCategoryPopup}>Create Category</button>
+                {this.state.showCreateCategoryPopup ?
+                  <CreateCategory closeCreateCategoryPopup={this.toggleCreateCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleUpdateCategoryPopup}>Update Category</button>
+                {this.state.showUpdateCategoryPopup ?
+                  <UpdateCategory closeUpdateCategoryPopup={this.toggleUpdateCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleDuplicateCategoryPopup}>Duplicate Category</button>
+                {this.state.showDuplicateCategoryPopup ?
+                  <DuplicateCategory closeDuplicateCategoryPopup={this.toggleDuplicateCategoryPopup} />
+                  : null
+                }
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button onClick={this.toggleDeleteTopLevelCategoryPopup}>Delete Top Level Category</button>
+                {this.state.showDeleteTopLevelCategoryPopup ?
+                  <DeleteTopLevelCategory closeDeleteTopLevelCategoryPopup={this.toggleDeleteTopLevelCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleDeleteCategoryPopup}>Delete Category</button>
+                {this.state.showDeleteCategoryPopup ?
+                  <DeleteCategory closeDeleteCategoryPopup={this.toggleDeleteCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleSplitCategoryPopup}>Split Category</button>
+                {this.state.showSplitCategoryPopup ?
+                  <SplitCategory closeSplitCategoryPopup={this.toggleSplitCategoryPopup} />
+                  : null
+                }
+              </td>
+              <td>
+                <button onClick={this.toggleCombineCategoryPopup}>Combine Category</button>
+                {this.state.showCombineCategoryPopup ?
+                  <CombineCategory closeCombineCategoryPopup={this.toggleCombineCategoryPopup} />
+                  : null
+                }
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     )
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createTable, loadTableHtml } from '../../actions/table'
-import { loadCategories } from '../../actions/category'
+import { loadCategories, loadRootCategories, loadCategoriesNoRoot } from '../../actions/category'
 import { browserHistory } from 'react-router'
 
 class CreateTablePopup extends Component {
@@ -35,6 +35,8 @@ class CreateTablePopup extends Component {
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
       this.props.loadCategories(this.props.table.tableId)
+      this.props.loadCategoriesNoRoot(this.props.table.tableId)
+      this.props.loadRootCategories(this.props.table.tableId)
       browserHistory.push('/table/' + this.props.table.tableId)
     }, 500)
   }
@@ -94,6 +96,8 @@ CreateTablePopup.propTypes = {
   createTable: PropTypes.func,
   loadTableHtml: PropTypes.func,
   loadCategories: PropTypes.func,
+  loadRootCategories: PropTypes.func,
+  loadCategoriesNoRoot: PropTypes.func,
   table: PropTypes.object
 }
 
@@ -102,7 +106,7 @@ function mapStateToProps ({ table }) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ createTable, loadTableHtml, loadCategories }, dispatch)
+  return bindActionCreators({ createTable, loadTableHtml, loadCategories, loadRootCategories, loadCategoriesNoRoot }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTablePopup)

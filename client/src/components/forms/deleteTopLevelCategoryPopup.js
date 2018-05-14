@@ -9,7 +9,7 @@ class DeleteCategory extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { carentCategoryId: this.props.rootCategories[0], dataOperationType: 0 }
+    this.state = { categoryId: this.props.rootCategories[0], dataOperationType: 0 }
 
     this.renderCategoryOptions = this.renderCategoryOptions.bind(this)
     this.renderOperationTypeOptions = this.renderOperationTypeOptions.bind(this)
@@ -21,7 +21,7 @@ class DeleteCategory extends Component {
 
   onFormSubmit (event) {
     event.preventDefault()
-    console.log(this.state.deleteChildren)
+    console.log(this.state.categoryId)
     this.props.deleteTopLevelCategory(this.props.table.tableId, this.state.categoryId, this.state.dataOperationType)
     this.setState({ categoryId: this.props.rootCategories[0] })
 
@@ -29,7 +29,7 @@ class DeleteCategory extends Component {
       this.props.loadTableHtml(this.props.table.tableId)
       this.props.loadCategories(this.props.table.tableId)
       this.props.loadCategoriesNoRoot(this.props.table.tableId)
-      this.props.loadRootCategories(this.props.tableId)
+      this.props.loadRootCategories(this.props.table.tableId)
       this.props.closeDeleteTopLevelCategoryPopup()
     }, 100)
   }

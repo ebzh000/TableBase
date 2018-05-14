@@ -33,13 +33,14 @@ class UpdateCategory extends Component {
     event.preventDefault()
     const categoryId = parseInt(this.state.categoryId, 10)
     const parentId = parseInt(this.state.parentId, 10)
-
+    
     this.props.updateCategory(this.props.table.tableId, categoryId, this.state.categoryName, parentId, this.state.linkChildren)
     this.setState({ categoryName: '', categoryId: this.props.categoriesNoRoot[0].categoryId, parentId: this.props.categories[0].categoryId, parentName: 'Select', linkChildren: false })
 
     setTimeout(() => {
       this.props.loadTableHtml(this.props.table.tableId)
       this.props.loadCategories(this.props.table.tableId)
+      this.props.loadCategoriesNoRoot(this.props.table.tableId)
       this.props.closeUpdateCategoryPopup()
     }, 100)
   }

@@ -3,6 +3,16 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 class Table extends Component {
+  constructor(props) {
+    super(props)
+
+    this.onButtonClick = this.onButtonClick.bind(this)
+  }
+
+  onButtonClick (event) {
+    console.log('button id: ' + even.target.id)
+  }
+
   render () {
     const tableHtml = this.props.tableHtml
     return (

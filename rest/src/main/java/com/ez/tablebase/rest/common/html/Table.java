@@ -199,6 +199,7 @@ public class Table
         }
 
         sb.append(NEW_LINE).append("</table>").append(NEW_LINE);
+
 //        sb.append("</body>").append(NEW_LINE);
 //        sb.append("</html>");
         return sb.toString();
