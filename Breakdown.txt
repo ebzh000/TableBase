@@ -1,0 +1,42 @@
+1. Create Top Level Category
+	Create new root category for new tree
+
+2. Create new subcategory for new root node
+	Get Access Paths of affected entries
+	Create Data Access Paths for all affected entries for both categories
+
+3. Create Category (With specified type)
+	A: Create category as leaf node
+		Create category with the selected parent category
+		Get data access path to the new category
+		Find all permutations of other tree's paths (this will give us the number of rows present in the table)
+		Loop permutations (Doesn't matter which order for the path)
+			Create Entry with the specified type
+			Combine new Path and and current permutation -> Gives a list
+			Loop
+				Create combined data access path for entry
+
+	B: Create category as a new subcategory parent
+		Create Category with the selected parent category
+		Get all entries that contain the parent category in the data access path
+		Loop entries
+			Create a data access path for the new category for current entry 
+
+4. Update Category (Should separate these two)
+	A. Move Category to new Parent
+		Get all entries that contain the selected parent
+		
+
+	B. Change Label
+		Just change update the category with the new attribute name
+
+
+5. Duplicate Category
+
+6. Split Category
+
+7. Combine Category
+
+8. Delete Category
+
+9. Delete Top Level Category
