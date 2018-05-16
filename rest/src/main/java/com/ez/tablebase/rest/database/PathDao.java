@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "data_access_path")
-public class DataAccessPathDao
+@Table(name = "paths")
+public class PathDao
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class DataAccessPathDao
     @Column(name = "tree_id")
     private int treeId;
 
-    public DataAccessPathDao() {}
+    public PathDao() {}
 
     public int getId()
     {
@@ -84,7 +84,7 @@ public class DataAccessPathDao
     @Override
     public String toString()
     {
-        return "DataAccessPathDao{" +
+        return "PathDao{" +
                 "id=" + id +
                 ", entryId=" + entryId +
                 ", tableId=" + tableId +

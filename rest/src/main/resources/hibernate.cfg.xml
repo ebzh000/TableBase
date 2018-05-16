@@ -8,7 +8,7 @@
 
         <mapping class="com.ez.tablebase.rest.database.TableDao" />
         <mapping class="com.ez.tablebase.rest.database.CategoryDao" />
-        <mapping class="com.ez.tablebase.rest.database.DataAccessPathDao" />
+        <mapping class="com.ez.tablebase.rest.database.PathDao" />
         <mapping class="com.ez.tablebase.rest.database.EntryDao" />
     </session-factory>
 </hibernate-configuration>

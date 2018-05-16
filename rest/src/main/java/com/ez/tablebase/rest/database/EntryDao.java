@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "table_data")
+@Table(name = "entries")
 public class EntryDao implements Serializable
 {
     @Id

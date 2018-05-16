@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" line="254" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="d728da42-8f15-4628-8676-6f6f28220bbf" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/DBConfiguration.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rest/src/main/resources/db.properties" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseAppConfiguration.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/DataAccessPathDao.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/PathDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/actions/category.js" afterPath="$PROJECT_DIR$/client/src/actions/category.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/combineCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/combineCategoryPopup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/deleteCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/deleteCategoryPopup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/components/forms/deleteTopLevelCategoryPopup.js" afterPath="$PROJECT_DIR$/client/src/components/forms/deleteTopLevelCategoryPopup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/build.gradle" afterPath="$PROJECT_DIR$/rest/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/schema/tablebase.sql" afterPath="$PROJECT_DIR$/rest/schema/tablebase.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryDao.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/EntryDao.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/EntryDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableDao.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java" afterPath="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/rest/src/main/resources/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/rest/src/main/resources/hibernate.cfg.xml" />
     </list>
     <ignored path="TableBase.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,28 +53,24 @@
     <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <expand />
+    <expand>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="tablebase@localhost" type="e3449647:DbNodeDescriptor" />
+      </path>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="tablebase@localhost" type="e3449647:DbNodeDescriptor" />
+        <item name="tablebase" type="e3449647:DbNodeDescriptor" />
+      </path>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="tablebase@localhost" type="e3449647:DbNodeDescriptor" />
+        <item name="tablebase" type="e3449647:DbNodeDescriptor" />
+        <item name="categories" type="e3449647:DbNodeDescriptor" />
+      </path>
+    </expand>
     <select />
-  </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="OperationUtils.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="498">
-                    <caret line="205" column="21" lean-forward="false" selection-start-line="205" selection-start-column="21" selection-end-line="205" selection-end-column="21" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -90,6 +90,17 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="TableBase" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="TableBase" type="f1a62948:ProjectNode" />
+                <item name=":rest" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="TableBase" type="f1a62948:ProjectNode" />
+                <item name=":rest" type="2d1252cf:ModuleNode" />
+                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -102,116 +113,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BaseUtils.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
+      <file leaf-file-name="Category.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="657" column="73" lean-forward="true" selection-start-line="657" selection-start-column="73" selection-end-line="657" selection-end-column="73" />
+            <state relative-caret-position="-8">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
-                <element signature="method#BaseUtils#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#createTable#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#createCategory#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#createDataAccessPath#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#deleteDAPByEntryId#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#createEntry#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#updateTableEntry#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#calculateNumberOfEntries#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#initialiseEntriesAndDAPs#0;class#BaseUtils#0" expanded="false" />
-                <element signature="e#5765#5918#0" expanded="false" />
-                <element signature="method#generatePermPaths#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#generatePermutations#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#constructTreeMap#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#constructTreePaths#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#buildPaths#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#findPaths#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#printPathList#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#findPathsByCategory#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#getAllCategoryChildren#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#updateDataAccessPaths#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#updateDataAccessPaths#1;class#BaseUtils#0" expanded="false" />
-                <element signature="method#getPathToCategory#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#findChildren#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#findEntriesForCategory#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#findRootNodeByTreeId#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#createTopLevelCategories#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#dls#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#createAccessCells#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#copy#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#constructTreeMapByDepth#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#constructParentChildMap#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#removeRootNodes#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#getTreeDepth#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#validateTable#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#validateCategory#0;class#BaseUtils#0" expanded="false" />
-                <element signature="method#validateEntry#0;class#BaseUtils#0" expanded="false" />
+                <element signature="e#806#807#0" expanded="true" />
+                <element signature="e#837#838#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableServiceImpl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataAccessPath.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/DataAccessPath.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-25">
+              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableServiceImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TableController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CategoryUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-88">
-              <caret line="347" column="6" lean-forward="true" selection-start-line="347" selection-start-column="6" selection-end-line="347" selection-end-column="6" />
+            <state relative-caret-position="400">
+              <caret line="37" column="13" lean-forward="true" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
               <folding>
-                <element signature="method#CategoryUtils#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#createCategoryDAPsAndEntries#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="e#1854#1985#0" expanded="false" />
-                <element signature="e#2461#2547#0" expanded="false" />
-                <element signature="e#3661#3753#0" expanded="false" />
-                <element signature="e#3951#4071#0" expanded="false" />
-                <element signature="method#createDAPForNewTopLevelCategory#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#duplicateCategories#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="e#5192#5331#0" expanded="false" />
-                <element signature="method#splitCategory#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#applyThresholdOperation#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#extractCurrencyValue#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#deleteCategory#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#deleteChildrenDapsEntries#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#deleteTopLevelCategory#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#max#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#min#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#mean#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#concatenateString#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#updateTableCategoriesForNewParent#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#deleteCategoryEntities#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#findAllTableCategories#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#findTableCategoriesWithoutRoot#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#findTableRootCategories#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#updateTableCategory#0;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#deleteCategory#1;class#CategoryUtils#0" expanded="false" />
-                <element signature="method#findCategory#0;class#CategoryUtils#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#632#633#0" expanded="true" />
+                <element signature="e#659#660#0" expanded="true" />
+                <element signature="e#719#720#0" expanded="true" />
+                <element signature="e#746#747#0" expanded="true" />
+                <element signature="e#899#900#0" expanded="true" />
+                <element signature="e#926#927#0" expanded="true" />
+                <element signature="e#985#986#0" expanded="true" />
+                <element signature="e#1012#1013#0" expanded="true" />
+                <element signature="e#1084#1085#0" expanded="true" />
+                <element signature="e#1111#1112#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CategoryServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
+      <file leaf-file-name="TableService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="207" column="29" lean-forward="false" selection-start-line="207" selection-start-column="29" selection-end-line="207" selection-end-column="29" />
+            <state relative-caret-position="187">
+              <caret line="14" column="10" lean-forward="false" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -224,15 +175,13 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
+        <option value="spring-beans.schema" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>TableModelBuilder</find>
-      <find>request.</find>
-      <find>children.removeAll(Collections.singleton(null));</find>
       <find>order</find>
       <find>children</find>
       <find>creatingNew</find>
@@ -260,6 +209,9 @@
       <find>updateCategory</find>
       <find>System</find>
       <find>getTableId</find>
+      <find>2,</find>
+      <find>9,</find>
+      <find>1,</find>
     </findStrings>
     <replaceStrings>
       <replace>header1_id, header2_id, header3_id, header4_id, header5_id, header6_id, header7_id, headr8_id, header9_id, header10_id,</replace>
@@ -269,6 +221,8 @@
       <replace>Table</replace>
       <replace>\n</replace>
       <replace>, 1\);</replace>
+      <replace>24,</replace>
+      <replace>17,</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\ErikZ\Documents\GitHub\TableBase\client\src\reducers</dir>
@@ -283,13 +237,11 @@
     <option name="myGradleHomes">
       <map>
         <entry key="$PROJECT_DIR$" value="C:\Users\Erik\.gradle\wrapper\dists\gradle-3.5.1-all\42vjebfdws9pjts3l4bouoq0p\gradle-3.5.1" />
-        <entry key="$PROJECT_DIR$/common" value="C:\Users\ErikZ\.gradle\wrapper\dists\gradle-3.5.1-all\42vjebfdws9pjts3l4bouoq0p\gradle-3.5.1" />
       </map>
     </option>
     <option name="myGradleVersions">
       <map>
         <entry key="$PROJECT_DIR$" value="3.5.1" />
-        <entry key="$PROJECT_DIR$/common" value="3.5.1" />
       </map>
     </option>
     <option name="availableProjects">
@@ -314,22 +266,6 @@
               <ExternalProjectPojo>
                 <option name="name" value=":rest" />
                 <option name="path" value="$PROJECT_DIR$/rest" />
-              </ExternalProjectPojo>
-            </list>
-          </value>
-        </entry>
-        <entry>
-          <key>
-            <ExternalProjectPojo>
-              <option name="name" value="common" />
-              <option name="path" value="$PROJECT_DIR$/common" />
-            </ExternalProjectPojo>
-          </key>
-          <value>
-            <list>
-              <ExternalProjectPojo>
-                <option name="name" value="common" />
-                <option name="path" value="$PROJECT_DIR$/common" />
               </ExternalProjectPojo>
             </list>
           </value>
@@ -590,72 +526,6 @@
             </list>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/common">
-          <value>
-            <list>
-              <ExternalTaskPojo>
-                <option name="description" value="Initializes a new Gradle build." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="init" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by root project 'common'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="components" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of root project 'common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="projects" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in root project 'common'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="dependentComponents" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in root project 'common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="buildEnvironment" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in root project 'common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="dependencyInsight" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Generates Gradle wrapper files." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="wrapper" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in root project 'common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="dependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays a help message." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="help" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of root project 'common'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="model" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of root project 'common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="properties" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from root project 'common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="tasks" />
-              </ExternalTaskPojo>
-            </list>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/rest">
           <value>
             <list>
@@ -846,10 +716,9 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6062347065916" />
+        <entry key="$PROJECT_DIR$" value="6063026932444" />
         <entry key="$PROJECT_DIR$/build.gradle" value="275422620" />
-        <entry key="$PROJECT_DIR$/common" value="0" />
-        <entry key="$PROJECT_DIR$/rest/build.gradle" value="230833071" />
+        <entry key="$PROJECT_DIR$/rest/build.gradle" value="3206040680" />
         <entry key="D:/projects/madre/branches/9427" value="2968546803988" />
         <entry key="D:/projects/madre/branches/9427_1" value="10389914643540" />
       </map>
@@ -1044,165 +913,6 @@
             </ExternalProjectBuildClasspathPojo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/common">
-          <value>
-            <ExternalProjectBuildClasspathPojo>
-              <option name="modulesBuildClasspath">
-                <map>
-                  <entry key="$PROJECT_DIR$/common">
-                    <value>
-                      <ExternalModuleBuildClasspathPojo>
-                        <option name="path" value="$PROJECT_DIR$/common" />
-                      </ExternalModuleBuildClasspathPojo>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-              <option name="name" value="common" />
-              <option name="projectBuildClasspath">
-                <list>
-                  <option value="C:/gradle-3.4.1/src/announce" />
-                  <option value="C:/gradle-3.4.1/src/antlr" />
-                  <option value="C:/gradle-3.4.1/src/base-services" />
-                  <option value="C:/gradle-3.4.1/src/base-services-groovy" />
-                  <option value="C:/gradle-3.4.1/src/build-cache-http" />
-                  <option value="C:/gradle-3.4.1/src/build-comparison" />
-                  <option value="C:/gradle-3.4.1/src/build-init" />
-                  <option value="C:/gradle-3.4.1/src/cli" />
-                  <option value="C:/gradle-3.4.1/src/code-quality" />
-                  <option value="C:/gradle-3.4.1/src/composite-builds" />
-                  <option value="C:/gradle-3.4.1/src/core" />
-                  <option value="C:/gradle-3.4.1/src/dependency-management" />
-                  <option value="C:/gradle-3.4.1/src/diagnostics" />
-                  <option value="C:/gradle-3.4.1/src/ear" />
-                  <option value="C:/gradle-3.4.1/src/ide" />
-                  <option value="C:/gradle-3.4.1/src/ide-native" />
-                  <option value="C:/gradle-3.4.1/src/ide-play" />
-                  <option value="C:/gradle-3.4.1/src/installation-beacon" />
-                  <option value="C:/gradle-3.4.1/src/internal-android-performance-testing" />
-                  <option value="C:/gradle-3.4.1/src/internal-integ-testing" />
-                  <option value="C:/gradle-3.4.1/src/internal-performance-testing" />
-                  <option value="C:/gradle-3.4.1/src/internal-testing" />
-                  <option value="C:/gradle-3.4.1/src/ivy" />
-                  <option value="C:/gradle-3.4.1/src/jacoco" />
-                  <option value="C:/gradle-3.4.1/src/javascript" />
-                  <option value="C:/gradle-3.4.1/src/jetty" />
-                  <option value="C:/gradle-3.4.1/src/jvm-services" />
-                  <option value="C:/gradle-3.4.1/src/language-groovy" />
-                  <option value="C:/gradle-3.4.1/src/language-java" />
-                  <option value="C:/gradle-3.4.1/src/language-jvm" />
-                  <option value="C:/gradle-3.4.1/src/language-native" />
-                  <option value="C:/gradle-3.4.1/src/language-scala" />
-                  <option value="C:/gradle-3.4.1/src/launcher" />
-                  <option value="C:/gradle-3.4.1/src/logging" />
-                  <option value="C:/gradle-3.4.1/src/maven" />
-                  <option value="C:/gradle-3.4.1/src/messaging" />
-                  <option value="C:/gradle-3.4.1/src/model-core" />
-                  <option value="C:/gradle-3.4.1/src/model-groovy" />
-                  <option value="C:/gradle-3.4.1/src/native" />
-                  <option value="C:/gradle-3.4.1/src/open-api" />
-                  <option value="C:/gradle-3.4.1/src/osgi" />
-                  <option value="C:/gradle-3.4.1/src/platform-base" />
-                  <option value="C:/gradle-3.4.1/src/platform-jvm" />
-                  <option value="C:/gradle-3.4.1/src/platform-native" />
-                  <option value="C:/gradle-3.4.1/src/platform-play" />
-                  <option value="C:/gradle-3.4.1/src/plugin-development" />
-                  <option value="C:/gradle-3.4.1/src/plugin-use" />
-                  <option value="C:/gradle-3.4.1/src/plugins" />
-                  <option value="C:/gradle-3.4.1/src/process-services" />
-                  <option value="C:/gradle-3.4.1/src/publish" />
-                  <option value="C:/gradle-3.4.1/src/reporting" />
-                  <option value="C:/gradle-3.4.1/src/resources" />
-                  <option value="C:/gradle-3.4.1/src/resources-http" />
-                  <option value="C:/gradle-3.4.1/src/resources-s3" />
-                  <option value="C:/gradle-3.4.1/src/resources-sftp" />
-                  <option value="C:/gradle-3.4.1/src/scala" />
-                  <option value="C:/gradle-3.4.1/src/signing" />
-                  <option value="C:/gradle-3.4.1/src/test-kit" />
-                  <option value="C:/gradle-3.4.1/src/testing-base" />
-                  <option value="C:/gradle-3.4.1/src/testing-jvm" />
-                  <option value="C:/gradle-3.4.1/src/testing-native" />
-                  <option value="C:/gradle-3.4.1/src/tooling-api" />
-                  <option value="C:/gradle-3.4.1/src/tooling-api-builders" />
-                  <option value="C:/gradle-3.4.1/src/ui" />
-                  <option value="C:/gradle-3.4.1/src/workers" />
-                  <option value="C:/gradle-3.4.1/src/wrapper" />
-                  <option value="C:/gradle-3.4.1/lib/ant-1.9.6.jar" />
-                  <option value="C:/gradle-3.4.1/lib/ant-launcher-1.9.6.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-base-services-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-base-services-groovy-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-cli-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-core-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-docs-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-installation-beacon-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-jvm-services-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-launcher-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-logging-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-messaging-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-model-core-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-model-groovy-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-native-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-open-api-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-process-services-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-resources-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-script-kotlin-0.5.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-tooling-api-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-ui-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-version-info-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/gradle-wrapper-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/groovy-all-2.4.7.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-announce-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-antlr-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-build-cache-http-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-build-comparison-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-build-init-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-code-quality-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-composite-builds-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-dependency-management-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-diagnostics-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-ear-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-ide-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-ide-native-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-ide-play-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-ivy-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-jacoco-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-javascript-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-jetty-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-language-groovy-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-language-java-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-language-jvm-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-language-native-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-language-scala-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-maven-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-osgi-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-platform-base-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-platform-jvm-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-platform-native-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-platform-play-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-plugin-development-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-plugin-use-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-plugins-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-publish-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-reporting-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-resources-http-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-resources-s3-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-resources-sftp-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-scala-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-signing-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-test-kit-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-testing-base-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-testing-jvm-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-testing-native-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-tooling-api-builders-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/gradle-workers-3.4.1.jar" />
-                  <option value="C:/gradle-3.4.1/lib/plugins/ivy-2.2.0.jar" />
-                  <option value="$PROJECT_DIR$/common/buildSrc/src/main/java" />
-                  <option value="$PROJECT_DIR$/common/buildSrc/src/main/groovy" />
-                </list>
-              </option>
-            </ExternalProjectBuildClasspathPojo>
-          </value>
-        </entry>
       </map>
     </option>
     <option name="externalProjectsViewState">
@@ -1212,15 +922,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/package.json" />
-        <option value="$PROJECT_DIR$/client/src/index.js" />
-        <option value="$PROJECT_DIR$/client/src/actions/AuthActions.js" />
-        <option value="$PROJECT_DIR$/client/server.js" />
-        <option value="$PROJECT_DIR$/client/makewebpackconfig.js" />
-        <option value="$PROJECT_DIR$/rest/schema/mysql.sql" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableDataEntity.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/CategoryCombineRequest.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/OperationUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/CategorySplitRequest.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/CategoryModelBuilder.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/EntryModelBuilder.java" />
@@ -1235,14 +936,11 @@
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryEntity.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/DataAccessPathEntity.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/DataAccessPathUtils.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/DataAccessPath.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryUpdateRequest.java" />
         <option value="$PROJECT_DIR$/rest/schema/tablebase.xsd" />
-        <option value="$PROJECT_DIR$/rest/build.gradle" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Cell.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java" />
@@ -1255,14 +953,26 @@
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataService.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/DataController.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/TableEntryRepository.java" />
-        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" />
-        <option value="$PROJECT_DIR$/rest/schema/tablebase.sql" />
-        <option value="$PROJECT_DIR$/rest/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/TableEntryUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/OperationUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java" />
         <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseAppConfiguration.java" />
+        <option value="$PROJECT_DIR$/rest/build.gradle" />
+        <option value="$PROJECT_DIR$/rest/src/main/resources/db.properties" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/EntryDao.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/PathDao.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryDao.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableDao.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/operations.java" />
+        <option value="$PROJECT_DIR$/rest/schema/tablebase.sql" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/DBConfiguration.java" />
+        <option value="$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java" />
       </list>
     </option>
   </component>
@@ -1284,8 +994,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="width" value="1920" />
-    <option name="height" value="1050" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1066" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1319,7 +1031,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1386,17 +1097,6 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="html" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="rest" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -1427,39 +1127,7 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="requests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="rest" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="repository" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="rest" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TableBase" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="rest" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TableBase" type="b2602c69:ProjectViewProjectNode" />
@@ -1475,17 +1143,18 @@
       </pane>
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="database.data.csv.formats" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.35211268" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="E:/Product/tollshield/trunk" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelWidth1" value="75" />
@@ -1498,8 +1167,11 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/ErikZ/Documents/GitHub/TableBase/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.ez.tablebase.rest.repository" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Erik\Documents\GitHub\TableBase\client\src\component" />
+      <recent name="C:\Users\ErikZ\Documents\GitHub\TableBase\client\src" />
+      <recent name="C:\Users\ErikZ\Documents\GitHub\TableBase\client\src\style" />
+      <recent name="C:\Users\Erik\Documents\GitHub\TableBase" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Erik\Documents\GitHub\TableBase\client\src\styles" />
@@ -1508,11 +1180,8 @@
       <recent name="C:\Users\Erik\Documents\GitHub\TableBase\client\src" />
       <recent name="C:\Users\Erik\Documents\GitHub\TableBase\client\src\containers" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Erik\Documents\GitHub\TableBase\client\src\component" />
-      <recent name="C:\Users\ErikZ\Documents\GitHub\TableBase\client\src" />
-      <recent name="C:\Users\ErikZ\Documents\GitHub\TableBase\client\src\style" />
-      <recent name="C:\Users\Erik\Documents\GitHub\TableBase" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.ez.tablebase.rest.repository" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1622,18 +1291,6 @@
       </option>
       <envs />
       <patterns />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="TableBase" />
-      <envs />
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
@@ -1913,6 +1570,18 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="TableBase" />
+      <envs />
+    </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="filePath" />
@@ -2024,11 +1693,12 @@
       <workItem from="1526178461457" duration="12633000" />
       <workItem from="1526278395209" duration="22304000" />
       <workItem from="1526315169599" duration="10502000" />
+      <workItem from="1526466364333" duration="7992000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="457703000" />
+    <option name="totallyTimeSpent" value="465695000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2044,29 +1714,30 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32599118" sideWeight="0.4968017" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32745314" sideWeight="0.50319827" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29658213" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31843576" sideWeight="0.49733475" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20575693" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994652" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32986668" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942432" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3969129" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32524806" sideWeight="0.4968017" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29658213" sideWeight="0.49893048" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31753033" sideWeight="0.49733475" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20575693" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994652" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3263506" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889125" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3969129" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2075,7 +1746,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -2113,12 +1783,6 @@
           <properties />
           <option name="timeStamp" value="44" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java</url>
-          <line>207</line>
-          <properties />
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
       </breakpoints>
       <option name="time" value="48" />
     </breakpoint-manager>
@@ -2135,78 +1799,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/LinkedList.java" />
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/common/html/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="38" lean-forward="false" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/concurrent/LinkedBlockingQueue.java" />
-    <entry file="file://$PROJECT_DIR$/rest/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="740">
-          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/TableSearchResponse.java" />
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="22" column="11" lean-forward="false" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/4.3.6.RELEASE/e41b15afc71764f982eec257729ac3fddda78f3e/spring-web-4.3.6.RELEASE-sources.jar!/org/springframework/http/HttpStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="73" column="4" lean-forward="false" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client_dev/src/actions/AuthActions.js" />
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryDeleteRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategoryUpdateRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/text/DecimalFormat.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/text/NumberFormat.java" />
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/requests/CategorySplitRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.assertj/assertj-core/2.6.0/86e8fd98e5ec52e93e3fa46d9bf5df7cca6d1bce/assertj-core-2.6.0-sources.jar!/org/assertj/core/util/DoubleComparator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/Comparator.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/Objects.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/Collections.java" />
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/repository/DataAccessPathRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -2271,10 +1863,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="36" column="156" lean-forward="false" selection-start-line="36" selection-start-column="146" selection-end-line="36" selection-end-column="156" />
-          <folding>
-            <marker date="1526315114897" expanded="true" signature="2163:2359" ph="@{...}" />
-            <marker date="1526315114897" expanded="true" signature="3525:3683" ph="@{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2282,35 +1871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding>
-            <marker date="1526315114893" expanded="true" signature="1397:1426" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="57" column="13" lean-forward="false" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
-          <folding>
-            <marker date="1526315114901" expanded="true" signature="2528:2867" ph="{...}" />
-            <marker date="1526315114901" expanded="false" signature="2920:2935" ph=" { " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/schema/tablebase.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="603" column="30" lean-forward="true" selection-start-line="603" selection-start-column="30" selection-end-line="603" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2326,11 +1886,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="26" column="56" lean-forward="false" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
-          <folding>
-            <marker date="1526315114898" expanded="true" signature="557:639" ph="SELECT * FRO... table_data" />
-            <marker date="1526315114898" expanded="true" signature="757:831" ph="SELECT * FRO... table_data" />
-            <marker date="1526315114898" expanded="true" signature="1281:1353" ph="DELETE FROM " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2356,7 +1912,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="16" column="24" lean-forward="false" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2380,9 +1935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
           <caret line="98" column="0" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-          <folding>
-            <element signature="e#3928#3929#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2390,7 +1942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="106" column="0" lean-forward="false" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2398,7 +1949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="289" column="0" lean-forward="false" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2406,7 +1956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="662" column="0" lean-forward="false" selection-start-line="662" selection-start-column="0" selection-end-line="662" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2414,7 +1963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2422,7 +1970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2430,7 +1977,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
           <caret line="497" column="0" lean-forward="false" selection-start-line="497" selection-start-column="0" selection-end-line="497" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2442,107 +1988,377 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1156">
+          <caret line="347" column="6" lean-forward="false" selection-start-line="347" selection-start-column="6" selection-end-line="347" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="657" column="73" lean-forward="false" selection-start-line="657" selection-start-column="73" selection-end-line="657" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/resources/application.properties.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/DataServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="32" column="30" lean-forward="false" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#630#631#0" expanded="false" />
+            <element signature="e#657#658#0" expanded="false" />
+            <element signature="e#735#736#0" expanded="false" />
+            <element signature="e#762#763#0" expanded="false" />
+            <element signature="e#838#839#0" expanded="false" />
+            <element signature="e#865#866#0" expanded="false" />
+            <element signature="e#924#925#0" expanded="false" />
+            <element signature="e#951#952#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#687#688#0" expanded="false" />
+            <element signature="e#714#715#0" expanded="false" />
+            <element signature="e#801#802#0" expanded="false" />
+            <element signature="e#828#829#0" expanded="false" />
+            <element signature="e#928#929#0" expanded="false" />
+            <element signature="e#955#956#0" expanded="false" />
+            <element signature="e#1038#1039#0" expanded="false" />
+            <element signature="e#1065#1066#0" expanded="false" />
+            <element signature="e#1147#1148#0" expanded="false" />
+            <element signature="e#1174#1175#0" expanded="false" />
+            <element signature="e#1261#1262#0" expanded="false" />
+            <element signature="e#1288#1289#0" expanded="false" />
+            <element signature="e#1376#1377#0" expanded="false" />
+            <element signature="e#1403#1404#0" expanded="false" />
+            <element signature="e#1966#1967#0" expanded="false" />
+            <element signature="e#1993#1994#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-orm/4.3.6.RELEASE/2feb36f042ae3079fe04b2c26c2b7ce2a3bd84e9/spring-orm-4.3.6.RELEASE-sources.jar!/org/springframework/orm/hibernate5/LocalSessionFactoryBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="391" column="16" lean-forward="false" selection-start-line="391" selection-start-column="16" selection-end-line="391" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/resources/db.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="21" lean-forward="false" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/PathDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/TableDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/operations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-orm/4.3.6.RELEASE/2feb36f042ae3079fe04b2c26c2b7ce2a3bd84e9/spring-orm-4.3.6.RELEASE-sources.jar!/org/springframework/orm/hibernate5/HibernateTemplate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="311" column="21" lean-forward="false" selection-start-line="311" selection-start-column="21" selection-end-line="311" selection-end-column="21" />
+          <folding>
+            <element signature="docComment;class#HibernateTemplate#0" expanded="false" />
+            <element signature="initializer##0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#3882#3958#0" expanded="false" />
+            <element signature="docComment;method#HibernateTemplate#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#HibernateTemplate#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#HibernateTemplate#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#HibernateTemplate#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setSessionFactory#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#getSessionFactory#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setFilterNames#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#getFilterNames#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setExposeNativeSession#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#isExposeNativeSession#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setCheckWriteOperations#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#isCheckWriteOperations#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setCacheQueries#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#isCacheQueries#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setQueryCacheRegion#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#getQueryCacheRegion#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setFetchSize#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#getFetchSize#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#setMaxResults#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#getMaxResults#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#afterPropertiesSet#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#execute#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#executeWithNativeSession#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#doExecute#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#doExecute#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#createSessionProxy#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#createSessionProxy#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#enableFilters#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#enableFilters#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#disableFilters#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#disableFilters#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#14333#14408#0" expanded="false" />
+            <element signature="method#get#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#get#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#get#2;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#get#3;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#load#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#load#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#load#2;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#load#3;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#loadAll#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#load#4;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#refresh#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#refresh#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#contains#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#evict#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#initialize#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#enableFilter#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#19410#19485#0" expanded="false" />
+            <element signature="method#lock#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#lock#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#save#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#save#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#update#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#update#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#update#2;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#update#3;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#saveOrUpdate#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#saveOrUpdate#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#replicate#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#replicate#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#persist#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#persist#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#merge#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#merge#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#delete#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#delete#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#delete#2;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#delete#3;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#deleteAll#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#flush#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#clear#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#27421#27496#0" expanded="false" />
+            <element signature="method#find#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByNamedParam#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByNamedParam#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByValueBean#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#29953#30028#0" expanded="false" />
+            <element signature="method#findByNamedQuery#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByNamedQueryAndNamedParam#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByNamedQueryAndNamedParam#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByNamedQueryAndValueBean#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#32622#32697#0" expanded="false" />
+            <element signature="method#findByCriteria#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByCriteria#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByExample#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByExample#1;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#findByExample#2;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#34210#34219#0" expanded="false" />
+            <element signature="method#findByExample#3;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#35154#35229#0" expanded="false" />
+            <element signature="method#iterate#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#closeIterator#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#bulkUpdate#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#36967#37042#0" expanded="false" />
+            <element signature="docComment;method#checkWriteOperationAllowed#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#checkWriteOperationAllowed#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#prepareQuery#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#prepareQuery#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#prepareCriteria#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#prepareCriteria#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;method#applyNamedParameterToQuery#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="method#applyNamedParameterToQuery#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="docComment;class#CloseSuppressingInvocationHandler#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="class#CloseSuppressingInvocationHandler#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#40908#40917#0" expanded="false" />
+            <element signature="method#invoke#0;class#CloseSuppressingInvocationHandler#0;class#HibernateTemplate#0" expanded="false" />
+            <element signature="e#41604#41673#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/schema/tablebase.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="16" lean-forward="true" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-autoconfigure/1.5.1.RELEASE/2353af62fb55e5c78a649e115b81a8916d99632a/spring-boot-autoconfigure-1.5.1.RELEASE-sources.jar!/org/springframework/boot/autoconfigure/web/ServerProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="292" column="16" lean-forward="false" selection-start-line="292" selection-start-column="16" selection-end-line="292" selection-end-column="16" />
+          <folding>
+            <element signature="e#9381#9382#0" expanded="false" />
+            <element signature="e#9404#9405#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/DBConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2213#2214#0" expanded="true" />
+            <element signature="e#2285#2286#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/TableBaseApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#360#361#0" expanded="true" />
+            <element signature="e#431#432#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="41" column="45" lean-forward="false" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/DataAccessPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-25">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Category.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#806#807#0" expanded="true" />
+            <element signature="e#837#838#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/EntryDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/database/CategoryDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-110">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/controller/TableController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        <state relative-caret-position="286">
+          <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="10" lean-forward="false" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/TableServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="43" column="13" lean-forward="false" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/CategoryServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="207" column="29" lean-forward="false" selection-start-line="207" selection-start-column="29" selection-end-line="207" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/CategoryUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-88">
-          <caret line="347" column="6" lean-forward="true" selection-start-line="347" selection-start-column="6" selection-end-line="347" selection-end-column="6" />
+        <state relative-caret-position="400">
+          <caret line="37" column="13" lean-forward="true" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
           <folding>
-            <element signature="method#CategoryUtils#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#createCategoryDAPsAndEntries#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="e#1854#1985#0" expanded="false" />
-            <element signature="e#2461#2547#0" expanded="false" />
-            <element signature="e#3661#3753#0" expanded="false" />
-            <element signature="e#3951#4071#0" expanded="false" />
-            <element signature="method#createDAPForNewTopLevelCategory#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#duplicateCategories#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="e#5192#5331#0" expanded="false" />
-            <element signature="method#splitCategory#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#applyThresholdOperation#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#extractCurrencyValue#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#deleteCategory#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#deleteChildrenDapsEntries#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#deleteTopLevelCategory#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#max#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#min#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#mean#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#concatenateString#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#updateTableCategoriesForNewParent#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#deleteCategoryEntities#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#findAllTableCategories#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#findTableCategoriesWithoutRoot#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#findTableRootCategories#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#updateTableCategory#0;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#deleteCategory#1;class#CategoryUtils#0" expanded="false" />
-            <element signature="method#findCategory#0;class#CategoryUtils#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/service/utils/BaseUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="657" column="73" lean-forward="true" selection-start-line="657" selection-start-column="73" selection-end-line="657" selection-end-column="73" />
-          <folding>
-            <element signature="method#BaseUtils#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createTable#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createDataAccessPath#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#deleteDAPByEntryId#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createEntry#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#updateTableEntry#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#calculateNumberOfEntries#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#initialiseEntriesAndDAPs#0;class#BaseUtils#0" expanded="false" />
-            <element signature="e#5765#5918#0" expanded="false" />
-            <element signature="method#generatePermPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#generatePermutations#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructTreeMap#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructTreePaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#buildPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#printPathList#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findPathsByCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getAllCategoryChildren#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#updateDataAccessPaths#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#updateDataAccessPaths#1;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getPathToCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findChildren#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findEntriesForCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#findRootNodeByTreeId#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createTopLevelCategories#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#dls#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#createAccessCells#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#copy#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructTreeMapByDepth#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#constructParentChildMap#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#removeRootNodes#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#getTreeDepth#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#validateTable#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#validateCategory#0;class#BaseUtils#0" expanded="false" />
-            <element signature="method#validateEntry#0;class#BaseUtils#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#632#633#0" expanded="true" />
+            <element signature="e#659#660#0" expanded="true" />
+            <element signature="e#719#720#0" expanded="true" />
+            <element signature="e#746#747#0" expanded="true" />
+            <element signature="e#899#900#0" expanded="true" />
+            <element signature="e#926#927#0" expanded="true" />
+            <element signature="e#985#986#0" expanded="true" />
+            <element signature="e#1012#1013#0" expanded="true" />
+            <element signature="e#1084#1085#0" expanded="true" />
+            <element signature="e#1111#1112#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2600,12 +2416,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>client|client</last-edited>
+          <last-edited>client</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.35211268" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

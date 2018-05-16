@@ -1,8 +1,6 @@
 package com.ez.tablebase.rest.model;
 
 import com.ez.tablebase.rest.database.CategoryDao;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 public class Category
 {
@@ -68,7 +66,7 @@ public class Category
 
         model.setTableId(entity.getTableId());
         model.setCategoryId(entity.getCategoryId());
-        model.setAttributeName(entity.getAttributeName());
+        model.setAttributeName(entity.getName());
         model.setParentId(entity.getParentId());
         return model;
     }

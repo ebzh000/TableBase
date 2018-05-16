@@ -1,0 +1,73 @@
+1. Create Top Level Category
+	Create new root category for new tree
+
+2. Create Category (With specified type)
+	A: Create category as leaf node
+		Create category with the selected parent category
+		Get data access path to the new category
+		Find all permutations of other tree's paths (this will give us the number of rows present in the table)
+		Loop permutations (Doesn't matter which order for the path)
+			Create Entry with the specified type
+			Combine new Path and and current permutation -> Gives a list
+			Loop
+				Create combined data access path for entry
+
+	B: Create category as a new subcategory parent
+		Create Category with the selected parent category
+		Get a list of the parent;s current children
+		Loop through children
+			Update child to point to the new category
+			Get a list of all entries that contain the child in its data access path
+			Loop through entries
+				Create data access path for new category
+
+
+	C: Create category with the selected parent category and link parent's children to the new category
+		Get data access path to the new category
+		Create category with the selected parent
+
+3. Update Category (Should separate these two)
+	A. Move Category to new Parent
+		Get Tree of selected category
+		Get a complete list of paths in the tree
+		Find the path to the old parent node
+		Find the path to the new parent node
+		Get a list of entries that have the category in its data access path
+		Get a list of data access paths from the list of entries
+		IF the new parent has no children (leaf node) THEN
+			Create a new subcategory "New Child"
+			Get a list of entries that contain the new parent category
+			Loop Entries
+				Create Data Access Path for "New Child"
+
+		Loop list of data access paths that contain selected category
+			Loop through data access path
+				If current path entity is contained to the path to the old parent THEN
+					Delete path entity
+
+			Loop through path to the new parent
+				Create a data access path for each path entity to the new parent
+
+		If the old parent has any children left THEN
+			Get data access path to the old parent
+			Find all permutations of other tree's paths (this will give us the number of rows present in the table)
+			Loop permutations (Doesn't matter which order for the path)
+			Create Entry with the specified type
+			Combine new Path and and current permutation -> Gives a list
+			Loop
+				Create combined data access path for entry
+
+
+	B. Change Label
+		Just change update the category with the new attribute name
+
+
+4. Duplicate Category
+
+5. Split Category
+
+6. Combine Category
+
+7. Delete Category
+
+8. Delete Top Level Category

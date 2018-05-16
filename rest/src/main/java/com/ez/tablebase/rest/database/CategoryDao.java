@@ -22,8 +22,8 @@ public class CategoryDao implements Serializable
     @Column(name = "tree_id", nullable = false)
     private Integer treeId;
 
-    @Column(name = "attribute_name")
-    private String attributeName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "parent_id")
     private Integer parentId;
@@ -60,14 +60,14 @@ public class CategoryDao implements Serializable
         this.treeId = treeId;
     }
 
-    public String getAttributeName()
+    public String getName()
     {
-        return attributeName;
+        return name;
     }
 
-    public void setAttributeName(String attributeName)
+    public void setName(String name)
     {
-        this.attributeName = attributeName;
+        this.name = name;
     }
 
     public Integer getParentId()
@@ -87,7 +87,7 @@ public class CategoryDao implements Serializable
                 "categoryId=" + categoryId +
                 ", tableId=" + tableId +
                 ", treeId=" + treeId +
-                ", attributeName='" + attributeName + '\'' +
+                ", name='" + name + '\'' +
                 ", parentId=" + parentId +
                 '}';
     }
