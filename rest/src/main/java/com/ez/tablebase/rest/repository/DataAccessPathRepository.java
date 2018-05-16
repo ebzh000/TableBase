@@ -31,9 +31,6 @@ public interface DataAccessPathRepository extends JpaRepository<DataAccessPathEn
     @Query(value = "SELECT dap.entry_id FROM (SELECT b.id, b.table_id, b.entry_id, b.category_id FROM data_access_path a JOIN data_access_path b ON b.entry_id = a.entry_id AND a.table_id = :tableId AND b.table_id = :tableId AND a.category_id = :categoryId) AS dap GROUP BY dap.entry_id", nativeQuery = true)
     List<Integer> getEntriesForCategory(@Param("tableId") int tableId, @Param("categoryId") int categoryId);
 
-    @Query(value = "SELECT entry_id FROM data_access_path WHERE table_id = :tableId AND category_id = :categoryId GROUP BY entry_id", nativeQuery = true)
-    List<Integer> getEntryByPathContainingCategory(@Param("tableId") int tableId, @Param("categoryId") int cateogryId);
-
     @Modifying(clearAutomatically = true)
     @Query(value = "DELETE FROM data_access_path WHERE table_id = :tableId AND entry_id = :entryId", nativeQuery = true)
     void deleteDAPByEntryId(@Param("tableId") int tableID, @Param("entryId") int entryId);

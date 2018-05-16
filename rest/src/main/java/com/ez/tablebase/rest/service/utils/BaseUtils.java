@@ -396,7 +396,7 @@ public class BaseUtils
         List<Integer> pathToNewParent = getPathToCategory(newParent, pathList);
 
         // Step 3 - Get a list of all data access paths that contains selected category
-        List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(category.getTableId(), category.getCategoryId());
+        List<Integer> affectedEntries = dataAccessPathRepository.getEntriesForCategory(category.getTableId(), category.getCategoryId());
         List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
         for (Integer entryId : affectedEntries)
             affectedPaths.add(dataAccessPathRepository.getEntryAccessPathByTree(category.getTableId(), entryId, category.getTreeId()));
@@ -407,7 +407,7 @@ public class BaseUtils
         if (newParentChildren.size() == 0)
         {
             CategoryEntity newChild = createCategory(newParent.getTableId(), "New Child", newParent.getCategoryId(), newParent.getTreeId());
-            List<Integer> newParentEntries = dataAccessPathRepository.getEntryByPathContainingCategory(newParent.getTableId(), newParent.getCategoryId());
+            List<Integer> newParentEntries = dataAccessPathRepository.getEntriesForCategory(newParent.getTableId(), newParent.getCategoryId());
             for (Integer entryId : newParentEntries)
                 createDataAccessPath(newChild.getTableId(), entryId, newChild.getCategoryId(), newChild.getTreeId());
         }

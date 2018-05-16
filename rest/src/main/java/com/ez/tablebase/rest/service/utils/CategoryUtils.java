@@ -57,7 +57,7 @@ public class CategoryUtils extends BaseUtils
                 {
                     updateTableCategory(child.getTableId(), child.getCategoryId(), child.getAttributeName(), category.getCategoryId());
 
-                    List<Integer> affectedEntries = dataAccessPathRepository.getEntryByPathContainingCategory(child.getTableId(), child.getCategoryId());
+                    List<Integer> affectedEntries = dataAccessPathRepository.getEntriesForCategory(child.getTableId(), child.getCategoryId());
                     List<List<DataAccessPathEntity>> affectedPaths = new LinkedList<>();
 
                     for (Integer entryId : affectedEntries)
