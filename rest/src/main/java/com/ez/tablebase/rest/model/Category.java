@@ -1,9 +1,10 @@
 package com.ez.tablebase.rest.model;
 
-import com.ez.tablebase.rest.database.CategoryEntity;
-import org.springframework.hateoas.ResourceSupport;
+import com.ez.tablebase.rest.database.CategoryDao;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-public class Category extends ResourceSupport
+public class Category
 {
     private int categoryId;
     private int tableId;
@@ -61,7 +62,7 @@ public class Category extends ResourceSupport
         this.type = type;
     }
 
-    public static Category buildModel(CategoryEntity entity)
+    public static Category buildModel(CategoryDao entity)
     {
         Category model = new Category();
 

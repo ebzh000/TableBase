@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "data_access_path")
-public class DataAccessPathEntity implements Serializable
+public class DataAccessPathDao
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,8 @@ public class DataAccessPathEntity implements Serializable
 
     @Column(name = "tree_id")
     private int treeId;
+
+    public DataAccessPathDao() {}
 
     public int getId()
     {
@@ -82,7 +84,7 @@ public class DataAccessPathEntity implements Serializable
     @Override
     public String toString()
     {
-        return "DataAccessPathEntity{" +
+        return "DataAccessPathDao{" +
                 "id=" + id +
                 ", entryId=" + entryId +
                 ", tableId=" + tableId +

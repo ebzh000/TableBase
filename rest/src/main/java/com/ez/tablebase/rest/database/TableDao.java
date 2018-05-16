@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "table_list")
-public class TableEntity implements Serializable
+public class TableDao implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,12 @@ public class TableEntity implements Serializable
     @Column(name = "public")
     private boolean isPublic;
 
-    public TableEntity()
+    public TableDao()
     {
 
     }
 
-    public TableEntity(Integer tableId, Integer userId, String tableName, String tags, boolean isPublic)
+    public TableDao(Integer tableId, Integer userId, String tableName, String tags, boolean isPublic)
     {
         super();
         this.tableId = tableId;
@@ -96,7 +96,7 @@ public class TableEntity implements Serializable
     @Override
     public String toString()
     {
-        return "TableEntity{" +
+        return "TableDao{" +
                 "tableId=" + tableId +
                 ", userId=" + userId +
                 ", tableName='" + tableName + '\'' +

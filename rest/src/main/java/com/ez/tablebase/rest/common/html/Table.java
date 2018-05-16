@@ -8,7 +8,7 @@ package com.ez.tablebase.rest.common.html;
  * Created by erikz on 8/05/2018.
  */
 
-import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.CategoryDao;
 
 import java.util.*;
 
@@ -123,7 +123,7 @@ public class Table
         return rowDAPs;
     }
 
-    public void saveRowDAPS(List<List<CategoryEntity>> allRowDAPs)
+    public void saveRowDAPS(List<List<CategoryDao>> allRowDAPs)
     {
         for(int index = 0; index < allRowDAPs.size(); index++)
         {

@@ -1,0 +1,14 @@
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/hibernate-configuration">
+    <session-factory name="env">
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">=jdbc:mysql://localhost:3306/table_base?autoReconnect=true&useSSL=false</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">password</property>
+
+        <mapping class="com.ez.tablebase.rest.database.TableDao" />
+        <mapping class="com.ez.tablebase.rest.database.CategoryDao" />
+        <mapping class="com.ez.tablebase.rest.database.DataAccessPathDao" />
+        <mapping class="com.ez.tablebase.rest.database.EntryDao" />
+    </session-factory>
+</hibernate-configuration>

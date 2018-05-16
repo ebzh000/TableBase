@@ -4,9 +4,7 @@ package com.ez.tablebase.rest.model;
  * Created by ErikZ on 27/11/2017.
  */
 
-import org.springframework.hateoas.ResourceSupport;
-
-public class DataAccessPath extends ResourceSupport
+public class DataAccessPath
 {
     private int id;
     private int tableId;

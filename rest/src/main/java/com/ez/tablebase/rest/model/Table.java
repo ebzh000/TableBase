@@ -4,10 +4,9 @@ package com.ez.tablebase.rest.model;
  * Created by erikz on 15/09/2017.
  */
 
-import com.ez.tablebase.rest.database.TableEntity;
-import org.springframework.hateoas.ResourceSupport;
+import com.ez.tablebase.rest.database.TableDao;
 
-public class Table extends ResourceSupport
+public class Table
 {
     private int tableId;
     private int userId;
@@ -65,7 +64,7 @@ public class Table extends ResourceSupport
         isPublic = aPublic;
     }
 
-    public static Table buildModel(TableEntity entity)
+    public static Table buildModel(TableDao entity)
     {
         Table model = new Table();
         model.setTableId(entity.getTableId());
