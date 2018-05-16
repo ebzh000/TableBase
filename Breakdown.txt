@@ -1,11 +1,9 @@
 1. Create Top Level Category
 	Create new root category for new tree
+	Create sub category for new root category
+	Create data access paths for these two new categories for all entries
 
-2. Create new subcategory for new root node
-	Get Access Paths of affected entries
-	Create Data Access Paths for all affected entries for both categories
-
-3. Create Category (With specified type)
+2. Create Category (With specified type)
 	A: Create category as leaf node
 		Create category with the selected parent category
 		Get data access path to the new category
@@ -18,25 +16,201 @@
 
 	B: Create category as a new subcategory parent
 		Create Category with the selected parent category
-		Get all entries that contain the parent category in the data access path
-		Loop entries
-			Create a data access path for the new category for current entry 
+		Get a list of the parent;s current children
+		Loop through children
+			Update child to point to the new category
+			Get a list of all entries that contain the child in its data access path
+			Loop through entries
+				Create data access path for new category
 
-4. Update Category (Should separate these two)
+
+	C: Create category with the selected parent category and link parent's children to the new category
+		Get data access path to the new category
+		Create category with the selected parent
+
+3. Update Category (Should separate these two)
 	A. Move Category to new Parent
-		Get all entries that contain the selected parent
-		
+		Get Tree of selected category
+		Get a complete list of paths in the tree
+		Find the path to the old parent node
+		Find the path to the new parent node
+		Get a list of entries that have the category in its data access path
+		Get a list of data access paths from the list of entries
+		IF the new parent has no children (leaf node) THEN
+			Create a new subcategory "New Child"
+			Get a list of entries that contain the new parent category
+			Loop Entries
+				Create Data Access Path for "New Child"
+
+		Loop list of data access paths that contain selected category
+			Loop through data access path
+				If current path entity is contained to the path to the old parent THEN
+					Delete path entity
+
+			Loop through path to the new parent
+				Create a data access path for each path entity to the new parent
+
+		If the old parent has any children left THEN
+			Get data access path to the old parent
+			Find all permutations of other tree's paths (this will give us the number of rows present in the table)
+			Loop permutations (Doesn't matter which order for the path)
+			Create Entry with the specified type
+			Combine new Path and and current permutation -> Gives a list
+			Loop
+				Create combined data access path for entry
+
 
 	B. Change Label
 		Just change update the category with the new attribute name
 
 
-5. Duplicate Category
+4. Duplicate Category (Recursive)
+	Create duplicate Category
+	Find children for selected category
+	IF Children Present
+		Loop Through Children
+			Duplicate Category
 
-6. Split Category
+	ELSE
+		Get Entries that have paths containing the selected category
+		If Not Empty
+			Loop Entries
+				Duplicate Entry
+				Get path (list of categories) to new Category
+				Loop through list
+					Create Path for current element
 
-7. Combine Category
+				Get table's TreeIds
+				Remove selected category's tree Id
+				Loop TreeIds
+					Get current entry's path elements that belong to current treeId
+					Loop through path elements
+						Create Data Access path with current element
 
-8. Delete Category
+5. Split Category (Only for leaf nodes)
+	Get selected category
+	Get selected category's parent
+	Get all entries that contain selected category in its path
+	Attempt to determine the type of all the entries
 
-9. Delete Top Level Category
+	Create new leaf node category (Refer to Create category A)
+	Apply Split Function
+		Get all Entries A for selected category
+		Get all Entries B for new category
+
+		Create a map of entries keyed by path (List A then B)
+		Loop through keyset of map (paths)
+			Get entry 1 from path
+			Get entry 2 from path
+
+			Apply Operation
+				NO_OPERATION: 
+					No-op
+				COPY: 
+					Duplicate entry 1 into entry 2
+				THRESHOLD: 
+					Values larger than or equal to threshold get pushed to Entry 2
+
+6. Combine Category (Only on leaf nodes)
+	Get category 1
+	Get category 2
+
+	Find children of 1
+	Find children of 2
+
+	Update Category 1 with new name
+	Apply Combine Entry Operation
+		Get all Entries for category 1
+		Get all Entries for category 2
+
+		Create a map of entries keyed by path
+		Loop through keyset of map (paths)
+			Get entry 1 from path
+			Get Data 1
+
+			Get entry 2 from path
+			Get Data 2
+
+			Apply opeartion
+				MAX:
+					return max value of two datas
+				MIN:
+					return min value of two datas
+				MEAN:
+					return mean of two datas
+				SUM:
+					return sum of two datas
+				DIFFERENCE:
+					return difference of two data
+				CONCATENATE_STRING:
+					return delmited string of two data
+				LEFT:
+					return data 2
+				RIGHT:
+					return data 1
+				
+
+			Update entry 1 with result
+			Delete Entry 2
+
+	Delete Category 2
+
+
+7. Delete Category (Anything but a root category)
+	A: DELETE Child categories, All entries and All data access paths (via cascade)
+		Get selected Category
+		Get parent of selected category
+		Get all children of selected category
+		Get all entries that contain the selected category
+		Delete all entries
+		Delete all Child categories (This will delete data access paths via cascade)
+		Delete selected category
+		If parent has no children left
+			Create parent as new leaf node (Refer to Create category A)
+
+	B: Delete selected category and link child categories
+		Get children of selected category
+		Get parent of selected category
+		IF children are present
+			LOOP children
+				Delete the selected category
+				Update child to refer to selected category's parent as new parent
+
+		ELSE no children
+			Get all entries for selected category
+			Delete all entries
+			Delete category
+
+
+8. Delete Top Level Category
+	Get selected category
+	Get all children of selected category
+	Loop children
+		Delete child category
+
+	Delete selected category
+
+	Find all entries of selected table
+
+	(Create map of entry ids and their string path)
+	Loop through entries
+		Get all Paths for current entry
+		Loop path elements to create concatenated string of category ids
+		Store string path for current entry in map
+
+	(Get all entries that share the same path)
+	Reverse map so we get a map containing lists of entries keyed by path
+	Loop list of entries (map values) to convert into a list of lists containing entry daos
+
+	Loop through entry lists
+		Apply operation to each set of entries
+			case MAX:
+            case MIN:
+            case MEAN:
+            case CONCATENATE_STRING:
+
+            all return a list of entries to be deleted
+
+        LOOP list of entries to be deleted
+        	delete entry's path
+            delete entry
