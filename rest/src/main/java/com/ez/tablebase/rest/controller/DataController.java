@@ -4,7 +4,7 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
-import com.ez.tablebase.rest.model.Entry;
+import com.ez.tablebase.rest.model.dao.EntryDaoImpl;
 import com.ez.tablebase.rest.model.requests.DataRequest;
 import com.ez.tablebase.rest.service.DataService;
 import org.slf4j.Logger;
@@ -43,7 +43,7 @@ public class DataController
     {
         request.setTableId(tableId);
         request.setEntryId(entryId);
-        Entry entry =  dataService.updateTableEntry(request);
+        EntryDaoImpl entry =  dataService.updateTableEntry(request);
         if(toHtml)
             return dataService.toHtml(tableId);
         else

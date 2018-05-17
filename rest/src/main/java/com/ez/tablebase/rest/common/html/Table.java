@@ -8,7 +8,7 @@ package com.ez.tablebase.rest.common.html;
  * Created by erikz on 8/05/2018.
  */
 
-import com.ez.tablebase.rest.database.CategoryDao;
+import com.ez.tablebase.rest.database.CategoryEntity;
 
 import java.util.*;
 
@@ -29,10 +29,10 @@ public class Table
     private Integer tableId;
     private List<List<Cell>> table;
 
-    // A Map populated with Entry<ColIndex, colDAP>
+    // A Map populated with EntryDaoImpl<ColIndex, colDAP>
     private Map<Integer, List<Integer>> colDAPs;
 
-    // A Map populated with Entry<rowIndex, rowDAP>
+    // A Map populated with EntryDaoImpl<rowIndex, rowDAP>
     private Map<Integer, List<Integer>> rowDAPs;
 
     private Integer headerGroupDepth;
@@ -123,7 +123,7 @@ public class Table
         return rowDAPs;
     }
 
-    public void saveRowDAPS(List<List<CategoryDao>> allRowDAPs)
+    public void saveRowDAPS(List<List<CategoryEntity>> allRowDAPs)
     {
         for(int index = 0; index < allRowDAPs.size(); index++)
         {

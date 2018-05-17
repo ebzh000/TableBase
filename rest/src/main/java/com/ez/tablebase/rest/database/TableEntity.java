@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "tables")
-public class TableDao implements Serializable
+@javax.persistence.Table(name = "tables")
+public class TableEntity implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,12 @@ public class TableDao implements Serializable
     @Column(name = "public")
     private boolean isPublic;
 
-    public TableDao()
+    public TableEntity()
     {
 
     }
 
-    public TableDao(Integer tableId, Integer userId, String tableName, String tags, boolean isPublic)
+    public TableEntity(Integer tableId, Integer userId, String tableName, String tags, boolean isPublic)
     {
         super();
         this.tableId = tableId;
@@ -96,7 +96,7 @@ public class TableDao implements Serializable
     @Override
     public String toString()
     {
-        return "TableDao{" +
+        return "TableDaoImpl{" +
                 "tableId=" + tableId +
                 ", userId=" + userId +
                 ", tableName='" + tableName + '\'' +

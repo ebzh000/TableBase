@@ -4,7 +4,7 @@ package com.ez.tablebase.rest.controller;
  * Created by ErikZ on 19/09/2017.
  */
 
-import com.ez.tablebase.rest.model.Category;
+import com.ez.tablebase.rest.model.dao.CategoryDaoImpl;
 import com.ez.tablebase.rest.model.requests.*;
 import com.ez.tablebase.rest.service.CategoryService;
 import org.slf4j.Logger;
@@ -35,28 +35,28 @@ public class CategoryController
     {
         request.setTableId(tableId);
         request.setLinkChildren(false);
-        Category category = categoryService.createTopLevelCategory(request);
+        CategoryDaoImpl categoryDaoImpl = categoryService.createTopLevelCategory(request);
         if(toHtml)
            return categoryService.toHtml(tableId);
         else
-            return category;
+            return categoryDaoImpl;
     }
 
     @PostMapping(value = "/category/create")
     Object createCategory(@PathVariable int tableId, @RequestBody CategoryCreateRequest request, @RequestParam(value = "toHtml") boolean toHtml)
     {
         request.setTableId(tableId);
-        Category category = categoryService.createCategory(request);
+        CategoryDaoImpl categoryDaoImpl = categoryService.createCategory(request);
         if(toHtml)
             return categoryService.toHtml(tableId);
         else
-            return category;
+            return categoryDaoImpl;
     }
 
     @GetMapping(value = "/categories")
     Object getCategories(@PathVariable int tableId, @RequestParam("excludeRoot") boolean excludeRoot)
     {
-        List<Category> categories = categoryService.getTableCategories(tableId, excludeRoot);
+        List<CategoryDaoImpl> categories = categoryService.getTableCategories(tableId, excludeRoot);
         logger.info("Returning "+ categories.size() + " categories");
         return categories;
     }
@@ -64,7 +64,7 @@ public class CategoryController
     @GetMapping(value = "/rootCategories")
     Object getRootCategories(@PathVariable int tableId)
     {
-        List<Category> categories = categoryService.getTableRootCategories(tableId);
+        List<CategoryDaoImpl> categories = categoryService.getTableRootCategories(tableId);
         logger.info("Returning "+ categories.size() + " categories");
         return categories;
     }
@@ -80,32 +80,32 @@ public class CategoryController
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
-        Category category = categoryService.updateCategory(request);
+        CategoryDaoImpl categoryDaoImpl = categoryService.updateCategory(request);
         if(toHtml)
             return categoryService.toHtml(tableId);
         else
-            return category;
+            return categoryDaoImpl;
     }
 
     @PostMapping(value = "/category/duplicate/{categoryId}")
     Object duplicateCategory(@PathVariable int tableId, @PathVariable int categoryId, @RequestParam(value = "toHtml") boolean toHtml)
     {
-        Category category = categoryService.duplicateCategory(tableId, categoryId);
+        CategoryDaoImpl categoryDaoImpl = categoryService.duplicateCategory(tableId, categoryId);
         if(toHtml)
             return categoryService.toHtml(tableId);
         else
-            return category;
+            return categoryDaoImpl;
     }
 
     @PostMapping(value = "/category/combine")
     Object combineCategory(@PathVariable int tableId, @RequestBody CategoryCombineRequest request, @RequestParam(value = "toHtml") boolean toHtml) throws ParseException
     {
         request.setTableId(tableId);
-        Category category = categoryService.combineCategory(request);
+        CategoryDaoImpl categoryDaoImpl = categoryService.combineCategory(request);
         if(toHtml)
             return categoryService.toHtml(tableId);
         else
-            return category;
+            return categoryDaoImpl;
     }
 
     @PostMapping(value = "/category/split/{categoryId}")
@@ -113,11 +113,11 @@ public class CategoryController
     {
         request.setTableId(tableId);
         request.setCategoryId(categoryId);
-        Category category = categoryService.splitCategory(request);
+        CategoryDaoImpl categoryDaoImpl = categoryService.splitCategory(request);
         if(toHtml)
             return categoryService.toHtml(tableId);
         else
-            return category;
+            return categoryDaoImpl;
     }
 
     @DeleteMapping(value = "/category/{categoryId}/deleteTopLevelCategory")

@@ -6,9 +6,9 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">password</property>
 
-        <mapping class="com.ez.tablebase.rest.database.TableDao" />
-        <mapping class="com.ez.tablebase.rest.database.CategoryDao" />
-        <mapping class="com.ez.tablebase.rest.database.PathDao" />
-        <mapping class="com.ez.tablebase.rest.database.EntryDao" />
+        <mapping class="com.ez.tablebase.rest.database.TableEntity" />
+        <mapping class="com.ez.tablebase.rest.database.CategoryEntity" />
+        <mapping class="com.ez.tablebase.rest.database.PathEntity" />
+        <mapping class="com.ez.tablebase.rest.database.EntryEntity" />
     </session-factory>
 </hibernate-configuration>

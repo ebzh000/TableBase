@@ -8,9 +8,9 @@ package com.ez.tablebase.rest.service;
  * Created by Erik on 16-May-18.
  */
 
+import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.operations.CreateTable;
 import com.ez.tablebase.rest.model.operations.Operation;
-import com.ez.tablebase.rest.model.Table;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import org.springframework.stereotype.Service;
 
@@ -20,26 +20,26 @@ import java.util.List;
 public class TableServiceImpl implements TableService
 {
     @Override
-    public Table createTable(CreateTableRequest request)
+    public TableDaoImpl createTable(CreateTableRequest request)
     {
         Operation operation = new CreateTable(request);
-        return (Table) operation.exec();
+        return (TableDaoImpl) operation.exec();
     }
 
     @Override
-    public Table getTable(int tableId)
+    public TableDaoImpl getTable(int tableId)
     {
         return null;
     }
 
     @Override
-    public List<Table> getUserTables(int userId)
+    public List<TableDaoImpl> getUserTables(int userId)
     {
         return null;
     }
 
     @Override
-    public List<Table> getTables()
+    public List<TableDaoImpl> getTables()
     {
         return null;
     }
@@ -51,7 +51,7 @@ public class TableServiceImpl implements TableService
     }
 
     @Override
-    public List<Table> searchTable(String keyword)
+    public List<TableDaoImpl> searchTable(String keyword)
     {
         return null;
     }

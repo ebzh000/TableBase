@@ -1,7 +1,6 @@
 package com.ez.tablebase.rest.database;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /*
 
@@ -10,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "paths")
-public class PathDao
+public class PathEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,7 @@ public class PathDao
     @Column(name = "tree_id")
     private int treeId;
 
-    public PathDao() {}
+    public PathEntity() {}
 
     public int getId()
     {
@@ -84,7 +83,7 @@ public class PathDao
     @Override
     public String toString()
     {
-        return "PathDao{" +
+        return "PathEntity{" +
                 "id=" + id +
                 ", entryId=" + entryId +
                 ", tableId=" + tableId +

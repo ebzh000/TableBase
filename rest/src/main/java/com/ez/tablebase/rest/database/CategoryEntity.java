@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "categories")
-public class CategoryDao implements Serializable
+public class CategoryEntity implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class CategoryDao implements Serializable
     @Column(name = "parent_id")
     private Integer parentId;
 
-    public CategoryDao () {}
+    public CategoryEntity() {}
 
     public Integer getTableId()
     {
@@ -83,7 +83,7 @@ public class CategoryDao implements Serializable
     @Override
     public String toString()
     {
-        return "CategoryDao{" +
+        return "CategoryDaoImpl{" +
                 "categoryId=" + categoryId +
                 ", tableId=" + tableId +
                 ", treeId=" + treeId +

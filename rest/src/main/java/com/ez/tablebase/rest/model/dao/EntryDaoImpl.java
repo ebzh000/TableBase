@@ -1,10 +1,10 @@
-package com.ez.tablebase.rest.model;
+package com.ez.tablebase.rest.model.dao;
 /*
 
  * Created by ErikZ on 19/09/2017.
  */
 
-public class Entry
+public class EntryDaoImpl
 {
     private int tableId;
     private int entryId;
@@ -40,9 +40,9 @@ public class Entry
         this.data = data;
     }
 
-    public static Entry buildModel(int tableId, int entryId, String data)
+    public static EntryDaoImpl buildModel(int tableId, int entryId, String data)
     {
-        Entry model = new Entry();
+        EntryDaoImpl model = new EntryDaoImpl();
 
         model.setTableId(tableId);
         model.setEntryId(entryId);
@@ -53,7 +53,7 @@ public class Entry
     @Override
     public String toString()
     {
-        return "Entry{" +
+        return "EntryDaoImpl{" +
                 "tableId=" + tableId +
                 ", entryId=" + entryId +
                 ", data='" + data + '\'' +

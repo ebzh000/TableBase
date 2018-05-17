@@ -1,6 +1,6 @@
 package com.ez.tablebase.rest.service;
 
-import com.ez.tablebase.rest.model.Category;
+import com.ez.tablebase.rest.model.dao.CategoryDaoImpl;
 import com.ez.tablebase.rest.model.requests.*;
 import org.springframework.stereotype.Service;
 
@@ -20,55 +20,55 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService
 {
     @Override
-    public Category createTopLevelCategory(CategoryCreateRequest request)
+    public CategoryDaoImpl createTopLevelCategory(CategoryCreateRequest request)
     {
         return null;
     }
 
     @Override
-    public Category createCategory(CategoryCreateRequest request)
+    public CategoryDaoImpl createCategory(CategoryCreateRequest request)
     {
         return null;
     }
 
     @Override
-    public List<Category> getTableCategories(int tableId, boolean excludeRoot)
+    public List<CategoryDaoImpl> getTableCategories(int tableId, boolean excludeRoot)
     {
         return null;
     }
 
     @Override
-    public List<Category> getTableRootCategories(int tableId)
+    public List<CategoryDaoImpl> getTableRootCategories(int tableId)
     {
         return null;
     }
 
     @Override
-    public Category getCategory(int tableId, int categoryId)
+    public CategoryDaoImpl getCategory(int tableId, int categoryId)
     {
         return null;
     }
 
     @Override
-    public Category updateCategory(CategoryUpdateRequest request)
+    public CategoryDaoImpl updateCategory(CategoryUpdateRequest request)
     {
         return null;
     }
 
     @Override
-    public Category duplicateCategory(int tableId, int categoryId)
+    public CategoryDaoImpl duplicateCategory(int tableId, int categoryId)
     {
         return null;
     }
 
     @Override
-    public Category combineCategory(CategoryCombineRequest request) throws ParseException
+    public CategoryDaoImpl combineCategory(CategoryCombineRequest request) throws ParseException
     {
         return null;
     }
 
     @Override
-    public Category splitCategory(CategorySplitRequest request) throws ParseException
+    public CategoryDaoImpl splitCategory(CategorySplitRequest request) throws ParseException
     {
         return null;
     }

@@ -3,16 +3,15 @@ package com.ez.tablebase.rest;
  * Created by ErikZ on 16/05/2018.
  */
 
-import com.ez.tablebase.rest.database.CategoryDao;
-import com.ez.tablebase.rest.database.PathDao;
-import com.ez.tablebase.rest.database.EntryDao;
-import com.ez.tablebase.rest.database.TableDao;
+import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.PathEntity;
+import com.ez.tablebase.rest.database.EntryEntity;
+import com.ez.tablebase.rest.database.TableEntity;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -48,7 +47,7 @@ public class DBConfiguration
             e.printStackTrace();
         }
 
-        sessionFactory.setAnnotatedClasses(TableDao.class, CategoryDao.class, PathDao.class, EntryDao.class);
+        sessionFactory.setAnnotatedClasses(TableEntity.class, CategoryEntity.class, PathEntity.class, EntryEntity.class);
 
         return sessionFactory.getObject();
     }

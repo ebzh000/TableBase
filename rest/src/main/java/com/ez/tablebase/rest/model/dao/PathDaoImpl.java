@@ -1,10 +1,10 @@
-package com.ez.tablebase.rest.model;
+package com.ez.tablebase.rest.model.dao;
 /*
 
  * Created by ErikZ on 27/11/2017.
  */
 
-public class DataAccessPath
+public class PathDaoImpl
 {
     private int id;
     private int tableId;
@@ -76,7 +76,7 @@ public class DataAccessPath
     @Override
     public String toString()
     {
-        return "DataAccessPath{" +
+        return "PathDaoImpl{" +
                 "id=" + id +
                 ", tableId=" + tableId +
                 ", entryId=" + entryId +

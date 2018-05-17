@@ -1,6 +1,6 @@
 package com.ez.tablebase.rest.controller;
 
-import com.ez.tablebase.rest.model.Table;
+import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
@@ -31,9 +31,9 @@ public class TableController
     @PostMapping(value = "/create")
     Object createTable(@RequestBody CreateTableRequest request)
     {
-        Table table = tableService.createTable(request);
-        logger.info("Created Table: " + table.getTableName());
-        return table;
+        TableDaoImpl tableDaoImpl = tableService.createTable(request);
+        logger.info("Created TableDaoImpl: " + tableDaoImpl.getTableName());
+        return tableDaoImpl;
     }
 
     @GetMapping(value = "/tables")
@@ -53,7 +53,7 @@ public class TableController
     {
         String htmlTable = tableService.toHtml(tableId);
         if(!htmlTable.isEmpty())
-            logger.info("Returning Table: " + tableId);
+            logger.info("Returning TableDaoImpl: " + tableId);
         else
             logger.error("Couldn't generate html table");
         return htmlTable;
@@ -62,9 +62,9 @@ public class TableController
     @GetMapping(value = "/search")
     Object searchTable(@RequestParam("keyword") String keyword)
     {
-        List<Table> tableList = tableService.searchTable(keyword);
-        logger.info("Found " + tableList.size() + " tables");
-        return tableList;
+        List<TableDaoImpl> tableDaoImplList = tableService.searchTable(keyword);
+        logger.info("Found " + tableDaoImplList.size() + " tables");
+        return tableDaoImplList;
     }
 
     @DeleteMapping(value = "/table/{tableId}")

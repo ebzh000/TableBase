@@ -8,7 +8,7 @@ package com.ez.tablebase.rest.service;
  * Created by Erik on 16-May-18.
  */
 
-import com.ez.tablebase.rest.model.Entry;
+import com.ez.tablebase.rest.model.dao.EntryDaoImpl;
 import com.ez.tablebase.rest.model.requests.DataRequest;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +18,19 @@ import java.util.List;
 public class DataServiceImpl implements DataService
 {
     @Override
-    public List<Entry> getTableEntries(int tableId)
+    public List<EntryDaoImpl> getTableEntries(int tableId)
     {
         return null;
     }
 
     @Override
-    public Entry getTableEntry(int tableId, int entryId)
+    public EntryDaoImpl getTableEntry(int tableId, int entryId)
     {
         return null;
     }
 
     @Override
-    public Entry updateTableEntry(DataRequest request)
+    public EntryDaoImpl updateTableEntry(DataRequest request)
     {
         return null;
     }

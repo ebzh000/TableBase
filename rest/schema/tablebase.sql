@@ -18,7 +18,7 @@ CREATE TABLE tablebase.categories (
   tree_id INT NOT NULL,
   name VARCHAR(400) NOT NULL,
   parent_id INT,
-  PRIMARY KEY (category_id, table_id),
+  PRIMARY KEY (category_id),
   CONSTRAINT cat_table_fk FOREIGN KEY (table_id) REFERENCES tablebase.tables (table_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
