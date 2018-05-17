@@ -6,7 +6,7 @@ USE tablebase;
 CREATE TABLE tablebase.tables (
   table_id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
-  table_name VARCHAR(500) NOT NULL,
+  name VARCHAR(500) NOT NULL,
   tags TEXT,
   public BOOLEAN NOT NULL,
   PRIMARY KEY (table_id)
@@ -16,7 +16,7 @@ CREATE TABLE tablebase.categories (
   table_id INT NOT NULL,
   category_id INT NOT NULL AUTO_INCREMENT,
   tree_id INT NOT NULL,
-  attribute_name VARCHAR(400) NOT NULL,
+  name VARCHAR(400) NOT NULL,
   parent_id INT,
   PRIMARY KEY (category_id, table_id),
   CONSTRAINT cat_table_fk FOREIGN KEY (table_id) REFERENCES tablebase.tables (table_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -47,24 +47,24 @@ CREATE TABLE tablebase.paths (
 /*
  * This is a 3-Dimensional Table.
  */
-INSERT INTO tables (user_id, table_name, tags, public) VALUES (1, 'Uni Marks', 'Uni, Marks', true);
+INSERT INTO tables (user_id, name, tags, public) VALUES (1, 'Uni Marks', 'Uni, Marks', true);
 
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 1, 1, null, 'Year');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 2, 2, null, 'Term');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 3, 3, null, 'Mark');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 4, 1, 1,    '1991');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 5, 1, 1,    '1992');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 6, 2, 2,    'Winter');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 7, 2, 2,    'Spring');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 8, 2, 2,    'Fall');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 9, 3, 3,    'Assignments');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 10, 3, 9,   'Ass1');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 11, 3, 9,   'Ass2');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 12, 3, 9,   'Ass3');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 13, 3, 3,   'Examinations');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 14, 3, 13,  'Midterm');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 15, 3, 13,  'Final');
-INSERT INTO categories (table_id, category_id, tree_id, parent_id, attribute_name) VALUES (1, 16, 3, 3,   'Grade');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 1, 1, null, 'Year');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 2, 2, null, 'Term');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 3, 3, null, 'Mark');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 4, 1, 1,    '1991');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 5, 1, 1,    '1992');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 6, 2, 2,    'Winter');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 7, 2, 2,    'Spring');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 8, 2, 2,    'Fall');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 9, 3, 3,    'Assignments');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 10, 3, 9,   'Ass1');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 11, 3, 9,   'Ass2');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 12, 3, 9,   'Ass3');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 13, 3, 3,   'Examinations');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 14, 3, 13,  'Midterm');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 15, 3, 13,  'Final');
+INSERT INTO categories (table_id, category_id, tree_id, parent_id, name) VALUES (1, 16, 3, 3,   'Grade');
 
 INSERT INTO entries (table_id, entry_id, data, type) VALUES (1, 1,'85', 1);
 INSERT INTO entries (table_id, entry_id, data, type) VALUES (1, 2,'80', 1);
@@ -405,22 +405,22 @@ INSERT INTO paths (table_id, entry_id, category_id, tree_id) VALUES (1, 36, 16, 
 /*
  * This is a 2-Dimensional Table
  */
-INSERT INTO tables (user_id, table_name, tags, public) VALUES (1, 'Quantifying Fuel-Saving Opportunities from Specific Driving', 'FuelSaving, Driving', true);
+INSERT INTO tables (user_id, name, tags, public) VALUES (1, 'Quantifying Fuel-Saving Opportunities from Specific Driving', 'FuelSaving, Driving', true);
 
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 17, 1, 'VH', null);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 18, 2, 'Cycle Name', null);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 19, 1, 'KI (1/km)', 1);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 20, 1, 'Distance (mi)', 1);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 21, 1, 'Percent Fuel Savings', 1);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 22, 2, '2012_2', 2);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 23, 2, '2145_1', 2);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 24, 2, '4234_1', 2);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 25, 2, '2032_2', 2);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 26, 2, '4171_1', 2);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 27, 1, 'Improved Speed', 5);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 28, 1, 'Decreased Accel', 5);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 29, 1, 'Eliminate Stops', 5);
-INSERT INTO categories (table_id, category_id, tree_id, attribute_name, parent_id) VALUES (2, 30, 1, 'Decreased Idle', 5);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 17, 1, 'VH', null);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 18, 2, 'Cycle Name', null);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 19, 1, 'KI (1/km)', 1);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 20, 1, 'Distance (mi)', 1);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 21, 1, 'Percent Fuel Savings', 1);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 22, 2, '2012_2', 2);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 23, 2, '2145_1', 2);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 24, 2, '4234_1', 2);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 25, 2, '2032_2', 2);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 26, 2, '4171_1', 2);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 27, 1, 'Improved Speed', 5);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 28, 1, 'Decreased Accel', 5);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 29, 1, 'Eliminate Stops', 5);
+INSERT INTO categories (table_id, category_id, tree_id, name, parent_id) VALUES (2, 30, 1, 'Decreased Idle', 5);
 
 INSERT INTO entries (entry_id, table_id, data, type) VALUES (37, 2, '3.30', 6);
 INSERT INTO entries (entry_id, table_id, data, type) VALUES (38, 2, '1.3', 6);

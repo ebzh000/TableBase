@@ -4,7 +4,7 @@ package com.ez.tablebase.rest.model.requests;
  * Created by Erik Zhong on 9/11/2017.
  */
 
-public class TableRequest
+public class CreateTableRequest
 {
     private int tableId;
     private int userId;

@@ -1,64 +1,13 @@
 package com.ez.tablebase.rest.model;
 
 import com.ez.tablebase.rest.database.CategoryDao;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class Category
+public class Category extends CategoryDao
 {
-    private int categoryId;
-    private int tableId;
-    private String attributeName;
-    private Integer parentId;
-    private DataType type;
-
-    public int getCategoryId()
-    {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId)
-    {
-        this.categoryId = categoryId;
-    }
-
-    public int getTableId()
-    {
-        return tableId;
-    }
-
-    public void setTableId(int tableId)
-    {
-        this.tableId = tableId;
-    }
-
-    public String getAttributeName()
-    {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName)
-    {
-        this.attributeName = attributeName;
-    }
-
-    public Integer getParentId()
-    {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId)
-    {
-        this.parentId = parentId;
-    }
-
-    public DataType getType()
-    {
-        return type;
-    }
-
-    public void setType(DataType type)
-    {
-        this.type = type;
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public static Category buildModel(CategoryDao entity)
     {
@@ -66,20 +15,10 @@ public class Category
 
         model.setTableId(entity.getTableId());
         model.setCategoryId(entity.getCategoryId());
-        model.setAttributeName(entity.getName());
+        model.setName(entity.getName());
         model.setParentId(entity.getParentId());
         return model;
     }
 
-    @Override
-    public String toString()
-    {
-        return "Category{" +
-                "categoryId=" + categoryId +
-                ", tableId=" + tableId +
-                ", attributeName='" + attributeName + '\'' +
-                ", parentId=" + parentId +
-                ", type=" + type +
-                '}';
-    }
+
 }

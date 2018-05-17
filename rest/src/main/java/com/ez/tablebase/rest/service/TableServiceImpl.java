@@ -8,8 +8,10 @@ package com.ez.tablebase.rest.service;
  * Created by Erik on 16-May-18.
  */
 
+import com.ez.tablebase.rest.model.operations.CreateTable;
+import com.ez.tablebase.rest.model.operations.Operation;
 import com.ez.tablebase.rest.model.Table;
-import com.ez.tablebase.rest.model.requests.TableRequest;
+import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +20,10 @@ import java.util.List;
 public class TableServiceImpl implements TableService
 {
     @Override
-    public Table createTable(TableRequest request)
+    public Table createTable(CreateTableRequest request)
     {
-        return null;
+        Operation operation = new CreateTable(request);
+        return (Table) operation.exec();
     }
 
     @Override

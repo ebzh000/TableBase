@@ -1,7 +1,7 @@
 package com.ez.tablebase.rest.service;
 
 import com.ez.tablebase.rest.model.Table;
-import com.ez.tablebase.rest.model.requests.TableRequest;
+import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public interface TableService
 {
     // Table Operations
-    Table createTable(TableRequest request);
+    Table createTable(CreateTableRequest request);
 
     Table getTable(int tableId);
 

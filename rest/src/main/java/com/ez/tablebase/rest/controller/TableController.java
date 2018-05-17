@@ -1,7 +1,7 @@
 package com.ez.tablebase.rest.controller;
 
 import com.ez.tablebase.rest.model.Table;
-import com.ez.tablebase.rest.model.requests.TableRequest;
+import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import com.ez.tablebase.rest.service.TableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class TableController
     }
 
     @PostMapping(value = "/create")
-    Object createTable(@RequestBody TableRequest request)
+    Object createTable(@RequestBody CreateTableRequest request)
     {
         Table table = tableService.createTable(request);
         logger.info("Created Table: " + table.getTableName());
