@@ -33,7 +33,7 @@ public class TableController
     Object createTable(@RequestBody CreateTableRequest request)
     {
         TableEntity table = tableService.createTable(request);
-        logger.info("Created TableDaoImpl: " + table.getTableName());
+        logger.info("Created Table: " + table.getTableName());
         return table;
     }
 
@@ -54,7 +54,7 @@ public class TableController
     {
         String htmlTable = tableService.toHtml(tableId);
         if(!htmlTable.isEmpty())
-            logger.info("Returning TableDaoImpl: " + tableId);
+            logger.info("Returning Table: " + tableId);
         else
             logger.error("Couldn't generate html table");
         return htmlTable;

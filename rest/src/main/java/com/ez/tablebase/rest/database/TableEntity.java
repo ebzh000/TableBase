@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@javax.persistence.Table(name = "tables")
+@Table(name = "tables")
 public class TableEntity implements Serializable
 {
     @Id
@@ -19,7 +19,7 @@ public class TableEntity implements Serializable
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "table_name")
+    @Column(name = "name")
     private String tableName;
 
     @Column(name = "tags")

@@ -7,34 +7,52 @@ package com.ez.tablebase.rest.model.dao;
 import com.ez.tablebase.rest.HibernateUtil;
 import com.ez.tablebase.rest.database.TableEntity;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class TableDaoImpl implements TableDao
 {
-    public Integer createTable(String name, String tags, boolean isPublic)
+    public TableEntity createTable(String name, String tags, boolean isPublic)
     {
+        Session session = getCurrentSession();
         TableEntity tableEntityDao = new TableEntity();
         tableEntityDao.setTableName(name);
         tableEntityDao.setTags(tags);
         tableEntityDao.setPublic(isPublic);
-        return (Integer) getCurrentSession().save(tableEntityDao);
+        Integer id = (Integer) session.save(tableEntityDao);
+        tableEntityDao.setTableId(id);
+        return tableEntityDao;
     }
 
     @Override
     public TableEntity getTable(Integer tableId)
     {
-        return null;
+        return getCurrentSession().get(TableEntity.class, tableId);
     }
 
     @Override
-    public TableEntity updateTable(Integer tableId, String name, String tags, boolean isPublic)
+    public void updateTable(Integer tableId, String name, String tags, boolean isPublic)
     {
-        return null;
+        Session session = getCurrentSession();
+        Transaction tx1 = session.beginTransaction();
+        TableEntity table = session.load(TableEntity.class, tableId);
+        tx1.commit();
+
+        table.setTableName(name);
+        table.setTags(tags);
+        table.setPublic(isPublic);
+        Transaction tx2 = session.beginTransaction();
+        session.update(table);
+        tx2.commit();
     }
 
     @Override
     public void deleteTable(Integer tableId)
     {
-
+        Session session = getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        TableEntity table = session.load(TableEntity.class, tableId);
+        session.delete(table);
+        tx.commit();
     }
 
     private Session getCurrentSession()

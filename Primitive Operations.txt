@@ -1,6 +1,9 @@
 Actions required by complex operations
 Table extends TableDao:
 	1. Create Table
+	2. Get Table
+	3. Update Table
+	4. Delete Table
 	
 Category extends CategoryDao:
 	1. Create Category

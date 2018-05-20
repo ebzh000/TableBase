@@ -1,19 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
-<hibernate-configuration xmlns="http://www.hibernate.org/xsd/hibernate-configuration">
+<hibernate-configuration>
     <session-factory name="env">
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">=jdbc:mysql://localhost:3306/tablebase?autoReconnect=true&useSSL=false</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tablebase?autoReconnect=true&amp;useSSL=false</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">password</property>
-
-        <mapping class="com.ez.tablebase.rest.database.TableEntity" />
-        <mapping class="com.ez.tablebase.rest.database.CategoryEntity" />
-        <mapping class="com.ez.tablebase.rest.database.PathEntity" />
-        <mapping class="com.ez.tablebase.rest.database.EntryEntity" />
+        <property name="hibernate.current_session_context_class">thread</property>
     </session-factory>
 </hibernate-configuration>

@@ -3,11 +3,14 @@ package com.ez.tablebase.rest;
  * Created by ErikZ on 18/05/2018.
  */
 
+import com.ez.tablebase.rest.database.CategoryEntity;
+import com.ez.tablebase.rest.database.EntryEntity;
+import com.ez.tablebase.rest.database.PathEntity;
+import com.ez.tablebase.rest.database.TableEntity;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil
 {
@@ -20,17 +23,17 @@ public class HibernateUtil
         {
             try
             {
-                // Create registry
-                registry = new StandardServiceRegistryBuilder().configure().build();
+                // Create the SessionFactory from hibernate.cfg.xml
+                Configuration configuration = new Configuration();
+                configuration.configure("hibernate.cfg.xml");
+                configuration.addAnnotatedClass(TableEntity.class);
+                configuration.addAnnotatedClass(CategoryEntity.class);
+                configuration.addAnnotatedClass(PathEntity.class);
+                configuration.addAnnotatedClass(EntryEntity.class);
 
-                // Create MetadataSources
-                MetadataSources sources = new MetadataSources(registry);
+                registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
-                // Create Metadata
-                Metadata metadata = sources.getMetadataBuilder().build();
-
-                // Create Session Factory
-                sessionFactory = metadata.getSessionFactoryBuilder().build();
+                sessionFactory = configuration.buildSessionFactory(registry);
             }
             catch (Exception e)
             {

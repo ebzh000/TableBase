@@ -4,59 +4,53 @@ package com.ez.tablebase.rest.model.dao;
  * Created by ErikZ on 19/09/2017.
  */
 
-public class EntryDaoImpl
+import com.ez.tablebase.rest.HibernateUtil;
+import com.ez.tablebase.rest.database.EntryEntity;
+import org.hibernate.Session;
+
+import java.util.List;
+
+public class EntryDaoImpl implements EntryDao
 {
-    private int tableId;
-    private int entryId;
-    private String data;
 
-    public int getEntryId()
+    @Override
+    public EntryEntity createEntry(Integer tableId, String label, byte type)
     {
-        return entryId;
-    }
-
-    public void setEntryId(int entryId)
-    {
-        this.entryId = entryId;
-    }
-
-    public int getTableId()
-    {
-        return tableId;
-    }
-
-    public void setTableId(int tableId)
-    {
-        this.tableId = tableId;
-    }
-
-    public String getData()
-    {
-        return data;
-    }
-
-    public void setData(String data)
-    {
-        this.data = data;
-    }
-
-    public static EntryDaoImpl buildModel(int tableId, int entryId, String data)
-    {
-        EntryDaoImpl model = new EntryDaoImpl();
-
-        model.setTableId(tableId);
-        model.setEntryId(entryId);
-        model.setData(data);
-        return model;
+        return null;
     }
 
     @Override
-    public String toString()
+    public List<EntryEntity> getEntryByTableId(Integer tableId)
     {
-        return "EntryDaoImpl{" +
-                "tableId=" + tableId +
-                ", entryId=" + entryId +
-                ", data='" + data + '\'' +
-                '}';
+        return null;
+    }
+
+    @Override
+    public List<EntryEntity> getEntryContainingCategoryId(Integer categoryId)
+    {
+        return null;
+    }
+
+    @Override
+    public EntryEntity duplicateEntity(EntryEntity entry)
+    {
+        return null;
+    }
+
+    @Override
+    public void deleteEntry(EntryEntity entry)
+    {
+
+    }
+
+    @Override
+    public void deleteEntryList(List<EntryEntity> entryList)
+    {
+
+    }
+
+    public Session getCurrentSession()
+    {
+        return HibernateUtil.getSessionFactory().getCurrentSession();
     }
 }

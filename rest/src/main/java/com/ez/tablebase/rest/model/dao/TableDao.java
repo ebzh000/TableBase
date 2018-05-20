@@ -12,11 +12,11 @@ import com.ez.tablebase.rest.database.TableEntity;
 
 public interface TableDao
 {
-    Integer createTable(String name, String tags, boolean isPublic);
+    TableEntity createTable(String name, String tags, boolean isPublic);
 
     TableEntity getTable(Integer tableId);
 
-    TableEntity updateTable(Integer tableId, String name, String tags, boolean isPublic);
+    void updateTable(Integer tableId, String name, String tags, boolean isPublic);
 
     void deleteTable(Integer tableId);
 }

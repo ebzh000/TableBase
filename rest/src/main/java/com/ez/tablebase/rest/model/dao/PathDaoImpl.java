@@ -4,85 +4,45 @@ package com.ez.tablebase.rest.model.dao;
  * Created by ErikZ on 27/11/2017.
  */
 
-public class PathDaoImpl
+import com.ez.tablebase.rest.HibernateUtil;
+import com.ez.tablebase.rest.database.PathEntity;
+import org.hibernate.Session;
+
+public class PathDaoImpl implements PathDao
 {
-    private int id;
-    private int tableId;
-    private int entryId;
-    private int categoryId;
-    private int treeId;
-    private byte type;
 
-    public int getPathId()
+    @Override
+    public void createPath(Integer tableId, Integer entryId, Integer categoryId, Integer treeId)
     {
-        return id;
-    }
 
-    public void setPathId(int id)
-    {
-        this.id = id;
-    }
-
-    public int getTableId()
-    {
-        return tableId;
-    }
-
-    public void setTableId(int tableId)
-    {
-        this.tableId = tableId;
-    }
-
-    public int getEntryId()
-    {
-        return entryId;
-    }
-
-    public void setEntryId(int entryId)
-    {
-        this.entryId = entryId;
-    }
-
-    public int getCategoryId()
-    {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId)
-    {
-        this.categoryId = categoryId;
-    }
-
-    public int getTreeId()
-    {
-        return treeId;
-    }
-
-    public void setTreeId(int treeId)
-    {
-        this.treeId = treeId;
-    }
-
-    public byte getType()
-    {
-        return type;
-    }
-
-    public void setType(byte type)
-    {
-        this.type = type;
     }
 
     @Override
-    public String toString()
+    public PathEntity getPathByEntryId(Integer entryId)
     {
-        return "PathDaoImpl{" +
-                "id=" + id +
-                ", tableId=" + tableId +
-                ", entryId=" + entryId +
-                ", categoryId=" + categoryId +
-                ", treeId=" + treeId +
-                ", type=" + type +
-                "} " + super.toString();
+        return null;
+    }
+
+    @Override
+    public PathEntity getPathByCategoryId(Integer categoryId)
+    {
+        return null;
+    }
+
+    @Override
+    public PathEntity getPathByTreeId(Integer tableId, Integer treeId)
+    {
+        return null;
+    }
+
+    @Override
+    public void deletePath(PathEntity path)
+    {
+
+    }
+
+    public Session getCurrentSession()
+    {
+        return HibernateUtil.getSessionFactory().getCurrentSession();
     }
 }

@@ -11,16 +11,37 @@ package com.ez.tablebase.rest.model.dao;
 import com.ez.tablebase.rest.database.CategoryEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryDao
 {
-    Integer createCategory(Integer tableId, String name, Integer parentId, Integer treeId);
+    CategoryEntity createCategory(Integer tableId, String name, Integer parentId, Integer treeId);
 
     CategoryEntity getCategory(Integer categoryId);
 
     CategoryEntity getRootCategoryByTreeId(Integer tableId, Integer treeId);
 
+    List<Integer> getTreeIds(Integer tableId);
+
+    List<CategoryEntity> findPathToCategory(Integer tableId, Integer categoryId);
+
     List<CategoryEntity> findCategoryChildren(Integer categoryId);
 
-    
+    List<CategoryEntity> findAllCategoryChildren(Integer categoryId);
+
+    void updateCategoryParent(Integer categoryId, Integer parentId);
+
+    void updateCategoryLabel(Integer categoryId, String name);
+
+    List<List<CategoryEntity>> buildPathListForTree(Integer tableId, Integer treeId);
+
+    Map<Integer, List<CategoryEntity>> buildPathMapForTree(Integer tableId, Integer treeId);
+
+    List<List<CategoryEntity>> findPathCombinations(Integer tableId, List<Integer> treeIds);
+
+    CategoryEntity duplicateCategory(CategoryEntity selectedCategory);
+
+    void deleteCategory(CategoryEntity category);
+
+    void deleteCategoryList(List<CategoryEntity> categories);
 }
