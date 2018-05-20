@@ -1,0 +1,35 @@
+Actions required by complex operations
+Table extends TableDao:
+	1. Create Table
+	
+Category extends CategoryDao:
+	1. Create Category
+	2. Get Category
+	3. Get Root Category By TreeId
+	8. Get Path (List of categoryIds) to given category
+	4. Find children (1 level)
+	5. Find all children
+	6. Update Category's parent
+	7. Construct Path list for tree
+	9. Construct a Map of paths keyed by leaf categoryIds
+	10. Find all path combinations of two trees
+	11. Duplicate Category
+	12. Get TreeIds
+	13. Delete Category
+	14. Delete List of Categories
+
+
+Path extends PathDao:
+	1. Create Path
+	2. Get Path by entry
+	3. Get Path element by category
+	4. Get Path element by treeId
+	5. Delete Path
+
+Entry extends EntryDao:
+	1. Create Entry
+	2. Get all entries by tableId
+	3. Get Entries that contain selected category in path
+	4. Duplicate Entry
+	5. Delete Entry
+	6. Delete List of Entries

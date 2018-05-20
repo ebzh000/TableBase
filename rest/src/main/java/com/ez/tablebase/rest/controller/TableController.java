@@ -1,5 +1,6 @@
 package com.ez.tablebase.rest.controller;
 
+import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import com.ez.tablebase.rest.service.TableService;
@@ -31,9 +32,9 @@ public class TableController
     @PostMapping(value = "/create")
     Object createTable(@RequestBody CreateTableRequest request)
     {
-        TableDaoImpl tableDaoImpl = tableService.createTable(request);
-        logger.info("Created TableDaoImpl: " + tableDaoImpl.getTableName());
-        return tableDaoImpl;
+        TableEntity table = tableService.createTable(request);
+        logger.info("Created TableDaoImpl: " + table.getTableName());
+        return table;
     }
 
     @GetMapping(value = "/tables")
@@ -62,9 +63,9 @@ public class TableController
     @GetMapping(value = "/search")
     Object searchTable(@RequestParam("keyword") String keyword)
     {
-        List<TableDaoImpl> tableDaoImplList = tableService.searchTable(keyword);
-        logger.info("Found " + tableDaoImplList.size() + " tables");
-        return tableDaoImplList;
+        List<TableEntity> tableList = tableService.searchTable(keyword);
+        logger.info("Found " + tableList.size() + " tables");
+        return tableList;
     }
 
     @DeleteMapping(value = "/table/{tableId}")

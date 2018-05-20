@@ -1,5 +1,6 @@
 package com.ez.tablebase.rest.service;
 
+import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 
@@ -12,17 +13,17 @@ import java.util.List;
 public interface TableService
 {
     // TableDaoImpl Operations
-    TableDaoImpl createTable(CreateTableRequest request);
+    TableEntity createTable(CreateTableRequest request);
 
-    TableDaoImpl getTable(int tableId);
+    TableEntity getTable(int tableId);
 
-    List<TableDaoImpl> getUserTables(int userId);
+    List<TableEntity> getUserTables(int userId);
 
-    List<TableDaoImpl> getTables();
+    List<TableEntity> getTables();
 
     String toHtml(int tableId);
 
-    List<TableDaoImpl> searchTable(String keyword);
+    List<TableEntity> searchTable(String keyword);
 
     void deleteTable(int tableId);
 }

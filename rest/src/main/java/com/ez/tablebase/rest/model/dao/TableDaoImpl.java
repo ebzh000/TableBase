@@ -4,16 +4,12 @@ package com.ez.tablebase.rest.model.dao;
  * Created by erikz on 15/09/2017.
  */
 
+import com.ez.tablebase.rest.HibernateUtil;
 import com.ez.tablebase.rest.database.TableEntity;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class TableDaoImpl implements TableDao
 {
-    @Autowired
-    private SessionFactory sessionFactory;
-
     public Integer createTable(String name, String tags, boolean isPublic)
     {
         TableEntity tableEntityDao = new TableEntity();
@@ -41,8 +37,8 @@ public class TableDaoImpl implements TableDao
 
     }
 
-    protected Session getCurrentSession()
+    private Session getCurrentSession()
     {
-        return sessionFactory.getCurrentSession();
+        return HibernateUtil.getSessionFactory().getCurrentSession();
     }
 }
