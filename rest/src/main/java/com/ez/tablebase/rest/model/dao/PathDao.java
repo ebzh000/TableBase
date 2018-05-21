@@ -10,15 +10,19 @@ package com.ez.tablebase.rest.model.dao;
 
 import com.ez.tablebase.rest.database.PathEntity;
 
+import java.util.List;
+
 public interface PathDao
 {
     void createPath(Integer tableId, Integer entryId, Integer categoryId, Integer treeId);
 
-    PathEntity getPathByEntryId(Integer entryId);
+    List<PathEntity> getPathByEntryId(Integer entryId);
 
-    PathEntity getPathByCategoryId(Integer categoryId);
+    List<PathEntity> getPathsByEntryIdExcludingTreeId(Integer entryId, Integer treeId);
 
-    PathEntity getPathByTreeId(Integer tableId, Integer treeId);
+    List<PathEntity> getPathByCategoryId(Integer categoryId);
+
+    List<PathEntity> getPathByTreeId(Integer tableId, Integer treeId);
 
     void deletePath(PathEntity path);
 }
