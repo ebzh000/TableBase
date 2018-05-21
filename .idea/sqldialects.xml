@@ -2,5 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/rest/schema/tablebase.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/rest/src/main/java/com/ez/tablebase/rest/model/dao/CategoryDaoImpl.java" dialect="MySQL" />
   </component>
 </project>

@@ -12,13 +12,12 @@ import org.hibernate.Session;
 public class CreateTable extends Operation<TableEntity>
 {
     private CreateTableRequest request;
-    private TableDaoImpl tableDaoImpl;
+    private TableDaoImpl tableDaoImpl = new TableDaoImpl();
     private Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
     public CreateTable(CreateTableRequest request)
     {
         this.request = request;
-        this.tableDaoImpl = new TableDaoImpl();
     }
 
     @Override

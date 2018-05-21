@@ -16,10 +16,9 @@ Category extends CategoryDao:
 	7. Construct Path list for tree
 	9. Construct a Map of paths keyed by leaf categoryIds
 	10. Find all path combinations of two trees
-	11. Duplicate Category
-	12. Get TreeIds
-	13. Delete Category
-	14. Delete List of Categories
+	11. Get TreeIds
+	12. Delete Category
+	13. Delete List of Categories
 
 
 Path extends PathDao:

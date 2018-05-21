@@ -23,11 +23,11 @@ public interface CategoryDao
 
     List<Integer> getTreeIds(Integer tableId);
 
-    List<CategoryEntity> findPathToCategory(Integer tableId, Integer categoryId);
+    List<Integer> findPathToCategory(CategoryEntity category);
 
     List<CategoryEntity> findCategoryChildren(Integer categoryId);
 
-    List<CategoryEntity> findAllCategoryChildren(Integer categoryId);
+    List findAllCategoryChildren(Integer categoryId);
 
     void updateCategoryParent(Integer categoryId, Integer parentId);
 
@@ -38,8 +38,6 @@ public interface CategoryDao
     Map<Integer, List<CategoryEntity>> buildPathMapForTree(Integer tableId, Integer treeId);
 
     List<List<CategoryEntity>> findPathCombinations(Integer tableId, List<Integer> treeIds);
-
-    CategoryEntity duplicateCategory(CategoryEntity selectedCategory);
 
     void deleteCategory(CategoryEntity category);
 
