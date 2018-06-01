@@ -12,6 +12,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PathDaoImpl implements PathDao
@@ -56,7 +57,7 @@ public class PathDaoImpl implements PathDao
     }
 
     @Override
-    public List<PathEntity> getPathByCategoryId(Integer categoryId)
+    public List<Integer> getPathEntryByCategoryId(Integer categoryId)
     {
         Session session = getCurrentSession();
         Transaction transaction = session.beginTransaction();
@@ -65,18 +66,46 @@ public class PathDaoImpl implements PathDao
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         // Create Query
-        CriteriaQuery<PathEntity> query = builder.createQuery(PathEntity.class);
+        CriteriaQuery<Integer> query = builder.createQuery(Integer.class);
 
         Root<PathEntity> root = query.from(PathEntity.class);
-        query.select(root).where(builder.equal(root.get("category_id"), categoryId));
+        query.select(root.get("entry_id")).where(builder.equal(root.get("category_id"), categoryId));
         query.groupBy(root.get("entry_id"));
 
-        List<PathEntity> paths = session.createQuery(query).getResultList();
+        List<Integer> entries = session.createQuery(query).getResultList();
 
-        // TODO: Need to do a join here to grab full paths. Currently its just a single path entity per entry
         transaction.commit();
 
-        return paths;
+        return entries;
+    }
+
+    @Override
+    public List<List<PathEntity>> getPathByCategoryIdAndTreeId(Integer categoryId, Integer treeId)
+    {
+        Session session = getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        List<List<PathEntity>> pathByEntryId = new ArrayList<>();
+        List<Integer> entries = getPathEntryByCategoryId(categoryId);
+
+        // Create Criteria Builder
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        // Create Query
+        CriteriaQuery<PathEntity> query = builder.createQuery(PathEntity.class);
+        Root<PathEntity> root = query.from(PathEntity.class);
+
+        for (Integer entry : entries)
+        {
+            query.select(root).where(builder.equal(root.get("entry_id"), entry), builder.equal(root.get("tree_id"), treeId));
+            query.groupBy(root.get("entry_id"));
+
+            pathByEntryId.add(session.createQuery(query).getResultList());
+        }
+
+        transaction.commit();
+
+        return pathByEntryId;
     }
 
     @Override
@@ -92,14 +121,13 @@ public class PathDaoImpl implements PathDao
         CriteriaQuery<PathEntity> query = builder.createQuery(PathEntity.class);
 
         Root<PathEntity> root = query.from(PathEntity.class);
-        query.select(root).where();
-        return null;
-    }
+        query.select(root).where(builder.equal(root.get("table_id"), tableId), builder.equal(root.get("tree_id"),treeId));
 
-    @Override
-    public void deletePath(PathEntity path)
-    {
+        List<PathEntity> pathsByTreeId = session.createQuery(query).getResultList();
 
+        transaction.commit();
+
+        return pathsByTreeId;
     }
 
     public Session getCurrentSession()

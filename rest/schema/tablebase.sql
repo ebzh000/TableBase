@@ -19,7 +19,9 @@ CREATE TABLE tablebase.categories (
   name VARCHAR(400) NOT NULL,
   parent_id INT,
   PRIMARY KEY (category_id),
-  CONSTRAINT cat_table_fk FOREIGN KEY (table_id) REFERENCES tablebase.tables (table_id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT cat_table_fk FOREIGN KEY (table_id)
+  REFERENCES tablebase.tables (table_id)
+  ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 CREATE TABLE tablebase.entries (
@@ -28,7 +30,9 @@ CREATE TABLE tablebase.entries (
   data VARCHAR(500) NOT NULL,
   type INT NOT NULL,
   PRIMARY KEY (entry_id),
-  CONSTRAINT data_table_fk FOREIGN KEY (table_id) REFERENCES tablebase.tables (table_id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT data_table_fk FOREIGN KEY (table_id) 
+    REFERENCES tablebase.tables (table_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 CREATE TABLE tablebase.paths (
@@ -38,9 +42,15 @@ CREATE TABLE tablebase.paths (
   category_id INT NOT NULL,
   tree_id INT NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT table_id_fk FOREIGN KEY (table_id) REFERENCES tablebase.tables (table_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT entry_id_fk FOREIGN KEY (entry_id) REFERENCES tablebase.entries(entry_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT category_id_fk FOREIGN KEY (category_id) REFERENCES tablebase.categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT table_id_fk FOREIGN KEY (table_id) 
+    REFERENCES tablebase.tables (table_id) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT entry_id_fk FOREIGN KEY (entry_id) 
+    REFERENCES tablebase.entries(entry_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT category_id_fk FOREIGN KEY (category_id)
+    REFERENCES tablebase.categories(category_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE INNODB;
 
 

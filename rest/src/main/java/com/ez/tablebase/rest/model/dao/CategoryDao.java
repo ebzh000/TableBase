@@ -29,6 +29,7 @@ public interface CategoryDao
 
     List findAllCategoryChildren(Integer categoryId);
 
+    /** If different parentId is specified, move category to a new parent */
     void updateCategoryParent(Integer categoryId, Integer parentId);
 
     void updateCategoryLabel(Integer categoryId, String name);

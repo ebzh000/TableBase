@@ -20,9 +20,9 @@ public interface PathDao
 
     List<PathEntity> getPathsByEntryIdExcludingTreeId(Integer entryId, Integer treeId);
 
-    List<PathEntity> getPathByCategoryId(Integer categoryId);
+    public List<Integer> getPathEntryByCategoryId(Integer categoryId);
+
+    public List<List<PathEntity>> getPathByCategoryIdAndTreeId(Integer categoryId, Integer treeId);
 
     List<PathEntity> getPathByTreeId(Integer tableId, Integer treeId);
-
-    void deletePath(PathEntity path);
 }
