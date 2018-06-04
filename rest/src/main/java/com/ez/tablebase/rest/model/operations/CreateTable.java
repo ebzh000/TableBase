@@ -8,6 +8,7 @@ import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class CreateTable extends Operation<TableEntity>
 {
@@ -23,11 +24,11 @@ public class CreateTable extends Operation<TableEntity>
     @Override
     public TableEntity exec()
     {
-        session.beginTransaction();
+        Transaction tx = session.beginTransaction();
         TableEntity table = tableDaoImpl.createTable(request.getTableName(), request.getTags(), request.getPublic());
 
-        session.flush();
-        session.getTransaction().commit();
+
+        tx.commit();
         return table;
     }
 }
