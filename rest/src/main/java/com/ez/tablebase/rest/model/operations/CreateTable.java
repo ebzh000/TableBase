@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 public class CreateTable extends Operation<TableEntity>
 {
     private CreateTableRequest request;
-    private TableDaoImpl tableDaoImpl = new TableDaoImpl();
     private Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
     public CreateTable(CreateTableRequest request)
@@ -25,8 +24,9 @@ public class CreateTable extends Operation<TableEntity>
     public TableEntity exec()
     {
         Transaction tx = session.beginTransaction();
-        TableEntity table = tableDaoImpl.createTable(request.getTableName(), request.getTags(), request.getPublic());
+        TableEntity table = tableDao.createTable(request.getTableName(), request.getTags(), request.getPublic());
 
+        // Create a category tree (dimension) for the new table
 
         tx.commit();
         return table;

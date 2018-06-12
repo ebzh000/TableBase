@@ -5,6 +5,7 @@ package com.ez.tablebase.rest.model.dao;
  */
 
 import com.ez.tablebase.rest.HibernateUtil;
+import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.PathEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -66,27 +67,29 @@ public class PathDaoImpl implements PathDao
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         // Create Query
-        CriteriaQuery<Integer> query = builder.createQuery(Integer.class);
+        CriteriaQuery<Integer> query1 = builder.createQuery(Integer.class);
 
-        Root<PathEntity> root = query.from(PathEntity.class);
-        query.select(root.get("entry_id")).where(builder.equal(root.get("category_id"), categoryId));
-        query.groupBy(root.get("entry_id"));
+        Root<PathEntity> root = query1.from(PathEntity.class);
+        query1.select(root.get("entry_id")).where(builder.equal(root.get("category_id"), categoryId));
+        query1.groupBy(root.get("entry_id"));
 
-        List<Integer> entries = session.createQuery(query).getResultList();
+        List<Integer> entries = session.createQuery(query1).getResultList();
 
         transaction.commit();
 
         return entries;
     }
 
+
+
     @Override
-    public List<List<PathEntity>> getPathByCategoryIdAndTreeId(Integer categoryId, Integer treeId)
+    public List<List<PathEntity>> getPathByCategoryIdAndTreeId(CategoryEntity category, Integer treeId)
     {
         Session session = getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
         List<List<PathEntity>> pathByEntryId = new ArrayList<>();
-        List<Integer> entries = getPathEntryByCategoryId(categoryId);
+        List<Integer> entries = getPathEntryByCategoryId(category.getCategoryId());
 
         // Create Criteria Builder
         CriteriaBuilder builder = session.getCriteriaBuilder();

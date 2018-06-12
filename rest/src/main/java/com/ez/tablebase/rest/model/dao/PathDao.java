@@ -8,6 +8,7 @@ package com.ez.tablebase.rest.model.dao;
  * Created by Erik on 20-May-18.
  */
 
+import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.PathEntity;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface PathDao
 
     public List<Integer> getPathEntryByCategoryId(Integer categoryId);
 
-    public List<List<PathEntity>> getPathByCategoryIdAndTreeId(Integer categoryId, Integer treeId);
+    public List<List<PathEntity>> getPathByCategoryIdAndTreeId(CategoryEntity category, Integer treeId);
 
     List<PathEntity> getPathByTreeId(Integer tableId, Integer treeId);
 }
