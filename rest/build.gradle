@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("se.transmode.gradle:gradle-docker:1.2")
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.4'
     }
 }
 
@@ -15,7 +15,11 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'docker'
+apply plugin: 'com.google.protobuf'
+
+plugins {
+    id 'com.palantir.docker' version '0.11.0'
+}
 
 bootRepackage {
     mainClass = 'com.ez.tablebase.rest.TableBaseApplication'
@@ -27,45 +31,17 @@ repositories {
     mavenCentral()
 }
 
-task distBinaries(type: Copy) {
-    println "distBinaries"
-    from 'build/libs/TableBase.jar'
-    into 'build/docker/libs'
+shadowJar {
+    baseName = 'tablebase'
+    classifier = null
+    zip64 = true
 }
 
-task distDockerfile(type: Copy) {
-    println "distDockerfile"
-    from './docker/Dockerfile'
-    into 'build/docker/'
-}
-
-task distBin(type: Copy) {
-    println 'DistBin'
-    from './docker/bin/'
-    into 'build/docker/bin/'
-}
-
-group = 'ebzh000'
-
-task buildImage(type: Docker) {
-    applicationName = "tablebase"
-    dockerfile = "build/docker/Dockerfile"
-}
-
-task containerise(type: GradleBuild) {
-    println "Start building docker image"
-    tasks = ['clean', 'assemble', 'test', 'distBinaries', 'distDockerfile', 'distBin', 'buildImage']
-    doLast {
-        File fileDir = file("docker/bin")
-        files(fileDir.listFiles()).each { File file ->
-            file.setExecutable(true)
-            file.setReadable(true)
-        }
-    }
-}
-
-jar {
-    archiveName 'TableBase.jar'
+docker {
+    name "ebzh000/tablebase"
+    files tasks.shadowJar.outputs
+    files 'elk-docker-entrypoint.sh'
+    files 'wait-for-it.sh'
 }
 
 dependencies {

@@ -1,9 +1,0 @@
-#!/bin/sh
-export TABLEBASE_HOME= /opt/tablebase
-
-if test "$3" != "";
-then
-    . $TABLEBASE_HOME/bin/start_tablebase $2 $3
-else
-    . $TABLEBASE_HOME/bin/start_tablebase $2
-fi
