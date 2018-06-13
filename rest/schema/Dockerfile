@@ -9,5 +9,3 @@ ENV MYSQL_USER=root \
 ADD ./tablebase.dump.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306
-
-CMD mysql -u $MYSQL_USER -p $MYSQL_PASSWORD $MYSQL_DATABASE
