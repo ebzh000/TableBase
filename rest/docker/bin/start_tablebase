@@ -1,0 +1,11 @@
+#!/bin/bash
+
+localPort=$1
+
+if test "$localPort" = "";
+then
+    localPort="8081"
+    echo "No local port specified, mapping to default local port 8081"
+fi
+
+sudo docker run --name tablebase --rm -it -v /etc/localtime:/etc/localtime -v /etc/timezone:/etc/timezone:ro -p $localPort:8081 tablebase

@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:1.2")
     }
 }
 
@@ -14,16 +15,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-
-jar {
-    baseName = 'tablebase-rest'
-    version =  '1.0.0'
-    manifest {
-        attributes("Implementation-Title": "TableBase",
-                "Implementation-Version": version,
-                "Main-Class": "com.ez.tablebase.rest.TableBaseApplication")
-    }
-}
+apply plugin: 'docker'
 
 bootRepackage {
     mainClass = 'com.ez.tablebase.rest.TableBaseApplication'
@@ -33,6 +25,46 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+}
+
+task distBinaries(type: Copy) {
+    println "distBinaries"
+    from 'build/libs/TableBase.jar'
+    into 'build/docker/libs'
+}
+
+task distDockerfile(type: Copy) {
+    println "distDockerfile"
+    from './docker/Dockerfile'
+    into 'build/docker/'
+}
+
+task distBin(type: Copy) {
+    println 'DistBin'
+    from './docker/bin/'
+    into 'build/docker/bin/'
+}
+
+task buildImage(type: Docker) {
+    applicationName = "tablebase"
+    tag = "tablebase"
+    dockerfile = "build/docker/Dockerfile"
+}
+
+task containerise(type: GradleBuild) {
+    println "Start building docker image"
+    tasks = ['clean', 'assemble', 'test', 'distBinaries', 'distDockerfile', 'distBin', 'buildImage']
+    doLast {
+        File fileDir = file("docker/bin")
+        files(fileDir.listFiles()).each { File file ->
+            file.setExecutable(true)
+            file.setReadable(true)
+        }
+    }
+}
+
+jar {
+    archiveName 'TableBase.jar'
 }
 
 dependencies {
