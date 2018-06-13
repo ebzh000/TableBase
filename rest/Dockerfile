@@ -1,11 +1,6 @@
 FROM openjdk:8
 
-COPY ./bin/* /opt/tablebase/bin/
-COPY ./libs/*  /opt/tablebase/libs/
+COPY tablebase.jar /opt/tablebase/tablebase.jar
+EXPOSE 8080
 
-RUN ln --symbol /usr/bin/java /usr/local/java1.8 \
-    && mkdir -p /opt/tablebase/logs \
-    && chmod 744 /opt/tablebase/bin/*
-
-ENTRYPOINT ["/opt/tablebase/bin/startup"]
-CMD ["", "", ""]
+CMD java -jar /opt/tablebase/tablebase.jar

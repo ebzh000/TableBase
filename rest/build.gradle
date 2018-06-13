@@ -7,41 +7,21 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
 }
 
 plugins {
-    id 'com.palantir.docker' version '0.11.0'
+    id 'com.palantir.docker' version '0.12.0'
 }
 
-
-apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 bootRepackage {
     mainClass = 'com.ez.tablebase.rest.TableBaseApplication'
-}
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-shadowJar {
-    baseName = 'tablebase'
-    classifier = null
-    zip64 = true
-}
-
-docker {
-    name "ebzh000/tablebase"
-    files tasks.shadowJar.outputs
-    files 'elk-docker-entrypoint.sh'
-    files 'wait-for-it.sh'
 }
 
 dependencies {
@@ -53,4 +33,25 @@ dependencies {
     runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+sourceCompatibility = 1.8
+group = 'ebzh000'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    baseName = "tablebase"
+
+    manifest {
+        attributes 'Main-Class' : 'com.ez.tablebase.rest.TableBaseApplication'
+    }
+}
+
+docker {
+    name 'ebzh000/tablebase'
+    tags '1.0'
+    files file('build/libs/tablebase.jar')
 }
