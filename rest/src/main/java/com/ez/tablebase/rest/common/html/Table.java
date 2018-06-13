@@ -196,7 +196,7 @@ public class Table
                                 .append("id=\"").append(cell.getCellId()).append("\" ")
                                 .append(COL_SPAN).append(cell.getColSpan()).append("\" ")
                                 .append(ROW_SPAN).append(cell.getRowSpan()).append("\">")
-                                .append(entryId).append(cell.getLabel()).append("</").append(tdOrTh).append(">")
+                                .append(cell.getLabel()).append("</").append(tdOrTh).append(">")
                                 .append(NEW_LINE);
                     }
                 }

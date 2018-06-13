@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 export TABLEBASE_HOME= /opt/tablebase
 
 if test "$3" != "";

@@ -45,9 +45,10 @@ task distBin(type: Copy) {
     into 'build/docker/bin/'
 }
 
+group = 'ebzh000'
+
 task buildImage(type: Docker) {
     applicationName = "tablebase"
-    tag = "tablebase"
     dockerfile = "build/docker/Dockerfile"
 }
 
