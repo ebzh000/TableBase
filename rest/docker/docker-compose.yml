@@ -1,0 +1,43 @@
+version: '3'
+services:
+  # Note that the environment variables used in this file are sourced from .env in this folder
+
+  # A web based interface for managing your docker containers.
+  portainer:
+    image: portainer/portainer
+    command: --templates http://templates/templates.json --no-auth
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./portainer-data:/data
+    # Enable you to access potainers web interface from your host machine
+    # using http://localhost:10001
+    ports:
+        - "10001:9000"
+
+  tablebase:
+    image: ebzh000/tablebase
+    depends_on:
+      - mysql-tablebase
+    environment:
+      SPRING_DATASOURCE_URL=${DB_URL}
+    ports:
+      - "8080:8080"
+
+  tablebase-mysql:
+    image: mysql
+    hostname: tablebase-mysql
+    volumes:
+      - data_sql:/dbcreation.sql
+    environment:
+      MYSQL_DATABASE: development
+      MYSQL_ROOT_PASSWORD: password
+      STARTUP_SQL: data_sql
+    ports:
+      - "3306:3306"
+
+volume
+
+networks:
+  default:
+    external:
+      name: dockervm_network

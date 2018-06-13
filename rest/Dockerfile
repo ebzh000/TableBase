@@ -1,5 +1,7 @@
 FROM openjdk:8
 
+MAINTAINER ErikZ
+
 COPY tablebase.jar /opt/tablebase/tablebase.jar
 EXPOSE 8080
 

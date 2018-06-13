@@ -50,7 +50,7 @@ jar {
     }
 }
 
-docker {
+docker (){
     name 'ebzh000/tablebase'
     tags '1.0'
     files file('build/libs/tablebase.jar')
