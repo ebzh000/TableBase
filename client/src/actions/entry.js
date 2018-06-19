@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const UPDATE_ENTRY = 'UPDATE_ENTRY'
 
-const ROOT_URL = `http://localhost:8081/tablebase`
+const ROOT_URL = `http://localhost:8080/tablebase`
 
 export function updateEntry (tableId, entryId, label) {
   const url = `${ROOT_URL}/table/${tableId}/entry/${entryId}?toHtml=true`

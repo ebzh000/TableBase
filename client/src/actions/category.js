@@ -12,7 +12,7 @@ export const SPLIT_CATEGORY = 'SPLIT_CATEGORY'
 export const COMBINE_CATEGORY = 'COMBINE_CATEGORY'
 export const DELETE_TOP_LEVEL_CATEGORY = 'DELETE_TOP_LEVEL_CATEGORY'
 
-const ROOT_URL = `http://localhost:8081/tablebase`
+const ROOT_URL = `http://localhost:8080/tablebase`
 
 export function loadCategories (tableId) {
   const url = `${ROOT_URL}/table/${tableId}/categories?excludeRoot=false`

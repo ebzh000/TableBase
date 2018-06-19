@@ -6,7 +6,7 @@ export const LOAD_TABLE_HTML = 'LOAD_TABLE_HTML'
 export const LOAD_TABLE = 'LOAD_TABLE'
 export const DELETE_TABLE = 'DELETE_TABLE'
 
-const ROOT_URL = `http://localhost:8081/tablebase`
+const ROOT_URL = `http://localhost:8080/tablebase`
 
 export function createTable (tableName, tags, userId, type) {
   const url = `${ROOT_URL}/create`
