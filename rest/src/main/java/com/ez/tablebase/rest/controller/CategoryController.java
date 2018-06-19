@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(value = "/tablebase/table/{tableId}")
 public class CategoryController
 {

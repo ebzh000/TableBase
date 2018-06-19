@@ -15,7 +15,6 @@ import java.util.List;
  */
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(value = "/tablebase")
 public class TableController
 {

@@ -14,27 +14,26 @@ services:
     ports:
         - "10001:9000"
 
+  tablebasedb:
+    image: mysql:5.6
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "table_base"
+      MYSQL_USER: "test"
+      MYSQL_PASSWORD: "test"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
   tablebase:
     image: ebzh000/tablebase
     depends_on:
-      - mysql-tablebase
+      - tablebasedb
     environment:
       - SPRING_DATASOURCE_URL=${DB_URL}
+    links:
+      - tablebasedb
     ports:
       - "8080:8080"
-
-  tablebasedb:
-    image: mysql:5.6
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-    volumes:
-      - ./tabebase.dump.sql:/docker-entrypoint-initdb.d
-    ports:
-      - "3306:3306"
-
-volume
-
-networks:
-  default:
-    external:
-      name: dockervm_network
