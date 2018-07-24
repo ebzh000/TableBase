@@ -25,8 +25,12 @@ public class TableDaoImpl implements TableDao
 
     @Override
     public TableEntity getTable(Integer tableId)
-    {
-        return getCurrentSession().get(TableEntity.class, tableId);
+    {   Session session = getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        TableEntity tableEntity = session.get(TableEntity.class, tableId);
+        tx.commit();
+
+        return tableEntity;
     }
 
     @Override

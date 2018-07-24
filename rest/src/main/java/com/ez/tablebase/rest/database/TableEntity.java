@@ -2,6 +2,8 @@ package com.ez.tablebase.rest.database;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Erik Zhong on 9/10/2017.
@@ -92,7 +94,7 @@ public class TableEntity implements Serializable
     {
         isPublic = aPublic;
     }
-
+    
     @Override
     public String toString()
     {

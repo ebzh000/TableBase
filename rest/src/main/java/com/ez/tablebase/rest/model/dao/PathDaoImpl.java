@@ -54,11 +54,49 @@ public class PathDaoImpl implements PathDao
     @Override
     public List<PathEntity> getPathsByEntryIdExcludingTreeId(Integer entryId, Integer treeId)
     {
-        return null;
+        Session session = getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        // Create Criteria Builder
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        // Create Query
+        CriteriaQuery<PathEntity> query = builder.createQuery(PathEntity.class);
+
+        Root<PathEntity> root = query.from(PathEntity.class);
+        query.select(root).where(builder.equal(root.get("entry_id"), entryId), builder.notEqual(root.get("tree_id"), treeId));
+        query.orderBy(builder.asc(root.get("entry_id")), builder.asc(root.get("tree_id")), builder.asc(root.get("category_id")));
+
+        List<PathEntity> paths = session.createQuery(query).getResultList();
+        transaction.commit();
+
+        return paths;
     }
 
     @Override
-    public List<Integer> getPathEntryByCategoryId(Integer categoryId)
+    public List<PathEntity> getPathsByEntryIdAndTreeId(Integer entryId, Integer treeId)
+    {
+        Session session = getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        // Create Criteria Builder
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        // Create Query
+        CriteriaQuery<PathEntity> query = builder.createQuery(PathEntity.class);
+
+        Root<PathEntity> root = query.from(PathEntity.class);
+        query.select(root).where(builder.equal(root.get("entry_id"), entryId), builder.equal(root.get("tree_id"), treeId));
+        query.orderBy(builder.asc(root.get("entry_id")), builder.asc(root.get("tree_id")), builder.asc(root.get("category_id")));
+
+        List<PathEntity> paths = session.createQuery(query).getResultList();
+        transaction.commit();
+
+        return paths;
+    }
+
+    @Override
+    public List<Integer> getPathEntryIdByCategoryId(Integer categoryId)
     {
         Session session = getCurrentSession();
         Transaction transaction = session.beginTransaction();
@@ -89,7 +127,7 @@ public class PathDaoImpl implements PathDao
         Transaction transaction = session.beginTransaction();
 
         List<List<PathEntity>> pathByEntryId = new ArrayList<>();
-        List<Integer> entries = getPathEntryByCategoryId(category.getCategoryId());
+        List<Integer> entries = getPathEntryIdByCategoryId(category.getCategoryId());
 
         // Create Criteria Builder
         CriteriaBuilder builder = session.getCriteriaBuilder();

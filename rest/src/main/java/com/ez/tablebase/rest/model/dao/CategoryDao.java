@@ -19,6 +19,8 @@ public interface CategoryDao
 
     CategoryEntity getCategory(Integer categoryId);
 
+    List<CategoryEntity> getRootCategories(Integer tableId);
+
     CategoryEntity getRootCategoryByTreeId(Integer tableId, Integer treeId);
 
     List<Integer> getTreeIds(Integer tableId);

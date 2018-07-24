@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class TableController
     }
 
     @PostMapping(value = "/create")
-    Object createTable(@RequestBody CreateTableRequest request)
+    Object createTable(@RequestBody CreateTableRequest request) throws ParseException
     {
         TableEntity table = tableService.createTable(request);
         logger.info("Created Table: " + table.getTableName());
@@ -41,6 +42,13 @@ public class TableController
     Object getTables()
     {
         return tableService.getTables();
+    }
+
+    @GetMapping(value = "/table/{tableId}/tableCategories")
+    Object getTableCategories(@PathVariable int tableId)
+    {
+        TableEntity tableEntity = tableService.getTable(tableId);
+        return tableEntity.getCategories();
     }
 
     @GetMapping(value = "/table/{tableId}")

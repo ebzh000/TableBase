@@ -36,6 +36,28 @@ public class CategoryDaoImpl implements CategoryDao
     }
 
     @Override
+    public List<CategoryEntity> getRootCategories(Integer tableId)
+    {
+        Session session = getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        // Create Criteria Builder
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        // Create new query
+        CriteriaQuery<CategoryEntity> query = builder.createQuery(CategoryEntity.class);
+
+        // Build Query
+        Root<CategoryEntity> root = query.from(CategoryEntity.class);
+        query.select(root).where(builder.equal(root.get("table_id"), tableId), builder.equal(root.get("parent_id"), null));
+
+        List<CategoryEntity> categories = session.createQuery(query).getResultList();
+        transaction.commit();
+
+        return categories;
+    }
+
+    @Override
     public CategoryEntity getRootCategoryByTreeId(Integer tableId, Integer treeId)
     {
         Session session = getCurrentSession();

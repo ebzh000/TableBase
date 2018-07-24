@@ -7,6 +7,10 @@ import com.ez.tablebase.rest.HibernateUtil;
 import com.ez.tablebase.rest.common.ObjectNotFoundException;
 import com.ez.tablebase.rest.database.CategoryEntity;
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.model.dao.CategoryDao;
+import com.ez.tablebase.rest.model.dao.CategoryDaoImpl;
+import com.ez.tablebase.rest.model.dao.TableDao;
+import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.requests.CategoryCreateRequest;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,6 +20,8 @@ import java.util.List;
 public class CreateLeafNodeCategory extends Operation<CategoryEntity>
 {
     private Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    private TableDao tableDao = new TableDaoImpl();
+    private CategoryDao categoryDao = new CategoryDaoImpl();
     private CategoryCreateRequest request;
 
     public CreateLeafNodeCategory(CategoryCreateRequest request)
@@ -41,15 +47,20 @@ public class CreateLeafNodeCategory extends Operation<CategoryEntity>
 
         // If the parentCategory has children, then we must initialise the new child category as a leaf node
         if (parentChildren.size() != 0)
-            initialiseLeafCategory(category, request.getEntryType());
+        {
+            InitializeLeafCategoryNode initLeafNode = new InitializeLeafCategoryNode(category);
+            initLeafNode.exec();
+        }
 
         // If the parentCategory has no children, then we must update all data access paths containing the parent category
         // to now include the new child category.
         else
-            updatePaths(category, parentCategory, category.getTreeId());
+        {
+            UpdatePaths updatePaths = new UpdatePaths(category, parentCategory, category.getTreeId());
+            updatePaths.exec();
+        }
 
         tx.commit();
-
         return category;
     }
 }

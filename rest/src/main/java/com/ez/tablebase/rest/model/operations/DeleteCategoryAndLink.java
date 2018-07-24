@@ -8,6 +8,7 @@ public class DeleteCategoryAndLink extends Operation
     @Override
     public Object exec()
     {
+        //TODO ImplementDeleteCategoryAndLink
         return null;
     }
 }

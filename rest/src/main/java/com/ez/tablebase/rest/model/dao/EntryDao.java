@@ -18,6 +18,8 @@ public interface EntryDao
 
     List<EntryEntity> getEntryByTableId(Integer tableId);
 
+    List<EntryEntity> getEntriesForCategoryId(Integer categoryId);
+
     EntryEntity getEntry(Integer entryId);
 
     void deleteEntry(EntryEntity entry);

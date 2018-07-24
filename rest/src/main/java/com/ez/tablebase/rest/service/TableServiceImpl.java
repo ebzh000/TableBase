@@ -9,18 +9,23 @@ package com.ez.tablebase.rest.service;
  */
 
 import com.ez.tablebase.rest.database.TableEntity;
+import com.ez.tablebase.rest.model.dao.TableDao;
+import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.operations.CreateTable;
 import com.ez.tablebase.rest.model.operations.Operation;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Service
 public class TableServiceImpl implements TableService
 {
+    private TableDao tableDao = new TableDaoImpl();
+
     @Override
-    public TableEntity createTable(CreateTableRequest request)
+    public TableEntity createTable(CreateTableRequest request) throws ParseException
     {
         Operation operation = new CreateTable(request);
         return (TableEntity) operation.exec();
@@ -29,7 +34,7 @@ public class TableServiceImpl implements TableService
     @Override
     public TableEntity getTable(int tableId)
     {
-        return null;
+        return tableDao.getTable(tableId);
     }
 
     @Override

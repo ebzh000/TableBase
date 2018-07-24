@@ -4,6 +4,7 @@ import com.ez.tablebase.rest.database.TableEntity;
 import com.ez.tablebase.rest.model.dao.TableDaoImpl;
 import com.ez.tablebase.rest.model.requests.CreateTableRequest;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public interface TableService
 {
     // TableDaoImpl Operations
-    TableEntity createTable(CreateTableRequest request);
+    TableEntity createTable(CreateTableRequest request) throws ParseException;
 
     TableEntity getTable(int tableId);
 
