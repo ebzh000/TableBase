@@ -10,6 +10,17 @@ public class CategoryCreateRequest
     private boolean linkChildren;
     private byte entryType;
 
+    public CategoryCreateRequest(Integer tableId, String attributeName, String name, byte type)
+    {
+    }
+
+    public CategoryCreateRequest(int tableId, String attributeName, String attributeName2)
+    {
+        this.tableId = tableId;
+        this.attributeName = attributeName;
+        this.attributeName2 = attributeName2;
+    }
+
     public int getCategoryId()
     {
         return categoryId;

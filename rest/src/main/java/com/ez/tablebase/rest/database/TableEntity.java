@@ -94,7 +94,7 @@ public class TableEntity implements Serializable
     {
         isPublic = aPublic;
     }
-    
+
     @Override
     public String toString()
     {
